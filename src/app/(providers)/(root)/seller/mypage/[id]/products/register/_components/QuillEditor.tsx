@@ -4,19 +4,7 @@ import dynamic from 'next/dynamic';
 import React, { useRef } from 'react';
 import ReactQuill, { ReactQuillProps } from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-
-const FORMATS = [
-  'size',
-  'bold',
-  'underline',
-  'blockquote',
-  'list',
-  'link',
-  'image',
-  'align',
-  'color',
-  'background'
-];
+import { FORMATS } from '../_utils/constants';
 
 interface ForwardedQuillComponent extends ReactQuillProps {
   forwardedRef: React.Ref<ReactQuill>;
@@ -61,7 +49,7 @@ function QuillEditor() {
         modules={modules}
         formats={FORMATS}
         placeholder="등록할 상품의 상세내용을 작성해주세요."
-        className="h-96 border-[#f0f0f0]"
+        className="h-[500px] border-[#f0f0f0]"
       />
     </>
   );
