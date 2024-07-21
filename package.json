@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "supabase:login": "npx supabase login",
+    "gen": "supabase gen types typescript --project-id gcjotstvywsxdklagkmr --schema public > src/types/supabase.ts"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.51.11",
@@ -18,6 +20,7 @@
   },
   "devDependencies": {
     "@prisma/client": "^5.17.0",
+    "@supabase/ssr": "^0.4.0",
     "@supabase/supabase-js": "^2.44.4",
     "@types/node": "^20",
     "@types/react": "^18",

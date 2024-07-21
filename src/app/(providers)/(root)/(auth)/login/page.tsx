@@ -1,5 +1,5 @@
 'use client';
-import supabase from '../../../../../supabase/index';
+import supabase from '@/supabase/supabaseClient';
 import React from 'react';
 
 type OAuthProvider = 'google' | 'kakao';
@@ -25,11 +25,18 @@ function LoginPage() {
     };
 
   return (
-    <div>
-      <form className="flex flex-col gap-6">
-        <button onClick={handleLogin('google')}>Google</button>
-        <button onClick={handleLogin('kakao')}>Kakao</button>
-      </form>
+    <div className="flex flex-col justify-center items-center p-10 gap-10">
+      <h1>로그인</h1>
+      <section>
+        <form className="flex flex-col gap-2">
+          <button onClick={handleLogin('kakao')} className="w-[618px]">
+            카카오 로그인
+          </button>
+          <button onClick={handleLogin('google')} className="w-[618px]">
+            구글 로그인
+          </button>
+        </form>
+      </section>
     </div>
   );
 }
