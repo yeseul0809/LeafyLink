@@ -1,11 +1,17 @@
-export const INITIAL_STATE = {
+import { ProductState } from '../types/product';
+
+export const INITIAL_STATE: ProductState = {
   category: '',
   name: '',
   price: '',
-  stock: ''
+  stock: '',
+  thumbnail: null
 };
 
 export const FORMATS = [
+  'float',
+  'height',
+  'width',
   'size',
   'bold',
   'underline',

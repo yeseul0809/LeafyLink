@@ -2,9 +2,14 @@
 
 import dynamic from 'next/dynamic';
 import React, { useRef } from 'react';
-import ReactQuill, { ReactQuillProps } from 'react-quill';
+import ReactQuill, { Quill, ReactQuillProps } from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { FORMATS } from '../_utils/constants';
+import { ImageActions } from '@xeger/quill-image-actions';
+import { ImageFormats } from '@xeger/quill-image-formats';
+
+Quill.register('modules/imageActions', ImageActions);
+Quill.register('modules/imageFormats', ImageFormats);
 
 interface ForwardedQuillComponent extends ReactQuillProps {
   forwardedRef: React.Ref<ReactQuill>;
@@ -27,6 +32,8 @@ function QuillEditor() {
 
   const modules = React.useMemo(
     () => ({
+      imageActions: {},
+      imageFormats: {},
       toolbar: {
         container: [
           [{ size: ['small', false, 'large', 'huge'] }],
@@ -34,10 +41,10 @@ function QuillEditor() {
           [{ list: 'ordered' }, { list: 'bullet' }],
           [{ align: [] }, { color: [] }, { background: [] }]
         ]
-        // handlers: {
-        //   image: () => handleImage(quillRef)
-        // }
       }
+      // handlers: {
+      //   image: () => handleImage(quillRef)
+      // }
     }),
     []
   );

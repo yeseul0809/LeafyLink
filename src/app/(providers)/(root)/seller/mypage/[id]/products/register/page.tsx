@@ -4,9 +4,10 @@ import React, { useState } from 'react';
 import QuillEditor from './_components/QuillEditor';
 import { INITIAL_STATE } from './_utils/constants';
 import InputField from './_components/InputField';
+import { ProductState } from './types/product';
 
 function ProductRegisterPage() {
-  const [state, setState] = useState(INITIAL_STATE);
+  const [state, setState] = useState<ProductState>(INITIAL_STATE);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>) => {
