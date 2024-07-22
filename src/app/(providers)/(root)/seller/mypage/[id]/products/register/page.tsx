@@ -25,14 +25,21 @@ function ProductRegisterPage() {
     }
   };
 
+  const handleDescriptionChange = (content: string) => {
+    setState((prev) => ({ ...prev, description: content }));
+  };
+
+  const handleInputSubmit = async () => {
+    await handleSubmit({ state, setState });
+    setState(INITIAL_STATE);
+    setImagePreview(null);
+  };
+
   return (
     <div className="container mx-auto p-6 flex flex-col">
       <h1 className="text-3xl text-center font-bold my-6">상품 등록</h1>
       <div className="flex justify-end mb-2">
-        <button
-          className="px-4 py-2 bg-black text-white rounded-md"
-          onClick={() => handleSubmit({ state, setState })}
-        >
+        <button className="px-4 py-2 bg-black text-white rounded-md" onClick={handleInputSubmit}>
           등록하기
         </button>
       </div>
@@ -50,6 +57,9 @@ function ProductRegisterPage() {
               onChange={handleChange}
               className="w-full p-2 border rounded-md"
             >
+              <option value="" disabled>
+                카테고리를 선택하세요
+              </option>
               <option value="씨앗">씨앗</option>
               <option value="모종">모종</option>
               <option value="재배키트">재배키트</option>
@@ -107,7 +117,7 @@ function ProductRegisterPage() {
 
         <section className="col-span-4 border p-4 rounded-md">
           <h2 className="text-xl text-center font-semibold mb-4">상세 설명</h2>
-          <QuillEditor />
+          <QuillEditor value={state.description} onChange={handleDescriptionChange} />
         </section>
       </div>
     </div>

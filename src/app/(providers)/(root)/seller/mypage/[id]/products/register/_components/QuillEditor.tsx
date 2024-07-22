@@ -13,6 +13,11 @@ interface ForwardedQuillComponent extends ReactQuillProps {
   forwardedRef: React.Ref<ReactQuill>;
 }
 
+interface QuillEditorProps {
+  value: string;
+  onChange: (content: string) => void;
+}
+
 const DynamicReactQuill = dynamic(
   async () => {
     const { default: ReactQuill } = await import('react-quill');
@@ -27,7 +32,7 @@ const DynamicReactQuill = dynamic(
   { ssr: false, loading: () => <p>Loading ...</p> }
 );
 
-function QuillEditor() {
+function QuillEditor({ value, onChange }: QuillEditorProps) {
   const quillRef = useRef<ReactQuill | null>(null);
 
   const modules = React.useMemo(
@@ -52,6 +57,8 @@ function QuillEditor() {
     <>
       <DynamicReactQuill
         forwardedRef={quillRef}
+        value={value}
+        onChange={onChange}
         theme="snow"
         modules={modules}
         formats={FORMATS}

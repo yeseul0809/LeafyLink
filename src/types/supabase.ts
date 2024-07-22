@@ -279,10 +279,10 @@ export type Database = {
         Insert: {
           category: string
           created_at?: string
-          description?: string
+          description: string
           image_url?: string
           price: number
-          product_id?: string
+          product_id: string
           productseller_id?: string
           stock: number
           thumbnail_url: string

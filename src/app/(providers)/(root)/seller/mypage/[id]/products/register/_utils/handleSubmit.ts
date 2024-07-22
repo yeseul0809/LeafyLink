@@ -1,7 +1,6 @@
 import supabase from "@/supabase/supabaseClient"
 import { v4 as uuidv4 } from 'uuid';
 import { ProductState } from "../types/product"
-import { INITIAL_STATE } from "./constants";
 
 interface handleSubmitProps{
     state:ProductState;
@@ -10,7 +9,7 @@ interface handleSubmitProps{
 
 async function handleSubmit({state, setState}:handleSubmitProps) {
     let thumbnail_url=""
-    
+
     if (state.thumbnail) {
         const { data, error } = await supabase.storage
           .from('product-thumbnail')
@@ -24,18 +23,22 @@ async function handleSubmit({state, setState}:handleSubmitProps) {
       }
 
     const {error} = await supabase.from('Product').insert([{
-        category:state.category,
-        title:state.name,
+        productseller_id: 'clywvwemu0000g6q0wdi88b7r',
+        image_url: uuidv4(),
+        product_id: uuidv4(),
+        category: state.category,
+        title: state.name,
         price: Number(state.price), 
         stock: Number(state.stock), 
-        thumbnail_url: thumbnail_url
+        thumbnail_url: thumbnail_url,
+        description: state.description,
     }])
 
     if(error) {
         console.error("상품등록 중 에러발생", error);
         return
     }
-    setState(INITIAL_STATE);
+    
 }
 
 export default handleSubmit
