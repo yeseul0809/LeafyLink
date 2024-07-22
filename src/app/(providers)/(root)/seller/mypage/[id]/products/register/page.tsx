@@ -5,6 +5,7 @@ import QuillEditor from './_components/QuillEditor';
 import { INITIAL_STATE } from './_utils/constants';
 import InputField from './_components/InputField';
 import { ProductState } from './types/product';
+import handleSubmit from './_utils/handleSubmit';
 
 function ProductRegisterPage() {
   const [state, setState] = useState<ProductState>(INITIAL_STATE);
@@ -12,8 +13,7 @@ function ProductRegisterPage() {
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>) => {
     const { name, value } = e.target;
-    const newValue = name === 'price' || name === 'stock' ? Number(value) : value;
-    setState((prev) => ({ ...prev, [name]: newValue }));
+    setState((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleThumbnailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -29,7 +29,12 @@ function ProductRegisterPage() {
     <div className="container mx-auto p-6 flex flex-col">
       <h1 className="text-3xl text-center font-bold my-6">상품 등록</h1>
       <div className="flex justify-end mb-2">
-        <button className="px-4 py-2 bg-black text-white rounded-md">등록하기</button>
+        <button
+          className="px-4 py-2 bg-black text-white rounded-md"
+          onClick={() => handleSubmit({ state, setState })}
+        >
+          등록하기
+        </button>
       </div>
       <div className="grid grid-cols-6 gap-6">
         <section className="col-span-2 border p-4 rounded-md">

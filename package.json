@@ -8,14 +8,14 @@
     "start": "next start",
     "lint": "next lint",
     "supabase:login": "npx supabase login",
-    "gen": "supabase gen types typescript --project-id gcjotstvywsxdklagkmr --schema public > src/types/supabase.ts"
+    "gen": "supabase gen types --lang=typescript --project-id gcjotstvywsxdklagkmr --schema public > src/types/supabase.ts"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.51.11",
     "@tanstack/react-query-devtools": "^5.51.11",
-    "iamport-typings": "^1.4.0",
     "@xeger/quill-image-actions": "^0.7.2",
     "@xeger/quill-image-formats": "^0.7.2",
+    "iamport-typings": "^1.4.0",
     "next": "14.2.5",
     "react": "^18",
     "react-dom": "^18",
@@ -36,6 +36,7 @@
     "postcss": "^8",
     "prettier": "^3.3.3",
     "prisma": "^5.17.0",
+    "supabase": "^1.183.5",
     "tailwindcss": "^3.4.1",
     "typescript": "^5"
   }

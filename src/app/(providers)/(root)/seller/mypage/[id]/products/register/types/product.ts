@@ -4,4 +4,5 @@ export interface ProductState {
   price: number | string;
   stock: number | string;
   thumbnail: File | null;
+  description:string;
 }

@@ -2,15 +2,12 @@
 
 import dynamic from 'next/dynamic';
 import React, { useRef } from 'react';
-import ReactQuill, { Quill, ReactQuillProps } from 'react-quill';
+import ReactQuill, { ReactQuillProps } from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { FORMATS } from '../_utils/constants';
 import { ImageActions } from '@xeger/quill-image-actions';
 import { ImageFormats } from '@xeger/quill-image-formats';
 import { handleImage } from '../_utils/handleImage';
-
-Quill.register('modules/imageActions', ImageActions);
-Quill.register('modules/imageFormats', ImageFormats);
 
 interface ForwardedQuillComponent extends ReactQuillProps {
   forwardedRef: React.Ref<ReactQuill>;
@@ -19,6 +16,8 @@ interface ForwardedQuillComponent extends ReactQuillProps {
 const DynamicReactQuill = dynamic(
   async () => {
     const { default: ReactQuill } = await import('react-quill');
+    ReactQuill.Quill.register('modules/imageActions', ImageActions);
+    ReactQuill.Quill.register('modules/imageFormats', ImageFormats);
     const ForwardedComponent = ({ forwardedRef, ...props }: ForwardedQuillComponent) => (
       <ReactQuill ref={forwardedRef} {...props} />
     );

@@ -5,7 +5,8 @@ export const INITIAL_STATE: ProductState = {
   name: '',
   price: '',
   stock: '',
-  thumbnail: null
+  thumbnail: null,
+  description:''
 };
 
 export const FORMATS = [
