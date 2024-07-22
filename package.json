@@ -6,11 +6,14 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "supabase:login": "npx supabase login",
+    "gen": "supabase gen types typescript --project-id gcjotstvywsxdklagkmr --schema public > src/types/supabase.ts"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.51.11",
     "@tanstack/react-query-devtools": "^5.51.11",
+    "iamport-typings": "^1.4.0",
     "@xeger/quill-image-actions": "^0.7.2",
     "@xeger/quill-image-formats": "^0.7.2",
     "next": "14.2.5",
@@ -21,6 +24,9 @@
     "zustand": "^4.5.4"
   },
   "devDependencies": {
+    "@prisma/client": "^5.17.0",
+    "@supabase/ssr": "^0.4.0",
+    "@supabase/supabase-js": "^2.44.4",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
@@ -29,6 +35,7 @@
     "eslint-config-next": "14.2.5",
     "postcss": "^8",
     "prettier": "^3.3.3",
+    "prisma": "^5.17.0",
     "tailwindcss": "^3.4.1",
     "typescript": "^5"
   }

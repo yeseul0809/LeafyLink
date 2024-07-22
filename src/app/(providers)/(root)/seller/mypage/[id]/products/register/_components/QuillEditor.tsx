@@ -7,6 +7,7 @@ import 'react-quill/dist/quill.snow.css';
 import { FORMATS } from '../_utils/constants';
 import { ImageActions } from '@xeger/quill-image-actions';
 import { ImageFormats } from '@xeger/quill-image-formats';
+import { handleImage } from '../_utils/handleImage';
 
 Quill.register('modules/imageActions', ImageActions);
 Quill.register('modules/imageFormats', ImageFormats);
@@ -40,11 +41,11 @@ function QuillEditor() {
           ['bold', 'underline', 'blockquote', 'link', 'image'],
           [{ list: 'ordered' }, { list: 'bullet' }],
           [{ align: [] }, { color: [] }, { background: [] }]
-        ]
+        ],
+        handlers: {
+          image: () => handleImage(quillRef)
+        }
       }
-      // handlers: {
-      //   image: () => handleImage(quillRef)
-      // }
     }),
     []
   );

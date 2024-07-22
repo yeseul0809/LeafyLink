@@ -1,50 +1,51 @@
-// import ReactQuill from 'react-quill';
-// import { v4 as uuidv4 } from 'uuid';
+import supabase from '@/supabase/supabaseClient';
+import ReactQuill from 'react-quill';
+import { v4 as uuidv4 } from 'uuid';
 
-// export const handleImage = (quillRef: React.RefObject<ReactQuill>) => {
-//   const input = document.createElement('input');
-//   input.setAttribute('type', 'file');
-//   input.setAttribute('accept', 'image/*');
-//   input.click();
+export const handleImage = (quillRef: React.RefObject<ReactQuill>) => {
+  const input = document.createElement('input');
+  input.setAttribute('type', 'file');
+  input.setAttribute('accept', 'image/*');
+  input.click();
 
-//   input.addEventListener('change', async () => {
-//     if (!input.files) return;
+  input.addEventListener('change', async () => {
+    if (!input.files) return;
 
-//     const file = input.files[0];
-//     const fileNewName = uuidv4();
+    const file = input.files[0];
+    const fileNewName = uuidv4();
 
-//     const { data, error } = supabase.storage
-//       .from('quillImags')
-//       .upload(`quill_imgs/${fileNewName}`, file);
+    const { data, error } = await supabase.storage
+      .from('product-image')
+      .upload(`product_imgs/${fileNewName}`, file);
 
-//     if (error) {
-//       console.error('Error uploading quill img file:', error);
-//       return;
-//     }
+    if (error) {
+      console.error('Error uploading quill img file:', error);
+      return;
+    }
 
-//     const response = supabase.storage.from('quillImgs').getPublicUrl(`quill_imgs/${fileNewName}`);
-//     if (!response.data) {
-//       console.error('No public URL found in response data.');
-//       return;
-//     }
+    const response = supabase.storage.from('product-image').getPublicUrl(`product_imgs/${fileNewName}`);
+    if (!response.data) {
+      console.error('No public URL found in response data.');
+      return;
+    }
 
-//     const postImgUrl = response.data.publicUrl;
-//     const editor = quillRef.current?.getEditor();
+    const postImgUrl = response.data.publicUrl;
+    const editor = quillRef.current?.getEditor();
 
-//     if (!editor) {
-//       console.error('Editor not found.');
-//       return;
-//     }
+    if (!editor) {
+      console.error('Editor not found.');
+      return;
+    }
 
-//     const range = editor.getSelection();
+    const range = editor.getSelection();
 
-//     if (!range) {
-//       console.error('No selection range found.');
-//       return;
-//     }
+    if (!range) {
+      console.error('No selection range found.');
+      return;
+    }
 
-//     editor.insertEmbed(range.index, 'image', postImgUrl);
-//     editor.setSelection(range.index + 1, 0);
-//     editor.insertText(range.index + 1, '\n');
-//   });
-// };
+    editor.insertEmbed(range.index, 'image', postImgUrl);
+    editor.setSelection(range.index + 1, 0);
+    editor.insertText(range.index + 1, '\n');
+  });
+};
