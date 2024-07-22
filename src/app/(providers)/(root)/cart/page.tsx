@@ -1,6 +1,10 @@
 import React from 'react';
+import { getCartData } from './actions';
 
-export default function CartPage() {
+export default async function CartPage() {
+  const data = await getCartData();
+  console.log('cartData::', data);
+
   return (
     <div>
       <h1>장바구니</h1>
@@ -10,14 +14,6 @@ export default function CartPage() {
         <p>장바구니가 비어 있습니다</p>
       </section>
       <div className="border-t border-gray-300 mt-2" />
-      <section>
-        <h2>이용안내</h2>
-        <div>
-          <div>
-            <h3>장바구니 이용안내</h3>
-          </div>
-        </div>
-      </section>
     </div>
   );
 }
