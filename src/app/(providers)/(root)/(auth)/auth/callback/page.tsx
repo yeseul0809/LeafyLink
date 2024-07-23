@@ -3,7 +3,6 @@
 import React, { useEffect } from 'react';
 import supabase from '@/supabase/supabaseClient';
 import { useRouter } from 'next/navigation';
-import Cookies from 'js-cookie';
 
 function AuthCallback() {
   const router = useRouter();
@@ -57,17 +56,6 @@ function AuthCallback() {
     };
 
     const handleAuthCallback = async () => {
-      // const storageData = localStorage.getItem('sb-cirbxzxyrghkthxdsrpe-auth-token');
-      // if (storageData) {
-      //   const userId = JSON.parse(storageData).user.id;
-      //   Cookies.set('userId', userId);
-      // }
-      // const token = Cookies.get('sb-access-token');
-      // console.log('token::', token);
-
-      // if (token) {
-      //   Cookies.set('access-token', token);
-      // }
       const { session } = await getUserSession();
       if (session) {
         const userExists = await checkUserExists(session.user.id);

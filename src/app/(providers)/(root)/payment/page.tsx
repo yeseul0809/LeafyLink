@@ -2,10 +2,23 @@ import Image from 'next/image';
 import React from 'react';
 import paymentHandler from './payment';
 import supabaseSever from '@/supabase/supabaseServer';
+import supabase from '@/supabase/supabaseClient';
 
 export default async function PaymentPage() {
-  const { data } = await supabaseSever.auth.getUser();
-  console.log('serverAuth::', data);
+  const { data: userData } = await supabaseSever.auth.getUser();
+  // console.log(userData);
+
+  const { data: productData } = await supabaseSever
+    .from('Product')
+    .select()
+    .eq('product_id', '0a1ace37-0c0b-41c7-a09b-54a19ded6c9c'); // 상세페이지에서 바로구매 버튼 클릭시 product_id,주문수량 받아와야함
+
+  console.log(productData);
+
+  let product;
+  if (productData) {
+    product = productData[0];
+  }
 
   return (
     <>
@@ -61,10 +74,15 @@ export default async function PaymentPage() {
           <h2>주문상품 1개</h2>
           <div>
             <div className="flex">
-              <Image src="/testimage.webp" alt="테스트이미지" width={150} height={150} />
+              <Image
+                src={`${product?.thumbnail_url}`}
+                alt="테스트이미지"
+                width={150}
+                height={150}
+              />
               <div>
-                <p>테스트 제품명</p>
-                <p>99,999원</p>
+                <p>{product?.title}</p>
+                <p>{product?.price}원</p>
               </div>
             </div>
             <div>
