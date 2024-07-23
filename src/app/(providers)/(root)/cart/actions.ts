@@ -1,6 +1,7 @@
 'use server';
 
 import supabaseSever from '@/supabase/supabaseServer';
+import { revalidatePath } from 'next/cache';
 
 export const getUserSession = async() => {
   const {data,error} = await supabaseSever.auth.getUser()
@@ -27,14 +28,39 @@ interface CartProps {
   cart_user_id: string
 }
 
-export const getProductData = async (products:CartProps[]) => {
-  let productIds: string[] = products.map(product => product.cart_product_id);
+export const getProductData = async (carts:CartProps[]) => {
+  let productIds: string[] = carts.map(cart => cart.cart_product_id);
+  let productCounts: number[] = carts.map(cart => cart.count);
+  
   const {data,error} = await supabaseSever.from('Product').select().in("product_id",productIds)
 
   if (error) {
     console.error('Error fetching posts:', error);
     return;
   }
-  return data;
+
+    const response = data.map(product => {
+      const index = productIds.indexOf(product.product_id);
+      const count = productCounts[index];  
+      return {
+        ...product,
+        count: count
+      };
+    });
+  
+    return response;  
 }
+
+export const deleteCart = async(productId:string) => {
+  const {data,error} = await supabaseSever.from('Cart').delete().eq('cart_product_id',productId)
+  if (error) {
+    console.error('Error deleting record:', error);
+    return;
+  }
+  console.log('Record deleted:', data);
+  revalidatePath('/cart')
+  return data
+}
+
+
 

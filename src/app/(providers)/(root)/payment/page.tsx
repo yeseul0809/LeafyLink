@@ -13,8 +13,6 @@ export default async function PaymentPage() {
     .select()
     .eq('product_id', '0a1ace37-0c0b-41c7-a09b-54a19ded6c9c'); // 상세페이지에서 바로구매 버튼 클릭시 product_id,주문수량 받아와야함
 
-  console.log(productData);
-
   let product;
   if (productData) {
     product = productData[0];
