@@ -24,7 +24,6 @@ async function handleSubmit({state, setState}:handleSubmitProps) {
 
     const {error} = await supabase.from('Product').insert([{
         productseller_id: 'clywvwemu0000g6q0wdi88b7r',
-        image_url: uuidv4(),
         product_id: uuidv4(),
         category: state.category,
         title: state.title,

@@ -6,6 +6,7 @@ import { useQuery, UseQueryResult } from '@tanstack/react-query';
 import DOMPurify from 'dompurify';
 import { useParams } from 'next/navigation';
 import React, { act, useRef, useState } from 'react';
+import ProductReview from './_components/Review';
 
 interface ParamsProps {
   params: { id: string };
@@ -97,6 +98,7 @@ function ProductDetailPage() {
         </div>
         <div ref={reviewRef} className="text-center border-4">
           <h1 className="text-xl font-bold mb-4">리뷰</h1>
+          <ProductReview review_product_id={id} />
         </div>
       </section>
     </div>
