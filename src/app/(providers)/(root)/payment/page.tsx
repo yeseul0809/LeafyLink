@@ -1,8 +1,12 @@
 import Image from 'next/image';
 import React from 'react';
 import paymentHandler from './payment';
+import supabaseSever from '@/supabase/supabaseServer';
 
-export default function PaymentPage() {
+export default async function PaymentPage() {
+  const { data } = await supabaseSever.auth.getUser();
+  console.log('serverAuth::', data);
+
   return (
     <>
       <div>
