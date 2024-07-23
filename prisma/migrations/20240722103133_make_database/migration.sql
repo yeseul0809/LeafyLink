@@ -1,5 +1,15 @@
--- AlterTable
-ALTER TABLE "User" ALTER COLUMN "created_at" SET DEFAULT CURRENT_TIMESTAMP;
+-- CreateTable
+CREATE TABLE "User" (
+    "user_id" TEXT NOT NULL,
+    "email" TEXT NOT NULL,
+    "user_name" TEXT NOT NULL,
+    "address" TEXT NOT NULL,
+    "phone" TEXT NOT NULL,
+    "avatar_url" TEXT NOT NULL,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "User_pkey" PRIMARY KEY ("user_id")
+);
 
 -- CreateTable
 CREATE TABLE "Seller" (
@@ -109,9 +119,6 @@ CREATE UNIQUE INDEX "Order_order_user_id_key" ON "Order"("order_user_id");
 CREATE UNIQUE INDEX "Cart_cart_user_id_key" ON "Cart"("cart_user_id");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Cart_cart_product_id_key" ON "Cart"("cart_product_id");
-
--- CreateIndex
 CREATE UNIQUE INDEX "Chatroom_chatroom_product_id_key" ON "Chatroom"("chatroom_product_id");
 
 -- CreateIndex
@@ -121,22 +128,22 @@ CREATE UNIQUE INDEX "Message_message_user_id_key" ON "Message"("message_user_id"
 CREATE UNIQUE INDEX "Message_message_seller_id_key" ON "Message"("message_seller_id");
 
 -- AddForeignKey
-ALTER TABLE "Product" ADD CONSTRAINT "Product_productseller_id_fkey" FOREIGN KEY ("productseller_id") REFERENCES "Seller"("seller_id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Product" ADD CONSTRAINT "Product_productseller_id_fkey" FOREIGN KEY ("productseller_id") REFERENCES "Seller"("seller_id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Order" ADD CONSTRAINT "Order_order_user_id_fkey" FOREIGN KEY ("order_user_id") REFERENCES "User"("user_id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Order" ADD CONSTRAINT "Order_order_user_id_fkey" FOREIGN KEY ("order_user_id") REFERENCES "User"("user_id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Cart" ADD CONSTRAINT "Cart_cart_user_id_fkey" FOREIGN KEY ("cart_user_id") REFERENCES "User"("user_id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Cart" ADD CONSTRAINT "Cart_cart_user_id_fkey" FOREIGN KEY ("cart_user_id") REFERENCES "User"("user_id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Cart" ADD CONSTRAINT "Cart_cart_product_id_fkey" FOREIGN KEY ("cart_product_id") REFERENCES "Product"("product_id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Cart" ADD CONSTRAINT "Cart_cart_product_id_fkey" FOREIGN KEY ("cart_product_id") REFERENCES "Product"("product_id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Review" ADD CONSTRAINT "Review_review_user_id_fkey" FOREIGN KEY ("review_user_id") REFERENCES "User"("user_id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Review" ADD CONSTRAINT "Review_review_user_id_fkey" FOREIGN KEY ("review_user_id") REFERENCES "User"("user_id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Review" ADD CONSTRAINT "Review_review_product_id_fkey" FOREIGN KEY ("review_product_id") REFERENCES "Product"("product_id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Review" ADD CONSTRAINT "Review_review_product_id_fkey" FOREIGN KEY ("review_product_id") REFERENCES "Product"("product_id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Chatroom" ADD CONSTRAINT "Chatroom_chatroom_user_id_fkey" FOREIGN KEY ("chatroom_user_id") REFERENCES "User"("user_id") ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -145,10 +152,10 @@ ALTER TABLE "Chatroom" ADD CONSTRAINT "Chatroom_chatroom_user_id_fkey" FOREIGN K
 ALTER TABLE "Chatroom" ADD CONSTRAINT "Chatroom_chatroom_seller_id_fkey" FOREIGN KEY ("chatroom_seller_id") REFERENCES "Seller"("seller_id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Chatroom" ADD CONSTRAINT "Chatroom_chatroom_product_id_fkey" FOREIGN KEY ("chatroom_product_id") REFERENCES "Product"("product_id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Chatroom" ADD CONSTRAINT "Chatroom_chatroom_product_id_fkey" FOREIGN KEY ("chatroom_product_id") REFERENCES "Product"("product_id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Message" ADD CONSTRAINT "Message_message_chatroom_id_fkey" FOREIGN KEY ("message_chatroom_id") REFERENCES "Chatroom"("chatroom_id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Message" ADD CONSTRAINT "Message_message_chatroom_id_fkey" FOREIGN KEY ("message_chatroom_id") REFERENCES "Chatroom"("chatroom_id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Message" ADD CONSTRAINT "Message_message_user_id_fkey" FOREIGN KEY ("message_user_id") REFERENCES "User"("user_id") ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -157,7 +164,7 @@ ALTER TABLE "Message" ADD CONSTRAINT "Message_message_user_id_fkey" FOREIGN KEY 
 ALTER TABLE "Message" ADD CONSTRAINT "Message_message_seller_id_fkey" FOREIGN KEY ("message_seller_id") REFERENCES "Seller"("seller_id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Livestream" ADD CONSTRAINT "Livestream_livestream_seller_id_fkey" FOREIGN KEY ("livestream_seller_id") REFERENCES "Seller"("seller_id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Livestream" ADD CONSTRAINT "Livestream_livestream_seller_id_fkey" FOREIGN KEY ("livestream_seller_id") REFERENCES "Seller"("seller_id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Livestream" ADD CONSTRAINT "Livestream_livestream_product_id_fkey" FOREIGN KEY ("livestream_product_id") REFERENCES "Product"("product_id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Livestream" ADD CONSTRAINT "Livestream_livestream_product_id_fkey" FOREIGN KEY ("livestream_product_id") REFERENCES "Product"("product_id") ON DELETE CASCADE ON UPDATE CASCADE;

@@ -1,11 +1,12 @@
 'use client';
 import supabase from '@/supabase/supabaseClient';
 import React from 'react';
+import Cookies from 'js-cookie';
 
 type OAuthProvider = 'google' | 'kakao';
 
 const handleSocialLogin = async (provider: OAuthProvider) => {
-  const { error } = await supabase.auth.signInWithOAuth({
+  const { data, error } = await supabase.auth.signInWithOAuth({
     provider: provider,
     options: {
       redirectTo: `${window.location.origin}/auth/callback`
