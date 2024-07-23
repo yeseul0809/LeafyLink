@@ -1,14 +1,15 @@
 'use client';
 
-import React from 'react';
+import { useEffect, useState } from 'react';
 
 interface PhoneFormProps {
   onChange?: (value: string) => void;
   initialPhone?: string;
+  userId: string;
 }
 
-const PhoneForm: React.FC<PhoneFormProps> = ({ onChange, initialPhone = '' }) => {
-  const [phoneParts, setPhoneParts] = React.useState({
+const PhoneForm = ({ onChange, initialPhone = '', userId }: PhoneFormProps) => {
+  const [phoneParts, setPhoneParts] = useState({
     part1: initialPhone.slice(0, 3),
     part2: initialPhone.slice(3, 7),
     part3: initialPhone.slice(7)
@@ -19,26 +20,21 @@ const PhoneForm: React.FC<PhoneFormProps> = ({ onChange, initialPhone = '' }) =>
     const maxLength = part === 'part1' ? 3 : 4;
     const newValue = cleanValue.slice(0, maxLength);
     setPhoneParts((prev) => ({ ...prev, [part]: newValue }));
-
-    if (onChange) {
-      const fullPhone = `${phoneParts.part1}${phoneParts.part2}${phoneParts.part3}`;
-      onChange(fullPhone);
-    }
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
+    const fullPhone = `${phoneParts.part1}${phoneParts.part2}${phoneParts.part3}`;
     if (onChange) {
-      const fullPhone = `${phoneParts.part1}${phoneParts.part2}${phoneParts.part3}`;
       onChange(fullPhone);
     }
   }, [phoneParts, onChange]);
 
   return (
-    <section className="flex items-center space-x-2">
+    <section className="flex items-center gap-2 w-full max-w-screen-sm">
       <input
         type="text"
         placeholder="010"
-        className="border p-2 rounded w-1/4 text-center"
+        className="border p-3 rounded flex-grow min-w-[0] box-border"
         maxLength={3}
         value={phoneParts.part1}
         onChange={(e) => handleInput('part1', e.target.value)}
@@ -47,7 +43,7 @@ const PhoneForm: React.FC<PhoneFormProps> = ({ onChange, initialPhone = '' }) =>
       <input
         type="text"
         placeholder="4444"
-        className="border p-2 rounded w-1/4 text-center"
+        className="border p-3 rounded flex-grow min-w-[0] box-border"
         maxLength={4}
         value={phoneParts.part2}
         onChange={(e) => handleInput('part2', e.target.value)}
@@ -56,7 +52,7 @@ const PhoneForm: React.FC<PhoneFormProps> = ({ onChange, initialPhone = '' }) =>
       <input
         type="text"
         placeholder="4444"
-        className="border p-2 rounded w-1/4 text-center"
+        className="border p-3 rounded flex-grow min-w-[0] box-border"
         maxLength={4}
         value={phoneParts.part3}
         onChange={(e) => handleInput('part3', e.target.value)}

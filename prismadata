@@ -49,7 +49,7 @@ model Product {
   stock            Int
   created_at       DateTime     @default(now())
   updated_at       DateTime     @updatedAt
-  cart             Cart?
+  cart             Cart[]
   reviews          Review[]
   chatrooms        Chatroom[]
   livestream       Livestream[]
@@ -69,7 +69,7 @@ model Cart {
   user            User    @relation(fields: [cart_user_id], references: [user_id], onDelete: Cascade)
   product         Product @relation(fields: [cart_product_id], references: [product_id], onDelete: Cascade)
   cart_user_id    String  @unique
-  cart_product_id String  @unique
+  cart_product_id String
   count           Int
 }
 
