@@ -3,31 +3,77 @@
 import Image from 'next/image';
 import React, { useState } from 'react';
 import paymentHandler from './payment';
-import supabaseSever from '@/supabase/supabaseServer';
 import UserEditForm from './_components/AddressForm';
 import { getUserDate } from './actions';
 import supabase from '@/supabase/supabaseClient';
 import { useQuery } from '@tanstack/react-query';
+import { useSearchParams } from 'next/navigation';
+
+interface Product {
+  productId: string;
+  quantity: number;
+}
 
 export default function PaymentPage() {
-  const url = new URL(window.location.href);
-  // console.log('url::', url);
-
-  const searchParams = new URLSearchParams(url.search);
-  // console.log('searchParams::', searchParams);
-
+  let products: Product[] = [];
+  const searchParams = useSearchParams();
+  const dataString = searchParams.get('data');
   const productId = searchParams.get('productId');
+  const quantity = searchParams.get('quantity');
+
+  if (dataString) {
+    try {
+      const decodedData = decodeURIComponent(dataString);
+      products = JSON.parse(decodedData);
+    } catch (error) {
+      console.error('Error decoding or parsing query data:', error);
+    }
+    // console.log('products::', products);
+  } else if (productId && quantity) {
+    products = [{ productId, quantity: Number(quantity) }];
+  }
+
+  // const productId = searchParams.get('productId');
   // console.log('productId::', productId);
 
-  const quantity = searchParams.get('quantity');
+  // const quantity = searchParams.get('quantity');
   // console.log('quantity::', quantity);
 
+  // const getProductInfo = async () => {
+  //   const { data: productData, error } = await supabase
+  //     .from('Product')
+  //     .select()
+  //     .eq('product_id', productId!);
+  //   return productData;
+  // };
+
   const getProductInfo = async () => {
+    const productIds = products.map((product) => product.productId);
     const { data: productData, error } = await supabase
       .from('Product')
       .select()
-      .eq('product_id', productId!);
-    return productData;
+      .in('product_id', productIds);
+    if (error) {
+      console.error('Error fetching product data:', error);
+      return null;
+    }
+
+    // Combine product data with quantities
+    const combinedData = productData.map((product) => {
+      const matchingProduct = products.find((p) => p.productId === product.product_id);
+      return {
+        ...product,
+        quantity: matchingProduct ? matchingProduct.quantity : 0
+      };
+    });
+
+    const totalCost = combinedData.reduce((total, product) => {
+      return total + product.price * product.quantity;
+    }, 0);
+
+    return { combinedData, totalCost };
+
+    // return combinedData;
   };
 
   const {
@@ -141,16 +187,23 @@ export default function PaymentPage() {
           <h2>주문상품 1개</h2>
           <div>
             <div className="flex">
-              {/* <Image
-               // src={`${product?.thumbnail_url}`}
-               alt="테스트이미지"
-               width={150}
-               height={150}
-             /> */}
-              <div>
-                {/* <p>{product?.title}</p> */}
-                {/* <p>{product?.price}원</p> */}
-              </div>
+              {productData?.combinedData?.map((product) => {
+                return (
+                  <div key={product.product_id}>
+                    <Image
+                      src={product.thumbnail_url}
+                      alt={product.title}
+                      width={150}
+                      height={150}
+                    />
+                    <div>
+                      <p>{product.title}</p>
+                      <p>{product.price * product.quantity}원</p>
+                      <p>{product.quantity}개</p>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
             <div>
               <span>배송비</span>
@@ -162,7 +215,7 @@ export default function PaymentPage() {
           <h2>결제정보</h2>
           <div>
             <span>총 상품 금액</span>
-            <span>99,999원</span>
+            <span>{productData?.totalCost}원</span>
           </div>
           <div>
             <span>배송비</span>
@@ -170,7 +223,7 @@ export default function PaymentPage() {
           </div>
           <div>
             <span>최종 결제 금액</span>
-            <span>99,999원</span>
+            <span>{productData?.totalCost}원</span>
           </div>
         </section>
         <section>
@@ -178,7 +231,7 @@ export default function PaymentPage() {
           <p>결제수단 선택</p>
           <div>카카오 페이</div>
         </section>
-        <button onClick={paymentHandler}>결제하기</button>
+        <button onClick={() => paymentHandler(productData?.totalCost!)}>결제하기</button>
       </div>
     );
   }

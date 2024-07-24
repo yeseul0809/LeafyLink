@@ -2,7 +2,7 @@
 
 import { RequestPayParams, RequestPayResponse } from 'iamport-typings';
 
-const paymentHandler = () => {
+const paymentHandler = (cost:number) => {
   if (!window.IMP) return;
   /* 1. 가맹점 식별하기 */
   const { IMP } = window;
@@ -18,7 +18,7 @@ const paymentHandler = () => {
     pay_method: 'card',
     merchant_uid: `mid_${new Date().getTime()}`, // 주문번호
     name: '모종삽',
-    amount: 100,
+    amount: cost,
     buyer_name: '구매자이름',
     buyer_tel: '010-1234-5678'
   };
