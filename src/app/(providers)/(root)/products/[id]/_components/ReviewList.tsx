@@ -1,12 +1,22 @@
-import useProductReviews from '@/hooks/useProductReviews';
+import supabase from '@/supabase/supabaseClient';
 import React from 'react';
-import { ProductReviewProps } from './Review';
 
-function ProductReviewList({ review_product_id }: ProductReviewProps) {
-  const { reviews } = useProductReviews({ review_product_id });
+export interface ProductReviewProps {
+  reviewProductId: string;
+}
+
+async function ProductReviewList({ reviewProductId }: ProductReviewProps) {
+  const { data: reviews, error } = await supabase
+    .from('Review')
+    .select('*')
+    .eq('review_product_id', reviewProductId);
 
   if (!reviews || reviews.length === 0) {
     return <p>리뷰가 없습니다.</p>;
+  }
+
+  if (error) {
+    console.error('리뷰리스트 가져오는 중 에러발생', error);
   }
 
   return (

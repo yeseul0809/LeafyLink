@@ -7,7 +7,11 @@ interface handleSubmitProps{
     setState: React.Dispatch<React.SetStateAction<Product>>;
 }
 
-async function handleSubmit({state, setState}:handleSubmitProps) {
+interface thumbnailProps extends handleSubmitProps {
+  thumbnail: File | null;
+}
+
+async function handleSubmit({state, setState}:thumbnailProps) {
     let thumbnail_url=""
 
     if (state.thumbnail) {

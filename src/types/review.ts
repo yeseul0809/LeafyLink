@@ -1,9 +1,4 @@
-export interface Review {
-    created_at?: string | null
-    description: string
-    rating?: number | null
-    review_id?: string
-    review_product_id: string
-    review_user_id: string
-    review_user_name?: string | null
-}
+import { Tables } from "./supabase";
+
+export type Review = Tables<"Review">
+export type ReviewInput = Omit<Review, 'created_at' | 'review_id'>;
