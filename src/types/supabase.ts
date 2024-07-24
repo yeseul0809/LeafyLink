@@ -280,10 +280,10 @@ export type Database = {
           category: string
           created_at?: string | null
           description: string
-          image_url: string
+          image_url?: string
           price: number
           product_id: string
-          productseller_id: string
+          productseller_id?: string
           stock: number
           thumbnail_url: string
           title: string
