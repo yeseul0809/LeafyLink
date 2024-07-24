@@ -6,15 +6,20 @@ import { useRouter } from 'next/navigation';
 import React, { useEffect, useRef, useState } from 'react';
 
 function Header() {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpenMenu, setIsOpenMenu] = useState(false);
+  const [isOpenSearch, setIsOpenSearch] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
 
   const toggleMenu = () => {
-    setIsOpen(!isOpen);
+    setIsOpenMenu(!isOpenMenu);
   };
 
-  console.log(isOpen);
+  const toggleSearch = () => {
+    setIsOpenSearch(!isOpenSearch);
+  };
+
+  console.log(isOpenMenu);
 
   const redirect = (e: string) => {
     router.push(`${e}`);
@@ -23,7 +28,7 @@ function Header() {
   return (
     <section>
       <div className="w-full h-[45px] text-center flex items-center justify-center bg-zinc-100 px-[190px]">
-        오늘의 날씨는 비내림, 물을 주지 않아도 되겠어요!
+        수원시의 날씨는 비내림☔, 물을 주지 않아도 되겠어요!
       </div>
 
       <div className="w-full h-20 px-[190px] flex items-center justify-between">
@@ -59,25 +64,25 @@ function Header() {
           <button onClick={toggleMenu}>
             <Image src="/icons/icon-menu.svg" alt="menu" width={24} height={24}></Image>
           </button>
-          {isOpen && (
+          {isOpenMenu && (
             <div
-              className="w-full h-auto py-[30px] px-[190px] border-b bg-white absolute top-12 right-0 "
+              className="w-full h-auto py-[30px] px-[190px] border-b bg-white absolute top-12 right-0 text-center"
               ref={dropdownRef}
             >
               <ul className="flex">
-                <li className="text-zinc-500 hover:text-zinc-950">
+                <li className="text-zinc-700 hover:text-zinc-950">
                   <a href="#">씨앗</a>
                 </li>
-                <li className="ml-7 text-zinc-500 hover:text-zinc-950">
+                <li className="ml-7 text-zinc-700 hover:text-zinc-950">
                   <a href="#">모종</a>
                 </li>
-                <li className="ml-7 text-zinc-500 hover:text-zinc-950">
+                <li className="ml-7 text-zinc-700 hover:text-zinc-950">
                   <a href="#">재배키트</a>
                 </li>
-                <li className="ml-7 text-zinc-500 hover:text-zinc-950">
+                <li className="ml-7 text-zinc-700 hover:text-zinc-950">
                   <a href="#">흙/비료</a>
                 </li>
-                <li className="ml-7 text-zinc-500 hover:text-zinc-950">
+                <li className="ml-7 text-zinc-700 hover:text-zinc-950">
                   <a href="#">원예용품</a>
                 </li>
               </ul>
@@ -99,7 +104,7 @@ function Header() {
         </div>
 
         <div className="flex">
-          <button className="ml-[48px]">
+          <button className="ml-[48px]" onClick={toggleSearch}>
             <Image src="/icons/icon-search.svg" alt="search" width={32} height={32}></Image>
           </button>
           <button className="ml-[48px]">
@@ -111,6 +116,16 @@ function Header() {
           <button className="ml-[48px]">
             <Image src="/icons/icon-mypage.svg" alt="mypage" width={32} height={32}></Image>
           </button>
+          {isOpenSearch && (
+            <div className="absolute w-full h-auto flex justify-between py-[30px] px-[190px] border-b bg-white top-12 right-0 text-center">
+              <p>SEARCH</p>
+              <form action="" className="flex">
+                <input type="text" className="w-[500px] h-10 r bg-zinc-100" />
+                <Image src="/icons/icon-search.svg" alt="search" width={32} height={32}></Image>
+              </form>
+              <Image src="/icon/icon-close.svg" alt="close" width={36} height={36}></Image>
+            </div>
+          )}
         </div>
       </div>
     </section>
