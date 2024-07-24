@@ -5,30 +5,77 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useRef, useState } from 'react';
 
+interface DayWeather {
+  rain: { pop: boolean };
+  snow: { pop: boolean };
+  sky: number; // 맑음(1), 구름많음(3), 흐림(4) 의 평균값
+}
+
 function Header() {
+  const [location, setLocation] = useState('');
+  const [weather, setWeather] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [isOpenMenu, setIsOpenMenu] = useState(false);
   const [isOpenSearch, setIsOpenSearch] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
+  const API_key = '9c8560ee4830bd2bf81d8bb4231b40fa';
 
+  // 날씨 api
+  useEffect(() => {
+    fetch(`https://api.openweathermap.org/data/2.5/weather?q=Seoul&appid=${API_key}&lang=kr`)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('날씨를 불러오지 못했습니다 :(');
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setWeather(data);
+        setLoading(false);
+      });
+  }, []);
+
+  // 날씨 안내 문구
+  const weatherComment = () => {
+    if (
+      weather.weather[0].description.includes('구름') ||
+      weather.weather[0].description.includes('흐림')
+    ) {
+      return '🌥, 광합성 하기 어려운 날이에요.';
+    } else if (weather.weather[0].description.includes('맑음')) {
+      return '🌞, 광합성 하기 딱 좋은 날!';
+    } else if (weather.weather[0].description.includes('비')) {
+      return '☔, 물을 주지 않아도 되겠어요 :)';
+    } else if (weather.weather[0].description.includes('눈')) {
+      return '⛄, 식물이 얼지 않게 주의하세요!';
+    }
+  };
+
+  // 메뉴 토글
   const toggleMenu = () => {
     setIsOpenMenu(!isOpenMenu);
   };
 
+  // 검색창 토글
   const toggleSearch = () => {
     setIsOpenSearch(!isOpenSearch);
   };
 
-  console.log(isOpenMenu);
-
+  // 페이지 네비게이션
   const redirect = (e: string) => {
     router.push(`${e}`);
   };
 
   return (
     <section>
-      <div className="w-full h-[45px] text-center flex items-center justify-center bg-zinc-100 px-[190px]">
-        수원시의 날씨는 비내림☔, 물을 주지 않아도 되겠어요!
+      <div className="w-full h-[45px] text-center flex items-center justify-center bg-zinc-50 px-[190px]">
+        {(loading && <p className="text-sm text-zinc-300 tracking-widest">Loading...</p>) || (
+          <p className="text-sm tracking-wide text-zinc-600">
+            서울시의 날씨는 {weather.weather[0].description}
+            {weatherComment()}
+          </p>
+        )}
       </div>
 
       <div className="w-full h-20 px-[190px] flex items-center justify-between">
@@ -118,12 +165,12 @@ function Header() {
           </button>
           {isOpenSearch && (
             <div className="absolute w-full h-auto flex justify-between py-[30px] px-[190px] border-b bg-white top-12 right-0 text-center">
-              <p className="bold">SEARCH</p>
+              <p className="bold text-2xl font-semibold">SEARCH</p>
               <form
                 action="submit"
-                className="flex justify-center items-center w-[500px] h-10 border rounded-full px-4"
+                className="flex justify-center items-center w-[540px] h-10 border rounded-full px-4"
               >
-                <input type="text" className="w-[450px] h-8" />
+                <input type="text" className="w-11/12 h-8" placeholder="어떤 식물을 찾으시나요?" />
                 <button type="submit">
                   <Image src="/icons/icon-search.svg" alt="search" width={24} height={24}></Image>
                 </button>
