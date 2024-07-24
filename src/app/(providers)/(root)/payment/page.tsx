@@ -14,6 +14,25 @@ interface Product {
   quantity: number;
 }
 
+interface CombinedProductData {
+  product_id: string;
+  productseller_id: string;
+  category: string;
+  title: string;
+  price: number;
+  quantity: number;
+  stock: number;
+  thumbnail_url: string;
+  description: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface ProductInfo {
+  combinedData: CombinedProductData[];
+  totalCost: number;
+}
+
 export default function PaymentPage() {
   let products: Product[] = [];
   const searchParams = useSearchParams();
@@ -72,8 +91,6 @@ export default function PaymentPage() {
     }, 0);
 
     return { combinedData, totalCost };
-
-    // return combinedData;
   };
 
   const {
@@ -100,29 +117,6 @@ export default function PaymentPage() {
     queryKey: ['getUserInfo'],
     queryFn: getUserInfo
   });
-
-  // const { data: productData } = await supabaseSever
-  //   .from('Product')
-  //   .select()
-  //   .eq('product_id', '0a1ace37-0c0b-41c7-a09b-54a19ded6c9c');
-  // let product;
-  // if (productData) {
-  //   product = productData[0];
-  // }
-
-  // let UserEditFormProps = {};
-  // if (userInfo) {
-  //   UserEditFormProps = {
-  //     initialAddress: userInfo[0].address,
-  //     initialDetailAddress: userInfo[0].address_detail,
-  //     initialAddressCode: userInfo[0].address_code,
-  //     initialUserName: userInfo[0].user_name,
-  //     initialPhone: userInfo[0].phone,
-  //     userId: userInfo[0].user_id
-  //   };
-  // }
-
-  // const phoneNumber = userInfo![0].phone;
 
   if (!userFetched) {
     return null;
@@ -231,7 +225,7 @@ export default function PaymentPage() {
           <p>결제수단 선택</p>
           <div>카카오 페이</div>
         </section>
-        <button onClick={() => paymentHandler(productData?.totalCost!)}>결제하기</button>
+        <button onClick={() => paymentHandler(productData)}>결제하기</button>
       </div>
     );
   }

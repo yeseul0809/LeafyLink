@@ -1,8 +1,9 @@
 'use client';
 
 import { RequestPayParams, RequestPayResponse } from 'iamport-typings';
+import { ProductInfo } from './page';
 
-const paymentHandler = (cost:number) => {
+const paymentHandler = (productData:ProductInfo) => {
   if (!window.IMP) return;
   /* 1. 가맹점 식별하기 */
   const { IMP } = window;
@@ -17,8 +18,8 @@ const paymentHandler = (cost:number) => {
     // pg: 'tosspay.tosstest',
     pay_method: 'card',
     merchant_uid: `mid_${new Date().getTime()}`, // 주문번호
-    name: '모종삽',
-    amount: cost,
+    name: `${productData.combinedData[0].title} 외 ${productData.combinedData.length-1}건`,
+    amount: productData.totalCost,
     buyer_name: '구매자이름',
     buyer_tel: '010-1234-5678'
   };
