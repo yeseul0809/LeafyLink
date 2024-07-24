@@ -17,6 +17,8 @@ export default async function CartPage() {
     }
   }
 
+  console.log('productData::', productData);
+
   return (
     <div>
       <h1>장바구니</h1>
