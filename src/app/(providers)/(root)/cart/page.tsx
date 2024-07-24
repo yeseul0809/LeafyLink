@@ -16,7 +16,6 @@ export default async function CartPage() {
       productData = await getProductData(cartData);
     }
   }
-  console.log('productData::', productData);
 
   return (
     <div>

@@ -1,61 +1,130 @@
+'use client';
+
 import Image from 'next/image';
-import React from 'react';
+import React, { useState } from 'react';
 import paymentHandler from './payment';
 import supabaseSever from '@/supabase/supabaseServer';
+import UserEditForm from './_components/AddressForm';
+import { getUserDate } from './actions';
 import supabase from '@/supabase/supabaseClient';
+import { useQuery } from '@tanstack/react-query';
 
-export default async function PaymentPage() {
-  const { data: userData } = await supabaseSever.auth.getUser();
-  // console.log(userData);
+export default function PaymentPage() {
+  const url = new URL(window.location.href);
+  // console.log('url::', url);
 
-  const { data: productData } = await supabaseSever
-    .from('Product')
-    .select()
-    .eq('product_id', '0a1ace37-0c0b-41c7-a09b-54a19ded6c9c'); // 상세페이지에서 바로구매 버튼 클릭시 product_id,주문수량 받아와야함
+  const searchParams = new URLSearchParams(url.search);
+  // console.log('searchParams::', searchParams);
 
-  let product;
-  if (productData) {
-    product = productData[0];
+  const productId = searchParams.get('productId');
+  // console.log('productId::', productId);
+
+  const quantity = searchParams.get('quantity');
+  // console.log('quantity::', quantity);
+
+  const getProductInfo = async () => {
+    const { data: productData, error } = await supabase
+      .from('Product')
+      .select()
+      .eq('product_id', productId!);
+    return productData;
+  };
+
+  const {
+    data: productData,
+    error: productError,
+    isFetched: productFeched
+  } = useQuery({
+    queryKey: ['getProductInfo'],
+    queryFn: getProductInfo
+  });
+  console.log('productData::', productData);
+
+  const getUserInfo = async () => {
+    const { data: userData } = await supabase.auth.getUser();
+    const userInfo = await getUserDate(userData.user?.id!);
+    return userInfo![0];
+  };
+
+  const {
+    data: userData,
+    error: userError,
+    isFetched: userFetched
+  } = useQuery({
+    queryKey: ['getUserInfo'],
+    queryFn: getUserInfo
+  });
+
+  // const { data: productData } = await supabaseSever
+  //   .from('Product')
+  //   .select()
+  //   .eq('product_id', '0a1ace37-0c0b-41c7-a09b-54a19ded6c9c');
+  // let product;
+  // if (productData) {
+  //   product = productData[0];
+  // }
+
+  // let UserEditFormProps = {};
+  // if (userInfo) {
+  //   UserEditFormProps = {
+  //     initialAddress: userInfo[0].address,
+  //     initialDetailAddress: userInfo[0].address_detail,
+  //     initialAddressCode: userInfo[0].address_code,
+  //     initialUserName: userInfo[0].user_name,
+  //     initialPhone: userInfo[0].phone,
+  //     userId: userInfo[0].user_id
+  //   };
+  // }
+
+  // const phoneNumber = userInfo![0].phone;
+
+  if (!userFetched) {
+    return null;
   }
 
-  return (
-    <>
+  if (userData) {
+    return (
       <div>
         <h1>주문/결제</h1>
         <section>
-          <h2>주문자</h2>
-          <div>
-            <input type="checkbox" id="same" />
-            <label htmlFor="same">회원 정보와 동일</label>
-            <input type="checkbox" id="new" />
-            <label htmlFor="new">새로운 배송지</label>
-          </div>
+          <UserEditForm
+            initialAddress={userData.address}
+            initialDetailAddress={userData.address_detail}
+            initialAddressCode={userData.address_code}
+            initialUserName={userData.user_name}
+            initialPhone={userData.phone}
+            userId={userData.user_id}
+          />
           <div className="flex flex-col">
             <div>
-              <label htmlFor="recipient">받는 사람</label>
-              <input type="text" id="recipient" placeholder="이름" />
-            </div>
-            <div className="flex">
-              <label htmlFor="address">주소</label>
-              <div className="flex flex-col">
-                <input type="text" id="address" placeholder="우편번호" />
-                <input type="text" id="address" placeholder="기본주소" />
-                <input type="text" id="address" placeholder="나머지 상세주소" />
-              </div>
-            </div>
-            <div>
               <label htmlFor="phone">휴대폰번호</label>
-              <input type="number" id="phone" />
+              <input
+                className="w-20"
+                type="text"
+                id="phone"
+                defaultValue={userData.phone.split('-')[0]}
+                maxLength={3}
+              />
               <span>-</span>
-              <input type="number" id="phone" />
+              <input
+                type="text"
+                id="phone"
+                defaultValue={userData.phone.split('-')[1]}
+                maxLength={4}
+              />
               <span>-</span>
-              <input type="number" id="phone" />
+              <input
+                type="text"
+                id="phone"
+                defaultValue={userData.phone.split('-')[2]}
+                maxLength={4}
+              />
               <label htmlFor=""></label>
               <input type="text" />
             </div>
             <div>
               <label htmlFor="email">이메일</label>
-              <input type="text" id="email" />
+              <input type="text" id="email" defaultValue={userData.email} />
               <select name="" id="">
                 <option value="">gmail.com</option>
                 <option value="">naver.com</option>
@@ -72,15 +141,15 @@ export default async function PaymentPage() {
           <h2>주문상품 1개</h2>
           <div>
             <div className="flex">
-              <Image
-                src={`${product?.thumbnail_url}`}
-                alt="테스트이미지"
-                width={150}
-                height={150}
-              />
+              {/* <Image
+               // src={`${product?.thumbnail_url}`}
+               alt="테스트이미지"
+               width={150}
+               height={150}
+             /> */}
               <div>
-                <p>{product?.title}</p>
-                <p>{product?.price}원</p>
+                {/* <p>{product?.title}</p> */}
+                {/* <p>{product?.price}원</p> */}
               </div>
             </div>
             <div>
@@ -109,8 +178,29 @@ export default async function PaymentPage() {
           <p>결제수단 선택</p>
           <div>카카오 페이</div>
         </section>
+        <button onClick={paymentHandler}>결제하기</button>
       </div>
-      <button onClick={paymentHandler}>결제하기</button>
-    </>
-  );
+    );
+  }
 }
+
+// 상품id,수량 을 쿼리로 주고받는 방식
+
+// 1. 상세페이지에서 router.push(클라이언트 컴포넌트)
+// router.push(`/payment?productId=${productId}&quantity=${quantity}`);
+
+// 2. 상세페이지에서 Link(서버컴포넌트)
+//  const url = `/payment?productId=${productId}&quantity=${quantity}`;
+// return (
+//   <div>
+//     <h1>Home Page</h1>
+//     {/* 클라이언트 측에서 이 URL을 사용하여 페이지를 이동시킵니다 */}
+//     <Link href={url}>Go to Payment</Link>
+//   </div>
+// );
+
+// -> 둘 중 택1
+
+// 받는곳 - 결제페이지
+// const quantity = searchParams.get('productId'); // 쿼리 문자열 파라미터 - 상품id 캐치
+// const quantity = searchParams.get('quantity'); // 쿼리 문자열 파라미터 - 수량 캐치

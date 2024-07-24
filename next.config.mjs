@@ -4,6 +4,9 @@ const nextConfig = {
     remotePatterns: [
       {
         hostname: 'cirbxzxyrghkthxdsrpe.supabase.co'
+      },
+      {
+        hostname: 't1.daumcdn.net'
       }
     ]
   },

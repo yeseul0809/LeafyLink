@@ -17,7 +17,7 @@ function AuthCallback() {
         avatar_url: user.user_metadata.avatar_url,
         email: user.email,
         phone: '000-0000-0000',
-        address: 'korean',
+        address: '',
         created_at: user.created_at
       };
 
