@@ -1,5 +1,6 @@
 'use client';
 
+import { WeatherData } from '@/types/weather';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -8,7 +9,6 @@ import React, { useEffect, useRef, useState } from 'react';
 function Header() {
   const [latitude, setLatitude] = useState('');
   const [longitude, setLongitude] = useState('');
-  const [cityName, setCityName] = useState('');
   const [weather, setWeather] = useState([]);
   const [loading, setLoading] = useState(true);
   const [isOpenMenu, setIsOpenMenu] = useState(false);
@@ -20,7 +20,6 @@ function Header() {
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
       (position) => {
-        console.log(position);
         setLatitude(position.coords.latitude);
         setLongitude(position.coords.longitude);
       },
@@ -32,7 +31,6 @@ function Header() {
   }, []);
 
   // 날씨 api
-  // https://api.openweathermap.org/data/2.5/weather?lat=37.2801536&lon=127.0153216&appid=9c8560ee4830bd2bf81d8bb4231b40fa&lang=kr
   useEffect(() => {
     if (latitude && longitude) {
       fetch(
@@ -51,22 +49,17 @@ function Header() {
     }
   }, [latitude, longitude]);
 
-  console.log(weather);
-
   // 날씨 안내 문구
-  const weatherComment = () => {
-    if (
-      weather.weather[0].description.includes('구름') ||
-      weather.weather[0].description.includes('흐림')
-    ) {
+  const weatherComment = (description: string) => {
+    if (description.includes('구름') || description.includes('흐림')) {
       return '🌥, 광합성 하기 어려운 날이에요.';
-    } else if (weather.weather[0].description.includes('맑음')) {
+    } else if (description.includes('맑음')) {
       return '🌞, 광합성 하기 딱 좋은 날!';
-    } else if (weather.weather[0].description.includes('비')) {
+    } else if (description.includes('비')) {
       return '☔, 물을 주지 않아도 되겠어요 :)';
-    } else if (weather.weather[0].description.includes('눈')) {
+    } else if (description.includes('눈')) {
       return '⛄, 식물이 얼지 않게 주의하세요!';
-    } else if (weather.weather[0].description.includes('박무')) {
+    } else if (description.includes('박무') || description.includes('안개')) {
       return '🌫, 안개가 끼어 습도가 높아요';
     } else {
       return '날씨 정보가 없어요.';
@@ -87,8 +80,6 @@ function Header() {
   const redirect = (e: string) => {
     router.push(`${e}`);
   };
-
-  console.log(cityName);
 
   return (
     <section>
@@ -162,7 +153,13 @@ function Header() {
           )}
           <button className="ml-7 flex text-[#FF0000]">
             라이브커머스{' '}
-            <Image src="/icons/icon-live.svg" alt="live" width={18} height={15}></Image>
+            <Image
+              src="/icons/icon-live.svg"
+              alt="live"
+              width={18}
+              height={15}
+              className="ml-1 mt-1"
+            ></Image>
           </button>
           <button
             className="ml-7"
