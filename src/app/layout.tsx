@@ -1,8 +1,8 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
+import Script from 'next/script';
 import Header from './(providers)/(root)/_components/Header';
-import Footer from './(providers)/(root)/_components/Footer';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -18,11 +18,8 @@ function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-        <Header />
-        {children}
-        <Footer />
-      </body>
+      <Script src="https://cdn.iamport.kr/v1/iamport.js" />
+      <body className={inter.className}>{children}</body>
     </html>
   );
 }
