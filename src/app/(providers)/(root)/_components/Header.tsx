@@ -5,36 +5,53 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useRef, useState } from 'react';
 
-interface DayWeather {
-  rain: { pop: boolean };
-  snow: { pop: boolean };
-  sky: number; // 맑음(1), 구름많음(3), 흐림(4) 의 평균값
-}
-
 function Header() {
-  const [location, setLocation] = useState('');
+  const [latitude, setLatitude] = useState('');
+  const [longitude, setLongitude] = useState('');
+  const [cityName, setCityName] = useState('');
   const [weather, setWeather] = useState([]);
   const [loading, setLoading] = useState(true);
   const [isOpenMenu, setIsOpenMenu] = useState(false);
   const [isOpenSearch, setIsOpenSearch] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
-  const API_key = '9c8560ee4830bd2bf81d8bb4231b40fa';
+
+  // user 위치
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        console.log(position);
+        setLatitude(position.coords.latitude);
+        setLongitude(position.coords.longitude);
+      },
+      (error) => {
+        setLoading(false);
+        console.log('위도경도 에러', error);
+      }
+    );
+  }, []);
 
   // 날씨 api
+  // https://api.openweathermap.org/data/2.5/weather?lat=37.2801536&lon=127.0153216&appid=9c8560ee4830bd2bf81d8bb4231b40fa&lang=kr
   useEffect(() => {
-    fetch(`https://api.openweathermap.org/data/2.5/weather?q=Seoul&appid=${API_key}&lang=kr`)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error('날씨를 불러오지 못했습니다 :(');
-        }
-        return response.json();
-      })
-      .then((data) => {
-        setWeather(data);
-        setLoading(false);
-      });
-  }, []);
+    if (latitude && longitude) {
+      fetch(
+        `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${process.env.NEXT_PUBLIC_API_KEY}&lang=kr`
+      )
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error('날씨를 불러오지 못했습니다 :(');
+          }
+          return response.json();
+        })
+        .then((data) => {
+          setWeather(data);
+          setLoading(false);
+        });
+    }
+  }, [latitude, longitude]);
+
+  console.log(weather);
 
   // 날씨 안내 문구
   const weatherComment = () => {
@@ -49,6 +66,10 @@ function Header() {
       return '☔, 물을 주지 않아도 되겠어요 :)';
     } else if (weather.weather[0].description.includes('눈')) {
       return '⛄, 식물이 얼지 않게 주의하세요!';
+    } else if (weather.weather[0].description.includes('박무')) {
+      return '🌫, 안개가 끼어 습도가 높아요';
+    } else {
+      return '날씨 정보가 없어요.';
     }
   };
 
@@ -67,13 +88,17 @@ function Header() {
     router.push(`${e}`);
   };
 
+  console.log(cityName);
+
   return (
     <section>
       <div className="w-full h-[45px] text-center flex items-center justify-center bg-zinc-50 px-[190px]">
-        {(loading && <p className="text-sm text-zinc-300 tracking-widest">Loading...</p>) || (
+        {loading ? (
+          <p className="text-sm text-zinc-300 tracking-widest">Loading...☀</p>
+        ) : (
           <p className="text-sm tracking-wide text-zinc-600">
-            서울시의 날씨는 {weather.weather[0].description}
-            {weatherComment()}
+            지금 내 위치 날씨는 {weather.weather[0].description}
+            {weatherComment(weather.weather[0].description)}
           </p>
         )}
       </div>
