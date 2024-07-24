@@ -1,3 +1,4 @@
+import useUser from '@/hooks/useUser';
 import supabase from '@/supabase/supabaseClient';
 import React, { useState } from 'react';
 
@@ -6,18 +7,24 @@ interface ProductReviewProps {
 }
 
 function ProductReview({ review_product_id }: ProductReviewProps) {
+  const { user } = useUser();
   const [rating, setRating] = useState(0);
   const [review, setReview] = useState('');
 
   const handleReviewSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    if (!user) {
+      console.error('로그인된 유저의 정보를 가져올 수 없습니다.');
+      return;
+    }
+
     const { data, error } = await supabase.from('Review').insert([
       {
         description: review,
         rating: rating,
         review_product_id: review_product_id,
-        review_user_id: 'b64bbd7d-5a64-49ea-ac5a-d760368f02a7'
+        review_user_id: user.id
       }
     ]);
 
@@ -31,30 +38,36 @@ function ProductReview({ review_product_id }: ProductReviewProps) {
   };
 
   return (
-    <form onSubmit={handleReviewSubmit}>
-      <div>
+    <form onSubmit={handleReviewSubmit} className="max-w-md mx-auto p-4 border rounded shadow-md">
+      <div className="flex space-x-2 mb-4">
         {[1, 2, 3, 4, 5].map((star) => (
-          <label key={star}>
+          <label
+            key={star}
+            className={`cursor-pointer text-2xl ${rating >= star ? 'text-black' : 'text-gray-400'}`}
+          >
             <input
               type="radio"
-              name="star"
+              name="rating"
               value={star}
               onChange={() => setRating(star)}
-              checked={rating === star}
+              className="hidden"
             />
-            {star} ★
+            ★
           </label>
         ))}
       </div>
-      <div>
+      <div className="mb-4">
         <textarea
           value={review}
           onChange={(e) => setReview(e.target.value)}
           placeholder="리뷰를 작성하세요."
           required
+          className="w-full p-2 border rounded"
         />
       </div>
-      <button type="submit">등록하기</button>
+      <button type="submit" className="w-full bg-black text-white p-2 rounded hover:bg-gray-600">
+        등록하기
+      </button>
     </form>
   );
 }

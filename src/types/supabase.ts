@@ -315,21 +315,21 @@ export type Database = {
           review_id: string
           review_product_id: string
           review_user_id: string
-          title: string
+          rating: number
         }
         Insert: {
           description: string
-          review_id: string
+          review_id?: string
           review_product_id: string
           review_user_id: string
-          title: string
+          rating: number
         }
         Update: {
           description?: string
           review_id?: string
           review_product_id?: string
           review_user_id?: string
-          title?: string
+          rating?: number
         }
         Relationships: [
           {
