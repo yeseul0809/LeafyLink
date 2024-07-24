@@ -118,12 +118,19 @@ function Header() {
           </button>
           {isOpenSearch && (
             <div className="absolute w-full h-auto flex justify-between py-[30px] px-[190px] border-b bg-white top-12 right-0 text-center">
-              <p>SEARCH</p>
-              <form action="" className="flex">
-                <input type="text" className="w-[500px] h-10 r bg-zinc-100" />
-                <Image src="/icons/icon-search.svg" alt="search" width={32} height={32}></Image>
+              <p className="bold">SEARCH</p>
+              <form
+                action="submit"
+                className="flex justify-center items-center w-[500px] h-10 border rounded-full px-4"
+              >
+                <input type="text" className="w-[450px] h-8" />
+                <button type="submit">
+                  <Image src="/icons/icon-search.svg" alt="search" width={24} height={24}></Image>
+                </button>
               </form>
-              <Image src="/icon/icon-close.svg" alt="close" width={36} height={36}></Image>
+              <button onClick={toggleSearch}>
+                <Image src="/icons/icon-close.svg" alt="close" width={30} height={30}></Image>
+              </button>
             </div>
           )}
         </div>
