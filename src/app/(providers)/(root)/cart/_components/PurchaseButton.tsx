@@ -3,8 +3,11 @@
 import React from 'react';
 import supabase from '@/supabase/supabaseClient';
 import { getProductData } from '../actions';
+import { useQuantityStore } from '@/stores';
 
 export default function PurchaseButton() {
+  const quantities = useQuantityStore((state) => state.quantities);
+
   const purchaseProducts = async () => {
     const {
       data: { user }
@@ -23,13 +26,16 @@ export default function PurchaseButton() {
 
       const productsData = await getProductData(cartData);
 
-      const orders = productsData?.map((product) => ({
-        order_user_id: user.id,
-        order_product_id: product.product_id,
-        quantity: Number(product.count),
-        cost: Number(product.price) * Number(product.count),
-        is_payed: false
-      }));
+      const orders = productsData?.map((product) => {
+        const quantity = quantities[product.product_id]?.quantity || 1;
+        return {
+          order_user_id: user.id,
+          order_product_id: product.product_id,
+          quantity: quantity,
+          cost: Number(product.price) * quantity,
+          is_payed: false
+        };
+      });
 
       const { data: orderData, error: orderError } = await supabase.from('Order').insert(orders!);
       if (orderError) {
