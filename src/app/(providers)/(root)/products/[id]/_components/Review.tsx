@@ -1,8 +1,9 @@
 import useUser from '@/hooks/useUser';
 import supabase from '@/supabase/supabaseClient';
+import { Review } from '@/types/review';
 import React, { useState } from 'react';
 
-interface ProductReviewProps {
+export interface ProductReviewProps {
   review_product_id: string;
 }
 
@@ -18,13 +19,15 @@ function ProductReview({ review_product_id }: ProductReviewProps) {
       console.error('로그인된 유저의 정보를 가져올 수 없습니다.');
       return;
     }
+    console.log(user);
 
     const { data, error } = await supabase.from('Review').insert([
       {
         description: review,
         rating: rating,
         review_product_id: review_product_id,
-        review_user_id: user.id
+        review_user_id: user.id,
+        review_user_name: user.user_metadata.name
       }
     ]);
 
@@ -38,12 +41,12 @@ function ProductReview({ review_product_id }: ProductReviewProps) {
   };
 
   return (
-    <form onSubmit={handleReviewSubmit} className="max-w-md mx-auto p-4 border rounded shadow-md">
-      <div className="flex space-x-2 mb-4">
+    <form onSubmit={handleReviewSubmit} className="w-full mx-auto p-4 border rounded shadow-md">
+      <div className="flex justify-center mb-4">
         {[1, 2, 3, 4, 5].map((star) => (
           <label
             key={star}
-            className={`cursor-pointer text-2xl ${rating >= star ? 'text-black' : 'text-gray-400'}`}
+            className={`cursor-pointer text-4xl ${rating >= star ? 'text-black' : 'text-gray-400'}`}
           >
             <input
               type="radio"
@@ -65,7 +68,7 @@ function ProductReview({ review_product_id }: ProductReviewProps) {
           className="w-full p-2 border rounded"
         />
       </div>
-      <button type="submit" className="w-full bg-black text-white p-2 rounded hover:bg-gray-600">
+      <button type="submit" className="bg-black text-white p-2 rounded hover:bg-gray-600">
         등록하기
       </button>
     </form>

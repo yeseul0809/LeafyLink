@@ -7,6 +7,7 @@ import DOMPurify from 'dompurify';
 import { useParams } from 'next/navigation';
 import React, { act, useRef, useState } from 'react';
 import ProductReview from './_components/Review';
+import ProductReviewList from './_components/ReviewList';
 
 interface ParamsProps {
   params: { id: string };
@@ -46,8 +47,8 @@ function ProductDetailPage() {
   const sanitizedProduct = DOMPurify.sanitize(product.description || '');
 
   return (
-    <div className="container mx-auto p-4">
-      <section className="flex flex-col md:flex-row">
+    <div className="container mx-auto max-w-screen-lg p-4">
+      <section className="flex flex-col md:flex-row mb-8">
         <div className="md:w-1/2 flex justify-end">
           <img
             src={product.thumbnail_url}
@@ -71,7 +72,7 @@ function ProductDetailPage() {
         </div>
       </section>
 
-      <nav className="flex justify-center gap-3">
+      <nav className="flex justify-center gap-3 mb-8">
         <button
           onClick={() => {
             setActiveTab('description');
@@ -91,14 +92,17 @@ function ProductDetailPage() {
         </button>
       </nav>
 
-      <section className="my-8 flex flex-col items-center">
-        <div className="text-center border-4 mb-10">
-          <h1 className="text-xl font-bold mb-4">상품 상세내용</h1>
-          <div dangerouslySetInnerHTML={{ __html: sanitizedProduct }} />
+      <section className="my-8 flex flex-col items-center w-full">
+        <div className="text-center border-4 mb-10 w-full">
+          <h1 className="text-2xl font-bold mb-4">상품 상세내용</h1>
+          <div className="flex justify-center text-center">
+            <div dangerouslySetInnerHTML={{ __html: sanitizedProduct }} />
+          </div>
         </div>
-        <div ref={reviewRef} className="text-center border-4">
-          <h1 className="text-xl font-bold mb-4">리뷰</h1>
+        <div ref={reviewRef} className="text-center w-full">
+          <h1 className="text-2xl font-bold mb-4">리뷰작성</h1>
           <ProductReview review_product_id={id} />
+          <ProductReviewList review_product_id={id} />
         </div>
       </section>
     </div>
