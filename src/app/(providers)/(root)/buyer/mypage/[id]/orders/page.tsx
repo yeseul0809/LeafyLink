@@ -96,27 +96,27 @@ const BuyerOrderListPage = ({ params }: ProductPageProps) => {
 
   return (
     <>
-      <div className="p-4">
-        <h1 className="text-xl font-bold mb-4">구매자 주문내역 페이지</h1>
+      <div className=" max-w-screen-lg mx-auto ">
+        {/* <h1 className="text-xl font-bold mb-4">구매자 주문내역 페이지</h1> */}
         <div className="overflow-x-auto">
           <table className="min-w-full bg-white">
             <thead>
-              <tr>
-                <th className="py-2 px-4 border-b">주문 번호</th>
-                <th className="py-2 px-4 border-b">상품명</th>
-                <th className="py-2 px-4 border-b">주문 날짜</th>
-                <th className="py-2 px-4 border-b">결제 금액</th>
-                <th className="py-2 px-4 border-b">결제 상황</th>
+              <tr className="bg-gray-300">
+                <th className="w-[15%] p-4 border-b">주문 번호</th>
+                <th className="p-4 border-b">상품명</th>
+                <th className="w-[12%] p-4 border-b">주문 날짜</th>
+                <th className="w-[12%] p-4 border-b">결제 금액</th>
+                {/* <th className="py-2 px-4 border-b">결제 상황</th> */}
               </tr>
             </thead>
             <tbody>
               {orders.map((order) => (
                 <tr key={order.order_id}>
-                  <td className="py-2 px-4 border-b">{order.order_id}</td>
-                  <td className="py-2 px-4 border-b">{order.Product.title}</td>
-                  <td className="py-2 px-4 border-b">{formatDate(order.order_date)}</td>
-                  <td className="py-2 px-4 border-b">{formatCurrency(order.cost)}원</td>
-                  <td className="py-2 px-4 border-b">{order.is_payed ? '결제 완료' : '미결제'}</td>
+                  <td className=" p-4 border-b text-center ">{order.order_id}</td>
+                  <td className=" p-4 border-b ">{order.Product.title}</td>
+                  <td className=" p-4 border-b text-center">{formatDate(order.order_date)}</td>
+                  <td className=" p-4 border-b text-center">{formatCurrency(order.cost)}원</td>
+                  {/* <td className="py-2 px-4 border-b">{order.is_payed ? '결제 완료' : '미결제'}</td> */}
                 </tr>
               ))}
             </tbody>
