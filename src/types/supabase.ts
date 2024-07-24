@@ -265,7 +265,7 @@ export type Database = {
       Product: {
         Row: {
           category: string
-          created_at: string
+          created_at: string | null
           description: string
           price: number
           product_id: string
@@ -273,11 +273,11 @@ export type Database = {
           stock: number
           thumbnail_url: string
           title: string
-          updated_at: string
+          updated_at: string | null
         }
         Insert: {
           category: string
-          created_at?: string
+          created_at?: string | null
           description: string
           price: number
           product_id: string
@@ -285,11 +285,11 @@ export type Database = {
           stock: number
           thumbnail_url: string
           title: string
-          updated_at?: string
+          updated_at?: string | null
         }
         Update: {
           category?: string
-          created_at?: string
+          created_at?: string | null
           description?: string
           price?: number
           product_id?: string
@@ -297,7 +297,7 @@ export type Database = {
           stock?: number
           thumbnail_url?: string
           title?: string
-          updated_at?: string
+          updated_at?: string | null
         }
         Relationships: [
           {
@@ -378,6 +378,8 @@ export type Database = {
       User: {
         Row: {
           address: string
+          address_code: string
+          address_detail: string
           avatar_url: string
           created_at: string
           email: string
@@ -387,6 +389,8 @@ export type Database = {
         }
         Insert: {
           address: string
+          address_code?: string
+          address_detail?: string
           avatar_url: string
           created_at?: string
           email: string
@@ -396,6 +400,8 @@ export type Database = {
         }
         Update: {
           address?: string
+          address_code?: string
+          address_detail?: string
           avatar_url?: string
           created_at?: string
           email?: string
