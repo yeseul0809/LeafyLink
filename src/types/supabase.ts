@@ -247,10 +247,10 @@ export type Database = {
           category: string
           created_at: string | null
           description: string
-          price: number | null
+          price: number | undefined
           product_id: string
           productseller_id: string
-          stock: number | null
+          stock: number | undefined
           thumbnail_url: string
           title: string
           updated_at: string | null
@@ -259,18 +259,10 @@ export type Database = {
           category: string
           created_at?: string | null
           description: string
-
-          price?: number | null
+          price: number | undefined
           product_id: string
           productseller_id: string
-          stock?: number | null
-
-          image_url?: string
-          price: number
-          product_id: string
-          productseller_id?: string
-          stock: number
-
+          stock: number | undefined
           thumbnail_url: string
           title: string
           updated_at?: string | null
@@ -279,10 +271,10 @@ export type Database = {
           category?: string
           created_at?: string | null
           description?: string
-          price?: number | null
+          price?: number | undefined
           product_id?: string
           productseller_id?: string
-          stock?: number | null
+          stock?: number | undefined
           thumbnail_url?: string
           title?: string
           updated_at?: string | null
@@ -299,31 +291,32 @@ export type Database = {
       }
       Review: {
         Row: {
-          created_at: string | null
+          created_at: string
           description: string
           rating: number | null
+  
           review_id: string
           review_product_id: string
           review_user_id: string
-          review_user_name: string | null
+          review_user_name: string 
         }
         Insert: {
-          created_at?: string | null
+          created_at?: string 
           description: string
-          rating?: number | null
+          rating: number | null
           review_id?: string
           review_product_id: string
           review_user_id: string
-          review_user_name?: string | null
+          review_user_name?: string 
         }
         Update: {
-          created_at?: string | null
+          created_at?: string 
           description?: string
           rating?: number | null
           review_id?: string
           review_product_id?: string
           review_user_id?: string
-          review_user_name?: string | null
+          review_user_name?: string 
         }
         Relationships: [
           {
