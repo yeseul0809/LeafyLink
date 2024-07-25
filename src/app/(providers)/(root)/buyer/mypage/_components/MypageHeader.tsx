@@ -18,7 +18,7 @@ const MyPageHeader = () => {
   const activeLinkClassName = 'font-bold border-b-2 border-blue-500';
 
   return (
-    <div className="max-w-screen-lg mx-auto  mb-8">
+    <div className="max-w-screen-lg mx-auto  mb-20">
       {/* Title */}
       <h1 className="text-center text-2xl font-bold mb-6">구매자 마이페이지</h1>
 
@@ -43,7 +43,7 @@ const MyPageHeader = () => {
           </Link>
         </li>
         <li className="w-1/3">
-          <Link href={`/buyer/mypage/${id}/business-verification`}>
+          <Link href={`/buyer/mypage/${id}/sellerAuth`}>
             <div
               className={`block text-center ${linkClassName} ${activeLink === `/buyer/mypage/${id}/business-verification` ? activeLinkClassName : ''}`}
             >
