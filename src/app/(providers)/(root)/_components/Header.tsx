@@ -1,15 +1,18 @@
 'use client';
+
 import { createClient } from '@/supabase/supabaseClient';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useRef, useState } from 'react';
+
 interface Weather {
   id: number;
   main: string;
   description: string;
   icon: string;
 }
+
 function Header() {
   const [latitude, setLatitude] = useState('');
   const [longitude, setLongitude] = useState('');

@@ -9,5 +9,5 @@ export default function ProductPrice() {
     (total, { quantity, price }) => total + quantity * price,
     0
   );
-  return <div>총 금액: {totalAmount.toLocaleString()} 원</div>;
+  return <span>{totalAmount.toLocaleString()}원</span>;
 }

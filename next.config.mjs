@@ -6,6 +6,12 @@ const nextConfig = {
         hostname: 'cirbxzxyrghkthxdsrpe.supabase.co'
       },
       {
+        hostname: 't1.daumcdn.net'
+      },
+      {
+        hostname: 'customer-jxuabwdsyao4ett2.cloudflarestream.com'
+      },
+      {
         hostname: 'lh3.googleusercontent.com'
       }
     ],
