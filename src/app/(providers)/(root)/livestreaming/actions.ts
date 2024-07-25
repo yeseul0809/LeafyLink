@@ -1,7 +1,6 @@
 'use server';
 
-import { createClient } from '@/supabase/supabaseClient';
-
+import { createClient } from '@/supabase/supabaseServer';
 
 export const getVideos = async () => {
   const options = {
@@ -36,11 +35,11 @@ export const getVideos = async () => {
 export const startLiveStreaming = async(_:any,formData:FormData) => {
 const InputDatas = {
   liveTitle : formData.get('liveTitle'),
-  productTitle : formData.get('productTitle'),
+  product : formData.get('product') as string,
   description : formData.get('description'),
- //썸네일이미지,카테고리 추가필요
-  
+ //썸네일이미지,카테고리 추가필요  
 }
+
   const response = await fetch(
     `https://api.cloudflare.com/client/v4/accounts/${process.env.CLOUDFLARE_ACCOUNT_ID}/stream/live_inputs`,
     {
@@ -51,6 +50,8 @@ const InputDatas = {
       body: JSON.stringify({
         meta: {
           name: InputDatas.liveTitle,
+          descriptioin:InputDatas.description,
+          product:InputDatas.product
         },
         recording: {
           mode: 'automatic',
@@ -59,19 +60,34 @@ const InputDatas = {
     }
   );
   const streamServerData = await response.json()
-  const stream = {
-    stream_title: InputDatas.liveTitle,
-    product_title: InputDatas.productTitle,
-    description: InputDatas.description,
-    stream_id: streamServerData.result.uid,
-    stream_key: streamServerData.result.rtmps.streamKey,
-    video_uid: streamServerData.result.uid,
-  }
+  console.log('streamServerData::',streamServerData);
+  
+  const supabaseServer = createClient()
+  const sellerSession = await supabaseServer.auth.getUser() 
+  // const productId = await supabaseServer.from('Product').select('product_id').eq('productseller_id',sellerSession.data.user!.id)
 
-  const supabase =  createClient()
-  const {data,error} = await supabase.from('Livestream').insert({
-
-  })
+  const productId = InputDatas.product  
+  let splitProductId
+  if (productId) {
+     splitProductId = productId.split('/')[2];    
+  } 
+  
+   const stream = {
+      livestream_seller_id:sellerSession.data.user!.id,
+      livestream_product_id:splitProductId,      
+      stream_title: InputDatas.liveTitle,
+      product_title: InputDatas.product,
+      description: InputDatas.description,
+      stream_id: streamServerData.result.uid,
+      stream_key: streamServerData.result.rtmps.streamKey,
+      video_uid: streamServerData.result.uid,
+    } 
+  
+  const {data,error} = await supabaseServer.from('Livestream').insert([stream]).select('*')
+ 
+  if(error){
+    console.log('error::',error);    
+  }  
 
 }
 

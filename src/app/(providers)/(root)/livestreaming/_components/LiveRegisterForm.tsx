@@ -34,11 +34,11 @@ function LiveRegisterForm() {
         </div>
       </div>
       <div>
-        <label htmlFor="productTitle">소개할 상품</label>
+        <label htmlFor="product">소개할 상품</label>
         <input
           type="text"
-          id="productTitle"
-          name="productTitle"
+          id="product"
+          name="product"
           placeholder="상품 URL을 입력해서 상품을 등록하세요."
           className="w-[40%] h-10 border"
         />
@@ -57,7 +57,7 @@ function LiveRegisterForm() {
           className="w-[40%] h-10 border"
         />
       </div>
-      <button type="submit">라이브 시작하기</button>
+      <button>라이브 시작하기</button>
     </form>
   );
 }
