@@ -51,7 +51,11 @@ export default function Pagination({
             <li key={pageNum}>
               <Link href={`?page=${pageNum}`} scroll={false}>
                 <div
-                  className={`w-8 h-8 flex items-center justify-center rounded-full border ${currentPage === pageNum ? 'bg-teal-700 text-white font-bold' : 'border-gray-300 hover:bg-gray-100'}`}
+                  className={`w-8 h-8 flex items-center justify-center rounded-full border ${
+                    currentPage === pageNum
+                      ? 'bg-teal-700 text-white font-bold'
+                      : 'border-gray-300 hover:bg-gray-100'
+                  }`}
                 >
                   {pageNum}
                 </div>

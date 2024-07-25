@@ -9,39 +9,6 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      _prisma_migrations: {
-        Row: {
-          applied_steps_count: number
-          checksum: string
-          finished_at: string | null
-          id: string
-          logs: string | null
-          migration_name: string
-          rolled_back_at: string | null
-          started_at: string
-        }
-        Insert: {
-          applied_steps_count?: number
-          checksum: string
-          finished_at?: string | null
-          id: string
-          logs?: string | null
-          migration_name: string
-          rolled_back_at?: string | null
-          started_at?: string
-        }
-        Update: {
-          applied_steps_count?: number
-          checksum?: string
-          finished_at?: string | null
-          id?: string
-          logs?: string | null
-          migration_name?: string
-          rolled_back_at?: string | null
-          started_at?: string
-        }
-        Relationships: []
-      }
       Cart: {
         Row: {
           cart_id: string
@@ -50,7 +17,7 @@ export type Database = {
           count: number
         }
         Insert: {
-          cart_id: string
+          cart_id?: string
           cart_product_id: string
           cart_user_id: string
           count: number
@@ -141,7 +108,7 @@ export type Database = {
           category: string
           create_at?: string
           description: string
-          livestream_id: string
+          livestream_id?: string
           livestream_product_id: string
           livestream_seller_id: string
           stream_id: string
@@ -192,7 +159,7 @@ export type Database = {
           created_at?: string
           is_read: boolean
           message_chatroom_id: string
-          message_id: string
+          message_id?: string
           message_seller_id: string
           message_user_id: string
           payload: string
@@ -235,24 +202,37 @@ export type Database = {
           cost: number
           is_payed: boolean
           order_date: string
-          order_id: string
+          order_id: number
+          order_product_id: string
           order_user_id: string
+          quantity: number
         }
         Insert: {
           cost: number
           is_payed: boolean
-          order_date: string
-          order_id: string
+          order_date?: string
+          order_id?: number
+          order_product_id: string
           order_user_id: string
+          quantity: number
         }
         Update: {
           cost?: number
           is_payed?: boolean
           order_date?: string
-          order_id?: string
+          order_id?: number
+          order_product_id?: string
           order_user_id?: string
+          quantity?: number
         }
         Relationships: [
+          {
+            foreignKeyName: "Order_order_product_id_fkey"
+            columns: ["order_product_id"]
+            isOneToOne: false
+            referencedRelation: "Product"
+            referencedColumns: ["product_id"]
+          },
           {
             foreignKeyName: "Order_order_user_id_fkey"
             columns: ["order_user_id"]
@@ -267,11 +247,10 @@ export type Database = {
           category: string
           created_at: string | null
           description: string
-          image_url: string
-          price: number
+          price: number | null
           product_id: string
           productseller_id: string
-          stock: number
+          stock: number | null
           thumbnail_url: string
           title: string
           updated_at: string | null
@@ -280,11 +259,10 @@ export type Database = {
           category: string
           created_at?: string | null
           description: string
-          image_url: string
-          price: number
+          price?: number | null
           product_id: string
           productseller_id: string
-          stock: number
+          stock?: number | null
           thumbnail_url: string
           title: string
           updated_at?: string | null
@@ -293,11 +271,10 @@ export type Database = {
           category?: string
           created_at?: string | null
           description?: string
-          image_url?: string
-          price?: number
+          price?: number | null
           product_id?: string
           productseller_id?: string
-          stock?: number
+          stock?: number | null
           thumbnail_url?: string
           title?: string
           updated_at?: string | null
@@ -314,25 +291,31 @@ export type Database = {
       }
       Review: {
         Row: {
+          created_at: string | null
           description: string
+          rating: number | null
           review_id: string
           review_product_id: string
           review_user_id: string
-          title: string
+          review_user_name: string | null
         }
         Insert: {
+          created_at?: string | null
           description: string
-          review_id: string
+          rating?: number | null
+          review_id?: string
           review_product_id: string
           review_user_id: string
-          title: string
+          review_user_name?: string | null
         }
         Update: {
+          created_at?: string | null
           description?: string
+          rating?: number | null
           review_id?: string
           review_product_id?: string
           review_user_id?: string
-          title?: string
+          review_user_name?: string | null
         }
         Relationships: [
           {
