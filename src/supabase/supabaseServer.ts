@@ -25,5 +25,3 @@ export function createClient() {
   )
 }
 
-const supabaseSever = createClient()
-export default supabaseSever
