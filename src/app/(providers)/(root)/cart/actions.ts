@@ -1,7 +1,6 @@
 'use server';
 
-import createClient from '@/supabase/supabaseServer';
-import supabaseSever from '@/supabase/supabaseServer';
+import {createClient} from '@/supabase/supabaseServer';
 import { revalidatePath } from 'next/cache';
 
 export const getUserSession = async() => {

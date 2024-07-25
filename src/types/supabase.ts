@@ -247,10 +247,10 @@ export type Database = {
           category: string
           created_at: string | null
           description: string
-          price: number
+          price: number | null
           product_id: string
           productseller_id: string
-          stock: number
+          stock: number | null
           thumbnail_url: string
           title: string
           updated_at: string | null
@@ -259,10 +259,15 @@ export type Database = {
           category: string
           created_at?: string | null
           description: string
-          price: number
+
+          price?: number | null
           product_id: string
           productseller_id: string
-          stock: number
+          stock?: number | null
+
+          image_url?: string
+       
+
           thumbnail_url: string
           title: string
           updated_at?: string | null
@@ -271,10 +276,10 @@ export type Database = {
           category?: string
           created_at?: string | null
           description?: string
-          price?: number
+          price?: number | null
           product_id?: string
           productseller_id?: string
-          stock?: number
+          stock?: number | null
           thumbnail_url?: string
           title?: string
           updated_at?: string | null
@@ -293,23 +298,29 @@ export type Database = {
         Row: {
           created_at: string | null
           description: string
+          rating: number | null
           review_id: string
           review_product_id: string
           review_user_id: string
+          review_user_name: string | null
         }
         Insert: {
           created_at?: string | null
           description: string
+          rating?: number | null
           review_id?: string
           review_product_id: string
           review_user_id: string
+          review_user_name?: string | null
         }
         Update: {
           created_at?: string | null
           description?: string
+          rating?: number | null
           review_id?: string
           review_product_id?: string
           review_user_id?: string
+          review_user_name?: string | null
         }
         Relationships: [
           {

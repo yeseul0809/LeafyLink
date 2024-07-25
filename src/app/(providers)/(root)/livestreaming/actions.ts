@@ -1,6 +1,5 @@
 'use server';
 
-import supabaseSever from '@/supabase/supabaseServer';
 
 export const getVideos = async () => {
   const options = {
@@ -59,7 +58,7 @@ const InputDatas = {
   );
 
   const streamData = await response.json()
-  
+
 }
 
 

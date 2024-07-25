@@ -2,7 +2,7 @@ import { createServerClient } from '@supabase/ssr'
 import { cookies } from 'next/headers' 
 import { Database } from '@/types/supabase';
 
-const createClient = ()=> {
+ export const createClient = ()=> {
   const cookieStore = cookies()
 
   return createServerClient<Database>(
@@ -18,14 +18,10 @@ const createClient = ()=> {
             cookiesToSet.forEach(({ name, value, options }) =>
               cookieStore.set(name, value, options)
             )
-          } catch {    
+          } catch {
           }
         },
       },
     }
   )
 }
-export default createClient
-
-// const supabaseSever = createClient()
-// export default supabaseSever
