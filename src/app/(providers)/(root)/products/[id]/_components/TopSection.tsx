@@ -2,7 +2,7 @@ import { Product } from '@/types/product';
 import React from 'react';
 import TopButtons from './TopButtons';
 
-interface TopSectionProps {
+export interface TopSectionProps {
   product: Product;
 }
 
@@ -23,7 +23,6 @@ function TopSection({ product }: TopSectionProps) {
           <p className="text-xl font-semibold mb-2">가격: {product.price} 원</p>
           <p className="text-md">배송비: 무료</p>
         </div>
-        <TopButtons productId={product.product_id} />
       </div>
     </section>
   );

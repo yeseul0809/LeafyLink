@@ -5,6 +5,7 @@ import { ReviewInput } from "@/types/review";
 import { SupabaseClient } from "@supabase/supabase-js";
 import { Database } from "@/types/supabase";
 import { createClient } from "@/supabase/supabaseServer";
+import { cache } from "react";
 // import supabaseSever from "@/supabase/supabaseServer";
 
 export async function createReview(reviewData: ReviewInput) {
@@ -35,7 +36,7 @@ export async function getReviews(reviewProductId: string){
   return reviews;
 }
 
-export async function getProduct(id: string){
+ async function getProductRequest(id: string){
   const supabseServer:SupabaseClient<Database> = createClient();
   const { data: product, error } = await supabseServer
     .from('Product')
@@ -50,6 +51,8 @@ export async function getProduct(id: string){
 
   return product;
 }
+
+export const getProduct = cache(getProductRequest);
 
 // export async function getUser(){
 //   const {data:userData, error} = await supabaseSever.auth.getUser();
