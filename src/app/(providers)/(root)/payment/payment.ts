@@ -2,8 +2,13 @@
 
 import { RequestPayParams, RequestPayResponse } from 'iamport-typings';
 import { ProductInfo } from './page';
+import supabase from '@/supabase/supabaseClient';
+import { useRouter } from 'next/navigation';
 
 const paymentHandler = (productData:ProductInfo) => {
+
+
+  
   if (!window.IMP) return;
   /* 1. 가맹점 식별하기 */
   const { IMP } = window;
@@ -25,16 +30,26 @@ const paymentHandler = (productData:ProductInfo) => {
   };
 
   /* 4. 결제 창 호출하기 */
-  IMP.request_pay(data, callback);
+  // IMP.request_pay(data, callback);
+  IMP.request_pay(data, (rsp: RequestPayResponse) => callback(rsp, productData));
 };
 
-async function callback(rsp: any) {
+async function callback(rsp: any,productData: ProductInfo) {
   const { success, error_msg, merchant_uid, imp_uid } = rsp;
-
-  console.log('success::', success);
-
   if (success) {
+    
+    for (const product of productData.combinedData) {
+      const { error } = await supabase
+        .from('Cart')
+        .delete()
+        .eq('cart_product_id', product.product_id);
+
+     if (error) {
+        console.error(`Error deleting product ${product.product_id} from Cart:`, error);         
+        }
+    }
     alert('결제성공');
+    window.location.href = '/';
   } else {
     alert(`결제 실패: ${error_msg}`);
   }

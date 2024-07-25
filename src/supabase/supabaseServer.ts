@@ -1,5 +1,5 @@
 import { createServerClient } from '@supabase/ssr'
-import { cookies } from 'next/headers'
+import { cookies } from 'next/headers' 
 import { Database } from '@/types/supabase';
 
 const createClient = ()=> {
@@ -25,6 +25,7 @@ const createClient = ()=> {
     }
   )
 }
+export default createClient
 
-const supabaseSever = createClient()
-export default supabaseSever
+// const supabaseSever = createClient()
+// export default supabaseSever

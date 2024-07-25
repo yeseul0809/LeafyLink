@@ -7,6 +7,9 @@ const nextConfig = {
       },
       {
         hostname: 't1.daumcdn.net'
+      },
+      {
+        hostname: 'customer-jxuabwdsyao4ett2.cloudflarestream.com'
       }
     ]
   },

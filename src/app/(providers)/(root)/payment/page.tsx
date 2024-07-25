@@ -31,6 +31,7 @@ interface CombinedProductData {
 export interface ProductInfo {
   combinedData: CombinedProductData[];
   totalCost: number;
+  cart: boolean;
 }
 
 export default function PaymentPage() {
@@ -90,7 +91,7 @@ export default function PaymentPage() {
       return total + product.price * product.quantity;
     }, 0);
 
-    return { combinedData, totalCost };
+    return { combinedData, totalCost, cart: !!dataString };
   };
 
   const {
@@ -101,7 +102,6 @@ export default function PaymentPage() {
     queryKey: ['getProductInfo'],
     queryFn: getProductInfo
   });
-  console.log('productData::', productData);
 
   const getUserInfo = async () => {
     const { data: userData } = await supabase.auth.getUser();
@@ -122,7 +122,7 @@ export default function PaymentPage() {
     return null;
   }
 
-  if (userData) {
+  if (userData && productData) {
     return (
       <div>
         <h1>주문/결제</h1>
@@ -225,7 +225,7 @@ export default function PaymentPage() {
           <p>결제수단 선택</p>
           <div>카카오 페이</div>
         </section>
-        <button onClick={() => paymentHandler(productData)}>결제하기</button>
+        <button onClick={() => paymentHandler(productData as ProductInfo)}>결제하기</button>
       </div>
     );
   }
