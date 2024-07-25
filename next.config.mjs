@@ -4,6 +4,9 @@ const nextConfig = {
     remotePatterns: [
       {
         hostname: 'cirbxzxyrghkthxdsrpe.supabase.co'
+      },
+      {
+        hostname: 'lh3.googleusercontent.com'
       }
     ],
     domains: ['k.kakaocdn.net'] // 여기에 이미지 호스트명을 추가합니다.
