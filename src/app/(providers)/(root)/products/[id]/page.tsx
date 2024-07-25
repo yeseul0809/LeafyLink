@@ -1,7 +1,7 @@
 import ProductReviewList from './_components/ReviewList';
 import TopSection from './_components/TopSection';
-import supabase from '@/supabase/supabaseClient';
 import ActiveTabWrapper from './_components/ActiveTabWrapper';
+import { createClient } from '@/supabase/supabaseServer';
 
 interface ParamsProps {
   params: { id: string };
@@ -9,8 +9,8 @@ interface ParamsProps {
 
 async function ProductDetailPage({ params }: ParamsProps) {
   const { id } = params;
-
-  const { data: product, error } = await supabase
+  const supabaseServer = createClient();
+  const { data: product, error } = await supabaseServer
     .from('Product')
     .select('*')
     .eq('product_id', id)

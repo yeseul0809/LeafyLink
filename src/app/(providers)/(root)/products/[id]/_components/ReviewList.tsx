@@ -1,22 +1,14 @@
-import supabase from '@/supabase/supabaseClient';
-import React from 'react';
+import { getReviews } from '../_actions/reviewActions';
 
 export interface ProductReviewProps {
   reviewProductId: string;
 }
 
-async function ProductReviewList({ reviewProductId }: ProductReviewProps) {
-  const { data: reviews, error } = await supabase
-    .from('Review')
-    .select('*')
-    .eq('review_product_id', reviewProductId);
+const ProductReviewList: React.FC<ProductReviewProps> = async ({ reviewProductId }) => {
+  const reviews = await getReviews(reviewProductId);
 
-  if (!reviews || reviews.length === 0) {
+  if (!reviews) {
     return <p>리뷰가 없습니다.</p>;
-  }
-
-  if (error) {
-    console.error('리뷰리스트 가져오는 중 에러발생', error);
   }
 
   return (
@@ -54,6 +46,6 @@ async function ProductReviewList({ reviewProductId }: ProductReviewProps) {
       </ul>
     </div>
   );
-}
+};
 
 export default ProductReviewList;

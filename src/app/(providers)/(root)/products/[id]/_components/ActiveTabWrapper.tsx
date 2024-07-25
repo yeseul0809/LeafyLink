@@ -3,8 +3,8 @@
 import React, { useRef, useState } from 'react';
 
 import ProductDescription from './Description';
-import ProductReview from './Review';
 import ActiveTab from './ActiveTab';
+import ReviewEdit from './ReviewEdit';
 
 interface ActiveTabWrapperProps {
   productDescription: string;
@@ -30,7 +30,7 @@ function ActiveTabWrapper({ productDescription, reviewProductId }: ActiveTabWrap
       />
       <ProductDescription productDescription={productDescription} />
       <div ref={reviewRef} className="text-center">
-        <ProductReview reviewProductId={reviewProductId} />
+        <ReviewEdit reviewProductId={reviewProductId} />
       </div>
     </>
   );

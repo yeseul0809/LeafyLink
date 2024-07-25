@@ -1,12 +1,10 @@
-'use client';
-
 import useUser from '@/hooks/useUser';
 import { useState } from 'react';
 import { ProductReviewProps } from './ReviewList';
 import { ReviewInput } from '@/types/review';
-import handleActionSubmit from '../_actions/reviewActions';
+import { createReview } from '../_actions/reviewActions';
 
-function ProductReview({ reviewProductId }: ProductReviewProps) {
+function ReviewEdit({ reviewProductId }: ProductReviewProps) {
   const { user } = useUser();
   const [rating, setRating] = useState(0);
   const [review, setReview] = useState('');
@@ -28,7 +26,7 @@ function ProductReview({ reviewProductId }: ProductReviewProps) {
     };
 
     try {
-      await handleActionSubmit(reviewData);
+      await createReview(reviewData);
       setRating(0);
       setReview('');
     } catch (error) {
@@ -74,4 +72,4 @@ function ProductReview({ reviewProductId }: ProductReviewProps) {
   );
 }
 
-export default ProductReview;
+export default ReviewEdit;

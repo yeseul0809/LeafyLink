@@ -1,13 +1,8 @@
-import { createBrowserClient } from '@supabase/ssr';
-import { Database } from '@/types/supabase';
+import { createBrowserClient } from '@supabase/ssr'
 
-const createClient = () =>
-  createBrowserClient<Database>(
+export function createClient() {
+  return createBrowserClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_KEY!
-  );
-
-const supabase = createClient();
-export default supabase;
-
-
+    process.env.NEXT_PUBLIC_SUPABASE_KEY!,
+  )
+}
