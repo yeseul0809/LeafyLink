@@ -259,10 +259,18 @@ export type Database = {
           category: string
           created_at?: string | null
           description: string
+
           price?: number | null
           product_id: string
           productseller_id: string
           stock?: number | null
+
+          image_url?: string
+          price: number
+          product_id: string
+          productseller_id?: string
+          stock: number
+
           thumbnail_url: string
           title: string
           updated_at?: string | null
