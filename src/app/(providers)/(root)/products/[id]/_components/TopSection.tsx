@@ -1,6 +1,5 @@
 import { Product } from '@/types/product';
 import React from 'react';
-import TopButtons from './TopButtons';
 
 export interface TopSectionProps {
   product: Product;

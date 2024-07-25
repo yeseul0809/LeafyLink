@@ -2,14 +2,18 @@
 
 import useUser from '@/hooks/useUser';
 import { useState } from 'react';
-import { ProductReviewProps } from './ReviewList';
 import { ReviewInput } from '@/types/review';
 import { createReview } from '../_actions/productActions';
+import StarRating from './StarRating';
 
-function ReviewEdit({ reviewProductId }: ProductReviewProps) {
+interface ReviewEditProps {
+  reviewProductId: string;
+}
+
+function ReviewEdit({ reviewProductId }: ReviewEditProps) {
   const { user } = useUser();
-  const [rating, setRating] = useState(0);
-  const [review, setReview] = useState('');
+  const [rating, setRating] = useState<number>(0);
+  const [review, setReview] = useState<string>('');
 
   const handleReviewSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -38,25 +42,9 @@ function ReviewEdit({ reviewProductId }: ProductReviewProps) {
 
   return (
     <>
-      <h1 className="text-2xl font-bold mb-4">리뷰작성</h1>
+      <h2 className="text-2xl font-bold mb-4">Review</h2>
       <form onSubmit={handleReviewSubmit} className="w-full mx-auto p-4 border rounded shadow-md">
-        <div className="flex justify-center mb-4">
-          {[1, 2, 3, 4, 5].map((star) => (
-            <label
-              key={star}
-              className={`cursor-pointer text-4xl ${rating >= star ? 'text-black' : 'text-gray-400'}`}
-            >
-              <input
-                type="radio"
-                name="rating"
-                value={star}
-                onChange={() => setRating(star)}
-                className="hidden"
-              />
-              ★
-            </label>
-          ))}
-        </div>
+        <StarRating rating={rating} setRating={setRating} />
         <div className="mb-4">
           <textarea
             value={review}

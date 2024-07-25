@@ -1,10 +1,10 @@
 import { getReviews } from '../_actions/productActions';
 
-export interface ProductReviewProps {
+interface ProductReviewProps {
   reviewProductId: string;
 }
 
-const ProductReviewList: React.FC<ProductReviewProps> = async ({ reviewProductId }) => {
+const ProductReviewList = async ({ reviewProductId }: ProductReviewProps) => {
   const reviews = await getReviews(reviewProductId);
 
   if (!reviews) {
@@ -12,8 +12,7 @@ const ProductReviewList: React.FC<ProductReviewProps> = async ({ reviewProductId
   }
 
   return (
-    <div className="w-full mx-auto mt-8">
-      <h2 className="text-2xl text-center font-bold mb-4">리뷰 목록</h2>
+    <div className="w-full mx-auto my-20">
       <ul className="space-y-4 text-left">
         {reviews.map((review) => (
           <li key={review.review_id} className="p-4 border rounded shadow-md">
