@@ -17,18 +17,32 @@ function Header() {
   const router = useRouter();
   const [isLogin, setIsLogin] = useState(false);
   const [userInfo, setUserInfo] = useState('');
+  const [userName, setUserName] = useState('');
+  const [userAvatar, setUserAvatar] = useState('');
 
   // 로그인 상태
   useEffect(() => {
     supabase.auth.getUser().then((res) => {
-      setUserInfo(res.data.user.identities[0].identity_data);
+      setUserInfo(res.data.user);
+      setUserName(res.data.user.identities[0].identity_data.full_name);
+      setUserAvatar(res.data.user.identities[0].identity_data.avatar_url);
+      if (res.data.user) {
+        setIsLogin(true);
+      } else {
+        setIsLogin(false);
+      }
     });
-    if (userInfo !== null) {
-      setIsLogin(true);
-    } else {
-      setIsLogin(false);
-    }
   }, []);
+
+  // 로그아웃 상태
+  const logout = async () => {
+    const { error } = await supabase.auth.signOut();
+    if (error) {
+      console.error('로그아웃 실패', error);
+    } else {
+      window.location.href = '/';
+    }
+  };
 
   // user 위치
   useEffect(() => {
@@ -115,16 +129,18 @@ function Header() {
         {isLogin ? (
           <div className="로그인O flex items-center text-zinc-500">
             <Image
-              src={userInfo.avatar_url}
+              src={userAvatar}
               alt="user profile image"
               width={28}
               height={28}
               className="rounded-full h-[28px]"
             />
             <Link href={'/mypage'}>
-              <p className="ml-3 hover:text-zinc-950">{userInfo.full_name}님</p>
+              <p className="ml-3 hover:text-zinc-950">{userName}님</p>
             </Link>
-            <button className="ml-10 hover:text-zinc-950">로그아웃</button>
+            <button className="ml-10 hover:text-zinc-950" onClick={logout}>
+              로그아웃
+            </button>
           </div>
         ) : (
           <div className="로그인X">
