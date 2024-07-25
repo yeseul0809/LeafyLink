@@ -1,6 +1,6 @@
 'use client';
 
-import supabase from '@/supabase/supabaseClient';
+import { createClient } from '@/supabase/supabaseClient';
 import React, { useEffect, useState } from 'react';
 import { useQuantityStore } from '@/stores';
 
@@ -10,6 +10,7 @@ export default function QuantityButton({ productId, price }: { productId: string
 
   useEffect(() => {
     const getProductQuantity = async () => {
+      const supabase = createClient();
       const { data: cartData, error } = await supabase
         .from('Cart')
         .select()
@@ -30,6 +31,7 @@ export default function QuantityButton({ productId, price }: { productId: string
   }, [value, productId, price, setQuantity]);
 
   const handleIncrease = async () => {
+    const supabase = createClient();
     const { data: cartData, error: fetchError } = await supabase
       .from('Cart')
       .select('count')
@@ -58,6 +60,7 @@ export default function QuantityButton({ productId, price }: { productId: string
   };
 
   const handleDecrease = async () => {
+    const supabase = createClient();
     const { data: cartData, error: fetchError } = await supabase
       .from('Cart')
       .select('count')

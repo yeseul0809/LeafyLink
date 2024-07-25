@@ -1,11 +1,12 @@
 'use client';
 
 import React from 'react';
-import supabase from '@/supabase/supabaseClient';
+import { createClient } from '@/supabase/supabaseClient';
 
 type OAuthProvider = 'google' | 'kakao';
 
 const handleSocialLogin = async (provider: OAuthProvider) => {
+  const supabase = createClient();
   const { error } = await supabase.auth.signInWithOAuth({
     provider: provider,
     options: {

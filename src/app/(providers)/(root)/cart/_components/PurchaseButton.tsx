@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import supabase from '@/supabase/supabaseClient';
+import { createClient } from '@/supabase/supabaseClient';
 import { useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 
@@ -9,6 +9,7 @@ export default function PurchaseButton() {
   const router = useRouter();
 
   const getCartData = async () => {
+    const supabase = createClient();
     const {
       data: { user }
     } = await supabase.auth.getUser();
