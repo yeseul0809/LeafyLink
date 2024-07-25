@@ -1,7 +1,9 @@
 import React from 'react';
 import SelectDropdown from '../_components/SelectDropdown';
+import { useFormState } from 'react-dom';
 
-function page() {
+function LiveRegisterPage() {
+  // const[state,formAction] = useFormState()
   return (
     <div>
       <h1>쇼핑 라이브 등록</h1>
@@ -47,4 +49,4 @@ function page() {
   );
 }
 
-export default page;
+export default LiveRegisterPage;

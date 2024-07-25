@@ -48,24 +48,9 @@ export default function PaymentPage() {
     } catch (error) {
       console.error('Error decoding or parsing query data:', error);
     }
-    // console.log('products::', products);
   } else if (productId && quantity) {
     products = [{ productId, quantity: Number(quantity) }];
   }
-
-  // const productId = searchParams.get('productId');
-  // console.log('productId::', productId);
-
-  // const quantity = searchParams.get('quantity');
-  // console.log('quantity::', quantity);
-
-  // const getProductInfo = async () => {
-  //   const { data: productData, error } = await supabase
-  //     .from('Product')
-  //     .select()
-  //     .eq('product_id', productId!);
-  //   return productData;
-  // };
 
   const getProductInfo = async () => {
     const productIds = products.map((product) => product.productId);
@@ -78,7 +63,6 @@ export default function PaymentPage() {
       return null;
     }
 
-    // Combine product data with quantities
     const combinedData = productData.map((product) => {
       const matchingProduct = products.find((p) => p.productId === product.product_id);
       return {
