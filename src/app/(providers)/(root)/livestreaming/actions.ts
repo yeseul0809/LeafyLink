@@ -1,5 +1,7 @@
 'use server';
 
+import { createClient } from '@/supabase/supabaseClient';
+
 
 export const getVideos = async () => {
   const options = {
@@ -56,8 +58,20 @@ const InputDatas = {
       }),
     }
   );
+  const streamServerData = await response.json()
+  const stream = {
+    stream_title: InputDatas.liveTitle,
+    product_title: InputDatas.productTitle,
+    description: InputDatas.description,
+    stream_id: streamServerData.result.uid,
+    stream_key: streamServerData.result.rtmps.streamKey,
+    video_uid: streamServerData.result.uid,
+  }
 
-  const streamData = await response.json()
+  const supabase =  createClient()
+  const {data,error} = await supabase.from('Livestream').insert({
+
+  })
 
 }
 

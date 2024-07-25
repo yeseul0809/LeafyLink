@@ -8,5 +8,3 @@ import { createBrowserClient } from '@supabase/ssr'
   )
 }
 
-// const supabase = createClient()
-// export default supabase

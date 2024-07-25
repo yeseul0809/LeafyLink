@@ -3,7 +3,6 @@
 import { RequestPayParams, RequestPayResponse } from 'iamport-typings';
 import { ProductInfo } from './page';
 import {createClient} from '@/supabase/supabaseClient';
-import { useRouter } from 'next/navigation';
 
 const paymentHandler = (productData:ProductInfo) => {  
   if (!window.IMP) return;

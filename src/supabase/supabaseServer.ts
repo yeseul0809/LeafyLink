@@ -25,5 +25,3 @@ export function createClient() {
   )
 }
 
-// const supabaseServer = createClient()
-// export default supabaseServer
