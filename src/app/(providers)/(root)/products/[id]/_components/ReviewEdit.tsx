@@ -61,14 +61,23 @@ function ReviewEdit({ reviewProductId }: ProductReviewProps) {
           <textarea
             value={review}
             onChange={(e) => setReview(e.target.value)}
-            placeholder="리뷰를 작성하세요."
+            placeholder="소중한 리뷰를 작성해주세요."
             required
-            className="w-full p-2 border rounded"
+            className="w-full px-5 py-16 border rounded"
           />
         </div>
-        <button type="submit" className="bg-black text-white p-2 rounded hover:bg-gray-600">
-          등록하기
-        </button>
+        <div className="flex justify-between gap-4">
+          <div className="flex flex-col text-[13px] text-left">
+            <span>
+              • 상품과 관련없는 내용 또는 이미지, 욕설/비방, 개인정보유출, 광고/홍보글 등 적절하지
+              않은 게시물은 별도의 고지없이 비공개 처리 될 수 있습니다.
+            </span>
+            <span>• 작성된 게시물은 운영 및 마케팅에 활용될 수 있습니다.</span>
+          </div>
+          <button type="submit" className="bg-black text-white p-2 rounded hover:bg-gray-600">
+            등록하기
+          </button>
+        </div>
       </form>
     </>
   );

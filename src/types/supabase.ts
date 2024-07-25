@@ -49,21 +49,21 @@ export type Database = {
         Row: {
           chatroom_id: string
           chatroom_product_id: string
-          chatroom_seller_id: string
+          chatroom_seller_id: string | null
           chatroom_user_id: string
           created_at: string
         }
         Insert: {
           chatroom_id: string
           chatroom_product_id: string
-          chatroom_seller_id: string
+          chatroom_seller_id?: string | null
           chatroom_user_id: string
           created_at?: string
         }
         Update: {
           chatroom_id?: string
           chatroom_product_id?: string
-          chatroom_seller_id?: string
+          chatroom_seller_id?: string | null
           chatroom_user_id?: string
           created_at?: string
         }
@@ -93,42 +93,45 @@ export type Database = {
       }
       Livestream: {
         Row: {
-          category: string
+          category: string | null
           create_at: string
           description: string
           livestream_id: string
           livestream_product_id: string
-          livestream_seller_id: string
+          livestream_seller_id: string | null
+          product_title: string
           stream_id: string
           stream_key: string
-          thumbnail_url: string
-          title: string
+          stream_title: string
+          thumbnail_url: string | null
           video_uid: string
         }
         Insert: {
-          category: string
+          category?: string | null
           create_at?: string
           description: string
           livestream_id?: string
           livestream_product_id: string
-          livestream_seller_id: string
+          livestream_seller_id?: string | null
+          product_title: string
           stream_id: string
           stream_key: string
-          thumbnail_url: string
-          title: string
+          stream_title: string
+          thumbnail_url?: string | null
           video_uid: string
         }
         Update: {
-          category?: string
+          category?: string | null
           create_at?: string
           description?: string
           livestream_id?: string
           livestream_product_id?: string
-          livestream_seller_id?: string
+          livestream_seller_id?: string | null
+          product_title?: string
           stream_id?: string
           stream_key?: string
-          thumbnail_url?: string
-          title?: string
+          stream_title?: string
+          thumbnail_url?: string | null
           video_uid?: string
         }
         Relationships: [
@@ -250,10 +253,10 @@ export type Database = {
           category: string
           created_at: string | null
           description: string
-          price: number | null
+          price: number | string
           product_id: string
           productseller_id: string
-          stock: number | null
+          stock: number | string
           thumbnail_url: string
           title: string
           updated_at: string | null
@@ -262,10 +265,10 @@ export type Database = {
           category: string
           created_at?: string | null
           description: string
-          price?: number | null
+          price: number | string
           product_id: string
           productseller_id: string
-          stock?: number | null
+          stock: number | string
           thumbnail_url: string
           title: string
           updated_at?: string | null
@@ -274,10 +277,10 @@ export type Database = {
           category?: string
           created_at?: string | null
           description?: string
-          price?: number | null
+          price?: number | string
           product_id?: string
           productseller_id?: string
-          stock?: number | null
+          stock?: number | string
           thumbnail_url?: string
           title?: string
           updated_at?: string | null
@@ -340,6 +343,7 @@ export type Database = {
       Seller: {
         Row: {
           address: string
+          avatar_url: string
           created_at: string
           email: string
           phone: string
@@ -348,6 +352,7 @@ export type Database = {
         }
         Insert: {
           address: string
+          avatar_url: string
           created_at?: string
           email: string
           phone: string
@@ -356,6 +361,7 @@ export type Database = {
         }
         Update: {
           address?: string
+          avatar_url?: string
           created_at?: string
           email?: string
           phone?: string

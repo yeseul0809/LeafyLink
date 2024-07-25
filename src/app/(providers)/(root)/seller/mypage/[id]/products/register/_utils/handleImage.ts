@@ -1,4 +1,4 @@
-import supabase from '@/supabase/supabaseClient';
+import { createClient } from '@/supabase/supabaseClient';
 import ReactQuill from 'react-quill';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -13,6 +13,7 @@ export const handleImage = (quillRef: React.RefObject<ReactQuill>) => {
 
     const file = input.files[0];
     const fileNewName = uuidv4();
+    const supabase = createClient();
 
     const { data, error } = await supabase.storage
       .from('product-image')

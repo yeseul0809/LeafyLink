@@ -8,12 +8,14 @@ interface ActiveTabProps {
 
 function ActiveTab({ activeTab, setActiveTab, handleScrollToReview }: ActiveTabProps) {
   return (
-    <nav className="flex justify-center gap-3 mb-8">
+    <nav className="flex justify-center gap-7 mt-16 mb-10 font-bold text-2xl">
       <button
         onClick={() => {
           setActiveTab('description');
         }}
-        className={`border-b-2 ${activeTab === 'description' ? 'border-b-black' : 'border-b-gray-200'}`}
+        className={`w-full border-b-2 py-3 ${
+          activeTab === 'description' ? 'border-black' : 'border-gray-200'
+        }`}
       >
         제품상세
       </button>
@@ -22,7 +24,9 @@ function ActiveTab({ activeTab, setActiveTab, handleScrollToReview }: ActiveTabP
           setActiveTab('reviews');
           handleScrollToReview();
         }}
-        className={`border-b-2 ${activeTab === 'reviews' ? 'border-b-black' : 'border-b-gray-200'}`}
+        className={`w-full border-b-2 py-3 ${
+          activeTab === 'reviews' ? 'border-black' : 'border-gray-200'
+        }`}
       >
         리뷰
       </button>

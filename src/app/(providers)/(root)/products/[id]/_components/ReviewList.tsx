@@ -13,7 +13,7 @@ const ProductReviewList: React.FC<ProductReviewProps> = async ({ reviewProductId
 
   return (
     <div className="w-full mx-auto mt-8">
-      <h2 className="text-2xl font-bold mb-4">리뷰 목록</h2>
+      <h2 className="text-2xl text-center font-bold mb-4">리뷰 목록</h2>
       <ul className="space-y-4 text-left">
         {reviews.map((review) => (
           <li key={review.review_id} className="p-4 border rounded shadow-md">
