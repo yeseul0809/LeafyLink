@@ -4,8 +4,8 @@ import React from 'react';
 
 function Footer() {
   return (
-    <section className="w-full h-auto flex">
-      <div className="w-full h-auto px-[190px] py-[37px] border-y text-[14px] text-[#505050]">
+    <section>
+      <div className="w-full h-auto sticky bottom-0 bg-white px-[190px] py-[37px] border-y text-[14px] text-[#505050]">
         <Link href={'/'}>
           <Image src="/icons/logo.svg" alt="logo" width={100} height={30}></Image>
         </Link>
