@@ -101,6 +101,7 @@ export type Database = {
           livestream_seller_id: string
           stream_id: string
           stream_key: string
+          thumbnail_url: string
           title: string
           video_uid: string
         }
@@ -113,6 +114,7 @@ export type Database = {
           livestream_seller_id: string
           stream_id: string
           stream_key: string
+          thumbnail_url: string
           title: string
           video_uid: string
         }
@@ -125,6 +127,7 @@ export type Database = {
           livestream_seller_id?: string
           stream_id?: string
           stream_key?: string
+          thumbnail_url?: string
           title?: string
           video_uid?: string
         }
@@ -247,10 +250,10 @@ export type Database = {
           category: string
           created_at: string | null
           description: string
-          price: number | undefined
+          price: number | null
           product_id: string
           productseller_id: string
-          stock: number | undefined
+          stock: number | null
           thumbnail_url: string
           title: string
           updated_at: string | null
@@ -259,10 +262,10 @@ export type Database = {
           category: string
           created_at?: string | null
           description: string
-          price: number | undefined
+          price?: number | null
           product_id: string
           productseller_id: string
-          stock: number | undefined
+          stock?: number | null
           thumbnail_url: string
           title: string
           updated_at?: string | null
@@ -271,10 +274,10 @@ export type Database = {
           category?: string
           created_at?: string | null
           description?: string
-          price?: number | undefined
+          price?: number | null
           product_id?: string
           productseller_id?: string
-          stock?: number | undefined
+          stock?: number | null
           thumbnail_url?: string
           title?: string
           updated_at?: string | null
@@ -291,32 +294,31 @@ export type Database = {
       }
       Review: {
         Row: {
-          created_at: string
+          created_at: string | null
           description: string
           rating: number | null
-  
           review_id: string
           review_product_id: string
           review_user_id: string
-          review_user_name: string 
+          review_user_name: string | null
         }
         Insert: {
-          created_at?: string 
+          created_at?: string | null
           description: string
-          rating: number | null
+          rating?: number | null
           review_id?: string
           review_product_id: string
           review_user_id: string
-          review_user_name?: string 
+          review_user_name?: string | null
         }
         Update: {
-          created_at?: string 
+          created_at?: string | null
           description?: string
           rating?: number | null
           review_id?: string
           review_product_id?: string
           review_user_id?: string
-          review_user_name?: string 
+          review_user_name?: string | null
         }
         Relationships: [
           {

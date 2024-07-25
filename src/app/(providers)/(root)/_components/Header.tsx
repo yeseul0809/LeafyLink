@@ -1,33 +1,39 @@
 'use client';
 
-import supabase from '@/supabase/supabaseClient';
+import { createClient } from '@/supabase/supabaseClient';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useRef, useState } from 'react';
 
+interface Weather {
+  id: number;
+  main: string;
+  description: string;
+  icon: string;
+}
+
 function Header() {
   const [latitude, setLatitude] = useState('');
   const [longitude, setLongitude] = useState('');
-  const [weather, setWeather] = useState([]);
+  const [weather, setWeather] = useState<Weather>();
   const [loading, setLoading] = useState(true);
   const [isOpenMenu, setIsOpenMenu] = useState(false);
   const [isOpenSearch, setIsOpenSearch] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
   const [isLogin, setIsLogin] = useState(false);
-  const [userInfo, setUserInfo] = useState('');
   const [userName, setUserName] = useState('');
   const [userAvatar, setUserAvatar] = useState('');
 
   // 로그인 상태
   useEffect(() => {
+    const supabase = createClient();
     supabase.auth.getUser().then((res) => {
-      setUserInfo(res.data.user);
-      setUserName(res.data.user.identities[0].identity_data.full_name);
-      setUserAvatar(res.data.user.identities[0].identity_data.avatar_url);
       if (res.data.user) {
         setIsLogin(true);
+        setUserName(res.data.user.identities![0].identity_data?.full_name);
+        setUserAvatar(res.data.user.identities![0].identity_data?.avatar_url);
       } else {
         setIsLogin(false);
       }
@@ -36,6 +42,7 @@ function Header() {
 
   // 로그아웃 상태
   const logout = async () => {
+    const supabase = createClient();
     const { error } = await supabase.auth.signOut();
     if (error) {
       console.error('로그아웃 실패', error);
@@ -48,8 +55,8 @@ function Header() {
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
       (position) => {
-        setLatitude(position.coords.latitude);
-        setLongitude(position.coords.longitude);
+        setLatitude(position.coords.latitude.toString());
+        setLongitude(position.coords.longitude.toString());
       },
       (error) => {
         setLoading(false);
@@ -71,7 +78,7 @@ function Header() {
           return response.json();
         })
         .then((data) => {
-          setWeather(data);
+          setWeather(data.weather[0]);
           setLoading(false);
         });
     }
@@ -116,8 +123,8 @@ function Header() {
           <p className="text-sm text-zinc-300 tracking-widest">Loading...☀</p>
         ) : (
           <p className="text-sm tracking-wide text-zinc-600">
-            지금 내 위치 날씨는 {weather.weather[0].description}
-            {weatherComment(weather.weather[0].description)}
+            지금 내 위치 날씨는 {weather && weather.description}
+            {weather && weatherComment(weather.description)}
           </p>
         )}
       </div>

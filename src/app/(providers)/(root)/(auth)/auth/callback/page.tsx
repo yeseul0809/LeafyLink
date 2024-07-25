@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect } from 'react';
-import supabase from '@/supabase/supabaseClient';
+import { createClient } from '@/supabase/supabaseClient';
 import { useRouter } from 'next/navigation';
 
 function AuthCallback() {
@@ -9,19 +9,18 @@ function AuthCallback() {
 
   useEffect(() => {
     const saveUserToDatabase = async (user: any) => {
-      console.log('user::', user);
-
       const userData = {
         user_id: user.id,
         user_name: user.user_metadata.full_name,
         avatar_url: user.user_metadata.avatar_url,
         email: user.email,
         phone: '000-0000-0000',
-        address: 'korean',
+        address: '',
         created_at: user.created_at
       };
 
       try {
+        const supabase = createClient();
         const { error } = await supabase.from('User').upsert([userData]);
 
         if (error) {
@@ -35,6 +34,7 @@ function AuthCallback() {
     };
 
     const checkUserExists = async (userId: string) => {
+      const supabase = createClient();
       const { data, error } = await supabase
         .from('User')
         .select('user_id')
@@ -51,6 +51,7 @@ function AuthCallback() {
     };
 
     const getUserSession = async () => {
+      const supabase = createClient();
       const { data } = await supabase.auth.getSession();
       return data;
     };
