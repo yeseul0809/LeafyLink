@@ -1,7 +1,7 @@
 import ProductReviewList from './_components/ReviewList';
 import TopSection from './_components/TopSection';
 import ActiveTabWrapper from './_components/ActiveTabWrapper';
-import { createClient } from '@/supabase/supabaseServer';
+import { getProduct } from './_actions/productActions';
 
 interface ParamsProps {
   params: { id: string };
@@ -9,18 +9,11 @@ interface ParamsProps {
 
 async function ProductDetailPage({ params }: ParamsProps) {
   const { id } = params;
-  const supabaseServer = createClient();
-  const { data: product, error } = await supabaseServer
-    .from('Product')
-    .select('*')
-    .eq('product_id', id)
-    .single();
+  const product = await getProduct(id);
 
-  if (error || !product) {
+  if (!product) {
     return <p>해당 상품이 없습니다.</p>;
   }
-
-  console.log(product);
 
   return (
     <div className="container mx-auto max-w-screen-lg p-4">

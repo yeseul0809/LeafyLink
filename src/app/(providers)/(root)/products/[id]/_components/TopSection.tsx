@@ -1,5 +1,6 @@
 import { Product } from '@/types/product';
 import React from 'react';
+import TopButtons from './TopButtons';
 
 interface TopSectionProps {
   product: Product;
@@ -22,12 +23,7 @@ function TopSection({ product }: TopSectionProps) {
           <p className="text-xl font-semibold mb-2">가격: {product.price} 원</p>
           <p className="text-md">배송비: 무료</p>
         </div>
-        <input type="number" placeholder="구매수량" className="border p-2 w-40 mb-4" />
-        <div className="flex items-center gap-2">
-          <button className="bg-black text-white p-2 rounded">문의</button>
-          <button className="bg-black text-white p-2 rounded">장바구니</button>
-          <button className="bg-black text-white p-2 rounded">바로구매</button>
-        </div>
+        <TopButtons productId={product.product_id} />
       </div>
     </section>
   );

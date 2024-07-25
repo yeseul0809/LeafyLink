@@ -1,8 +1,10 @@
+'use client';
+
 import useUser from '@/hooks/useUser';
 import { useState } from 'react';
 import { ProductReviewProps } from './ReviewList';
 import { ReviewInput } from '@/types/review';
-import { createReview } from '../_actions/reviewActions';
+import { createReview } from '../_actions/productActions';
 
 function ReviewEdit({ reviewProductId }: ProductReviewProps) {
   const { user } = useUser();

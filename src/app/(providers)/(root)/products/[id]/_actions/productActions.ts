@@ -2,9 +2,10 @@
 
 import { revalidatePath } from "next/cache";
 import { ReviewInput } from "@/types/review";
-import { createClient } from "@/supabase/supabaseServer";
 import { SupabaseClient } from "@supabase/supabase-js";
 import { Database } from "@/types/supabase";
+import { createClient } from "@/supabase/supabaseServer";
+// import supabaseSever from "@/supabase/supabaseServer";
 
 export async function createReview(reviewData: ReviewInput) {
     const supabseServer:SupabaseClient<Database> = createClient();
@@ -33,3 +34,30 @@ export async function getReviews(reviewProductId: string){
 
   return reviews;
 }
+
+export async function getProduct(id: string){
+  const supabseServer:SupabaseClient<Database> = createClient();
+  const { data: product, error } = await supabseServer
+    .from('Product')
+    .select('*')
+    .eq('product_id', id)
+    .single();
+
+    if (error || !product) {
+      console.error('해당 상품을 찾을 수 없습니다.', error);
+      return;
+    }
+
+  return product;
+}
+
+// export async function getUser(){
+//   const {data:userData, error} = await supabaseSever.auth.getUser();
+
+//     if (error) {
+//       console.error('로그인한 유저 정보 가져오는 중 에러 발생', error);
+//       return;
+//     }
+
+//   return userData;
+// }

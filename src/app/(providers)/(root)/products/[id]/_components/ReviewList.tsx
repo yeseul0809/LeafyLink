@@ -1,4 +1,4 @@
-import { getReviews } from '../_actions/reviewActions';
+import { getReviews } from '../_actions/productActions';
 
 export interface ProductReviewProps {
   reviewProductId: string;
