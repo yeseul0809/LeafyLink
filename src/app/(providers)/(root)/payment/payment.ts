@@ -2,7 +2,7 @@
 
 import { RequestPayParams, RequestPayResponse } from 'iamport-typings';
 import { ProductInfo } from './page';
-import supabase from '@/supabase/supabaseClient';
+import {createClient} from '@/supabase/supabaseClient';
 import { useRouter } from 'next/navigation';
 
 const paymentHandler = (productData:ProductInfo) => {  
@@ -33,7 +33,8 @@ const paymentHandler = (productData:ProductInfo) => {
 
 async function callback(rsp: any,productData: ProductInfo) {
   const { success, error_msg, merchant_uid, imp_uid } = rsp;
-  if (success) {    
+  if (success) {  
+    const supabase = createClient()  
     for (const product of productData.combinedData) {
       const { error } = await supabase
         .from('Cart')

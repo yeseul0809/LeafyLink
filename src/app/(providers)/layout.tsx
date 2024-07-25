@@ -1,8 +1,18 @@
 import QueryProvider from '@/providers/QueryProvider';
 import { PropsWithChildren } from 'react';
+import Header from './(root)/_components/Header';
+import Footer from './(root)/_components/Footer';
+import TopButton from './(root)/_components/TopButton';
 
 const ProvidersLayout = ({ children }: PropsWithChildren) => {
-  return <QueryProvider>{children}</QueryProvider>;
+  return (
+    <QueryProvider>
+      <Header />
+      {children}
+      <TopButton />
+      <Footer />
+    </QueryProvider>
+  );
 };
 
 export default ProvidersLayout;

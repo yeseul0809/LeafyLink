@@ -1,11 +1,11 @@
 'use client';
 
 import Image from 'next/image';
-import React, { useState } from 'react';
+import React from 'react';
 import paymentHandler from './payment';
 import UserEditForm from './_components/AddressForm';
 import { getUserDate } from './actions';
-import supabase from '@/supabase/supabaseClient';
+import { createClient } from '@/supabase/supabaseClient';
 import { useQuery } from '@tanstack/react-query';
 import { useSearchParams } from 'next/navigation';
 
@@ -54,6 +54,7 @@ export default function PaymentPage() {
 
   const getProductInfo = async () => {
     const productIds = products.map((product) => product.productId);
+    const supabase = createClient();
     const { data: productData, error } = await supabase
       .from('Product')
       .select()
@@ -88,6 +89,7 @@ export default function PaymentPage() {
   });
 
   const getUserInfo = async () => {
+    const supabase = createClient();
     const { data: userData } = await supabase.auth.getUser();
     const userInfo = await getUserDate(userData.user?.id!);
     return userInfo![0];
