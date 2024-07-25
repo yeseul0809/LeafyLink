@@ -22,32 +22,26 @@ interface AddressData {
   apartment: string;
 }
 
-interface AddressFormProps {
-  initialAddress: string;
-  initialDetailAddress: string;
-  initialAddressCode: string;
-  initialUserName: string;
-  avatarUrl: string;
-  initialPhone: string;
+interface UserEditFormProps {
+  initialData: {
+    address: string;
+    detailAddress: string;
+    addressCode: string;
+    phone: string;
+    userName: string;
+    avatarUrl: string;
+  };
   userId: string;
 }
 
-const UserEditFrom = ({
-  initialAddress,
-  initialDetailAddress,
-  initialAddressCode,
-  initialUserName,
-  avatarUrl,
-  initialPhone,
-  userId
-}: AddressFormProps) => {
+const UserEditForm = ({ initialData, userId }: UserEditFormProps) => {
   const wrapRef = useRef<HTMLDivElement>(null);
-  const [address, setAddress] = useState<string>(initialAddress);
-  const [postcode, setPostcode] = useState<string>(initialAddressCode);
-  const [detailAddress, setDetailAddress] = useState<string>(initialDetailAddress);
+  const [address, setAddress] = useState<string>(initialData.address);
+  const [postcode, setPostcode] = useState<string>(initialData.addressCode);
+  const [detailAddress, setDetailAddress] = useState<string>(initialData.detailAddress);
   const [extraAddress, setExtraAddress] = useState<string>('');
-  const [userName, setUserName] = useState<string>(initialUserName);
-  const [phone, setPhone] = useState<string>(initialPhone);
+  const [userName, setUserName] = useState<string>(initialData.userName);
+  const [phone, setPhone] = useState<string>(initialData.phone);
 
   useEffect(() => {
     const script = document.createElement('script');
@@ -156,12 +150,12 @@ const UserEditFrom = ({
   };
 
   const handleCancel = () => {
-    setAddress(initialAddress);
-    setPostcode(initialAddressCode);
-    setDetailAddress(initialDetailAddress);
+    setAddress(initialData.address);
+    setPostcode(initialData.addressCode);
+    setDetailAddress(initialData.detailAddress);
     setExtraAddress('');
-    setUserName(initialUserName);
-    setPhone(initialPhone);
+    setUserName(initialData.userName);
+    setPhone(initialData.phone);
     alert('변경 사항이 취소되었습니다.');
   };
 
@@ -169,7 +163,7 @@ const UserEditFrom = ({
     <div className="  ">
       {/* 이미지 컨테이너 */}
       <div className=" flex justify-center mb-4 ">
-        <img src={avatarUrl} alt="Profile Image" className="w-24 h-24 rounded-full" />
+        <img src={initialData.avatarUrl} alt="Profile Image" className="w-24 h-24 rounded-full" />
       </div>
       {/* 이름 입력 필드 */}
       <label className="font-bold text-lg ">이름</label>
@@ -256,4 +250,4 @@ const UserEditFrom = ({
   );
 };
 
-export default UserEditFrom;
+export default UserEditForm;
