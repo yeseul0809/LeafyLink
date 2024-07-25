@@ -1,41 +1,43 @@
 'use client';
-
-import supabase from '@/supabase/supabaseClient';
+import { createClient } from '@/supabase/supabaseClient';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useRef, useState } from 'react';
-
+interface Weather {
+  id: number;
+  main: string;
+  description: string;
+  icon: string;
+}
 function Header() {
   const [latitude, setLatitude] = useState('');
   const [longitude, setLongitude] = useState('');
-  const [weather, setWeather] = useState([]);
+  const [weather, setWeather] = useState<Weather>();
   const [loading, setLoading] = useState(true);
   const [isOpenMenu, setIsOpenMenu] = useState(false);
   const [isOpenSearch, setIsOpenSearch] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
   const [isLogin, setIsLogin] = useState(false);
-  const [userInfo, setUserInfo] = useState('');
   const [userName, setUserName] = useState('');
   const [userAvatar, setUserAvatar] = useState('');
-
   // 로그인 상태
   useEffect(() => {
+    const supabase = createClient();
     supabase.auth.getUser().then((res) => {
-      setUserInfo(res.data.user);
-      setUserName(res.data.user.identities[0].identity_data.full_name);
-      setUserAvatar(res.data.user.identities[0].identity_data.avatar_url);
       if (res.data.user) {
         setIsLogin(true);
+        setUserName(res.data.user.identities![0].identity_data?.full_name);
+        setUserAvatar(res.data.user.identities![0].identity_data?.avatar_url);
       } else {
         setIsLogin(false);
       }
     });
   }, []);
-
   // 로그아웃 상태
   const logout = async () => {
+    const supabase = createClient();
     const { error } = await supabase.auth.signOut();
     if (error) {
       console.error('로그아웃 실패', error);
@@ -43,13 +45,12 @@ function Header() {
       window.location.href = '/';
     }
   };
-
   // user 위치
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
       (position) => {
-        setLatitude(position.coords.latitude);
-        setLongitude(position.coords.longitude);
+        setLatitude(position.coords.latitude.toString());
+        setLongitude(position.coords.longitude.toString());
       },
       (error) => {
         setLoading(false);
@@ -57,7 +58,6 @@ function Header() {
       }
     );
   }, []);
-
   // 날씨 api
   useEffect(() => {
     if (latitude && longitude) {
@@ -71,12 +71,11 @@ function Header() {
           return response.json();
         })
         .then((data) => {
-          setWeather(data);
+          setWeather(data.weather[0]);
           setLoading(false);
         });
     }
   }, [latitude, longitude]);
-
   // 날씨 안내 문구
   const weatherComment = (description: string) => {
     if (description.includes('구름') || description.includes('흐림')) {
@@ -86,29 +85,25 @@ function Header() {
     } else if (description.includes('비')) {
       return '☔, 물을 주지 않아도 되겠어요 :)';
     } else if (description.includes('눈') || description.includes('우박')) {
-      return '⛄, 식물이 얼지 않게 주의하세요!';
+      return '⛄ 식물이 얼지 않게 주의하세요!';
     } else if (description.includes('박무') || description.includes('안개')) {
       return '🌫, 안개가 끼어 습도가 높아요';
     } else {
       return '날씨 정보가 없어요.';
     }
   };
-
   // 메뉴 토글
   const toggleMenu = () => {
     setIsOpenMenu(!isOpenMenu);
   };
-
   // 검색창 토글
   const toggleSearch = () => {
     setIsOpenSearch(!isOpenSearch);
   };
-
   // 페이지 네비게이션
   const redirect = (e: string) => {
     router.push(`${e}`);
   };
-
   return (
     <section className="w-full h-auto bg-white sticky top-0">
       <div className="w-full h-[45px] text-center flex items-center justify-center bg-zinc-50 px-[190px]">
@@ -116,12 +111,11 @@ function Header() {
           <p className="text-sm text-zinc-300 tracking-widest">Loading...☀</p>
         ) : (
           <p className="text-sm tracking-wide text-zinc-600">
-            지금 내 위치 날씨는 {weather.weather[0].description}
-            {weatherComment(weather.weather[0].description)}
+            지금 내 위치 날씨는 {weather && weather.description}
+            {weather && weatherComment(weather.description)}
           </p>
         )}
       </div>
-
       <div className="w-full h-20 px-[190px] flex items-center justify-between">
         <Link href={'/'}>
           <Image src="/icons/logo.svg" alt="logo" width={100} height={30} />
@@ -163,7 +157,6 @@ function Header() {
           </div>
         )}
       </div>
-
       <div className="w-full h-[62px] flex items-center justify-between px-[190px] border-b relative">
         <div className="flex">
           <button onClick={toggleMenu}>
@@ -213,7 +206,6 @@ function Header() {
           </button>
           <button className="ml-7">식집사템</button>
         </div>
-
         <div className="flex">
           <button className="ml-[48px]" onClick={toggleSearch}>
             <Image src="/icons/icon-search.svg" alt="search" width={32} height={32}></Image>
@@ -249,5 +241,4 @@ function Header() {
     </section>
   );
 }
-
 export default Header;
