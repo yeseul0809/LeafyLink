@@ -1,6 +1,6 @@
 'use client';
 
-import { WeatherData } from '@/types/weather';
+import supabase from '@/supabase/supabaseClient';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -15,6 +15,20 @@ function Header() {
   const [isOpenSearch, setIsOpenSearch] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
+  const [isLogin, setIsLogin] = useState(false);
+  const [userInfo, setUserInfo] = useState('');
+
+  // 로그인 상태
+  useEffect(() => {
+    supabase.auth.getUser().then((res) => {
+      setUserInfo(res.data.user.identities[0].identity_data);
+    });
+    if (userInfo !== null) {
+      setIsLogin(true);
+    } else {
+      setIsLogin(false);
+    }
+  }, []);
 
   // user 위치
   useEffect(() => {
@@ -53,11 +67,11 @@ function Header() {
   const weatherComment = (description: string) => {
     if (description.includes('구름') || description.includes('흐림')) {
       return '🌥, 광합성 하기 어려운 날이에요.';
-    } else if (description.includes('맑음')) {
+    } else if (description.includes('맑음') || description.includes('해')) {
       return '🌞, 광합성 하기 딱 좋은 날!';
     } else if (description.includes('비')) {
       return '☔, 물을 주지 않아도 되겠어요 :)';
-    } else if (description.includes('눈')) {
+    } else if (description.includes('눈') || description.includes('우박')) {
       return '⛄, 식물이 얼지 않게 주의하세요!';
     } else if (description.includes('박무') || description.includes('안개')) {
       return '🌫, 안개가 끼어 습도가 높아요';
@@ -96,30 +110,42 @@ function Header() {
 
       <div className="w-full h-20 px-[190px] flex items-center justify-between">
         <Link href={'/'}>
-          <Image src="/icons/logo.svg" alt="logo" width={100} height={30}></Image>
+          <Image src="/icons/logo.svg" alt="logo" width={100} height={30} />
         </Link>
-        <div>
-          <button
-            className="mr-10 text-zinc-500 hover:text-zinc-950"
-            onClick={() => {
-              redirect('/login');
-            }}
-          >
-            로그인
-          </button>
-          <button
-            className="text-zinc-500 hover:text-zinc-950"
-            onClick={() => {
-              redirect('/login');
-            }}
-          >
-            회원가입
-          </button>
-        </div>
-        {/* <div>
-          <Image></Image> <p>{user.name}님</p>
-          <button>로그아웃</button>
-        </div> */}
+        {isLogin ? (
+          <div className="로그인O flex items-center text-zinc-500">
+            <Image
+              src={userInfo.avatar_url}
+              alt="user profile image"
+              width={28}
+              height={28}
+              className="rounded-full h-[28px]"
+            />
+            <Link href={'/mypage'}>
+              <p className="ml-3 hover:text-zinc-950">{userInfo.full_name}님</p>
+            </Link>
+            <button className="ml-10 hover:text-zinc-950">로그아웃</button>
+          </div>
+        ) : (
+          <div className="로그인X">
+            <button
+              className="mr-10 text-zinc-500 hover:text-zinc-950"
+              onClick={() => {
+                redirect('/login');
+              }}
+            >
+              로그인
+            </button>
+            <button
+              className="text-zinc-500 hover:text-zinc-950"
+              onClick={() => {
+                redirect('/login');
+              }}
+            >
+              회원가입
+            </button>
+          </div>
+        )}
       </div>
 
       <div className="w-full h-[62px] flex items-center justify-between px-[190px] border-b relative">
