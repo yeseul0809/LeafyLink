@@ -5,7 +5,7 @@ import React from 'react';
 function Footer() {
   return (
     <section className="w-full h-auto flex">
-      <div className="w-full h-auto px-[190px] py-[37px] bg-[#A6A6A6] text-[14px] text-[#505050]">
+      <div className="w-full h-auto px-[190px] py-[37px] border-y text-[14px] text-[#505050]">
         <Link href={'/'}>
           <Image src="/icons/logo.svg" alt="logo" width={100} height={30}></Image>
         </Link>
@@ -32,7 +32,6 @@ function Footer() {
           </p>
         </div>
       </div>
-      <div></div>
     </section>
   );
 }
