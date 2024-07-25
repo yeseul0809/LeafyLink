@@ -294,6 +294,7 @@ export type Database = {
           created_at: string
           description: string
           rating: number | null
+  
           review_id: string
           review_product_id: string
           review_user_id: string
