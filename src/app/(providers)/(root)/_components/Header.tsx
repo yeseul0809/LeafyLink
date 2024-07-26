@@ -29,6 +29,7 @@ function Header() {
   useEffect(() => {
     const supabase = createClient();
     supabase.auth.getUser().then((res) => {
+      console.log(res);
       if (res.data.user) {
         setIsLogin(true);
         setUserName(res.data.user.identities![0].identity_data?.full_name);
@@ -98,17 +99,21 @@ function Header() {
   // 메뉴 토글
   const toggleMenu = () => {
     setIsOpenMenu(!isOpenMenu);
+    setIsOpenSearch(false);
+    console.log('열림');
   };
   // 검색창 토글
   const toggleSearch = () => {
     setIsOpenSearch(!isOpenSearch);
+    setIsOpenMenu(false);
+    console.log('열림');
   };
   // 페이지 네비게이션
   const redirect = (e: string) => {
     router.push(`${e}`);
   };
   return (
-    <section className="w-full h-auto bg-white sticky top-0">
+    <section className="w-full h-auto bg-white sticky top-0 z-10">
       <div className="w-full h-[45px] text-center flex items-center justify-center bg-zinc-50 px-[190px]">
         {loading ? (
           <p className="text-sm text-zinc-300 tracking-widest">Loading...☀</p>
