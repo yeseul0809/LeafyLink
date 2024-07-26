@@ -2,7 +2,8 @@
 
 import useUser from '@/hooks/useUser';
 import { useState } from 'react';
-import { ReviewInput } from '@/types/review';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { Review, ReviewInput } from '@/types/review';
 import { createReview } from '../_actions/productActions';
 import StarRating from './StarRating';
 
@@ -12,8 +13,21 @@ interface ReviewEditProps {
 
 function ReviewEdit({ reviewProductId }: ReviewEditProps) {
   const { user } = useUser();
+  const queryClient = useQueryClient();
   const [rating, setRating] = useState<number>(0);
   const [review, setReview] = useState<string>('');
+
+  const mutation = useMutation<Review[], Error, ReviewInput>({
+    mutationFn: createReview,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['reviews', reviewProductId] });
+      setRating(0);
+      setReview('');
+    },
+    onError: (error: any) => {
+      console.error('리뷰 등록 중 에러 발생:', error);
+    }
+  });
 
   const handleReviewSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -31,13 +45,7 @@ function ReviewEdit({ reviewProductId }: ReviewEditProps) {
       review_user_name: user.user_metadata.name
     };
 
-    try {
-      await createReview(reviewData);
-      setRating(0);
-      setReview('');
-    } catch (error) {
-      console.error('리뷰 등록 중 에러 발생:', error);
-    }
+    mutation.mutate(reviewData);
   };
 
   return (

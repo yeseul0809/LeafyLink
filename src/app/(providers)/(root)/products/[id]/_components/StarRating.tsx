@@ -11,7 +11,7 @@ function StarRating({ rating, setRating }: StarRatingProps) {
       {Array.from({ length: 5 }, (_, index) => {
         const star = index + 1;
         const isActive = rating >= star;
-        const starClass = `cursor-pointer text-4xl ${isActive ? 'text-black' : 'text-gray-400'}`;
+        const starClass = `cursor-pointer text-4xl ${isActive ? 'text-green-300' : 'text-gray-400'}`;
         return (
           <label key={star} className={starClass} htmlFor={`rating-${star}`}>
             <input

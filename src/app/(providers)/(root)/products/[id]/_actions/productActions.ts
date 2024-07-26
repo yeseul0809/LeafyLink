@@ -1,40 +1,41 @@
 'use server';
 
 import { revalidatePath } from "next/cache";
-import { ReviewInput } from "@/types/review";
+import { Review, ReviewInput } from "@/types/review";
 import { SupabaseClient } from "@supabase/supabase-js";
 import { Database } from "@/types/supabase";
 import { createClient } from "@/supabase/supabaseServer";
 import { cache } from "react";
-// import supabaseSever from "@/supabase/supabaseServer";
 
-export async function createReview(reviewData: ReviewInput) {
+export async function createReview(reviewData: ReviewInput): Promise<Review[]> {
     const supabseServer:SupabaseClient<Database> = createClient();
-    const { data, error } = await supabseServer.from('Review').insert([reviewData]).select('*');
-
+    const { data, error } = await supabseServer.from('Review').insert(reviewData).select('*');
+    
     if (error) {
       console.error('리뷰 데이터 삽입 중 에러발생', error);
-      return;
+      throw new Error(error.message);
     }
 
     revalidatePath(`/products/${reviewData.review_product_id}`);
     return data;
   }
 
-export async function getReviews(reviewProductId: string){
-  const supabseServer:SupabaseClient<Database> = createClient();
-  const { data: reviews, error } = await supabseServer
-  .from('Review')
-  .select('*')
-  .eq('review_product_id', reviewProductId);
-
-  if (error) {
-    console.error('리뷰 데이터 가져오는 중 에러발생', error);
-    return;
+  export async function getReviews(reviewProductId: string, limit: number, offset: number) {
+    const supabaseServer: SupabaseClient<Database> = createClient();
+    const { data: reviews, error, count } = await supabaseServer
+      .from('Review')
+      .select('*', { count: 'exact' })  
+      .eq('review_product_id', reviewProductId)
+      .order('created_at', { ascending: false })
+      .range(offset, offset + limit - 1);
+  
+    if (error) {
+      console.error('리뷰 데이터 가져오는 중 에러발생', error);
+      throw new Error(error.message);
+    }
+  
+    return { reviews, totalCount: count };
   }
-
-  return reviews;
-}
 
  async function getProductRequest(id: string){
   const supabseServer:SupabaseClient<Database> = createClient();
