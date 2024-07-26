@@ -126,7 +126,7 @@ function Header() {
       </div>
       <div className="w-full h-20 px-[190px] flex items-center justify-between">
         <Link href={'/'}>
-          <Image src="/icons/logo.svg" alt="logo" width={100} height={30} />
+          <Image src="/icons/logo.svg" alt="logo" width={152} height={41} />
         </Link>
         {isLogin ? (
           <div className="로그인O flex items-center text-zinc-500">
