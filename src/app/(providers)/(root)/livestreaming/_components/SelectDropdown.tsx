@@ -8,8 +8,12 @@ interface Option {
   label: string;
 }
 
-export default function SelectDropdown() {
-  const online: Option[] = [
+interface SelectDropdownProps {
+  onCategoryChange: (category: string) => void;
+}
+
+export default function SelectDropdown({ onCategoryChange }: SelectDropdownProps) {
+  const category: Option[] = [
     { value: 'null', label: '카테고리를 선택하세요' },
     { value: '씨앗', label: '씨앗' },
     { value: '모종', label: '모종' },
@@ -17,7 +21,7 @@ export default function SelectDropdown() {
     { value: '흙,비료', label: '흙,비료' },
     { value: '원예용품', label: '원예용품' }
   ];
-  const [selectOnline, setSelectOnline] = useState<Option | null>(online[0]);
+  const [categoryState, setCategoryState] = useState<Option | null>(category[0]);
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
@@ -25,7 +29,10 @@ export default function SelectDropdown() {
   }, []);
 
   const handleChange = (newValue: SingleValue<Option>, actionMeta: ActionMeta<Option>) => {
-    setSelectOnline(newValue);
+    setCategoryState(newValue);
+    if (newValue) {
+      onCategoryChange(newValue.value);
+    }
   };
 
   if (!isMounted) {
@@ -33,6 +40,11 @@ export default function SelectDropdown() {
   }
 
   return (
-    <Select options={online} onChange={handleChange} defaultValue={online[0]} className="w-[50%]" />
+    <Select
+      options={category}
+      onChange={handleChange}
+      defaultValue={category[0]}
+      className="w-[50%]"
+    />
   );
 }
