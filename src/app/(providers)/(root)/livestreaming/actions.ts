@@ -1,6 +1,7 @@
 'use server';
 
 import { createClient } from '@/supabase/supabaseServer';
+import { redirect } from 'next/navigation';
 import { v4 as uuidv4 } from 'uuid';
 
 export const getVideos = async () => {
@@ -107,5 +108,52 @@ export const startLiveStreaming = async (_: any, formData: FormData) => {
 
   if (error) {
     console.log('error::', error);
+    return;
   }
+
+  redirect(`/livestreaming/${stream.livestream_product_id}_${stream.stream_id}`);
+};
+
+interface Livestream {
+  livestream_id: string;
+  stream_title: string;
+  category: string;
+  description: string;
+  stream_key: string;
+  stream_id: string;
+  video_uid: string;
+  create_at: string; // ISO 8601 날짜 문자열
+  livestream_product_id: string;
+  thumbnail_url: string;
+  product_title: string;
+  livestream_seller_id: string;
+}
+
+export const getStream = async (id: string): Promise<Livestream | null> => {
+  const supabaseServer = createClient();
+  const { data, error } = await supabaseServer.from('Livestream').select().eq('stream_id', id);
+
+  if (error) {
+    console.error('Error fetching stream:', error);
+    return null;
+  }
+
+  if (!data || data.length === 0) {
+    return null;
+  }
+
+  return data[0] as Livestream;
+};
+
+interface ProductPrice {
+  price: number;
+}
+
+export const getProductPrice = async (productId: string): Promise<ProductPrice[]> => {
+  const supabaseServer = createClient();
+  const { data, error } = await supabaseServer
+    .from('Product')
+    .select('price')
+    .eq('product_id', productId);
+  return data as ProductPrice[];
 };
