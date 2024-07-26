@@ -4,10 +4,12 @@ import { notFound } from 'next/navigation';
 import { createClient } from '@/supabase/supabaseServer';
 import Image from 'next/image';
 import Link from 'next/link';
+import LiveQuitButton from '../_components/LiveQuitButton';
 
 export default async function StreamingPage({ params }: { params: { id: string } }) {
   const supabaseServer = createClient();
   const streamId = params.id.split('_')[1];
+  // const streamId = params.id;
   const stream = await getStream(streamId);
   if (!stream) {
     return notFound();
@@ -15,7 +17,7 @@ export default async function StreamingPage({ params }: { params: { id: string }
   const sessionData = await supabaseServer.auth.getUser();
   const sessionId = sessionData.data.user?.id;
   // console.log(sessionData.data.user?.user_metadata.full_name);
-  // console.log(stream);
+  console.log(stream);
   const productPrice = await getProductPrice(stream.livestream_product_id);
   console.log(productPrice);
 
@@ -62,6 +64,7 @@ export default async function StreamingPage({ params }: { params: { id: string }
             <span className="font-semibold">Secret Key:</span>
             <span>{stream.stream_key}</span>
           </div>
+          <LiveQuitButton streamId={streamId} />
         </div>
       ) : null}
     </div>

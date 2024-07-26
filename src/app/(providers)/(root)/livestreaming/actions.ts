@@ -1,6 +1,7 @@
 'use server';
 
 import { createClient } from '@/supabase/supabaseServer';
+import { Video } from '@/types/livestream';
 import { redirect } from 'next/navigation';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -10,7 +11,8 @@ export const getVideos = async () => {
     headers: {
       'Content-Type': 'application/json',
       // 'X-Auth-Email': 'raccoonboy0803@gmail.com',
-      Authorization: `Bearer ${process.env.CLOUDFLARE_API_KEY}`
+      Authorization: `Bearer ${process.env.CLOUDFLARE_API_KEY}`,
+      'Cache-Control': 'no-cache'
     }
   };
 
@@ -64,6 +66,7 @@ export const startLiveStreaming = async (_: any, formData: FormData) => {
       })
     }
   );
+
   const streamServerData = await response.json();
   const sellerSession = await supabaseServer.auth.getUser();
 
@@ -156,4 +159,50 @@ export const getProductPrice = async (productId: string): Promise<ProductPrice[]
     .select('price')
     .eq('product_id', productId);
   return data as ProductPrice[];
+};
+
+export const getProductId = async (videoUid: string) => {
+  const supabaseServer = createClient();
+  const { data, error } = await supabaseServer
+    .from('Livestream')
+    .select('livestream_product_id')
+    .eq('video_uid', videoUid);
+  // .single(); // 단일 행 반환
+  if (error) {
+    console.error('Error fetching product id:', error);
+    return null;
+  }
+
+  return data;
+};
+
+export const addProductIdsToVideos = async (videos: Video[]) => {
+  const updatedVideos = await Promise.all(
+    videos.map(async (video) => {
+      const productId = await getProductId(video.uid);
+      return { ...video, product_id: productId };
+    })
+  );
+  return updatedVideos;
+};
+
+interface LivestreamDB {
+  livestream_id: string;
+  stream_title: string;
+  category: string;
+  description: string;
+  stream_key: string;
+  stream_id: string;
+  video_uid: string;
+  create_at: string; // ISO 8601 날짜 문자열
+  livestream_product_id: string;
+  thumbnail_url: string;
+  product_title: string;
+  livestream_seller_id: string;
+}
+
+export const getAllLiveStreamDB = async (): Promise<LivestreamDB[]> => {
+  const supabaseServer = createClient();
+  const { data, error } = await supabaseServer.from('Livestream').select('*');
+  return data as LivestreamDB[];
 };

@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useRef, useState } from 'react';
-import supabase from '@/supabase/supabaseClient';
+import { createClient } from '@/supabase/supabaseClient';
 import Image from 'next/image';
 
 declare global {
@@ -129,6 +129,7 @@ export default function UserEditForm({
     extraAddress: string
   ) => {
     const fullAddress = `${newAddress}${extraAddress}`;
+    const supabase = createClient();
     const { error } = await supabase
       .from('User')
       .update({
