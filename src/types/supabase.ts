@@ -52,6 +52,7 @@ export type Database = {
           chatroom_seller_id: string | null
           chatroom_user_id: string
           created_at: string
+          message: string | null
         }
         Insert: {
           chatroom_id: string
@@ -59,6 +60,7 @@ export type Database = {
           chatroom_seller_id?: string | null
           chatroom_user_id: string
           created_at?: string
+          message?: string | null
         }
         Update: {
           chatroom_id?: string
@@ -66,6 +68,7 @@ export type Database = {
           chatroom_seller_id?: string | null
           chatroom_user_id?: string
           created_at?: string
+          message?: string | null
         }
         Relationships: [
           {
@@ -253,10 +256,10 @@ export type Database = {
           category: string
           created_at: string | null
           description: string
-          price: number | string
+          price: number
           product_id: string
           productseller_id: string
-          stock: number | string
+          stock: number
           thumbnail_url: string
           title: string
           updated_at: string | null
@@ -265,10 +268,10 @@ export type Database = {
           category: string
           created_at?: string | null
           description: string
-          price: number | string
+          price: number
           product_id: string
           productseller_id: string
-          stock: number | string
+          stock: number
           thumbnail_url: string
           title: string
           updated_at?: string | null
@@ -277,10 +280,10 @@ export type Database = {
           category?: string
           created_at?: string | null
           description?: string
-          price?: number | string
+          price?: number
           product_id?: string
           productseller_id?: string
-          stock?: number | string
+          stock?: number
           thumbnail_url?: string
           title?: string
           updated_at?: string | null
