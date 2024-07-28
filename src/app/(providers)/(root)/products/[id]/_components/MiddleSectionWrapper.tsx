@@ -6,12 +6,12 @@ import ProductDescription from './Description';
 import ActiveTab from './ActiveTab';
 import ReviewEdit from './ReviewEdit';
 
-interface ActiveTabWrapperProps {
+interface MiddleSectionWrapperProps {
   productDescription: string;
   reviewProductId: string;
 }
 
-function ActiveTabWrapper({ productDescription, reviewProductId }: ActiveTabWrapperProps) {
+function MiddleSectionWrapper({ productDescription, reviewProductId }: MiddleSectionWrapperProps) {
   const [activeTab, setActiveTab] = useState('description');
   const reviewRef = useRef<HTMLDivElement | null>(null);
 
@@ -36,4 +36,4 @@ function ActiveTabWrapper({ productDescription, reviewProductId }: ActiveTabWrap
   );
 }
 
-export default ActiveTabWrapper;
+export default MiddleSectionWrapper;
