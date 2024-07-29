@@ -90,20 +90,26 @@ export default function QuantityButton({ productId, price }: { productId: string
 
   return (
     <>
-      <div className="ring-1 ring-[#E5E5EC] w-[122px] h-[36px] mt-3 grid grid-cols-3">
-        <button className="border-r border-[#E5E5EC] h-full text-xl" onClick={handleDecrease}>
+      <div className="ring-1 ring-[#E5E5EC] w-[122px] h-[24px] mt-3 grid grid-cols-3">
+        <button
+          className="border-r border-[#E5E5EC] h-[24px] flex items-center justify-center"
+          onClick={handleDecrease}
+        >
           -
         </button>
         <input
           type="number"
-          className="text-center w-full"
+          className="text-center h-[24px]"
           value={value}
           onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
             setValue(Number(event.target.value))
           }
           min="1"
         />
-        <button className="border-l border-[#E5E5EC] h-full text-xl" onClick={handleIncrease}>
+        <button
+          className="flex border-l border-[#E5E5EC] h-[24px] justify-center items-center"
+          onClick={handleIncrease}
+        >
           +
         </button>
       </div>

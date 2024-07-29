@@ -25,7 +25,7 @@ export default function Checkbox({ productId }: { productId: string }) {
     return (
       <input
         type="checkbox"
-        className="absolute -top-0 -left-10 w-[18px] h-[18px]"
+        className="absolute -top-0 left-0 w-[18px] h-[18px]"
         checked={isChecked?.is_checked}
         onChange={handleToggle}
       />

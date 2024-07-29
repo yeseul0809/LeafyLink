@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { getUserSession, allToggleCheckbox, Product } from '../actions';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { createClient } from '@/supabase/supabaseClient';
+import { revalidatePath } from 'next/cache';
 
 const getClientUserData = async () => {
   const supabase = createClient();
@@ -70,16 +71,22 @@ export default function AllCheckbox({ productIds }: { productIds: string[] }) {
         )
       );
 
-      queryClient.invalidateQueries({ queryKey: ['getCartStatus', userId] });
+      // queryClient.invalidateQueries({ queryKey: ['getCartStatus', userId] });
     }
   };
 
   if (isUserFetched) {
     return (
-      <>
-        <input type="checkbox" id="allcheck" onChange={handleAllToggle} checked={isChecked} />
+      <div>
+        <input
+          type="checkbox"
+          id="allcheck"
+          onChange={handleAllToggle}
+          checked={isChecked}
+          className="w-[18px] h-[18px] mr-2"
+        />
         <label htmlFor="allcheck">모두 선택</label>
-      </>
+      </div>
     );
   }
 }

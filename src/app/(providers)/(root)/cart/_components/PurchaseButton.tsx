@@ -49,7 +49,10 @@ export default function PurchaseButton() {
   };
 
   return (
-    <button onClick={() => handleNavigate(data)} className="bg-[#D9D9D9] mt-4 h-[71px] rounded-md">
+    <button
+      onClick={() => handleNavigate(data)}
+      className="bg-[#3BB873] mt-4 h-[51px] rounded-md text-[16px]"
+    >
       구매하기
     </button>
   );

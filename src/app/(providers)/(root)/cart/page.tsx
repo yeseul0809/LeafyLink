@@ -1,5 +1,5 @@
 import React from 'react';
-import { deleteCart, getCartData, getProductData, getUserSession } from './actions';
+import { deleteCart, getCartData, getProductData, getUserSession, IsCheck } from './actions';
 import Image from 'next/image';
 import QuantityButton from './_components/QuantityButton';
 import ProductPrice from './_components/ProductPrice';
@@ -19,8 +19,6 @@ export default async function CartPage() {
       productData = await getProductData(cartData);
     }
   }
-  // console.log('productData::', productData);
-  console.log('userData::', userData);
 
   const productIds = productData?.map((data) => data.product_id);
 
@@ -30,17 +28,20 @@ export default async function CartPage() {
       {cartData && (
         <h2 className="text-[18px] font-semibold">{`장바구니 상품(${cartData?.length})`}</h2>
       )}
-      <div className="border-t border-gray-300 mt-2" />
-      <AllCheckbox productIds={productIds!} />
-      <SelectDeleteButton userId={userData?.user.id} />
-      <div className="flex items-start *:my-14">
+      <div className="border-t border-gray-300 mt-4" />
+      <div className="flex items-start my-4">
         {productData && productData.length !== 0 ? (
-          <section className="w-full border-[#D9D9D9] border rounded-md flex py-[52px] px-[87px] flex-col">
+          <section className="w-full rounded-md flex flex-col">
+            <div className="flex gap-4">
+              <AllCheckbox productIds={productIds!} />
+              <div className="border-l border-[#E5E5EC] h-[22px]"></div>
+              <SelectDeleteButton userId={userData?.user.id} />
+            </div>
             {productData.map((data) => {
               return (
                 <div
                   key={data.product_id}
-                  className="flex border-b-2 last:border-none mb-[52px] last:mb-0 pb-[52px] last:pb-0 items-center justify-between relative"
+                  className="flex border-b-2 last:border-none last:mb-0 pb-[52px] last:pb-0 items-center justify-between relative pl-8 mt-10"
                 >
                   <Checkbox productId={data.product_id} />
                   <div className="flex items-center">
@@ -48,10 +49,11 @@ export default async function CartPage() {
                     <div className="ml-8">
                       <p className="text-[18px] font-semibold mb-2">{data.title}</p>
                       <p className="text-[12px]">배송비 무료</p>
-                      <QuantityButton productId={data.product_id} price={data.price} />
                     </div>
                   </div>
-                  <div className="flex gap-8">
+
+                  <div className="flex gap-8 items-center">
+                    <QuantityButton productId={data.product_id} price={data.price} />
                     <div className="text-[18px] font-semibold">{data.price.toLocaleString()}원</div>
                     <DeleteButton productId={data.product_id} />
                   </div>
@@ -64,7 +66,7 @@ export default async function CartPage() {
         )}
 
         {productData && productData.length !== 0 && (
-          <div className="flex flex-col w-[370px] h-[219px] ml-4">
+          <div className="flex flex-col w-[370px] ml-4 bg-[#FEFEFA] mt-14">
             <div className="ring-1 ring-[#D9D9D9] rounded-md w-full h-full flex flex-col items-end justify-center p-6">
               <div className="text-[14px] w-full text-center flex justify-between mb-3">
                 <span>총 상품금액</span>
@@ -75,7 +77,7 @@ export default async function CartPage() {
                 <span>무료</span>
               </div>
               <div className="border-t border-gray-300 mt-2 w-full" />
-              <div className="w-full text-center flex justify-between text-[18px] mt-5">
+              <div className="w-full text-center flex justify-between text-[16px] mt-5">
                 <span>결제 예정 금액</span>
                 <ProductPrice />
               </div>
