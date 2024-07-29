@@ -10,7 +10,7 @@ function Recommend() {
           <p className="mb-[5px]">판매자명/브랜드명 최대 1줄</p>
           <h3 className="text-[32px] mb-[10px]">제품명 최대 2줄 넘어가면 말줄임표</h3>
           <h3 className="text-[32px] font-semibold mb-[15px]">99,999,999원</h3>
-          <p className="w-[610px] h-[72px] text-ellipsis overflow-hidden">
+          <p className="line-clamp-3 text-ellipsis overflow-hidden text-[#555555]">
             이 식물을 추천하는 이유 최대 3줄까지 노출 이 식물을 추천하는 이유 최대 3줄까지 노출 이
             식물을 추천하는 이유 최대 3줄까지 노출 이 식물을 추천하는 이유 최대 3줄까지 노출 이
             식물을 추천하는 이유 최대 3줄까지 노출 이 식물을 추천하는 이유 최대 3줄까지 노출 이
