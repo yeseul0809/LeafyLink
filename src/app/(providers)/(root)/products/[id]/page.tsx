@@ -41,6 +41,7 @@ async function ProductDetailPage({ params }: ParamsProps) {
             productId={product.product_id}
             productPrice={product.price}
             productTitle={product.title}
+            productSellerId={product.product_seller_id}
           />
         </div>
       </section>

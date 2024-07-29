@@ -258,7 +258,7 @@ export type Database = {
           description: string
           price: number
           product_id: string
-          productseller_id: string
+          product_seller_id: string
           stock: number
           thumbnail_url: string
           title: string
@@ -270,7 +270,7 @@ export type Database = {
           description: string
           price: number
           product_id: string
-          productseller_id: string
+          product_seller_id: string
           stock: number
           thumbnail_url: string
           title: string
@@ -282,7 +282,7 @@ export type Database = {
           description?: string
           price?: number
           product_id?: string
-          productseller_id?: string
+          product_seller_id?: string
           stock?: number
           thumbnail_url?: string
           title?: string

@@ -3,7 +3,6 @@
 import useUser from '@/hooks/useUser';
 import { createClient } from '@/supabase/supabaseClient';
 import { Message } from '@/types/message';
-import { useSearchParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 
 interface ParamsProps {
@@ -13,20 +12,20 @@ interface ParamsProps {
 function ChatPage({ params }: ParamsProps) {
   const supabase = createClient();
   const [isMessagesLoaded, setIsMessagesLoaded] = useState<boolean>(false);
-
   const [messages, setMessages] = useState<Message[]>([]);
   const [newMessage, setNewMessage] = useState<string>('');
-  //   const searchParams = useSearchParams();
-  //   const chatroomId = searchParams.get('id');
+  const [sellerId, setSellerId] = useState<string>('');
+  const [isSeller, setIsSeller] = useState<boolean>(false);
   const { id: chatroomId } = params;
   const { user } = useUser();
 
   useEffect(() => {
     if (chatroomId) {
+      fetchChatroomInfo();
       fetchMessages();
 
       const channel = supabase
-        .channel('message')
+        .channel('Message')
         .on(
           'postgres_changes',
           {
@@ -48,6 +47,21 @@ function ChatPage({ params }: ParamsProps) {
     }
   }, [chatroomId, supabase]);
 
+  const fetchChatroomInfo = async () => {
+    const { data, error } = await supabase
+      .from('Chatroom')
+      .select('chatroom_seller_id')
+      .eq('chatroom_id', chatroomId)
+      .single();
+
+    if (error) {
+      console.log('채팅방 seller 정보 가져오는 중 에러발생', error);
+    } else if (data) {
+      setSellerId(data.chatroom_seller_id);
+      // setIsSeller(data.chatroom_seller_id === user.id);
+    }
+  };
+
   const fetchMessages = async () => {
     const { data, error } = await supabase
       .from('Message')
@@ -65,22 +79,21 @@ function ChatPage({ params }: ParamsProps) {
 
   const sendMessage = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(chatroomId);
-    console.log(user.id);
 
     if (!chatroomId || !user) {
       console.error('채팅방 ID 또는 사용자 정보가 누락되었습니다.');
-
       return;
     }
 
-    const { error } = await supabase.from('Message').insert({
-      message_chatroom_id: chatroomId,
-      message_user_id: user.id,
-      message_seller_id: '00067b01-245f-452f-8cd0-8639df5e9ef7',
-      payload: newMessage,
-      is_read: false
-    });
+    const { error } = await supabase.from('Message').insert([
+      {
+        message_chatroom_id: chatroomId,
+        message_user_id: user.id,
+        message_seller_id: sellerId,
+        payload: newMessage,
+        is_read: false
+      }
+    ]);
 
     if (error) {
       console.error('메세지 보내는 중 에러발생', error.message, error.details);
@@ -93,11 +106,11 @@ function ChatPage({ params }: ParamsProps) {
     <div className="flex flex-col items-center justify-center">
       <div>
         {isMessagesLoaded && messages.length === 0 ? (
-          <p>대화중인 채팅방이 없습니다.</p>
+          <p>이전 대화내역이 없습니다.</p>
         ) : (
           messages.map((msg) => (
             <div key={msg.message_id}>
-              <strong>{msg.message_user_id === user.id ? 'You' : 'Seller'}:</strong> {msg.payload}
+              <strong>{msg.message_user_id === user.id ? '나' : '상대방'}:</strong> {msg.payload}
             </div>
           ))
         )}
