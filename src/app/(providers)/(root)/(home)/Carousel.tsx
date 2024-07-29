@@ -10,12 +10,7 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 
-const images = [
-  'https://via.placeholder.com/900x460',
-  'https://via.placeholder.com/900x460',
-  'https://via.placeholder.com/900x460',
-  'https://via.placeholder.com/900x460'
-];
+const images = ['/carousel(1).jpg', '/carousel(2).jpg', '/carousel(3).jpg'];
 
 function Carousel() {
   return (
@@ -25,7 +20,7 @@ function Carousel() {
         spaceBetween={30}
         loop={true}
         autoplay={{
-          delay: 2500,
+          delay: 5000,
           disableOnInteraction: false
         }}
         pagination={{
