@@ -3,7 +3,7 @@ import React from 'react';
 
 function Categories() {
   return (
-    <div className="w-[1020px] grid grid-cols-5 gap-5 mx-auto mt-[74px] text-center justify-items-center">
+    <div className="w-[1020px] grid grid-cols-5 gap-[175px] mx-auto mt-[120px] text-center justify-items-center">
       <Link href="/" className="w-[120px]">
         <img src="/icons/icon-seed.svg" alt="씨앗" className="w-[120px] h-[120px]" />
         <p className="text-center mt-6">씨앗</p>

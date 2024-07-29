@@ -11,10 +11,10 @@ import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 
 const images = [
-  'https://via.placeholder.com/1020x461',
-  'https://via.placeholder.com/1020x461',
-  'https://via.placeholder.com/1020x461',
-  'https://via.placeholder.com/1020x461'
+  'https://via.placeholder.com/900x460',
+  'https://via.placeholder.com/900x460',
+  'https://via.placeholder.com/900x460',
+  'https://via.placeholder.com/900x460'
 ];
 
 function Carousel() {
@@ -60,34 +60,6 @@ function Carousel() {
           </div>
         </div>
       </Swiper>
-      {/* <Swiper
-        slidesPerView={1}
-        spaceBetween={30}
-        loop={true}
-        autoplay={{
-          delay: 2500,
-          disableOnInteraction: false
-        }}
-        pagination={{
-          clickable: true
-        }}
-        navigation={true}
-        modules={[Autoplay, Pagination, Navigation]}
-        className="mySwiper w-7/12 h-[461px] bg-zinc-300"
-      >
-        <div>
-          <SwiperSlide className="w-[1020px] h-[461px]">
-            <img src="/carousel(1).jpg" alt="carousel" className="w-full object-cover h-[461px]" />
-          </SwiperSlide>
-          <SwiperSlide className="w-[1020px] h-auto">
-            <img src="/carousel(2).jpg" alt="carousel" className="w-full object-cover h-[461px]" />
-          </SwiperSlide>
-          <SwiperSlide className="w-[1020px] h-auto">
-            <img src="/carousel(3).jpg" alt="carousel" className="w-full object-cover h-[461px]" />
-          </SwiperSlide>
-        </div>
-
-      </Swiper> */}
     </div>
   );
 }

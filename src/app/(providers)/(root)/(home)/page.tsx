@@ -3,6 +3,10 @@ import Carousel from './Carousel';
 import Categories from './Categories';
 import NewProduct from './NewProduct';
 import LiveCommerce from './LiveCommerce';
+import Goods from './Goods';
+import Recommend from './Recommend';
+import BestSeller from './BestSeller';
+import Advertising from './Advertising';
 
 function Home() {
   return (
@@ -11,6 +15,10 @@ function Home() {
       <Categories />
       <NewProduct />
       <LiveCommerce />
+      <Goods />
+      <Recommend />
+      <BestSeller />
+      <Advertising />
     </div>
   );
 }

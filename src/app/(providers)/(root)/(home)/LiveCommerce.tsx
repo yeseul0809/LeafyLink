@@ -2,9 +2,9 @@ import React from 'react';
 
 function LiveCommerce() {
   return (
-    <div className="w-full h-[800px] bg-[#BABABA]">
-      <h2 className="text-center text-[36px]">라이브커머스</h2>
-    </div>
+    <section className="w-full h-[800px] bg-[#F9F3CF] mx-auto mt-[145px] pb-[145px]">
+      <h2 className="text-center text-[32px] mb-[38px] pt-[85px]">라이브커머스</h2>
+    </section>
   );
 }
 

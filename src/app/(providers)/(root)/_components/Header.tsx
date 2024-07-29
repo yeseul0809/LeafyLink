@@ -194,8 +194,13 @@ function Header() {
               </ul>
             </div>
           )}
-          <button className="ml-7 flex text-[#FF0000]">
-            라이브커머스{' '}
+          <button
+            className="ml-7 flex text-[#FF0000]"
+            onClick={() => {
+              redirect('/livestreaming');
+            }}
+          >
+            라이브커머스
             <Image
               src="/icons/icon-live.svg"
               alt="live"
@@ -212,13 +217,25 @@ function Header() {
           >
             베스트셀러
           </button>
-          <button className="ml-7">식집사템</button>
+          <button
+            className="ml-7"
+            onClick={() => {
+              redirect('/livestreaming');
+            }}
+          >
+            식집사템
+          </button>
         </div>
         <div className="flex">
           <button className="ml-[48px]" onClick={toggleSearch}>
             <Image src="/icons/icon-search.svg" alt="search" width={32} height={32}></Image>
           </button>
-          <button className="ml-[48px]">
+          <button
+            className="ml-[48px]"
+            onClick={() => {
+              redirect('/livestreaming');
+            }}
+          >
             <Image src="/icons/icon-message.svg" alt="message" width={32} height={32}></Image>
           </button>
           <button className="ml-[48px]">
