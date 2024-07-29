@@ -89,22 +89,38 @@ export default function QuantityButton({ productId, price }: { productId: string
   };
 
   return (
-    <div className="number-input">
-      <button className="minus" onClick={handleDecrease}>
-        -
-      </button>
-      <input
-        type="number"
-        className="text-center"
-        value={value}
-        onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-          setValue(Number(event.target.value))
-        }
-        min="1"
-      />
-      <button className="plus" onClick={handleIncrease}>
-        +
-      </button>
-    </div>
+    <>
+      <div className="ring-1 ring-[#E5E5EC] w-[122px] h-[36px] mt-3 grid grid-cols-3">
+        <button className="border-r border-[#E5E5EC] h-full text-xl" onClick={handleDecrease}>
+          -
+        </button>
+        <input
+          type="number"
+          className="text-center w-full"
+          value={value}
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+            setValue(Number(event.target.value))
+          }
+          min="1"
+        />
+        <button className="border-l border-[#E5E5EC] h-full text-xl" onClick={handleIncrease}>
+          +
+        </button>
+      </div>
+
+      <style jsx>
+        {`
+          input[type='number']::-webkit-outer-spin-button,
+          input[type='number']::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+          }
+
+          input[type='number'] {
+            -moz-appearance: textfield; /* Firefox */
+          }
+        `}
+      </style>
+    </>
   );
 }
