@@ -13,6 +13,9 @@ const nextConfig = {
       },
       {
         hostname: 'lh3.googleusercontent.com'
+      },
+      {
+        hostname: 'cafe24.poxo.com'
       }
     ],
     domains: ['k.kakaocdn.net'] // 여기에 이미지 호스트명을 추가합니다.

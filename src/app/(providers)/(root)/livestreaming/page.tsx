@@ -5,12 +5,11 @@ import Image from 'next/image';
 import { Video } from '@/types/livestream';
 
 async function LiveStreamingPage() {
-  // const videos = (await getVideos()).result as Video[];
-  // const videosWithProductIds = await addProductIdsToVideos(videos);
+  const videos = (await getVideos()).result as Video[];
+  const videosWithProductIds = await addProductIdsToVideos(videos);
   // console.log(videosWithProductIds);
-  // console.log(videos);
+  console.log(videos);
   const streamDatas = await getAllLiveStreamDB();
-  console.log(streamDatas);
 
   return (
     <div className="grid grid-cols-2">
