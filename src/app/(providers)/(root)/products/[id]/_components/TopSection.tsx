@@ -1,30 +1,61 @@
+'use client';
+
 import { Product } from '@/types/product';
+import showSwal from '@/utils/swal';
+import Image from 'next/image';
 import React from 'react';
-import TopButtons from './TopButtons';
 
 export interface TopSectionProps {
   product: Product;
+  averageRating: number;
+  reviewCount: number;
 }
 
-function TopSection({ product }: TopSectionProps) {
+function TopSection({ product, averageRating, reviewCount }: TopSectionProps) {
+  const handleCopyToClipboard = async () => {
+    try {
+      await navigator.clipboard.writeText(window.location.href);
+      showSwal({ icon: 'success', title: '링크가 복사되었습니다!' });
+    } catch (error) {
+      console.error('클립보드로 링크복사 실패', error);
+    }
+  };
+  const filledStars = Math.floor(averageRating);
+
   return (
-    <section className="flex flex-col md:flex-row mb-8">
-      <div className="md:w-1/2 flex justify-end">
-        <img
-          src={product.thumbnail_url}
-          alt={product.title}
-          className="h-80 w-full md:w-80 rounded-lg"
+    <div className="flex flex-col items-center md:items-start md:text-left">
+      <h1 className="text-3xl font-bold mb-4">{product.title}</h1>
+      <div className="flex justify-between w-full">
+        <div className="flex items-center">
+          {Array.from({ length: filledStars }).map((_, index) => (
+            <span key={index} className="text-green-300">
+              ★
+            </span>
+          ))}
+          {Array.from({ length: 5 - filledStars }).map((_, index) => (
+            <span key={index} className="text-gray-300">
+              ★
+            </span>
+          ))}
+          <p className="text-lg ml-2">
+            {averageRating.toFixed(1)} ({reviewCount}개의 리뷰)
+          </p>
+        </div>
+        <Image
+          src="/icons/share.svg"
+          alt="share"
+          width={30}
+          height={30}
+          style={{ width: 'auto', height: 'auto' }}
+          onClick={handleCopyToClipboard}
+          className="cursor-pointer"
         />
       </div>
-      <div className="md:w-1/2 mt-4 md:mt-0 md:ml-4 pt-6">
-        <h1 className="text-3xl font-bold mb-2">{product.title}</h1>
-        <p className="text-lg mb-2">★★★★★ 13개의 리뷰</p>
-        <div className="border-t-2 border-b-2 mb-4">
-          <p className="text-xl font-semibold mb-2">가격: {product.price} 원</p>
-          <p className="text-md">배송비: 무료</p>
-        </div>
+      <div className="border-t-2 border-b-2 my-4 py-2 w-full">
+        <p className="text-xl font-semibold mb-2">판매가: {product.price} 원</p>
+        <p className="text-md">배송비: 3,000원</p>
       </div>
-    </section>
+    </div>
   );
 }
 

@@ -1,58 +1,50 @@
 'use client';
 
-import useUser from '@/hooks/useUser';
-import { useRouter } from 'next/navigation';
-import React, { useState } from 'react';
-import { createCartItem } from '../_actions/cartActions';
+import React from 'react';
 
 interface TopButtonsProps {
-  productId: string;
-  productPrice: number | undefined;
+  productState: {
+    count: number;
+    setCount: (value: number) => void;
+    handleAddToCart: () => void;
+    handleBuyNow: () => void;
+    product: {
+      product_id: string;
+      price: string | number;
+      title: string;
+    };
+  };
 }
 
-function TopButtons({ productId, productPrice = 1 }: TopButtonsProps) {
-  const [count, setCount] = useState(1);
-  const { user } = useUser();
-  const router = useRouter();
-
-  const handleAddToCart = async () => {
-    const cartItemData = {
-      cart_product_id: productId,
-      count: count,
-      cart_user_id: user.id
-    };
-    const result = await createCartItem(cartItemData);
-
-    if (result) {
-      alert('선택하신 상품이 장바구니에 추가되었습니다.');
-      router.push(`/cart`);
-    }
-  };
-
-  const handleBuyNow = () => {
-    router.push(`/payment?productId=${productId}&quantity=${count}`);
-  };
+function TopButtons({ productState }: TopButtonsProps) {
+  const { count, setCount, handleAddToCart, handleBuyNow, product } = productState;
 
   return (
-    <div>
-      <input
-        type="number"
-        placeholder="구매수량"
-        value={count}
-        onChange={(e) => setCount(Number(e.target.value))}
-        className="border p-2 w-40 mb-4"
-      />
-      <strong>총 가격 : {productPrice * count} 원</strong>
-      <div className="flex items-center gap-2">
-        <button className="bg-black text-white p-2 rounded">문의</button>
-        <button onClick={handleAddToCart} className="bg-black text-white p-2 rounded">
+    <>
+      <div className="mb-5 flex justify-end">
+        <div>
+          <div className="mb-3 flex items-center">
+            <button className="border px-4 py-2 rounded" onClick={() => setCount(count - 1)}>
+              -
+            </button>
+            <div className="border p-2 text-center w-12 mx-2 rounded">{count}</div>
+            <button className="border px-4 py-2 rounded" onClick={() => setCount(count + 1)}>
+              +
+            </button>
+          </div>
+          <p className="text-xl font-bold text-right">총 상품금액: {+product.price * count} 원</p>
+        </div>
+      </div>
+      <div className="flex justify-between items-center gap-2">
+        <button className="bg-black text-white px-4 py-2 rounded flex-1">문의</button>
+        <button onClick={handleAddToCart} className="bg-black text-white px-4 py-2 rounded flex-1">
           장바구니
         </button>
-        <button onClick={handleBuyNow} className="bg-black text-white p-2 rounded">
+        <button onClick={handleBuyNow} className="bg-black text-white px-4 py-2 rounded flex-1">
           바로구매
         </button>
       </div>
-    </div>
+    </>
   );
 }
 
