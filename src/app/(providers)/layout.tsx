@@ -8,7 +8,7 @@ const ProvidersLayout = ({ children }: PropsWithChildren) => {
   return (
     <QueryProvider>
       <Header />
-      {children}
+      <div className="px-[190px]">{children}</div>
       <TopButton />
       <Footer />
     </QueryProvider>

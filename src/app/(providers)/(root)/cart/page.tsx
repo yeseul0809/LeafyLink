@@ -19,13 +19,15 @@ export default async function CartPage() {
 
   return (
     <div>
-      <h1>장바구니</h1>
-      {cartData && <h2>{`장바구니 상품(${cartData?.length})`}</h2>}
+      <h1 className="text-[36px] text-center">장바구니</h1>
+      {cartData && (
+        <h2 className="text-[18px] font-semibold">{`장바구니 상품(${cartData?.length})`}</h2>
+      )}
       <div className="border-t border-gray-300 mt-2" />
       <div className="flex items-start *:my-14">
-        <section className="w-[60%] ring-1 flex">
+        <section className="w-full ring-1 flex">
           <div className="w-full">
-            {productData &&
+            {productData && productData.length !== 0 ? (
               productData.map((data) => {
                 return (
                   <div key={data.product_id} className="flex border-b-2 last:border-none">
@@ -39,26 +41,31 @@ export default async function CartPage() {
                     <DeleteButton productId={data.product_id} />
                   </div>
                 );
-              })}
+              })
+            ) : (
+              <p>장바구니가 비어 있습니다.</p>
+            )}
           </div>
         </section>
-        <div className="flex flex-col">
-          <div className="ring-1 h-[30%]">
-            <div>
-              <span>총 상품금액</span>
-              <ProductPrice />
+        {productData && productData.length !== 0 && (
+          <div className="flex flex-col">
+            <div className="ring-1 h-[30%]">
+              <div>
+                <span>총 상품금액</span>
+                <ProductPrice />
+              </div>
+              <div>
+                <span>총 배송비</span>
+                <span>무료</span>
+              </div>
+              <div>
+                <span>결제 예정 금액</span>
+                <ProductPrice />
+              </div>
             </div>
-            <div>
-              <span>총 배송비</span>
-              <span>무료</span>
-            </div>
-            <div>
-              <span>결제 예정 금액</span>
-              <ProductPrice />
-            </div>
+            <PurchaseButton />
           </div>
-          <PurchaseButton />
-        </div>
+        )}
       </div>
       <div className="border-t border-gray-300 mt-2" />
     </div>
