@@ -20,9 +20,10 @@ function ChatPage({ params }: ParamsProps) {
   const { user } = useUser();
 
   useEffect(() => {
-    if (chatroomId) {
+    if (chatroomId && user) {
       fetchChatroomInfo();
       fetchMessages();
+      markMessagesAsRead();
 
       const channel = supabase
         .channel('Message')
@@ -45,9 +46,11 @@ function ChatPage({ params }: ParamsProps) {
         supabase.removeChannel(channel);
       };
     }
-  }, [chatroomId, supabase]);
+  }, [chatroomId, user]);
 
   const fetchChatroomInfo = async () => {
+    if (!user) return;
+
     const { data, error } = await supabase
       .from('Chatroom')
       .select('chatroom_seller_id')
@@ -55,10 +58,10 @@ function ChatPage({ params }: ParamsProps) {
       .single();
 
     if (error) {
-      console.log('채팅방 seller 정보 가져오는 중 에러발생', error);
+      console.log('채팅방 정보 가져오는 중 에러발생', error);
     } else if (data) {
       setSellerId(data.chatroom_seller_id);
-      // setIsSeller(data.chatroom_seller_id === user.id);
+      setIsSeller(data.chatroom_seller_id === user.id);
     }
   };
 
@@ -77,13 +80,38 @@ function ChatPage({ params }: ParamsProps) {
     }
   };
 
+  const markMessagesAsRead = async () => {
+    if (!user) return;
+
+    if (isSeller) {
+      // 판매자가 메시지를 읽을 경우
+      const { error } = await supabase
+        .from('Message')
+        .update({ is_read: true })
+        .eq('message_chatroom_id', chatroomId)
+        .neq('message_user_id', user.id) // 구매자가 보낸 메시지만 업데이트
+        .eq('is_read', false);
+
+      if (error) {
+        console.error('구매자가 보낸 메세지 읽음 업데이트 중 에러발생', error);
+      }
+    } else {
+      // 구매자가 메시지를 읽을 경우
+      const { error } = await supabase
+        .from('Message')
+        .update({ is_read: true })
+        .eq('message_chatroom_id', chatroomId)
+        .eq('message_user_id', sellerId) // 판매자가 보낸 메시지만 업데이트
+        .eq('is_read', false);
+
+      if (error) {
+        console.error('판매자가 보낸 메세지 읽음 업데이트 중 에러발생', error);
+      }
+    }
+  };
+
   const sendMessage = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    if (!chatroomId || !user) {
-      console.error('채팅방 ID 또는 사용자 정보가 누락되었습니다.');
-      return;
-    }
 
     const { error } = await supabase.from('Message').insert([
       {
@@ -110,7 +138,10 @@ function ChatPage({ params }: ParamsProps) {
         ) : (
           messages.map((msg) => (
             <div key={msg.message_id}>
-              <strong>{msg.message_user_id === user.id ? '나' : '상대방'}:</strong> {msg.payload}
+              <strong>
+                {msg.message_user_id === user.id ? '나 ' : isSeller ? '고객 ' : '판매자 '}:
+              </strong>
+              {msg.payload}
             </div>
           ))
         )}

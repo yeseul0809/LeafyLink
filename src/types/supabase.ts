@@ -49,7 +49,7 @@ export type Database = {
         Row: {
           chatroom_id: string
           chatroom_product_id: string
-          chatroom_seller_id: string | null
+          chatroom_seller_id: string
           chatroom_user_id: string
           created_at: string
           message: string | null
@@ -57,7 +57,7 @@ export type Database = {
         Insert: {
           chatroom_id: string
           chatroom_product_id: string
-          chatroom_seller_id?: string | null
+          chatroom_seller_id?: string
           chatroom_user_id: string
           created_at?: string
           message?: string | null
@@ -65,7 +65,7 @@ export type Database = {
         Update: {
           chatroom_id?: string
           chatroom_product_id?: string
-          chatroom_seller_id?: string | null
+          chatroom_seller_id?: string
           chatroom_user_id?: string
           created_at?: string
           message?: string | null
@@ -290,8 +290,8 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: "Product_productseller_id_fkey"
-            columns: ["productseller_id"]
+            foreignKeyName: "Product_product_seller_id_fkey"
+            columns: ["product_seller_id"]
             isOneToOne: false
             referencedRelation: "Seller"
             referencedColumns: ["seller_id"]

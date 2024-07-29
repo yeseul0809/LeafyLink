@@ -225,9 +225,11 @@ function Header() {
           <button className="ml-[48px]" onClick={toggleSearch}>
             <Image src="/icons/icon-search.svg" alt="search" width={32} height={32}></Image>
           </button>
-          <button className="ml-[48px]">
-            <Image src="/icons/icon-message.svg" alt="message" width={32} height={32}></Image>
-          </button>
+          <Link href={'/chat'}>
+            <button className="ml-[48px]">
+              <Image src="/icons/icon-message.svg" alt="message" width={32} height={32}></Image>
+            </button>
+          </Link>
           <button className="ml-[48px]">
             <Image src="/icons/icon-cart.svg" alt="cart" width={32} height={32}></Image>
           </button>
