@@ -4,6 +4,9 @@ import useUser from '@/hooks/useUser';
 import { createClient } from '@/supabase/supabaseClient';
 import { Message } from '@/types/message';
 import React, { useEffect, useState } from 'react';
+import { addHours, formatDate } from '../_utils/timeUtils';
+import MessageInput from '../_components/MessageInput';
+import MessageList from '../_components/MessageList';
 
 interface ParamsProps {
   params: { id: string };
@@ -131,32 +134,14 @@ function ChatPage({ params }: ParamsProps) {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center">
-      <div>
-        {isMessagesLoaded && messages.length === 0 ? (
-          <p>이전 대화내역이 없습니다.</p>
-        ) : (
-          messages.map((msg) => (
-            <div key={msg.message_id}>
-              <strong>
-                {msg.message_user_id === user.id ? '나 ' : isSeller ? '고객 ' : '판매자 '}:
-              </strong>
-              {msg.payload}
-            </div>
-          ))
-        )}
-      </div>
-      <form onSubmit={sendMessage}>
-        <input
-          type="text"
-          value={newMessage}
-          className="bg-green-200"
-          onChange={(e) => setNewMessage(e.target.value)}
-        />
-        <button type="submit">전송</button>
-      </form>
+    <div className="flex flex-col items-center justify-center min-h-screen mx-auto my-20 w-[610px]">
+      <MessageList isMessagesLoaded={isMessagesLoaded} messages={messages} userId={user?.id} />
+      <MessageInput
+        newMessage={newMessage}
+        setNewMessage={setNewMessage}
+        sendMessage={sendMessage}
+      />
     </div>
   );
 }
-
 export default ChatPage;
