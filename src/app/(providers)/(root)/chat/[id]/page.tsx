@@ -23,7 +23,7 @@ function ChatPage({ params }: ParamsProps) {
     if (chatroomId && user) {
       fetchChatroomInfo();
       fetchMessages();
-      markMessagesAsRead();
+      messagesCheckRead();
 
       const channel = supabase
         .channel('Message')
@@ -80,7 +80,7 @@ function ChatPage({ params }: ParamsProps) {
     }
   };
 
-  const markMessagesAsRead = async () => {
+  const messagesCheckRead = async () => {
     if (!user) return;
 
     if (isSeller) {
@@ -101,7 +101,7 @@ function ChatPage({ params }: ParamsProps) {
         .from('Message')
         .update({ is_read: true })
         .eq('message_chatroom_id', chatroomId)
-        .eq('message_user_id', sellerId) // 판매자가 보낸 메시지만 업데이트
+        .neq('message_user_id', user.id) // 판매자가 보낸 메시지만 업데이트
         .eq('is_read', false);
 
       if (error) {

@@ -6,12 +6,16 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { fetchSellerAvatar, fetchUserAvatar } from './_utils/fetchAvatar';
 import Image from 'next/image';
+import { createClient } from '@/supabase/supabaseClient';
+
+const supabase = createClient();
 
 function ChatListPage() {
   const { user } = useUser();
   const router = useRouter();
   const { chatrooms } = useChatrooms(user ? user.id : '');
   const [avatars, setAvatars] = useState<{ [key: string]: string | null }>({});
+  const [unreadCounts, setUnreadCounts] = useState<{ [key: string]: number }>({});
 
   useEffect(() => {
     const fetchAvatars = async () => {
@@ -29,6 +33,48 @@ function ChatListPage() {
 
     fetchAvatars();
   }, [chatrooms]);
+
+  useEffect(() => {
+    const fetchUnreadCounts = async () => {
+      const counts: { [key: string]: number } = {};
+
+      for (const chatroom of chatrooms) {
+        let data, error;
+
+        if (user.id === chatroom.chatroom_user_id) {
+          // 구매자일 때
+          ({ data, error } = await supabase
+            .from('Message')
+            .select('is_read', { count: 'exact' })
+            .eq('message_chatroom_id', chatroom.chatroom_id)
+            .eq('is_read', false)
+            .neq('message_user_id', user.id));
+        } else {
+          // 판매자일 때
+          ({ data, error } = await supabase
+            .from('Message')
+            .select('is_read', { count: 'exact' })
+            .eq('message_chatroom_id', chatroom.chatroom_id)
+            .eq('is_read', false)
+            .neq('message_user_id', chatroom.chatroom_seller_id));
+        }
+
+        if (error) {
+          console.error('읽지 않은 메세지 수 가져오는 중 에러발생', error);
+        } else if (data) {
+          console.log(`Chatroom ID: ${chatroom.chatroom_id}, Unread count: ${data.length}`);
+          counts[chatroom.chatroom_id] = data.length;
+        }
+      }
+      setUnreadCounts(counts);
+    };
+
+    fetchUnreadCounts();
+  }, [chatrooms, user]);
+
+  if (!user) {
+    return <div>로그인이 필요합니다.</div>;
+  }
 
   if (!user) {
     return <div>로그인이 필요합니다.</div>;
@@ -71,9 +117,11 @@ function ChatListPage() {
               )}
             </div>
             <div className="text-right">
-              <div className="w-5 h-5 bg-green-500 text-white rounded-full flex items-center justify-center text-xs ml-2">
-                1
-              </div>
+              {unreadCounts[chatroom.chatroom_id] > 0 && (
+                <div className="w-5 h-5 bg-green-500 text-white rounded-full flex items-center justify-center text-xs ml-2">
+                  {unreadCounts[chatroom.chatroom_id]}
+                </div>
+              )}
             </div>
           </li>
         ))}
