@@ -13,6 +13,9 @@ const nextConfig = {
       },
       {
         hostname: 'lh3.googleusercontent.com'
+      },
+      {
+        hostname: 'sitem.ssgcdn.com'
       }
     ],
     domains: ['k.kakaocdn.net']

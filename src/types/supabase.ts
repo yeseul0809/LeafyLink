@@ -15,18 +15,21 @@ export type Database = {
           cart_product_id: string
           cart_user_id: string
           count: number
+          is_checked: boolean
         }
         Insert: {
           cart_id?: string
           cart_product_id: string
           cart_user_id: string
           count: number
+          is_checked: boolean
         }
         Update: {
           cart_id?: string
           cart_product_id?: string
           cart_user_id?: string
           count?: number
+          is_checked?: boolean
         }
         Relationships: [
           {
@@ -48,22 +51,22 @@ export type Database = {
       Chatroom: {
         Row: {
           chatroom_id: string
-          chatroom_product_id: string
-          chatroom_seller_id: string | null
+          chatroom_product_id: string | null
+          chatroom_seller_id: string
           chatroom_user_id: string
           created_at: string
         }
         Insert: {
           chatroom_id: string
-          chatroom_product_id: string
-          chatroom_seller_id?: string | null
+          chatroom_product_id?: string | null
+          chatroom_seller_id: string
           chatroom_user_id: string
           created_at?: string
         }
         Update: {
           chatroom_id?: string
-          chatroom_product_id?: string
-          chatroom_seller_id?: string | null
+          chatroom_product_id?: string | null
+          chatroom_seller_id?: string
           chatroom_user_id?: string
           created_at?: string
         }
@@ -96,6 +99,7 @@ export type Database = {
           category: string | null
           create_at: string
           description: string
+          is_live: boolean
           livestream_id: string
           livestream_product_id: string
           livestream_seller_id: string | null
@@ -110,6 +114,7 @@ export type Database = {
           category?: string | null
           create_at?: string
           description: string
+          is_live: boolean
           livestream_id?: string
           livestream_product_id: string
           livestream_seller_id?: string | null
@@ -124,6 +129,7 @@ export type Database = {
           category?: string | null
           create_at?: string
           description?: string
+          is_live?: boolean
           livestream_id?: string
           livestream_product_id?: string
           livestream_seller_id?: string | null
@@ -210,6 +216,7 @@ export type Database = {
           order_date: string
           order_id: number
           order_product_id: string
+          order_seller_id: string
           order_user_id: string
           quantity: number
         }
@@ -219,6 +226,7 @@ export type Database = {
           order_date?: string
           order_id?: number
           order_product_id: string
+          order_seller_id: string
           order_user_id: string
           quantity: number
         }
@@ -228,6 +236,7 @@ export type Database = {
           order_date?: string
           order_id?: number
           order_product_id?: string
+          order_seller_id?: string
           order_user_id?: string
           quantity?: number
         }
@@ -238,6 +247,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "Product"
             referencedColumns: ["product_id"]
+          },
+          {
+            foreignKeyName: "Order_order_seller_id_fkey"
+            columns: ["order_seller_id"]
+            isOneToOne: false
+            referencedRelation: "Seller"
+            referencedColumns: ["seller_id"]
           },
           {
             foreignKeyName: "Order_order_user_id_fkey"
@@ -253,10 +269,10 @@ export type Database = {
           category: string
           created_at: string | null
           description: string
-          price: number | string
+          price: number
           product_id: string
-          productseller_id: string
-          stock: number | string
+          product_seller_id: string
+          stock: number
           thumbnail_url: string
           title: string
           updated_at: string | null
@@ -265,10 +281,10 @@ export type Database = {
           category: string
           created_at?: string | null
           description: string
-          price: number | string
+          price: number
           product_id: string
-          productseller_id: string
-          stock: number | string
+          product_seller_id: string
+          stock: number
           thumbnail_url: string
           title: string
           updated_at?: string | null
@@ -277,18 +293,18 @@ export type Database = {
           category?: string
           created_at?: string | null
           description?: string
-          price?: number | string
+          price?: number
           product_id?: string
-          productseller_id?: string
-          stock?: number | string
+          product_seller_id?: string
+          stock?: number
           thumbnail_url?: string
           title?: string
           updated_at?: string | null
         }
         Relationships: [
           {
-            foreignKeyName: "Product_productseller_id_fkey"
-            columns: ["productseller_id"]
+            foreignKeyName: "Product_product_seller_id_fkey"
+            columns: ["product_seller_id"]
             isOneToOne: false
             referencedRelation: "Seller"
             referencedColumns: ["seller_id"]
@@ -343,6 +359,8 @@ export type Database = {
       Seller: {
         Row: {
           address: string
+          address_code: string
+          address_detail: string | null
           avatar_url: string
           created_at: string
           email: string
@@ -352,6 +370,8 @@ export type Database = {
         }
         Insert: {
           address: string
+          address_code?: string
+          address_detail?: string | null
           avatar_url: string
           created_at?: string
           email: string
@@ -361,6 +381,8 @@ export type Database = {
         }
         Update: {
           address?: string
+          address_code?: string
+          address_detail?: string | null
           avatar_url?: string
           created_at?: string
           email?: string

@@ -1,13 +1,8 @@
 'use client';
 import { createClient } from '@/supabase/supabaseClient';
 import React, { useEffect, useState } from 'react';
-
-interface Product {
-  title: string;
-  description: string;
-  thumbnail_url: string;
-  price: number;
-}
+import { Product } from '@/types/product';
+import ProductCard from './_components/ProductCard';
 
 function NewProduct() {
   const [newProducts, setNewProducts] = useState<Product[]>([]);
@@ -42,17 +37,7 @@ function NewProduct() {
       <h2 className="text-[32px] text-center mb-[43px]">신제품</h2>
       <div className=" grid grid-cols-4 gap-x-[20px]	gap-y-[24px] justify-items-center">
         {topProducts.map((product) => (
-          <div className="w-[295px]">
-            <img
-              src={product.thumbnail_url}
-              className="w-[295px] h-[295px] bg-zinc-300 rounded-2xl"
-            ></img>
-            <p className="mt-[24px] text-sm font-semibold	">{product.title}</p>
-            <p className="line-clamp-2 text-sm text-[#555555] text-ellipsis overflow-hidden">
-              {product.description}
-            </p>
-            <p className="mt-[10px] font-semibold text-lg">{formatPrice(product.price)}원</p>
-          </div>
+          <ProductCard product={product} />
         ))}
       </div>
     </section>
