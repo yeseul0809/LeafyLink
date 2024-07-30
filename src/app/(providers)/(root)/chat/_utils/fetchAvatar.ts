@@ -22,3 +22,18 @@ export const fetchSellerAvatar = async (sellerId: string) => {
 
     return data?.avatar_url || null
 }
+
+export const fetchSellerInfo = async (sellerId: string) => {
+    const { data, error } = await supabase
+      .from('Seller')
+      .select('user_name, avatar_url')
+      .eq('seller_id', sellerId)
+      .single();
+  
+    if (error) {
+      console.error('판매자 정보 가져오는 중 에러발생', error);
+    } else {
+      return data;
+    }
+  };
+  

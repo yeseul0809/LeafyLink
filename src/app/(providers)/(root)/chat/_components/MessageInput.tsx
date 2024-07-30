@@ -8,9 +8,17 @@ interface MessageInputProps {
 
 function MessageInput({ newMessage, setNewMessage, sendMessage }: MessageInputProps) {
   return (
-    <form onSubmit={sendMessage} className="border rounded-full w-full">
-      <input type="text" value={newMessage} onChange={(e) => setNewMessage(e.target.value)} />
-      <button type="submit" className="p-3 rounded-r-lg">
+    <form
+      onSubmit={sendMessage}
+      className="flex border rounded-full w-full items-center justify-between mt-5"
+    >
+      <input
+        type="text"
+        value={newMessage}
+        onChange={(e) => setNewMessage(e.target.value)}
+        className="flex-grow p-3 rounded-l-full"
+      />
+      <button type="submit" className="p-3 mr-3 rounded-r-full">
         전송
       </button>
     </form>
