@@ -23,7 +23,7 @@ export default async function CartPage() {
   const productIds = productData?.map((data) => data.product_id);
 
   return (
-    <div>
+    <div className="py-10">
       <h1 className="text-[36px] text-center">장바구니</h1>
       {cartData && (
         <h2 className="text-[18px] font-semibold">{`장바구니 상품(${cartData?.length})`}</h2>

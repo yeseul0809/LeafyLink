@@ -5,14 +5,23 @@ import { Video } from '@/types/livestream';
 import { redirect } from 'next/navigation';
 import { v4 as uuidv4 } from 'uuid';
 
+const getLiveStreamData = async (videoUid: string) => {
+  const supabaseServer = createClient();
+  const { data, error } = await supabaseServer
+    .from('Livestream')
+    .select('*')
+    .eq('video_uid', videoUid);
+  return data;
+};
+
 export const getVideos = async () => {
   const options = {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
-      // 'X-Auth-Email': 'raccoonboy0803@gmail.com',
       Authorization: `Bearer ${process.env.CLOUDFLARE_API_KEY}`,
-      'Cache-Control': 'no-cache'
+      Pragma: 'no-cache',
+      Expires: '0'
     }
   };
 
@@ -23,18 +32,24 @@ export const getVideos = async () => {
     )
   ).json();
 
-  return response;
-};
+  const videos = response.result;
 
-// export const getStreamId = async (uid: string) => {
-//   const {data,error} = await supabaseSever.from('Livestream').select('id').eq('video_uid',uid)
-//   // return response.length > 0 ? response[0].id : null;
-//   if (error) {
-//     console.error('Error fetching data:', error);
-//   } else {
-//   return data
-//   }
-// };
+  const videosWithProduct = await Promise.all(
+    videos.map(async (video: Video) => {
+      if (video.liveInput) {
+        const streamData = await getLiveStreamData(video.liveInput);
+        return {
+          ...video,
+          streamData
+        };
+      } else {
+        return video;
+      }
+    })
+  );
+
+  return videosWithProduct;
+};
 
 export const startLiveStreaming = async (_: any, formData: FormData) => {
   const supabaseServer = createClient();
@@ -58,7 +73,8 @@ export const startLiveStreaming = async (_: any, formData: FormData) => {
         meta: {
           name: InputDatas.liveTitle,
           descriptioin: InputDatas.description,
-          product: InputDatas.product
+          product: InputDatas.product,
+          category: InputDatas.category
         },
         recording: {
           mode: 'automatic'
@@ -69,6 +85,7 @@ export const startLiveStreaming = async (_: any, formData: FormData) => {
 
   const streamServerData = await response.json();
   const sellerSession = await supabaseServer.auth.getUser();
+  console.log('streamServerData::', streamServerData);
 
   const productId = InputDatas.product;
   let splitProductId;
@@ -104,7 +121,8 @@ export const startLiveStreaming = async (_: any, formData: FormData) => {
     stream_key: streamServerData.result.rtmps.streamKey,
     video_uid: streamServerData.result.uid,
     thumbnail_url: InputDatas.thumbnail,
-    category: InputDatas.category
+    category: InputDatas.category,
+    is_live: true
   };
 
   const { data, error } = await supabaseServer.from('Livestream').insert([stream]).select('*');
@@ -134,7 +152,8 @@ interface Livestream {
 
 export const getStream = async (id: string): Promise<Livestream | null> => {
   const supabaseServer = createClient();
-  const { data, error } = await supabaseServer.from('Livestream').select().eq('stream_id', id);
+  const { data, error } = await supabaseServer.from('Livestream').select().eq('livestream_id', id);
+  console.log(data);
 
   if (error) {
     console.error('Error fetching stream:', error);
@@ -199,10 +218,41 @@ interface LivestreamDB {
   thumbnail_url: string;
   product_title: string;
   livestream_seller_id: string;
+  id_live: boolean;
 }
 
 export const getAllLiveStreamDB = async (): Promise<LivestreamDB[]> => {
   const supabaseServer = createClient();
-  const { data, error } = await supabaseServer.from('Livestream').select('*');
+  const { data, error } = await supabaseServer.from('Livestream').select('*').eq('is_live', true);
   return data as LivestreamDB[];
+};
+
+export const getAllRecodeStramDB = async (): Promise<LivestreamDB[]> => {
+  const supabaseServer = createClient();
+  const { data, error } = await supabaseServer.from('Livestream').select('*').eq('is_live', false);
+  return data as LivestreamDB[];
+};
+
+export const getLiveInput = async (liveInputUID: string) => {
+  const options = {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${process.env.CLOUDFLARE_API_KEY}`
+    }
+  };
+
+  const response = await fetch(
+    `https://api.cloudflare.com/client/v4/accounts/${process.env.CLOUDFLARE_ACCOUNT_ID}/stream/live_inputs/${liveInputUID}`,
+    options
+  );
+
+  const data = await response.json();
+  return data;
+};
+
+export const getSellerData = async (sellerId: string) => {
+  const supabaseServer = createClient();
+  const { data, error } = await supabaseServer.from('Seller').select().eq('seller_id', sellerId);
+  return data;
 };

@@ -1,15 +1,19 @@
-import React from 'react';
-import { getStream, getProductPrice, getSellerData } from '../actions';
-import { notFound } from 'next/navigation';
 import { createClient } from '@/supabase/supabaseServer';
-import Image from 'next/image';
+import { getSellerData, getStream } from '../../actions';
+import { notFound } from 'next/navigation';
 import Link from 'next/link';
-import LiveQuitButton from '../_components/LiveQuitButton';
+import LiveQuitButton from '../../_components/LiveQuitButton';
+import Image from 'next/image';
 
-export default async function StreamingPage({ params }: { params: { id: string } }) {
+export default async function RecodedVideoPage({ params }: { params: { id: string } }) {
   const supabaseServer = createClient();
+  const productId = params.id.split('_')[0];
   const streamId = params.id.split('_')[1];
+  const videoId = params.id.split('_')[2];
   const stream = await getStream(streamId);
+  // console.log('streamId::', streamId);
+
+  // console.log('stream::', stream);
 
   if (!stream) {
     return notFound();
@@ -17,7 +21,6 @@ export default async function StreamingPage({ params }: { params: { id: string }
   const sellerData = await getSellerData(stream.livestream_seller_id);
   const sessionData = await supabaseServer.auth.getUser();
   const sessionId = sessionData.data.user?.id;
-  const productPrice = await getProductPrice(stream.livestream_product_id);
 
   return (
     <div className="p-10">
@@ -30,13 +33,13 @@ export default async function StreamingPage({ params }: { params: { id: string }
           className="rounded-full"
         />
         <div>
-          <span className="font-bold">{sellerData![0].user_name} </span>
-          <span>님의 라이브 방송입니다.</span>
+          <span className="font-bold">{`${sessionData.data.user?.user_metadata.full_name}`} </span>
+          <span>님의 녹화방송입니다.</span>
         </div>
       </div>
       <div className="relative aspect-video">
         <iframe
-          src={`https://${process.env.CLOUDFLARE_DOMAIN}/${streamId}/iframe`}
+          src={`https://${process.env.CLOUDFLARE_DOMAIN}/${videoId}/iframe`}
           // src={`https://${process.env.CLOUDFLARE_DOMAIN}/${stream.video_uid}/iframe`}
           // src={`https://${process.env.CLOUDFLARE_DOMAIN}/038642e35c0cc07e353b5897f60b8efa/iframe`}
           allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
