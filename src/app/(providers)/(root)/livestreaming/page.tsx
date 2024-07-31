@@ -14,7 +14,7 @@ export default function StreamListPage() {
   };
 
   return (
-    <div className="pt-12 pb-24">
+    <div className="pt-[80px] pb-[180px]">
       <h1 className="text-[20px] font-semibold text-center mb-4">라이브 커머스</h1>
       <div className="flex justify-between">
         <div className="flex gap-2">

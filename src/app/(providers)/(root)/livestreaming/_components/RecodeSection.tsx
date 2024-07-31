@@ -37,8 +37,8 @@ export default function RecodeSection({ category }: { category: string }) {
               </div>
               <div className="flex justify-between mt-4 pr-6">
                 <div>
-                  <h2>{video.streamData[0].stream_title}</h2>
-                  <p>{video.streamData[0].description}</p>
+                  <h2 className="font-semibold">{video.streamData[0].stream_title}</h2>
+                  <p className="text-[#555555]">{video.streamData[0].description}</p>
                 </div>
                 <Link
                   href={`/livestreaming/video/${video.streamData[0].livestream_product_id}_${video.streamData[0].livestream_id}_${video.uid}`}

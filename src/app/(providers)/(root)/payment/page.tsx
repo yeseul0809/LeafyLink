@@ -110,7 +110,7 @@ export default function PaymentPage() {
 
   if (userData && productData) {
     return (
-      <div className="py-20">
+      <div className="pt-[80px] pb-[180px]">
         <h1 className="text-[32px] font-semibold text-center">주문/결제</h1>
         <p>주문자</p>
         <form action="">

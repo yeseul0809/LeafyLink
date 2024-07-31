@@ -31,8 +31,8 @@ export default function LiveSection({ category }: { category: string }) {
               </div>
               <div className="flex justify-between mt-4 pr-6">
                 <div>
-                  <h2>{data.stream_title}</h2>
-                  <p>{data.description}</p>
+                  <h2 className="font-semibold">{data.stream_title}</h2>
+                  <p className="text-[#555555]">{data.description}</p>
                 </div>
                 <Link href={`/livestreaming/${data.livestream_product_id}_${data.livestream_id}`}>
                   <button className="bg-[#3BB873] text-white px-6 py-3 rounded-lg">

@@ -1,5 +1,5 @@
 import React from 'react';
-import { getStream, getProductPrice, getSellerData } from '../actions';
+import { getStream, getSellerData } from '../actions';
 import { notFound } from 'next/navigation';
 import { createClient } from '@/supabase/supabaseServer';
 import Image from 'next/image';
@@ -17,11 +17,10 @@ export default async function StreamingPage({ params }: { params: { id: string }
   const sellerData = await getSellerData(stream.livestream_seller_id);
   const sessionData = await supabaseServer.auth.getUser();
   const sessionId = sessionData.data.user?.id;
-  const productPrice = await getProductPrice(stream.livestream_product_id);
 
   return (
-    <div className="p-10">
-      <div className="flex items-center">
+    <div className="pt-[80px] pb-[180px]">
+      <div className="flex items-center my-6 gap-3">
         <Image
           src={sellerData![0].avatar_url}
           alt="판매자프로필사진"
@@ -37,23 +36,23 @@ export default async function StreamingPage({ params }: { params: { id: string }
       <div className="relative aspect-video">
         <iframe
           src={`https://${process.env.CLOUDFLARE_DOMAIN}/${streamId}/iframe`}
-          // src={`https://${process.env.CLOUDFLARE_DOMAIN}/${stream.video_uid}/iframe`}
-          // src={`https://${process.env.CLOUDFLARE_DOMAIN}/038642e35c0cc07e353b5897f60b8efa/iframe`}
           allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
-          className="w-full h-full rounded-md"
+          className="w-full h-full rounded-2xl"
         ></iframe>
       </div>
-      <div className="p-5 flex items-center gap-3">
-        <div>{stream.category}</div>
-        <p>{stream.stream_title}</p>
-        {/* {productPrice && <p>{productPrice[0].price} 원</p>} */}
-      </div>
-      <div className="flex justify-between">
-        <p>{stream.description}</p>
+      <div className="flex items-center gap-3 justify-between mt-6">
+        <div className="flex flex-col gap-6">
+          <div className="flex items-center gap-4">
+            <div className="rounded-full bg-[#F9F3CF] px-4 py-1">{stream.category}</div>
+            <p className="text-[20px] font-semibold">{stream.stream_title}</p>
+          </div>
+          <p>{stream.description}</p>
+        </div>
         <Link href={`/products/${stream.livestream_product_id}`} className="cursor-pointer">
-          상품 구매하러 가기
+          <button>구매하러 가기</button>
         </Link>
       </div>
+
       {stream.livestream_seller_id === sessionId! ? (
         <div className="bg-yellow-200 text-black p-5 rounded-md">
           <div className="flex gap-2">

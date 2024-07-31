@@ -7,7 +7,7 @@ import Image from 'next/image';
 
 export default async function RecodedVideoPage({ params }: { params: { id: string } }) {
   const supabaseServer = createClient();
-  const productId = params.id.split('_')[0];
+  // const productId = params.id.split('_')[0];
   const streamId = params.id.split('_')[1];
   const videoId = params.id.split('_')[2];
   const stream = await getStream(streamId);
@@ -20,8 +20,8 @@ export default async function RecodedVideoPage({ params }: { params: { id: strin
   const sessionId = sessionData.data.user?.id;
 
   return (
-    <div className="p-10">
-      <div className="flex items-center">
+    <div className="pt-[80px] pb-[180px]">
+      <div className="flex items-center my-6 gap-3">
         <Image
           src={sellerData![0].avatar_url}
           alt="판매자프로필사진"
@@ -38,20 +38,22 @@ export default async function RecodedVideoPage({ params }: { params: { id: strin
         <iframe
           src={`https://${process.env.CLOUDFLARE_DOMAIN}/${videoId}/iframe`}
           allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
-          className="w-full h-full rounded-md"
+          className="w-full h-full rounded-2xl"
         ></iframe>
       </div>
-      <div className="p-5 flex items-center gap-3">
-        <div>{stream.category}</div>
-        <p>{stream.stream_title}</p>
-        {/* {productPrice && <p>{productPrice[0].price} 원</p>} */}
-      </div>
-      <div className="flex justify-between">
-        <p>{stream.description}</p>
+      <div className="flex items-center gap-3 justify-between mt-6">
+        <div className="flex flex-col gap-6">
+          <div className="flex items-center gap-4">
+            <div className="rounded-full bg-[#F9F3CF] px-4 py-1">{stream.category}</div>
+            <p className="text-[20px] font-semibold">{stream.stream_title}</p>
+          </div>
+          <p>{stream.description}</p>
+        </div>
         <Link href={`/products/${stream.livestream_product_id}`} className="cursor-pointer">
-          상품 구매하러 가기
+          <button>구매하러 가기</button>
         </Link>
       </div>
+
       {stream.livestream_seller_id === sessionId! ? (
         <div className="bg-yellow-200 text-black p-5 rounded-md">
           <div className="flex gap-2">
