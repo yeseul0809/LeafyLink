@@ -42,7 +42,7 @@ const ProductCard = ({ product }: { product: Product }) => {
       <p className="lg:w-[295px] w-[164px] lg:line-clamp-2 line-clamp-1 text-sm text-[#555555] text-ellipsis overflow-hidden">
         {product.description}
       </p>
-      <p className="mt-[10px] font-semibold text-lg">{formatPrice(product.price)}원</p>
+      <p className="mt-[10px] font-semibold text-lg">{formatPrice(product.price ?? 0)}원</p>
     </div>
   );
 };

@@ -28,7 +28,8 @@ function ButtonsWrapper({
     const cartItemData = {
       cart_product_id: productId,
       count: count,
-      cart_user_id: user.id
+      cart_user_id: user.id,
+      is_checked: false
     };
     const result = await createCartItem(cartItemData);
 
