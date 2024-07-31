@@ -17,6 +17,13 @@ const config: Config = {
 
         '1000':'1000',
       },
+<<<<<<< HEAD
+      screens: {
+        'sm': '640px',
+        'md': '768px',
+        'lg': '1024px',
+      },
+=======
       colors: {
         'primary-green-50': '#f7fdfa',
         'primary-green-100': '#d1f0df',
@@ -35,6 +42,7 @@ const config: Config = {
 
 
       }
+>>>>>>> ff597c7c843360b6b5ef576ae431555291602497
     },
   },
   plugins: [],

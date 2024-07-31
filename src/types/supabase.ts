@@ -51,7 +51,11 @@ export type Database = {
       Chatroom: {
         Row: {
           chatroom_id: string
+<<<<<<< HEAD
+          chatroom_product_id: string | null
+=======
           chatroom_product_id: string
+>>>>>>> ff597c7c843360b6b5ef576ae431555291602497
           chatroom_seller_id: string
           chatroom_user_id: string
           created_at: string
@@ -59,15 +63,24 @@ export type Database = {
         }
         Insert: {
           chatroom_id: string
+<<<<<<< HEAD
+          chatroom_product_id?: string | null
+          chatroom_seller_id: string
+=======
           chatroom_product_id: string
           chatroom_seller_id?: string
+>>>>>>> ff597c7c843360b6b5ef576ae431555291602497
           chatroom_user_id: string
           created_at?: string
           message?: string | null
         }
         Update: {
           chatroom_id?: string
+<<<<<<< HEAD
+          chatroom_product_id?: string | null
+=======
           chatroom_product_id?: string
+>>>>>>> ff597c7c843360b6b5ef576ae431555291602497
           chatroom_seller_id?: string
           chatroom_user_id?: string
           created_at?: string
@@ -272,10 +285,14 @@ Product: {
           category: string
           created_at: string | null
           description: string
-          price: number | string
+          price: number
           product_id: string
           product_seller_id: string
+<<<<<<< HEAD
+          stock: number
+=======
           stock: number | string
+>>>>>>> ff597c7c843360b6b5ef576ae431555291602497
           thumbnail_url: string
           title: string
           updated_at: string | null
@@ -284,10 +301,14 @@ Product: {
           category: string
           created_at?: string | null
           description: string
-          price: number | string
+          price: number
           product_id: string
           product_seller_id: string
+<<<<<<< HEAD
+          stock: number
+=======
           stock: number | string
+>>>>>>> ff597c7c843360b6b5ef576ae431555291602497
           thumbnail_url: string
           title: string
           updated_at?: string | null
@@ -296,10 +317,14 @@ Product: {
           category?: string
           created_at?: string | null
           description?: string
-          price?: number | string
+          price?: number
           product_id?: string
           product_seller_id?: string
+<<<<<<< HEAD
+          stock?: number
+=======
           stock?: number | string
+>>>>>>> ff597c7c843360b6b5ef576ae431555291602497
           thumbnail_url?: string
           title?: string
           updated_at?: string | null
@@ -375,7 +400,11 @@ Product: {
           user_name: string
         }
         Insert: {
+<<<<<<< HEAD
+          address: string
+=======
           address?: string
+>>>>>>> ff597c7c843360b6b5ef576ae431555291602497
           address_code?: string
           address_detail?: string | null
           avatar_url: string
