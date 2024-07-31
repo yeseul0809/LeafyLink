@@ -51,24 +51,27 @@ export type Database = {
       Chatroom: {
         Row: {
           chatroom_id: string
-          chatroom_product_id: string | null
+          chatroom_product_id: string
           chatroom_seller_id: string
           chatroom_user_id: string
           created_at: string
+          message: string | null
         }
         Insert: {
           chatroom_id: string
-          chatroom_product_id?: string | null
-          chatroom_seller_id: string
+          chatroom_product_id: string
+          chatroom_seller_id?: string
           chatroom_user_id: string
           created_at?: string
+          message?: string | null
         }
         Update: {
           chatroom_id?: string
-          chatroom_product_id?: string | null
+          chatroom_product_id?: string
           chatroom_seller_id?: string
           chatroom_user_id?: string
           created_at?: string
+          message?: string | null
         }
         Relationships: [
           {

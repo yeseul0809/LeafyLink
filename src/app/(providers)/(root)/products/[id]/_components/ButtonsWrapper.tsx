@@ -11,9 +11,15 @@ interface ButtonsWrapperProps {
   productId: string;
   productPrice: string | number;
   productTitle: string;
+  productSellerId: string;
 }
 
-function ButtonsWrapper({ productId, productPrice, productTitle }: ButtonsWrapperProps) {
+function ButtonsWrapper({
+  productId,
+  productPrice,
+  productTitle,
+  productSellerId
+}: ButtonsWrapperProps) {
   const [count, setCount] = useState(1);
   const { user } = useUser();
   const router = useRouter();
@@ -44,7 +50,8 @@ function ButtonsWrapper({ productId, productPrice, productTitle }: ButtonsWrappe
     product: {
       product_id: productId,
       price: productPrice,
-      title: productTitle
+      title: productTitle,
+      product_seller_id: productSellerId
     }
   };
 
