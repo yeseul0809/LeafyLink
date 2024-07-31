@@ -17,6 +17,7 @@ export default function Pagination({
   currentPage
 }: Props) {
   const totalPages = Math.ceil(totalItems / itemCountPerPage); // 총 페이지 수 계산
+
   const [startPage, setStartPage] = useState(1); // 페이지 범위의 시작 페이지
 
   // 페이지 범위의 마지막 페이지

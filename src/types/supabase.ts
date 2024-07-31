@@ -15,18 +15,21 @@ export type Database = {
           cart_product_id: string
           cart_user_id: string
           count: number
+          is_checked: boolean
         }
         Insert: {
           cart_id?: string
           cart_product_id: string
           cart_user_id: string
           count: number
+          is_checked: boolean
         }
         Update: {
           cart_id?: string
           cart_product_id?: string
           cart_user_id?: string
           count?: number
+          is_checked?: boolean
         }
         Relationships: [
           {
@@ -99,6 +102,7 @@ export type Database = {
           category: string | null
           create_at: string
           description: string
+          is_live: boolean
           livestream_id: string
           livestream_product_id: string
           livestream_seller_id: string | null
@@ -113,6 +117,7 @@ export type Database = {
           category?: string | null
           create_at?: string
           description: string
+          is_live: boolean
           livestream_id?: string
           livestream_product_id: string
           livestream_seller_id?: string | null
@@ -127,6 +132,7 @@ export type Database = {
           category?: string | null
           create_at?: string
           description?: string
+          is_live?: boolean
           livestream_id?: string
           livestream_product_id?: string
           livestream_seller_id?: string | null
@@ -213,6 +219,7 @@ export type Database = {
           order_date: string
           order_id: number
           order_product_id: string
+          order_seller_id: string
           order_user_id: string
           quantity: number
         }
@@ -222,6 +229,7 @@ export type Database = {
           order_date?: string
           order_id?: number
           order_product_id: string
+          order_seller_id: string
           order_user_id: string
           quantity: number
         }
@@ -231,6 +239,7 @@ export type Database = {
           order_date?: string
           order_id?: number
           order_product_id?: string
+          order_seller_id?: string
           order_user_id?: string
           quantity?: number
         }
@@ -243,6 +252,13 @@ export type Database = {
             referencedColumns: ["product_id"]
           },
           {
+            foreignKeyName: "Order_order_seller_id_fkey"
+            columns: ["order_seller_id"]
+            isOneToOne: false
+            referencedRelation: "Seller"
+            referencedColumns: ["seller_id"]
+          },
+          {
             foreignKeyName: "Order_order_user_id_fkey"
             columns: ["order_user_id"]
             isOneToOne: false
@@ -251,7 +267,7 @@ export type Database = {
           },
         ]
       }
-      Product: {
+Product: {
         Row: {
           category: string
           created_at: string | null
@@ -346,7 +362,12 @@ export type Database = {
       Seller: {
         Row: {
           address: string
+          address_code: string
+          address_detail: string | null
           avatar_url: string
+          business_inception: string
+          business_name: string
+          business_number: string
           created_at: string
           email: string
           phone: string
@@ -354,8 +375,13 @@ export type Database = {
           user_name: string
         }
         Insert: {
-          address: string
+          address?: string
+          address_code?: string
+          address_detail?: string | null
           avatar_url: string
+          business_inception?: string
+          business_name?: string
+          business_number?: string
           created_at?: string
           email: string
           phone: string
@@ -364,7 +390,12 @@ export type Database = {
         }
         Update: {
           address?: string
+          address_code?: string
+          address_detail?: string | null
           avatar_url?: string
+          business_inception?: string
+          business_name?: string
+          business_number?: string
           created_at?: string
           email?: string
           phone?: string
