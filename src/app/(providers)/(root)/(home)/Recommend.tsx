@@ -1,7 +1,6 @@
-import { createClient } from '@/supabase/supabaseServer';
 import { Product } from '@/types/product';
 import Link from 'next/link';
-import { getSellerName } from './actions';
+import { getRecommendPlant, getSellerName } from './actions';
 import Image from 'next/image';
 
 const setRecommendPlant = (products: Product[]) => {
@@ -11,26 +10,17 @@ const setRecommendPlant = (products: Product[]) => {
 };
 
 async function Recommend() {
-  const supabase = createClient();
-  const { data: products, error: productError } = await supabase
-    .from('Product')
-    .select('*')
-    .or('category.eq.씨앗, category.eq.모종');
-
-  if (productError) throw productError;
-
-  // console.log('product', products);
-
+  const products = await getRecommendPlant();
   const myPrd = products as unknown; // type 임시방편
   const recommendProduct = myPrd as Product[]; // type 임시방편
 
   const recommendedData = setRecommendPlant(recommendProduct);
-  //
-  // 추천된 상품의 유저 정보를 불러오고 싶음 오 오 굿굿
   const { user_name } = await getSellerName(recommendedData?.product_seller_id!);
-  // console.log('==================================', user_name);
 
-  // 데이터 베이스에서 식물카테고리만 가져와서 재고 없는 순으로 근데 아예 없으면 안됨 그 중에 하나
+  const formatPrice = (price: number) => {
+    return new Intl.NumberFormat('en-US').format(price);
+  };
+
   return (
     <section className="w-[1240px] mx-auto mt-[140px]">
       <h2 className="text-[32px] text-center mb-[34px]">이 달의 추천 식물</h2>
@@ -47,7 +37,9 @@ async function Recommend() {
         <div>
           <p className="mb-[5px]">{user_name}</p>
           <h3 className="text-[32px] mb-[10px]">{recommendedData?.title}</h3>
-          <h3 className="text-[32px] font-semibold mb-[15px]">{recommendedData?.price}원</h3>
+          <h3 className="text-[32px] font-semibold mb-[15px]">
+            {formatPrice(recommendedData?.price!)}원
+          </h3>
           <p className="line-clamp-3 text-ellipsis overflow-hidden text-[#555555]">
             {recommendedData?.description}
           </p>
