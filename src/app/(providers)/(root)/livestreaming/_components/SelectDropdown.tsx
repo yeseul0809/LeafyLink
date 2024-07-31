@@ -39,12 +39,34 @@ export default function SelectDropdown({ onCategoryChange }: SelectDropdownProps
     return null;
   }
 
+  const customStyles = {
+    control: (provided: any) => ({
+      ...provided,
+      height: '58px',
+      borderRadius: 0
+      // minHeight: '40px'
+    }),
+    singleValue: (provided: any) => ({
+      ...provided,
+      color: '#767676'
+    }),
+    option: (provided: any, state: any) => ({
+      ...provided,
+      color: state.isSelected ? '#111' : '#111', // 선택된 옵션 색상
+      backgroundColor: state.isSelected ? '#3BB873' : '#fff', // 선택된 옵션 배경색
+      '&:hover': {
+        backgroundColor: '#F7F7FB' // 옵션에 마우스를 올렸을 때 배경색
+      }
+    })
+  };
+
   return (
     <Select
+      styles={customStyles}
       options={category}
       onChange={handleChange}
       defaultValue={category[0]}
-      className="w-full border-[#E5E5EC]"
+      className="w-full"
     />
   );
 }

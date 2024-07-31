@@ -22,11 +22,11 @@ export default function LiveSection({ category }: { category: string }) {
 
   if (liveStreamDatas && isFetched) {
     return (
-      <div className="grid grid-cols-2 w-full gap-5">
+      <div className="grid grid-cols-2 w-full gap-[20px]">
         {liveStreamDatas.map((data) => {
           return (
             <div key={data.livestream_id} className="w-full relative">
-              <div className="relative w-full h-[252px]">
+              <div className="relative w-full h-[342px]">
                 <Image src={data.thumbnail_url} alt="방송썸네일" fill className="rounded-2xl" />
               </div>
               <div className="flex justify-between mt-4 pr-6">

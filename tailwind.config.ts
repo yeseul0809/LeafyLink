@@ -28,7 +28,7 @@ const config: Config = {
         'primary-green-400': '#5dcb8e',
         'primary-green-500': '#3BB873',
         'primary-green-600': '#2f935c',
-        'primary-green-700': '#2f935c',
+        'primary-green-700': '#236c44',
         'primary-green-800': '#236c44',
         'secondary-yellow-50': '#fefefa',
         'secondary-yellow-100': '#F9F3CF',

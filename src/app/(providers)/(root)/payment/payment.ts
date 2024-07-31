@@ -1,10 +1,10 @@
 'use client';
 
 import { RequestPayParams, RequestPayResponse } from 'iamport-typings';
-import { ProductInfo } from './page';
-import {createClient} from '@/supabase/supabaseClient';
+import { createClient } from '@/supabase/supabaseClient';
+import { ProductInfo } from './_components/Payment';
 
-const paymentHandler = (productData:ProductInfo) => {  
+const paymentHandler = (productData: ProductInfo) => {
   if (!window.IMP) return;
   /* 1. 가맹점 식별하기 */
   const { IMP } = window;
@@ -19,7 +19,7 @@ const paymentHandler = (productData:ProductInfo) => {
     // pg: 'tosspay.tosstest',
     pay_method: 'card',
     merchant_uid: `mid_${new Date().getTime()}`, // 주문번호
-    name: `${productData.combinedData[0].title} 외 ${productData.combinedData.length-1}건`,
+    name: `${productData.combinedData[0].title} 외 ${productData.combinedData.length - 1}건`,
     amount: productData.totalCost,
     buyer_name: '구매자이름',
     buyer_tel: '010-1234-5678'
@@ -30,19 +30,19 @@ const paymentHandler = (productData:ProductInfo) => {
   IMP.request_pay(data, (rsp: RequestPayResponse) => callback(rsp, productData));
 };
 
-async function callback(rsp: any,productData: ProductInfo) {
+async function callback(rsp: any, productData: ProductInfo) {
   const { success, error_msg, merchant_uid, imp_uid } = rsp;
-  if (success) {  
-    const supabase = createClient()  
+  if (success) {
+    const supabase = createClient();
     for (const product of productData.combinedData) {
       const { error } = await supabase
         .from('Cart')
         .delete()
         .eq('cart_product_id', product.product_id);
 
-     if (error) {
-        console.error(`Error deleting product ${product.product_id} from Cart:`, error);         
-        }
+      if (error) {
+        console.error(`Error deleting product ${product.product_id} from Cart:`, error);
+      }
     }
     alert('결제성공');
     window.location.href = '/';

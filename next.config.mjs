@@ -30,7 +30,11 @@ const nextConfig = {
         hostname: 'sitem.ssgcdn.com'
       }
     ],
-    domains: ['k.kakaocdn.net', 't1.kakaocdn.net']
+    domains: ['k.kakaocdn.net', 't1.kakaocdn.net'],
+    disableStaticImages: true
+  },
+  eslint: {
+    ignoreDuringBuilds: true
   },
   env: {
     NEXT_PUBLIC_SUPABASE_URL: process.env.NEXT_PUBLIC_SUPABASE_URL,

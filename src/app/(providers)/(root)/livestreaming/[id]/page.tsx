@@ -20,7 +20,7 @@ export default async function StreamingPage({ params }: { params: { id: string }
 
   return (
     <div className="pt-[80px] pb-[180px]">
-      <div className="flex items-center my-6 gap-3">
+      <div className="flex items-center mb-[40px] gap-3">
         <Image
           src={sellerData![0].avatar_url}
           alt="판매자프로필사진"
@@ -37,19 +37,24 @@ export default async function StreamingPage({ params }: { params: { id: string }
         <iframe
           src={`https://${process.env.CLOUDFLARE_DOMAIN}/${streamId}/iframe`}
           allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
-          className="w-full h-full rounded-2xl"
+          className="w-full h-[698px] rounded-2xl"
         ></iframe>
       </div>
-      <div className="flex items-center gap-3 justify-between mt-6">
-        <div className="flex flex-col gap-6">
-          <div className="flex items-center gap-4">
-            <div className="rounded-full bg-[#F9F3CF] px-4 py-1">{stream.category}</div>
-            <p className="text-[20px] font-semibold">{stream.stream_title}</p>
+      <div className="flex gap-[32px] justify-between mt-[32px] items-start">
+        <div className="flex gap-[20px]">
+          <div className="rounded-full bg-[#F9F3CF] px-[16px] py-[9px] text-[13px] h-[36px] text-center">
+            {stream.category}
           </div>
-          <p>{stream.description}</p>
+          <div>
+            <p className="text-[20px] font-semibold mb-[20px]">{stream.stream_title}</p>
+            <p className="text-[14px]">{stream.description}</p>
+          </div>
         </div>
         <Link href={`/products/${stream.livestream_product_id}`} className="cursor-pointer">
-          <button>구매하러 가기</button>
+          <button className="bg-primary-green-500 text-white p-[16px] rounded-[6px] flex items-center gap-[4px] hover:bg-primary-green-700 transition-colors">
+            <p className="text-[16px] font-semibold">구매하러 가기</p>
+            <Image src="/icons/right-arrow.png" alt="rightarrow" width={20} height={20} />
+          </button>
         </Link>
       </div>
 
