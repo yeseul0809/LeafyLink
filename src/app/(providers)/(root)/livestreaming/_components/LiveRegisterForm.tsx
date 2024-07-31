@@ -46,25 +46,25 @@ function LiveRegisterForm() {
     setSelectedCategory(category);
   };
   return (
-    <form action={formAction} className="flex flex-col gap-2">
-      <div className="flex gap-8 items-center">
-        <label htmlFor="liveTitle" className="w-40">
+    <form action={formAction} className="flex flex-col gap-[12px]">
+      <div className="flex gap-[16px] items-center">
+        <label htmlFor="liveTitle" className="w-[120px] text-[14px]">
           라이브 타이틀
         </label>
         <input
           type="text"
           id="liveTitle"
           name="liveTitle"
-          placeholder="라이브 타이틀을 입력하세요 (최대 20글자)"
-          className="w-full h-10 border placeholder:pl-3 placeholder:text-[14px]"
+          placeholder="라이브 타이틀을 입력하세요 (최대 30글자)"
+          className="w-full h-[58px] border placeholder:text-[16px] p-[16px] placeholder:text-font/sub2"
           maxLength={20}
           required
         />
       </div>
-      <div className="flex">
-        <div className="flex gap-14 items-center">
-          <div className="w-40">대표 이미지 등록</div>
-          <div className="w-full">
+      <div className="flex gap-[16px]">
+        <div className="flex items-center gap-[4px]">
+          <p className="w-[120px] text-[14px]">대표 이미지 등록</p>
+          <div className="">
             <label
               htmlFor="thumbnail"
               className="flex items-center justify-center rounded-2xl cursor-pointer bg-center bg-contain bg-no-repeat bg-[#F1F1F5] w-[295px] h-[165px]"
@@ -91,7 +91,7 @@ function LiveRegisterForm() {
             />
           </div>
         </div>
-        <div className="flex flex-col items-start justify-center">
+        <div className="flex flex-col items-start justify-center text-[14px]">
           <p>- 최대 용량: 2MB</p>
           <p>- 권장 비율 : 16:9</p>
           <p>썸네일을 등록해주세요.</p>
@@ -99,8 +99,8 @@ function LiveRegisterForm() {
           <p>글자가 포함되지 않은 이미지를 사용해주세요.</p>
         </div>
       </div>
-      <div className="flex items-center w-full gap-8">
-        <label htmlFor="product" className="w-40">
+      <div className="flex items-center w-full gap-[16px]">
+        <label htmlFor="product" className="w-[120px] text-[14px]">
           소개할 상품
         </label>
         <input
@@ -108,18 +108,18 @@ function LiveRegisterForm() {
           id="product"
           name="product"
           placeholder="상품 URL을 입력해서 상품을 등록하세요."
-          className="w-full h-10 border placeholder:pl-3 placeholder:text-[14px]"
+          className="w-full h-[58px] border placeholder:text-[16px] p-[16px] placeholder:text-font/sub2"
           required
         />
       </div>
-      <div className="flex items-center w-full gap-8">
-        <label htmlFor="category" className="w-40">
+      <div className="flex items-center w-full gap-[16px]">
+        <label htmlFor="category" className="w-[120px] text-[14px]">
           카테고리
         </label>
         <SelectDropdown onCategoryChange={handleCategoryChange} />
       </div>
-      <div className="w-full flex gap-8">
-        <label htmlFor="description" className="w-40">
+      <div className="w-full flex gap-[16px]">
+        <label htmlFor="description" className="w-[120px] text-[14px]">
           라이브 한줄 설명
         </label>
         <input
@@ -127,12 +127,12 @@ function LiveRegisterForm() {
           id="description"
           name="description"
           placeholder="라이브에 대한 간단한 설명을 입력하세요."
-          className="w-full h-10 border placeholder:pl-3 placeholder:text-[14px]"
+          className="w-full h-[58px] border placeholder:text-[16px] p-[16px] placeholder:text-font/sub2"
           required
         />
       </div>
       <input type="hidden" name="category" value={selectedCategory || ''} />
-      <button className="w-full bg-[#3BB873] h-[56px] rounded-lg text-white mt-16">
+      <button className="w-full bg-primary-green-500 h-[56px] rounded-[6px] text-white mt-16 text-[16px] hover:bg-primary-green-700 transition-colors">
         라이브 시작하기
       </button>
     </form>

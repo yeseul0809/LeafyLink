@@ -15,7 +15,6 @@ export default function RecodeSection({ category }: { category: string }) {
     queryKey: ['getRecodeStreamList', category],
     queryFn: () => getVideos(category!)
   });
-  console.log('recodedVideos::', recodedVideos);
 
   if (!isFetched) {
     return <p>로딩중</p>;
@@ -23,11 +22,11 @@ export default function RecodeSection({ category }: { category: string }) {
 
   if (recodedVideos && isFetched) {
     return (
-      <div className="grid grid-cols-2 w-full gap-5">
+      <div className="grid grid-cols-2 w-full gap-[20px]">
         {recodedVideos.map((video) => {
           return (
-            <div key={video.uid} className="w-full">
-              <div className="relative w-full h-[252px]">
+            <div key={video.uid} className="w-full relative">
+              <div className="relative w-full h-[342px]">
                 <Image
                   src={video.streamData[0].thumbnail_url}
                   alt="방송썸네일"
@@ -48,6 +47,14 @@ export default function RecodeSection({ category }: { category: string }) {
                   </button>
                 </Link>
               </div>
+              <Image
+                src="/icons/recode-stream.png"
+                alt="라이브"
+                width={50}
+                height={26}
+                quality={100}
+                className="absolute top-4 left-4"
+              />
             </div>
           );
         })}
