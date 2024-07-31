@@ -1,6 +1,6 @@
 import ProductReviewList from './_components/ReviewList';
 import TopSection from './_components/TopSection';
-import { getProduct, getReviews } from './_actions/productActions';
+import { getProductRequest, getReviews } from './_actions/productActions';
 import Image from 'next/image';
 import ButtonsWrapper from './_components/ButtonsWrapper';
 import MiddleSectionWrapper from './_components/MiddleSectionWrapper';
@@ -11,7 +11,7 @@ interface ParamsProps {
 
 async function ProductDetailPage({ params }: ParamsProps) {
   const { id } = params;
-  const product = await getProduct(id);
+  const product = await getProductRequest(id);
   const reviewsPerPage = 10;
   const reviewData = await getReviews(id, reviewsPerPage, 0);
 
