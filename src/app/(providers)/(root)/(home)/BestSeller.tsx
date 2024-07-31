@@ -19,9 +19,9 @@ async function BestSeller() {
   // console.log('========BestSellerProductsData=======', BestSellerProductsData);
 
   return (
-    <section className="lg:w-[1240px] mx-auto mt-[140px] mb-[180px]">
+    <section className="lg:w-[1240px] mx-auto lg:mt-[140px] mb-[180px] mt-[55px]">
       <h2 className="text-[32px] text-center mb-[34px]">베스트 셀러</h2>
-      <div className="grid grid-cols-1 gap-x-[20px] gap-y-[24px] justify-items-center sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+      <div className="grid grid-cols-2 lg:gap-x-[20px] lg:gap-y-[24px] justify-items-center sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4">
         {BestSellerProductsData.map((product) => (
           <ProductCard key={product.product_id} product={product} />
         ))}

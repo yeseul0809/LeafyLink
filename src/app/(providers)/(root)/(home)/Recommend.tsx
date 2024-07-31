@@ -22,7 +22,7 @@ async function Recommend() {
   };
 
   return (
-    <section className="lg:w-[1240px] mx-auto mt-[140px] ">
+    <section className="lg:w-[1240px] mx-auto lg:mt-[140px] mt-[55px]">
       <h2 className="text-[32px] text-center mb-[34px]">이 달의 추천 식물</h2>
       <div className=" lg:grid lg:grid-cols-2 lg:gap-x-[20px] justify-items-center md:block sm:block">
         <div className="lg:w-[610px] lg:h-[342px] md:w-[500px] md:h-[300px] h-[206px] w-[335px] bg-zinc-300 rounded-2xl object-cover mx-auto">
@@ -40,7 +40,7 @@ async function Recommend() {
           <h3 className="lg:text-[32px] font-semibold mb-[15px] sm:text-sm sm:mb-[8px]">
             {formatPrice(recommendedData?.price!)}원
           </h3>
-          <p className="line-clamp-3 text-ellipsis overflow-hidden text-[#555555]">
+          <p className="hidden lg:block line-clamp-3 text-ellipsis overflow-hidden text-[#555555]">
             {recommendedData?.description}
           </p>
           <Link

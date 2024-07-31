@@ -89,7 +89,7 @@ function Header() {
     } else if (description.includes('비')) {
       return '☔, 물을 주지 않아도 되겠어요 :)';
     } else if (description.includes('눈') || description.includes('우박')) {
-      return '⛄ 식물이 얼지 않게 주의하세요!';
+      return '⛄, 식물이 얼지 않게 주의하세요!';
     } else if (description.includes('박무') || description.includes('안개')) {
       return '🌫, 안개가 끼어 습도가 높아요';
     } else {
@@ -114,9 +114,9 @@ function Header() {
   };
   return (
     <section className="w-full h-auto bg-white sticky top-0 z-20">
-      <div className="w-full h-[45px] text-center flex items-center justify-center bg-zinc-50 ">
+      <div className="w-full lg:h-[45px] md:h-[40px] text-center flex items-center justify-center bg-zinc-50">
         {loading ? (
-          <p className="text-sm text-zinc-300 tracking-widest">Loading...☀</p>
+          <p className="text-sm md:text-xs text-zinc-300 tracking-widest">Loading...☀</p>
         ) : (
           <p className="text-sm tracking-wide text-zinc-600">
             지금 내 위치 날씨는 {weather && weather.description}
@@ -124,7 +124,7 @@ function Header() {
           </p>
         )}
       </div>
-      <div className="w-full h-20 px-[190px] flex items-center justify-between">
+      <div className="w-full h-20 lg:px-[190px] md:px-[24px] flex items-center justify-between">
         <Link href={'/'}>
           <Image src="/icons/logo.svg" alt="logo" width={152} height={41} />
         </Link>
@@ -195,7 +195,7 @@ function Header() {
             </div>
           )}
           <button
-            className="ml-7 flex text-[#FF0000]"
+            className="ml-2 lg:ml-7 flex text-[#FF0000]"
             onClick={() => {
               redirect('/livestreaming');
             }}
@@ -210,7 +210,7 @@ function Header() {
             ></Image>
           </button>
           <button
-            className="ml-7"
+            className="ml-2 lg:ml-7 "
             onClick={() => {
               redirect('/livestreaming');
             }}
@@ -218,7 +218,7 @@ function Header() {
             베스트셀러
           </button>
           <button
-            className="ml-7"
+            className="ml-2 lg:ml-7 "
             onClick={() => {
               redirect('/livestreaming');
             }}
