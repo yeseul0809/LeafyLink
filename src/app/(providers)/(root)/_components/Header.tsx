@@ -114,7 +114,7 @@ function Header() {
   };
   return (
     <section className="w-full h-auto bg-white sticky top-0 z-20">
-      <div className="w-full h-[45px] text-center flex items-center justify-center bg-zinc-50 px-[190px]">
+      <div className="w-full h-[45px] text-center flex items-center justify-center bg-zinc-50 ">
         {loading ? (
           <p className="text-sm text-zinc-300 tracking-widest">Loading...☀</p>
         ) : (

@@ -32,8 +32,6 @@ function Categories() {
     }
   ]);
 
-  console.log('categoryIcons', categoryIcons);
-
   return (
     <div className="lg:w-[1020px] grid grid-cols-5 lg:gap-[175px] mx-auto mt-[120px] text-center justify-items-center">
       {categoryIcons.map((category) => (
