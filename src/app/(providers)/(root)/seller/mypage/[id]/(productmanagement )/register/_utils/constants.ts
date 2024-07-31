@@ -9,7 +9,7 @@ export const INITIAL_STATE: Product = {
   created_at: null,
   updated_at: null,
   product_id: '',
-  productseller_id: '', 
+  product_seller_id: '', 
   thumbnail_url: '' 
 };
 

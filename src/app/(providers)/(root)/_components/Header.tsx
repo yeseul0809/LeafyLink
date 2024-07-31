@@ -233,7 +233,7 @@ function Header() {
           <button
             className="ml-[48px]"
             onClick={() => {
-              redirect('/livestreaming');
+              redirect('/chat');
             }}
           >
             <Image src="/icons/icon-message.svg" alt="message" width={32} height={32}></Image>

@@ -1,3 +1,16 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* 아코디언 커스텀 스타일 추가 */
+.szh-accordion__item-btn {
+  @apply block w-full p-0 bg-none border-none text-left cursor-pointer;
+}
+
+.szh-accordion__item-btn:focus {
+  @apply outline-none;
+}
+
+.szh-accordion__item-btn > div {
+  @apply flex justify-between p-4 border-b border-gray-300 cursor-pointer bg-white;
+}

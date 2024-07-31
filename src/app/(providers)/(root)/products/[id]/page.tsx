@@ -23,11 +23,6 @@ async function ProductDetailPage({ params }: ParamsProps) {
   const totalRating = reviewData.reviews.reduce((acc, review) => acc + (review.rating || 0), 0);
   const averageRating = reviewCount > 0 ? totalRating / reviewCount : 0;
 
-  // reviewCount와 totalRating, averageRating의 값을 확인합니다.
-  console.log('reviewCount:', reviewCount);
-  console.log('totalRating:', totalRating);
-  console.log('averageRating:', averageRating);
-
   return (
     <div className="container mx-auto max-w-screen-lg p-4">
       <section className="flex flex-col md:flex-row my-8 gap-12">
@@ -46,6 +41,7 @@ async function ProductDetailPage({ params }: ParamsProps) {
             productId={product.product_id}
             productPrice={product.price}
             productTitle={product.title}
+            productSellerId={product.product_seller_id}
           />
         </div>
       </section>
