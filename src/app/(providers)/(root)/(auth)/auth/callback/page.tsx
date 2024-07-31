@@ -10,6 +10,7 @@ function AuthCallback() {
   useEffect(() => {
     const saveUserToDatabase = async (user: any) => {
       const userData = {
+        // 구매자
         user_id: user.id,
         user_name: user.user_metadata.full_name,
         avatar_url: user.user_metadata.avatar_url,
@@ -18,10 +19,20 @@ function AuthCallback() {
         address: '',
         created_at: user.created_at
       };
+      const sellerData = {
+        // 판매자
+        seller_id: user.id,
+        email: user.email,
+        user_name: user.user_metadata.full_name,
+        address: '',
+        phone: '000-0000-0000',
+        avatar_url: user.user_metadata.avatar_url
+      };
 
       try {
         const supabase = createClient();
-        const { error } = await supabase.from('User').upsert([userData]);
+        // const { error } = await supabase.from('User').upsert([userData]);
+        const { error } = await supabase.from('Seller').upsert([sellerData]);
 
         if (error) {
           console.error('유저 정보를 데이터베이스에 저장하는 중 에러 발생:', error.message);

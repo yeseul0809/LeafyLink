@@ -27,12 +27,18 @@ function SocialLoginButtons() {
     };
 
   return (
-    <form className="flex flex-col gap-2">
-      <button onClick={handleLogin('kakao')} className="w-[618px]">
-        카카오 로그인
+    <form className="flex flex-col gap-5">
+      <button
+        onClick={handleLogin('kakao')}
+        className="w-[400px] h-[56px] bg-[#D9D9D9] rounded-md font-semibold"
+      >
+        카카오 로그인/회원가입
       </button>
-      <button onClick={handleLogin('google')} className="w-[618px]">
-        구글 로그인
+      <button
+        onClick={handleLogin('google')}
+        className="w-[400px] h-[56px] bg-[#D9D9D9] rounded-md font-semibold"
+      >
+        구글 로그인/회원가입
       </button>
     </form>
   );

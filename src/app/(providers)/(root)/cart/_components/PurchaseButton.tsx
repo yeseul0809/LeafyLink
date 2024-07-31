@@ -48,5 +48,12 @@ export default function PurchaseButton() {
     router.push(`/payment?data=${encodedData}`);
   };
 
-  return <button onClick={() => handleNavigate(data)}>구매하기</button>;
+  return (
+    <button
+      onClick={() => handleNavigate(data)}
+      className="bg-[#3BB873] mt-4 h-[51px] rounded-md text-[16px]"
+    >
+      구매하기
+    </button>
+  );
 }

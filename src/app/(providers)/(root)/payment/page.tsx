@@ -110,8 +110,15 @@ export default function PaymentPage() {
 
   if (userData && productData) {
     return (
-      <div>
-        <h1>주문/결제</h1>
+      <div className="pt-[80px] pb-[180px]">
+        <h1 className="text-[32px] font-semibold text-center">주문/결제</h1>
+        <p>주문자</p>
+        <form action="">
+          <input type="checkbox" id="sameaddress" />
+          <label htmlFor="sameaddress">회원 정보와 동일</label>
+          <input type="checkbox" id="newaddress" />
+          <label htmlFor="newaddress">새로운 배송지</label>
+        </form>
         <section>
           <UserEditForm
             initialAddress={userData.address}
@@ -122,24 +129,28 @@ export default function PaymentPage() {
             userId={userData.user_id}
           />
           <div className="flex flex-col">
-            <div>
-              <label htmlFor="phone">휴대폰번호</label>
+            <div className="h-[64px]">
+              <label htmlFor="phone" className="w-20 mr-12">
+                휴대폰번호
+              </label>
               <input
-                className="w-20"
+                className="border p-3 mb-3 rounded w-1/4"
                 type="text"
                 id="phone"
                 defaultValue={userData.phone.split('-')[0]}
                 maxLength={3}
               />
-              <span>-</span>
+              <span className="mx-2">-</span>
               <input
+                className="border p-3 mb-3 rounded w-1/4"
                 type="text"
                 id="phone"
                 defaultValue={userData.phone.split('-')[1]}
                 maxLength={4}
               />
-              <span>-</span>
+              <span className="mx-2">-</span>
               <input
+                className="border p-3 mb-3 rounded w-1/4"
                 type="text"
                 id="phone"
                 defaultValue={userData.phone.split('-')[2]}
@@ -149,69 +160,101 @@ export default function PaymentPage() {
               <input type="text" />
             </div>
             <div>
-              <label htmlFor="email">이메일</label>
-              <input type="text" id="email" defaultValue={userData.email} />
-              <select name="" id="">
+              <label htmlFor="email" className="w-20 mr-[74px]">
+                이메일
+              </label>
+              <input
+                type="text"
+                id="email"
+                defaultValue={userData.email}
+                className="border p-3 mb-3 rounded w-1/2 h-[54px]"
+              />
+              {/* <select name="" id="">
                 <option value="">gmail.com</option>
                 <option value="">naver.com</option>
                 <option value="">hanmail.net</option>
-              </select>
+              </select> */}
             </div>
-            <div>
-              <input type="checkbox" id="default" />
+            <div className="flex items-center gap-2">
+              <input type="checkbox" id="default" className="green-checkbox" />
               <label htmlFor="default">기본 배송지로 저장</label>
             </div>
           </div>
+          <div className="border-t w-full my-10" />
         </section>
         <section>
-          <h2>주문상품 1개</h2>
+          <h2 className="text-[20px] font-semibold">
+            주문상품 {productData.combinedData.length}개
+          </h2>
           <div>
-            <div className="flex">
+            <div className="flex flex-col">
               {productData?.combinedData?.map((product) => {
                 return (
-                  <div key={product.product_id}>
+                  <div
+                    key={product.product_id}
+                    className="flex gap-6 items-center border-b w-full py-10"
+                  >
                     <Image
                       src={product.thumbnail_url}
                       alt={product.title}
                       width={150}
                       height={150}
+                      className="rounded-lg"
                     />
                     <div>
                       <p>{product.title}</p>
-                      <p>{product.price * product.quantity}원</p>
-                      <p>{product.quantity}개</p>
+                      <div className="flex mt-4">
+                        <span className="text-[18px] font-semibold">
+                          {(product.price * product.quantity).toLocaleString()}
+                        </span>
+                        <span className="ml-1 text-[18px]">원</span>
+                        <div className="border-l mx-4" />
+                        <p>{product.quantity}개</p>
+                      </div>
                     </div>
                   </div>
                 );
               })}
             </div>
-            <div>
-              <span>배송비</span>
-              <span>무료</span>
-            </div>
           </div>
         </section>
-        <section>
-          <h2>결제정보</h2>
-          <div>
+        <section className="mt-6">
+          <h2 className="text-[20px] font-semibold">결제정보</h2>
+          <div className="flex justify-between mt-4">
             <span>총 상품 금액</span>
-            <span>{productData?.totalCost}원</span>
+            <span>{productData?.totalCost.toLocaleString()}원</span>
           </div>
-          <div>
+          <div className="flex justify-between mb-4">
             <span>배송비</span>
             <span>무료</span>
           </div>
-          <div>
+          <div className="flex justify-between text-[20px] font-semibold">
             <span>최종 결제 금액</span>
-            <span>{productData?.totalCost}원</span>
+            <span>{productData?.totalCost.toLocaleString()}원</span>
           </div>
         </section>
+        <div className="w-full border-b my-6" />
         <section>
-          <h2>결제수단</h2>
-          <p>결제수단 선택</p>
-          <div>카카오 페이</div>
+          <h2 className="text-[20px] font-semibold mb-4">결제수단</h2>
+          <p className="mb-4">결제수단 선택</p>
+          <div className="border border-[#787878] w-full h-[48px] rounded-md flex items-center gap-2 justify-center">
+            <Image src="/icons/kakaotalk.png" alt="kakaotalk" width={20} height={20} />
+            <p>카카오 페이</p>
+          </div>
         </section>
-        <button onClick={() => paymentHandler(productData as ProductInfo)}>결제하기</button>
+        <div className="border-b w-full my-10" />
+        <div className="mb-10 flex items-center gap-2">
+          <input type="checkbox" id="agreement" className="green-checkbox" />
+          <label htmlFor="agreement" className="text-[15px]">
+            주문 내용을 확인하였으며 약관에 동의합니다.
+          </label>
+        </div>
+        <button
+          onClick={() => paymentHandler(productData as ProductInfo)}
+          className="w-full bg-[#3BB873] rounded-md h-[48px] text-white"
+        >
+          {productData?.totalCost.toLocaleString()}원 결제하기
+        </button>
       </div>
     );
   }

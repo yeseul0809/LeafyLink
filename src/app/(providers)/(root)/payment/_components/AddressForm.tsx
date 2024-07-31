@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useRef, useState } from 'react';
-import supabase from '@/supabase/supabaseClient';
+import { createClient } from '@/supabase/supabaseClient';
 import Image from 'next/image';
 
 declare global {
@@ -129,6 +129,7 @@ export default function UserEditForm({
     extraAddress: string
   ) => {
     const fullAddress = `${newAddress}${extraAddress}`;
+    const supabase = createClient();
     const { error } = await supabase
       .from('User')
       .update({
@@ -168,7 +169,7 @@ export default function UserEditForm({
     <div>
       {/* 이름 입력 필드 */}
       <div className="flex items-center">
-        <label className="w-16" htmlFor="receiver">
+        <label className="w-20 mr-12" htmlFor="receiver">
           받는 사람
         </label>
         <input
@@ -183,7 +184,7 @@ export default function UserEditForm({
       {/* 우편번호 입력 필드 */}
 
       <div className="flex justify-start items-start">
-        <div className="w-16">주소</div>
+        <div className="w-20 mr-12">주소</div>
         <div className="w-full">
           <input
             type="text"
@@ -198,8 +199,8 @@ export default function UserEditForm({
           <input
             type="button"
             onClick={() => window.sample3_execDaumPostcode()}
-            value="우편번호 찾기"
-            className="bg-black text-white p-4 cursor-pointer rounded "
+            value="주소검색"
+            className="bg-white text-[#3BB873] border border-[#3BB873] cursor-pointer rounded w-[87px] h-[50px] ml-3"
           />
 
           {/* 주소 검색 컨테이너 */}
@@ -208,7 +209,7 @@ export default function UserEditForm({
             ref={wrapRef}
             className="border w-full max-w-lg h-96 relative hidden bg-white rounded-lg shadow-lg"
           >
-            <div className="flex justify-between items-center bg-gray-100 p-3 border-b border-gray-300">
+            <div className="flex justify-between items-centerbg-gray-100 border-b border-gray-300">
               <h1 className="text-black font-bold">주소 검색</h1>
               <Image
                 src="https://t1.daumcdn.net/postcode/resource/images/close.png"
@@ -242,7 +243,6 @@ export default function UserEditForm({
         </div>
       </div>
       {/* Phone Form 추가 */}
-      <label className="font-bold text-lg ">휴대폰 번호</label>
     </div>
   );
 }

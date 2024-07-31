@@ -15,12 +15,9 @@ const nextConfig = {
         hostname: 'lh3.googleusercontent.com'
       },
       {
-<<<<<<< HEAD
-        hostname: 'sitem.ssgcdn.com'
-      }
-    ],
-    domains: ['k.kakaocdn.net']
-=======
+        hostname: 'cafe24.poxo.com'
+      },
+      {
         hostname: 'k.kakaocdn.net'
       },
       {
@@ -28,10 +25,12 @@ const nextConfig = {
       },
       {
         hostname: 'cafe24.poxo.com'
+      },
+      {
+        hostname: 'sitem.ssgcdn.com'
       }
     ],
     domains: ['k.kakaocdn.net', 't1.kakaocdn.net']
->>>>>>> ff597c7c843360b6b5ef576ae431555291602497
   },
   env: {
     NEXT_PUBLIC_SUPABASE_URL: process.env.NEXT_PUBLIC_SUPABASE_URL,
