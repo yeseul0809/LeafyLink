@@ -1,12 +1,12 @@
 'use client';
 
-import useChatrooms from '@/hooks/useChatrooms';
 import useUser from '@/hooks/useUser';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { fetchSellerInfo, fetchUserInfo } from './_utils/fetchInfo';
 import Image from 'next/image';
 import { createClient } from '@/supabase/supabaseClient';
+import useChatrooms from './_hooks/useChatrooms';
 
 const supabase = createClient();
 
