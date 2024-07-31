@@ -54,6 +54,9 @@ const config: Config = {
         'Line/Regular': '#e5e5ec',
         'Line/Strong': '#111111',
         'Line/Disabled': '#cacad7'
+      },
+      fontFamily: {
+        pretendard: ['var(--font-pretendard)']
       }
     }
   },

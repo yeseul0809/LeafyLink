@@ -2,7 +2,7 @@ import React from 'react';
 
 interface InputFieldProps {
   name: string;
-  value: number | string;
+  value: number | string | null;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   placeholder: string;
   labelText: string;
@@ -20,7 +20,7 @@ function InputField({ name, value, onChange, placeholder, id, labelText, type }:
         type={type}
         id={id}
         name={name}
-        value={value}
+        value={value ?? ''}
         onChange={onChange}
         placeholder={placeholder}
         className="w-full p-2 border rounded-md text-right"

@@ -3,8 +3,8 @@ import { Product } from '@/types/product';
 export const INITIAL_STATE: Product = {
   category: '',
   title: '',
-  price: 0,
-  stock: 0,
+  price: null,
+  stock: null,
   description: '',
   created_at: null,
   updated_at: null,
