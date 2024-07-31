@@ -140,7 +140,13 @@ export const startLiveStreaming = async (_: any, formData: FormData) => {
     return;
   }
 
-  redirect(`/livestreaming/${stream.livestream_product_id}_${stream.stream_id}`);
+  const { data: liveStreamDB, error: liveStreamError } = await supabaseServer
+    .from('Livestream')
+    .select('livestream_id')
+    .eq('stream_id', stream.stream_id);
+
+  redirect(`/livestreaming/${stream.livestream_product_id}_${liveStreamDB![0].livestream_id}`);
+  // redirect(`/livestreaming/${stream.livestream_product_id}_${stream.stream_id}`);
 };
 
 interface Livestream {

@@ -22,16 +22,32 @@ export default function LiveSection({ category }: { category: string }) {
 
   if (liveStreamDatas && isFetched) {
     return (
-      <div>
+      <div className="grid grid-cols-2 w-full gap-5">
         {liveStreamDatas.map((data) => {
           return (
-            <div key={data.livestream_id}>
-              <Link href={`/livestreaming/${data.livestream_product_id}_${data.livestream_id}`}>
-                <Image src={data.thumbnail_url} alt="방송썸네일" width={200} height={150} />
+            <div key={data.livestream_id} className="w-full relative">
+              <div className="relative w-full h-[252px]">
+                <Image src={data.thumbnail_url} alt="방송썸네일" fill className="rounded-2xl" />
+              </div>
+              <div className="flex justify-between mt-4 pr-6">
                 <div>
                   <h2>{data.stream_title}</h2>
+                  <p>{data.description}</p>
                 </div>
-              </Link>
+                <Link href={`/livestreaming/${data.livestream_product_id}_${data.livestream_id}`}>
+                  <button className="bg-[#3BB873] text-white px-6 py-3 rounded-lg">
+                    구매하러가기
+                  </button>
+                </Link>
+              </div>
+              <Image
+                src="/icons/on-live.png"
+                alt="라이브"
+                width={50}
+                height={26}
+                quality={100}
+                className="absolute top-4 left-4"
+              />
             </div>
           );
         })}
