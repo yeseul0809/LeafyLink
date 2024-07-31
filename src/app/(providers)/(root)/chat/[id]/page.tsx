@@ -8,6 +8,7 @@ import { fetchSellerInfo, fetchUserInfo } from '../_utils/fetchInfo';
 import MessageInput from '../_components/MessageInput';
 import MessageList from '../_components/MessageList';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
 interface ParamsProps {
   params: { id: string };
@@ -26,6 +27,7 @@ function ChatPage({ params }: ParamsProps) {
   const [isSeller, setIsSeller] = useState<boolean>(false);
   const { id: chatroomId } = params;
   const { user } = useUser();
+  const router = useRouter();
 
   useEffect(() => {
     if (chatroomId && user) {
@@ -150,18 +152,23 @@ function ChatPage({ params }: ParamsProps) {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen mx-auto my-20 w-[610px]">
-      {otherUserInfo && (
-        <div className="flex items-center mb-4 w-full px-4">
-          <Image
-            src={otherUserInfo.avatar_url || '/default-avatar.png'}
-            alt="Avatar"
-            width={48}
-            height={48}
-            className="w-12 h-12 rounded-full mr-4"
-          />
-          <span className="text-xl font-bold">{otherUserInfo.user_name}</span>
-        </div>
-      )}
+      <div className="flex items-center mb-4 w-full px-4">
+        <button onClick={router.back} className="mr-4">
+          <Image src={'/icons/back.svg'} alt="back" width={24} height={24} />
+        </button>
+        {otherUserInfo && (
+          <>
+            <Image
+              src={otherUserInfo.avatar_url || '/default-avatar.png'}
+              alt="Avatar"
+              width={40}
+              height={40}
+              className="w-10 h-10 rounded-full mr-4"
+            />
+            <span className="text-xl font-bold">{otherUserInfo.user_name}</span>
+          </>
+        )}
+      </div>
       <MessageList isMessagesLoaded={isMessagesLoaded} messages={messages} userId={user?.id} />
       <MessageInput
         newMessage={newMessage}
@@ -171,4 +178,5 @@ function ChatPage({ params }: ParamsProps) {
     </div>
   );
 }
+
 export default ChatPage;

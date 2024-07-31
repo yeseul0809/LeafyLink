@@ -37,7 +37,7 @@ export async function createReview(reviewData: ReviewInput): Promise<Review[]> {
     return { reviews, totalCount: count };
   }
 
- async function getProductRequest(id: string){
+  export async function getProductRequest(id: string){
   const supabseServer:SupabaseClient<Database> = createClient();
   const { data: product, error } = await supabseServer
     .from('Product')
@@ -52,8 +52,7 @@ export async function createReview(reviewData: ReviewInput): Promise<Review[]> {
 
   return product;
 }
-
-export const getProduct = cache(getProductRequest);
+// export const getProduct = cache(getProductRequest);
 
 // export async function getUser(){
 //   const {data:userData, error} = await supabaseSever.auth.getUser();

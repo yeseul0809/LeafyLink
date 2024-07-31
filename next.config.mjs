@@ -25,6 +25,9 @@ const nextConfig = {
       },
       {
         hostname: '*.googleusercontent.com'
+      },
+      {
+        hostname: 'cafe24.poxo.com'
       }
     ],
     domains: ['k.kakaocdn.net', 't1.kakaocdn.net']

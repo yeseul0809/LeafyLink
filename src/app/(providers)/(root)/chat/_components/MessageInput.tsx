@@ -17,10 +17,18 @@ function MessageInput({ newMessage, setNewMessage, sendMessage }: MessageInputPr
         value={newMessage}
         onChange={(e) => setNewMessage(e.target.value)}
         className="flex-grow p-3 rounded-l-full"
+        required
       />
-      <button type="submit" className="p-3 mr-3 rounded-r-full">
-        전송
-      </button>
+      <button
+        type="submit"
+        className="p-3 mr-3 rounded-r-full bg-no-repeat bg-center"
+        style={{
+          backgroundImage: `url('/icons/send.svg')`,
+          backgroundSize: '20px',
+          width: '40px',
+          height: '40px'
+        }}
+      ></button>
     </form>
   );
 }

@@ -1,5 +1,6 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 type Product = {
@@ -21,10 +22,16 @@ interface ProductTableProps {
 }
 
 export default function ProductTable({ sellerId, products }: ProductTableProps) {
+  const router = useRouter();
+
   const [categoryFilter, setCategoryFilter] = useState<string>('all');
 
   const handleCategoryChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setCategoryFilter(event.target.value);
+  };
+
+  const handleMoveEditPage = (id: string) => {
+    router.push(`/seller/mypage/${id}/edit`);
   };
 
   // 필터링된 제품 리스트
@@ -76,7 +83,12 @@ export default function ProductTable({ sellerId, products }: ProductTableProps) 
                     {product.stock === 0 ? '품절' : '판매중'}
                   </td>
                   <td className="p-4 border-b text-center">
-                    <button className="p-2 bg-gray-200 rounded">수정</button>
+                    <button
+                      onClick={() => handleMoveEditPage(product.product_id)}
+                      className="p-2 bg-gray-200 rounded"
+                    >
+                      수정
+                    </button>
                   </td>
                 </tr>
               ))
