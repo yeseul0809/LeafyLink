@@ -44,7 +44,7 @@ export default function SelectDropdown({ onCategoryChange }: SelectDropdownProps
       options={category}
       onChange={handleChange}
       defaultValue={category[0]}
-      className="w-[50%]"
+      className="w-full border-[#E5E5EC]"
     />
   );
 }

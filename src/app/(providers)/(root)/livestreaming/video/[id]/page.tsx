@@ -11,9 +11,6 @@ export default async function RecodedVideoPage({ params }: { params: { id: strin
   const streamId = params.id.split('_')[1];
   const videoId = params.id.split('_')[2];
   const stream = await getStream(streamId);
-  // console.log('streamId::', streamId);
-
-  // console.log('stream::', stream);
 
   if (!stream) {
     return notFound();
@@ -40,8 +37,6 @@ export default async function RecodedVideoPage({ params }: { params: { id: strin
       <div className="relative aspect-video">
         <iframe
           src={`https://${process.env.CLOUDFLARE_DOMAIN}/${videoId}/iframe`}
-          // src={`https://${process.env.CLOUDFLARE_DOMAIN}/${stream.video_uid}/iframe`}
-          // src={`https://${process.env.CLOUDFLARE_DOMAIN}/038642e35c0cc07e353b5897f60b8efa/iframe`}
           allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
           className="w-full h-full rounded-md"
         ></iframe>

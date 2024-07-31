@@ -14,7 +14,7 @@ const getLiveStreamData = async (videoUid: string) => {
   return data;
 };
 
-export const getVideos = async () => {
+export const getVideos = async (category: string) => {
   const options = {
     method: 'GET',
     headers: {
@@ -48,7 +48,15 @@ export const getVideos = async () => {
     })
   );
 
-  return videosWithProduct;
+  if (category === 'all') {
+    return videosWithProduct;
+  }
+
+  const categoryFilteredData = videosWithProduct.filter((video) => {
+    return video.streamData[0].category === category;
+  });
+
+  return categoryFilteredData;
 };
 
 export const startLiveStreaming = async (_: any, formData: FormData) => {
@@ -221,15 +229,31 @@ interface LivestreamDB {
   id_live: boolean;
 }
 
-export const getAllLiveStreamDB = async (): Promise<LivestreamDB[]> => {
+export const getAllLiveStreamDB = async (category: string): Promise<LivestreamDB[]> => {
   const supabaseServer = createClient();
-  const { data, error } = await supabaseServer.from('Livestream').select('*').eq('is_live', true);
-  return data as LivestreamDB[];
+
+  if (category === 'all') {
+    const { data, error } = await supabaseServer.from('Livestream').select('*').eq('is_live', true);
+
+    return data as LivestreamDB[];
+  } else {
+    const { data, error } = await supabaseServer
+      .from('Livestream')
+      .select('*')
+      .eq('is_live', true)
+      .eq('category', category);
+
+    return data as LivestreamDB[];
+  }
 };
 
-export const getAllRecodeStramDB = async (): Promise<LivestreamDB[]> => {
+export const getAllRecodeStramDB = async (category: string): Promise<LivestreamDB[]> => {
   const supabaseServer = createClient();
-  const { data, error } = await supabaseServer.from('Livestream').select('*').eq('is_live', false);
+  const { data, error } = await supabaseServer
+    .from('Livestream')
+    .select('*')
+    .eq('is_live', false)
+    .eq('category', category);
   return data as LivestreamDB[];
 };
 

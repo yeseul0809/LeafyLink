@@ -3,9 +3,9 @@ import LiveRegisterForm from '../_components/LiveRegisterForm';
 
 function LiveRegisterPage() {
   return (
-    <div>
-      <h1>쇼핑 라이브 등록</h1>
-      <section className="w-full ">
+    <div className="mt-14 mb-36">
+      <h1 className="mb-14 font-semibold text-2xl text-center">라이브 설정</h1>
+      <section className="w-full">
         <LiveRegisterForm />
       </section>
     </div>

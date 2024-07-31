@@ -1,3 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.green-checkbox {
+  @apply w-5 h-5 appearance-none border border-black checked:bg-[#3BB873] checked:bg-[url(/icons/check.png)] checked:border-0 bg-no-repeat bg-center;
+}

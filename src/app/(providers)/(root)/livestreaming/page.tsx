@@ -1,95 +1,61 @@
-import React from 'react';
-import {
-  addProductIdsToVideos,
-  getAllLiveStreamDB,
-  getAllRecodeStramDB,
-  getLiveInput,
-  getVideos
-} from './actions';
-import Link from 'next/link';
-import Image from 'next/image';
-import { Video } from '@/types/livestream';
+'use client';
 
-const options = {
-  method: 'GET',
-  headers: {
-    'Content-Type': 'application/json',
-    Authorization: `Bearer ${process.env.CLOUDFLARE_API_KEY}`,
-    Pragma: 'no-cache',
-    Expires: '0'
-  }
-};
+import React, { useState } from 'react';
+import LiveSection from './_components/LiveSection';
+import RecodeSection from './_components/RecodeSection';
 
-async function LiveStreamingPage() {
-  // const videos = (await getVideos()).result as Video[];
-  const recodedVideos = (await getVideos()) as Video[];
-  console.log('videos22::', recodedVideos[0].streamData[0]);
+export default function ListCatogory() {
+  const [activeCategory, setActiveCategory] = useState<string>('all');
 
-  // const inputdata = await getLiveInput(recodedVideos[0].liveInput);
-  // console.log('inputdata:::', inputdata);
-
-  // const videosWithProductIds = await addProductIdsToVideos(videos);
-  // console.log(videosWithProductIds);
-  const liveStreamDatas = await getAllLiveStreamDB();
-  console.log('liveStreamDatas:', liveStreamDatas);
-
-  // fetch(
-  //   `https://api.cloudflare.com/client/v4/accounts/${process.env.CLOUDFLARE_ACCOUNT_ID}/stream/live_inputs`,
-  //   options // 여기에서 메타데이터 끄집어올수있음
-  // )
-  //   .then((response) => response.json())
-  //   // .then((response) => console.log(response.result[0].meta))
-  //   .then((response) => console.log(response))
-  //   .catch((err) => console.error(err));
-
-  // fetch(
-  //   // `https://api.cloudflare.com/client/v4/accounts/${process.env.CLOUDFLARE_ACCOUNT_ID}/stream/live_inputs/c51340789d6ec0668e198fe4ab7e9029/outputs`, // uid입력
-  //   `https://api.cloudflare.com/client/v4/accounts/${process.env.CLOUDFLARE_ACCOUNT_ID}/stream/live_inputs/21719c624de096ce04a0d9fe4932d365/outputs`, // liveinput입력
-  //   options
-  // )
-  //   .then((response) => response.json())
-  //   .then((response) => console.log(response))
-  //   .catch((err) => console.error(err));
-
-  const recodeStreamDatas = await getAllRecodeStramDB();
-  // // console.log('recodeStreamDatas::', recodeStreamDatas);
+  const handleClick = (buttonId: string) => {
+    setActiveCategory(activeCategory === buttonId ? 'none' : buttonId);
+  };
 
   return (
-    <div className="flex flex-col">
-      {liveStreamDatas.map((data) => {
-        return (
-          <div key={data.livestream_id}>
-            <Link href={`/livestreaming/${data.livestream_product_id}_${data.livestream_id}`}>
-              <Image src={data.thumbnail_url} alt="방송썸네일" width={200} height={150} />
-              <div>
-                <h2>{data.stream_title}</h2>
-              </div>
-            </Link>
-          </div>
-        );
-      })}
-      <p>------------------------------이전방송---------------------------------</p>
-      {recodedVideos.map((video) => {
-        return (
-          <div key={video.uid}>
-            <Link
-              href={`/livestreaming/video/${video.streamData[0].livestream_product_id}_${video.streamData[0].livestream_id}_${video.uid}`}
-            >
-              <Image
-                src={video.streamData[0].thumbnail_url}
-                alt="방송썸네일"
-                width={200}
-                height={150}
-              />
-              <div>
-                <h2>{video.streamData[0].stream_title}</h2>
-              </div>
-            </Link>
-          </div>
-        );
-      })}
+    <div>
+      <h1>라이브 커머스</h1>
+      <div className="flex gap-3">
+        <button
+          className={`border px-3 py-2 rounded-md ${activeCategory === 'all' ? 'bg-[#3BB873] text-white border-transparent' : 'bg-none'}`}
+          onClick={() => handleClick('all')}
+        >
+          전체보기
+        </button>
+        <button
+          className={`border px-3 py-2 rounded-md ${activeCategory === '씨앗' ? 'bg-[#3BB873] text-white border-transparent' : 'bg-none'}`}
+          onClick={() => handleClick('씨앗')}
+        >
+          씨앗
+        </button>
+        <button
+          className={`border px-3 py-2 rounded-md ${activeCategory === '모종' ? 'bg-[#3BB873] text-white border-transparent' : 'bg-none'}`}
+          onClick={() => handleClick('모종')}
+        >
+          모종
+        </button>
+        <button
+          className={`border px-3 py-2 rounded-md ${activeCategory === '재배키트' ? 'bg-[#3BB873] text-white border-transparent' : 'bg-none'}`}
+          onClick={() => handleClick('재배키트')}
+        >
+          재배키트
+        </button>
+        <button
+          className={`border px-3 py-2 rounded-md ${activeCategory === '흙,비료' ? 'bg-[#3BB873] text-white border-transparent' : 'bg-none'}`}
+          onClick={() => handleClick('흙,비료')}
+        >
+          흙/비료
+        </button>
+        <button
+          className={`border px-3 py-2 rounded-md ${activeCategory === '원예용품' ? 'bg-[#3BB873] text-white border-transparent' : 'bg-none'}`}
+          onClick={() => handleClick('원예용품')}
+        >
+          원예용품
+        </button>
+      </div>
+      <p>라이브섹션</p>
+      <LiveSection category={activeCategory} />
+      <p>이전방송섹션</p>
+      <RecodeSection category={activeCategory} />
     </div>
   );
 }
-
-export default LiveStreamingPage;
