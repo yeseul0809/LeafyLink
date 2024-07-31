@@ -15,6 +15,10 @@ const config: Config = {
       },
       zIndex: {
         '1000':'1000',
+      },
+      colors: {
+        'primary-green-500': '#3BB873',
+        'secondary-main-100': '#F9F3CF'
       }
     },
   },

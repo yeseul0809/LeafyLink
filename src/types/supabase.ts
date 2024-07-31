@@ -49,23 +49,26 @@ export type Database = {
         Row: {
           chatroom_id: string
           chatroom_product_id: string
-          chatroom_seller_id: string | null
+          chatroom_seller_id: string
           chatroom_user_id: string
           created_at: string
+          message: string | null
         }
         Insert: {
           chatroom_id: string
           chatroom_product_id: string
-          chatroom_seller_id?: string | null
+          chatroom_seller_id?: string
           chatroom_user_id: string
           created_at?: string
+          message?: string | null
         }
         Update: {
           chatroom_id?: string
           chatroom_product_id?: string
-          chatroom_seller_id?: string | null
+          chatroom_seller_id?: string
           chatroom_user_id?: string
           created_at?: string
+          message?: string | null
         }
         Relationships: [
           {
@@ -255,7 +258,7 @@ export type Database = {
           description: string
           price: number | string
           product_id: string
-          productseller_id: string
+          product_seller_id: string
           stock: number | string
           thumbnail_url: string
           title: string
@@ -267,7 +270,7 @@ export type Database = {
           description: string
           price: number | string
           product_id: string
-          productseller_id: string
+          product_seller_id: string
           stock: number | string
           thumbnail_url: string
           title: string
@@ -279,7 +282,7 @@ export type Database = {
           description?: string
           price?: number | string
           product_id?: string
-          productseller_id?: string
+          product_seller_id?: string
           stock?: number | string
           thumbnail_url?: string
           title?: string
@@ -287,8 +290,8 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: "Product_productseller_id_fkey"
-            columns: ["productseller_id"]
+            foreignKeyName: "Product_product_seller_id_fkey"
+            columns: ["product_seller_id"]
             isOneToOne: false
             referencedRelation: "Seller"
             referencedColumns: ["seller_id"]
