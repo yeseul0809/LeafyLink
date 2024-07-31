@@ -142,67 +142,63 @@ function SellerCheck({ userData }: SellerCheckProps) {
   }
 
   return (
-    <div>
+    <div className="max-w-[400px] mx-auto p-4">
       <form
         onSubmit={(e) => {
           e.preventDefault();
           codeCheck();
         }}
       >
-        <table>
-          <tbody>
-            <tr>
-              <th>사업자등록번호</th>
-              <td>
-                <input
-                  type="text"
-                  value={businessNumber}
-                  onChange={(e) => setBusinessNumber(e.target.value.replace(/\D/g, ''))}
-                  maxLength={10}
-                  placeholder="예: 1234567890"
-                />
-              </td>
-            </tr>
-            <tr>
-              <th>개업일자</th>
-              <td>
-                <input
-                  type="text"
-                  value={startDate}
-                  onChange={(e) => setStartDate(e.target.value)}
-                  placeholder="YYYYMMDD"
-                />
-              </td>
-            </tr>
-            <tr>
-              <th>대표자 성명</th>
-              <td>
-                <input
-                  type="text"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  placeholder="대표자 성명"
-                />
-              </td>
-            </tr>
-            <tr>
-              <th>상호명</th>
-              <td>
-                <input
-                  type="text"
-                  value={businessName}
-                  onChange={(e) => setBusinessName(e.target.value)}
-                  placeholder="상호명 입력"
-                />
-              </td>
-            </tr>
-            <tr>
-              <td colSpan={2}>
-                <button type="submit">인증</button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+        <div className="mb-4">
+          <label className="block text-sm font-medium text-gray-700">사업자 등록번호</label>
+          <input
+            type="text"
+            value={businessNumber}
+            onChange={(e) => setBusinessNumber(e.target.value.replace(/\D/g, ''))}
+            maxLength={10}
+            placeholder="사업자 번호를 입력해 주세요"
+            className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-primary-green-500 focus:border-primary-green-500"
+          />
+        </div>
+
+        <div className="mb-4">
+          <label className="block text-sm font-medium text-gray-700">대표자 성명</label>
+          <input
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder="대표자 성명을 입력해 주세요"
+            className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-primary-green-500 focus:border-primary-green-500"
+          />
+        </div>
+        <div className="mb-4">
+          <label className="block text-sm font-medium text-gray-700">상호명</label>
+          <input
+            type="text"
+            value={businessName}
+            onChange={(e) => setBusinessName(e.target.value)}
+            placeholder="상호명을 입력해 주세요"
+            className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-primary-green-500 focus:border-primary-green-500"
+          />
+        </div>
+        <div className="mb-4">
+          <label className="block text-sm font-medium text-gray-700">개업일자</label>
+          <input
+            type="text"
+            value={startDate}
+            onChange={(e) => setStartDate(e.target.value)}
+            placeholder="YYYY.MM.DD"
+            className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-primary-green-500 focus:border-primary-green-500"
+          />
+        </div>
+        <div className="flex justify-center">
+          <button
+            type="submit"
+            className="w-full py-2 px-4 bg-primary-green-500 text-white font-semibold rounded-md shadow-sm hover:bg-primary-green-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-green-500"
+          >
+            인증하기
+          </button>
+        </div>
       </form>
     </div>
   );

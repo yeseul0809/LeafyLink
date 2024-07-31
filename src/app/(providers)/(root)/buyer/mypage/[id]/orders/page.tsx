@@ -21,7 +21,7 @@ interface ProductPageProps {
 export default async function BuyerOrderListPage({ params, searchParams }: ProductPageProps) {
   const page = searchParams.page ? parseInt(searchParams.page as string, 10) : 1;
   const currentPage = page || 1;
-  const itemsPerPage = 10;
+  const itemsPerPage = 1;
   const supabase = createClient();
 
   // 총 주문 수를 조회
@@ -91,25 +91,41 @@ export default async function BuyerOrderListPage({ params, searchParams }: Produ
 
   return (
     <>
-      <div className="max-w-screen-lg mx-auto">
+      <div className="max-w-screen-xl mx-auto mt-20 mb-20  w-m-[1240px] ">
         <div className="overflow-x-auto">
           <table className="min-w-full bg-white border-collapse">
             <thead>
-              <tr className="bg-gray-300">
-                <th className="w-[15%] p-4 border-b">주문 번호</th>
-                <th className="p-4 border-b">상품명</th>
-                <th className="w-[12%] p-4 border-b">주문 날짜</th>
-                <th className="w-[12%] p-4 border-b">결제 금액</th>
+              <tr className="bg-secondary-yellow-100">
+                <th className="w-[15%] px-4 py-[22px] border-b text-base font-normal leading-6 tracking-tight text-font/main">
+                  주문 번호
+                </th>
+                <th className="px-4 py-[22px] border-b text-base font-normal leading-6 tracking-tight text-font/main">
+                  상품명
+                </th>
+                <th className="w-[12%] px-4 py-[22px] border-b text-base font-normal leading-6 tracking-tight text-font/main">
+                  주문 날짜
+                </th>
+                <th className="w-[12%] px-4 py-[22px] border-b text-base font-normal leading-6 tracking-tight text-font/main">
+                  결제 금액
+                </th>
               </tr>
             </thead>
             <tbody>
               {Array.isArray(ordersWithProducts) && ordersWithProducts.length > 0 ? (
                 ordersWithProducts.map((order) => (
                   <tr key={order.order_id}>
-                    <td className="p-4 border-b text-center">{order.order_id}</td>
-                    <td className="p-4 border-b ">{order.Product?.title || '제품 없음'}</td>
-                    <td className="p-4 border-b text-center">{formatDate(order.order_date)}</td>
-                    <td className="p-4 border-b text-right">{formatCurrency(order.cost)}원</td>
+                    <td className="px-4 py-[22px] text-font/sub2 text-sm font-normal tracking-tight  text-center border-b">
+                      {order.order_id}
+                    </td>
+                    <td className="px-4 py-[22px] font/main text-sm font-normal tracking-tight border-b ">
+                      {order.Product?.title || '제품 없음'}
+                    </td>
+                    <td className="px-4 py-[22px] text-font/sub2 text-sm font-normal tracking-tight border-b text-center">
+                      {formatDate(order.order_date)}
+                    </td>
+                    <td className="px-4 py-[22px] text-font/sub2 text-sm font-normal tracking-tight border-b text-center">
+                      {formatCurrency(order.cost)}원
+                    </td>
                   </tr>
                 ))
               ) : (
