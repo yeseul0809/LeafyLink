@@ -4,7 +4,7 @@ import useUser from '@/hooks/useUser';
 import { createClient } from '@/supabase/supabaseClient';
 import { Message } from '@/types/message';
 import React, { useEffect, useState } from 'react';
-import { fetchSellerInfo } from '../_utils/fetchAvatar';
+import { fetchSellerInfo, fetchUserInfo } from '../_utils/fetchInfo';
 import MessageInput from '../_components/MessageInput';
 import MessageList from '../_components/MessageList';
 import Image from 'next/image';
@@ -19,9 +19,10 @@ function ChatPage({ params }: ParamsProps) {
   const [messages, setMessages] = useState<Message[]>([]);
   const [newMessage, setNewMessage] = useState<string>('');
   const [sellerId, setSellerId] = useState<string>('');
-  const [sellerInfo, setSellerInfo] = useState<{ user_name: string; avatar_url: string } | null>(
-    null
-  );
+  const [otherUserInfo, setOtherUserInfo] = useState<{
+    user_name: string;
+    avatar_url: string;
+  } | null>(null);
   const [isSeller, setIsSeller] = useState<boolean>(false);
   const { id: chatroomId } = params;
   const { user } = useUser();
@@ -60,7 +61,7 @@ function ChatPage({ params }: ParamsProps) {
 
     const { data, error } = await supabase
       .from('Chatroom')
-      .select('chatroom_seller_id')
+      .select('chatroom_seller_id, chatroom_user_id')
       .eq('chatroom_id', chatroomId)
       .single();
 
@@ -69,9 +70,15 @@ function ChatPage({ params }: ParamsProps) {
     } else if (data) {
       setSellerId(data.chatroom_seller_id);
       setIsSeller(data.chatroom_seller_id === user.id);
-      const sellerData = await fetchSellerInfo(data.chatroom_seller_id);
-      if (sellerData) {
-        setSellerInfo(sellerData);
+
+      if (data.chatroom_seller_id === user.id) {
+        const buyerInfo = await fetchUserInfo(data.chatroom_user_id);
+        if (buyerInfo) {
+          setOtherUserInfo(buyerInfo);
+        }
+      } else {
+        const sellerInfo = await fetchSellerInfo(data.chatroom_seller_id);
+        setOtherUserInfo(sellerInfo);
       }
     }
   };
@@ -143,16 +150,16 @@ function ChatPage({ params }: ParamsProps) {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen mx-auto my-20 w-[610px]">
-      {sellerInfo && (
+      {otherUserInfo && (
         <div className="flex items-center mb-4 w-full px-4">
           <Image
-            src={sellerInfo.avatar_url || '/default-avatar.png'}
+            src={otherUserInfo.avatar_url || '/default-avatar.png'}
             alt="Avatar"
             width={48}
             height={48}
             className="w-12 h-12 rounded-full mr-4"
           />
-          <span className="text-xl font-bold">{sellerInfo.user_name}</span>
+          <span className="text-xl font-bold">{otherUserInfo.user_name}</span>
         </div>
       )}
       <MessageList isMessagesLoaded={isMessagesLoaded} messages={messages} userId={user?.id} />
