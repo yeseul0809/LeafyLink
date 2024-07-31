@@ -9,9 +9,9 @@ async function NewProduct() {
   );
 
   return (
-    <section className="w-[1240px] mx-auto mt-[93px] ">
+    <section className="lg:w-[1240px] mx-auto mt-[93px] ">
       <h2 className="text-[32px] text-center mb-[43px]">신제품</h2>
-      <div className=" grid grid-cols-4 gap-x-[20px]	gap-y-[24px] justify-items-center">
+      <div className=" grid grid-cols-1 gap-x-[20px] gap-y-[24px] justify-items-center sm:grid-cols-2 lg:grid-cols-4">
         {sortedProducts.slice(0, 8).map((product) => (
           <div key={product.product_id}>
             <ProductCard product={product} />

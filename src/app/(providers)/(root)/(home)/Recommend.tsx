@@ -22,7 +22,7 @@ async function Recommend() {
   };
 
   return (
-    <section className="w-[1240px] mx-auto mt-[140px]">
+    <section className="lg:w-[1240px] mx-auto mt-[140px]">
       <h2 className="text-[32px] text-center mb-[34px]">이 달의 추천 식물</h2>
       <div className=" grid grid-cols-2 gap-x-[20px] justify-items-center">
         <div className="w-[610px] h-[342px] bg-zinc-300 rounded-2xl object-cover">
