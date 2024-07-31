@@ -188,7 +188,7 @@ const UserEditForm = ({ initialData, userId }: UserEditFormProps) => {
           type="text"
           id="sample3_postcode"
           placeholder="우편번호"
-          className=" border p-3 mb-3 mt-3 rounded "
+          className=" border p-3 mb-3 mt-3  "
           value={postcode}
           readOnly
         />
@@ -197,8 +197,8 @@ const UserEditForm = ({ initialData, userId }: UserEditFormProps) => {
         <input
           type="button"
           onClick={() => window.sample3_execDaumPostcode()}
-          value="우편번호 찾기"
-          className="bg-black text-white p-4 cursor-pointer rounded "
+          value="주소검색"
+          className="border border-main500 bg-white text-main500 ml-3 cursor-pointer rounded-lg text-center p-3"
         />
       </div>
       {/* 주소 검색 컨테이너 */}
@@ -244,13 +244,13 @@ const UserEditForm = ({ initialData, userId }: UserEditFormProps) => {
       <div className="flex gap-4 mt-4">
         <button
           onClick={handleCancel}
-          className="flex-1 bg-gray-400 text-black font-bold p-4 cursor-pointer rounded"
+          className="flex-1 bg-main50 text-main400 font-bold p-4 cursor-pointer rounded"
         >
           취소
         </button>
         <button
           onClick={handleSave}
-          className="flex-1 bg-gray-400 text-black p-3 font-bold cursor-pointer rounded"
+          className="flex-1 bg-main500 text-white p-3 font-bold cursor-pointer rounded"
         >
           회원정보수정
         </button>

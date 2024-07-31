@@ -100,7 +100,6 @@ function SellerCheck({ userData }: SellerCheckProps) {
     const supabase = createClient();
     const { user_id, phone, avatar_url } = userData;
 
-    // Check if the seller already exists
     const { data: existingSeller, error: fetchError } = await supabase
       .from('Seller')
       .select('seller_id')
@@ -117,11 +116,10 @@ function SellerCheck({ userData }: SellerCheckProps) {
       return;
     }
 
-    // Insert new seller data
     const { error } = await supabase.from('Seller').insert({
       seller_id: user_id,
       business_number: businessData.b_no,
-      business_name: businessData.b_nm,
+      business_name: businessData.request_param.b_nm,
       business_inception: businessData.request_param.start_dt,
       user_name: businessData.request_param.p_nm,
       email: userData.email,
@@ -151,22 +149,22 @@ function SellerCheck({ userData }: SellerCheckProps) {
           codeCheck();
         }}
       >
-        <table className="tb_board_1">
+        <table>
           <tbody>
             <tr>
-              <th scope="row">사업자등록번호</th>
-              <td className="">
+              <th>사업자등록번호</th>
+              <td>
                 <input
                   type="text"
                   value={businessNumber}
                   onChange={(e) => setBusinessNumber(e.target.value.replace(/\D/g, ''))}
                   maxLength={10}
-                  placeholder=" 예: 1234567890"
+                  placeholder="예: 1234567890"
                 />
               </td>
             </tr>
             <tr>
-              <th scope="row">개업일자</th>
+              <th>개업일자</th>
               <td>
                 <input
                   type="text"
@@ -177,7 +175,7 @@ function SellerCheck({ userData }: SellerCheckProps) {
               </td>
             </tr>
             <tr>
-              <th scope="row">대표자 성명</th>
+              <th>대표자 성명</th>
               <td>
                 <input
                   type="text"
@@ -188,7 +186,7 @@ function SellerCheck({ userData }: SellerCheckProps) {
               </td>
             </tr>
             <tr>
-              <th scope="row">상호명</th>
+              <th>상호명</th>
               <td>
                 <input
                   type="text"
@@ -200,7 +198,7 @@ function SellerCheck({ userData }: SellerCheckProps) {
             </tr>
             <tr>
               <td colSpan={2}>
-                <button type="submit">조회</button>
+                <button type="submit">인증</button>
               </td>
             </tr>
           </tbody>
