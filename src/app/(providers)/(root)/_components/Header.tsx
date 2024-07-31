@@ -5,8 +5,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useRef, useState } from 'react';
-import { useFormState } from 'react-dom';
-// import { searchKeyword } from '../actions';
 
 interface Weather {
   id: number;
@@ -27,12 +25,11 @@ function Header() {
   const [isLogin, setIsLogin] = useState(false);
   const [userName, setUserName] = useState('');
   const [userAvatar, setUserAvatar] = useState('');
-  const [searchValue, setSearchValue] = useState('');
-
   // 로그인 상태
   useEffect(() => {
     const supabase = createClient();
     supabase.auth.getUser().then((res) => {
+      console.log(res);
       if (res.data.user) {
         setIsLogin(true);
         setUserName(res.data.user.identities![0].identity_data?.full_name);
@@ -42,7 +39,6 @@ function Header() {
       }
     });
   }, []);
-
   // 로그아웃 상태
   const logout = async () => {
     const supabase = createClient();
@@ -53,7 +49,6 @@ function Header() {
       window.location.href = '/';
     }
   };
-
   // user 위치
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
@@ -67,7 +62,6 @@ function Header() {
       }
     );
   }, []);
-
   // 날씨 api
   useEffect(() => {
     if (latitude && longitude) {
@@ -86,7 +80,6 @@ function Header() {
         });
     }
   }, [latitude, longitude]);
-
   // 날씨 안내 문구
   const weatherComment = (description: string) => {
     if (description.includes('구름') || description.includes('흐림')) {
@@ -103,37 +96,27 @@ function Header() {
       return '날씨 정보가 없어요.';
     }
   };
-
   // 메뉴 토글
   const toggleMenu = () => {
     setIsOpenMenu(!isOpenMenu);
+    setIsOpenSearch(false);
+    console.log('열림');
   };
-
   // 검색창 토글
   const toggleSearch = () => {
     setIsOpenSearch(!isOpenSearch);
+    setIsOpenMenu(false);
+    console.log('열림');
   };
-
   // 페이지 네비게이션
   const redirect = (e: string) => {
     router.push(`${e}`);
   };
-
-  const searchKeyword = (_: any, formData: FormData) => {
-    const keyword = formData.get('keyword') as string;
-    if (keyword) {
-      setIsOpenSearch(false);
-      router.push(`/search/${encodeURIComponent(keyword)}`);
-    }
-  };
-
-  const [state, formAction] = useFormState(searchKeyword, null);
-
   return (
-    <section className="w-full h-auto bg-white sticky top-0">
-      <div className="w-full h-[45px] text-center flex items-center justify-center bg-zinc-50 px-[190px]">
+    <section className="w-full h-auto bg-white sticky top-0 z-20">
+      <div className="w-full lg:h-[45px] md:h-[40px] text-center flex items-center justify-center bg-zinc-50">
         {loading ? (
-          <p className="text-sm text-zinc-300 tracking-widest">Loading...☀</p>
+          <p className="text-sm md:text-xs text-zinc-300 tracking-widest">Loading...☀</p>
         ) : (
           <p className="text-sm tracking-wide text-zinc-600">
             지금 내 위치 날씨는 {weather && weather.description}
@@ -141,10 +124,9 @@ function Header() {
           </p>
         )}
       </div>
-
-      <div className="w-full h-20 px-[190px] flex items-center justify-between">
+      <div className="w-full h-20 lg:px-[190px] md:px-[24px] flex items-center justify-between">
         <Link href={'/'}>
-          <Image src="/icons/logo.svg" alt="logo" width={100} height={30} />
+          <Image src="/icons/logo.svg" alt="logo" width={152} height={41} />
         </Link>
         {isLogin ? (
           <div className="로그인O flex items-center text-zinc-500">
@@ -183,7 +165,6 @@ function Header() {
           </div>
         )}
       </div>
-
       <div className="w-full h-[62px] flex items-center justify-between px-[190px] border-b relative">
         <div className="flex">
           <button onClick={toggleMenu}>
@@ -213,8 +194,13 @@ function Header() {
               </ul>
             </div>
           )}
-          <button className="ml-7 flex text-[#FF0000]">
-            라이브커머스{' '}
+          <button
+            className="ml-2 lg:ml-7 flex text-[#FF0000]"
+            onClick={() => {
+              redirect('/livestreaming');
+            }}
+          >
+            라이브커머스
             <Image
               src="/icons/icon-live.svg"
               alt="live"
@@ -224,21 +210,32 @@ function Header() {
             ></Image>
           </button>
           <button
-            className="ml-7"
+            className="ml-2 lg:ml-7 "
             onClick={() => {
               redirect('/livestreaming');
             }}
           >
             베스트셀러
           </button>
-          <button className="ml-7">식집사템</button>
+          <button
+            className="ml-2 lg:ml-7 "
+            onClick={() => {
+              redirect('/livestreaming');
+            }}
+          >
+            식집사템
+          </button>
         </div>
-
         <div className="flex">
           <button className="ml-[48px]" onClick={toggleSearch}>
             <Image src="/icons/icon-search.svg" alt="search" width={32} height={32}></Image>
           </button>
-          <button className="ml-[48px]">
+          <button
+            className="ml-[48px]"
+            onClick={() => {
+              redirect('/chat');
+            }}
+          >
             <Image src="/icons/icon-message.svg" alt="message" width={32} height={32}></Image>
           </button>
           <button className="ml-[48px]">
@@ -251,18 +248,10 @@ function Header() {
             <div className="absolute w-full h-auto flex justify-between py-[30px] px-[190px] border-b bg-white top-12 right-0 text-center">
               <p className="bold text-2xl font-semibold">SEARCH</p>
               <form
-                action={formAction}
+                action="submit"
                 className="flex justify-center items-center w-[540px] h-10 border rounded-full px-4"
               >
-                <input
-                  type="text"
-                  className="w-11/12 h-8"
-                  placeholder="어떤 식물을 찾으시나요?"
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                    setSearchValue(e.target.value)
-                  }
-                  name="keyword"
-                />
+                <input type="text" className="w-11/12 h-8" placeholder="어떤 식물을 찾으시나요?" />
                 <button type="submit">
                   <Image src="/icons/icon-search.svg" alt="search" width={24} height={24}></Image>
                 </button>
@@ -277,5 +266,4 @@ function Header() {
     </section>
   );
 }
-
 export default Header;

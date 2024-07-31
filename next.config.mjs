@@ -16,9 +16,21 @@ const nextConfig = {
       },
       {
         hostname: 'cafe24.poxo.com'
+      },
+      {
+        hostname: 'k.kakaocdn.net'
+      },
+      {
+        hostname: '*.googleusercontent.com'
+      },
+      {
+        hostname: 'cafe24.poxo.com'
+      },
+      {
+        hostname: 'sitem.ssgcdn.com'
       }
     ],
-    domains: ['k.kakaocdn.net'] // 여기에 이미지 호스트명을 추가합니다.
+    domains: ['k.kakaocdn.net', 't1.kakaocdn.net']
   },
   env: {
     NEXT_PUBLIC_SUPABASE_URL: process.env.NEXT_PUBLIC_SUPABASE_URL,

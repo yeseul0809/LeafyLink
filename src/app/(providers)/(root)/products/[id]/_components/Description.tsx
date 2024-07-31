@@ -16,7 +16,7 @@ function ProductDescription({ productDescription }: ProductDescriptionProps) {
   }, [productDescription]);
 
   return (
-    <section className="my-8 flex flex-col items-center w-full">
+    <section className="py-11 flex flex-col text-center items-center w-full">
       <div dangerouslySetInnerHTML={{ __html: sanitizedProduct }} />
     </section>
   );

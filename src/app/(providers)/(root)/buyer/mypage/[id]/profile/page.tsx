@@ -27,7 +27,7 @@ export default async function BuyerMyPage({ params }: BuyerMyPageProps) {
   };
 
   return (
-    <section className="max-w-screen-sm mx-auto">
+    <section className="max-w-sm mx-auto">
       <div className="mb-8">
         <UserEditFrom initialData={initialData} userId={params.id} />
       </div>
