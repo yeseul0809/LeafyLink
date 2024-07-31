@@ -113,7 +113,7 @@ function Header() {
     router.push(`${e}`);
   };
   return (
-    <section className="w-full h-auto bg-white sticky top-0 z-10">
+    <section className="w-full h-auto bg-white sticky top-0 z-20">
       <div className="w-full h-[45px] text-center flex items-center justify-center bg-zinc-50 px-[190px]">
         {loading ? (
           <p className="text-sm text-zinc-300 tracking-widest">Loading...☀</p>
