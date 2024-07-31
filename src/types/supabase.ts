@@ -267,15 +267,15 @@ export type Database = {
           },
         ]
       }
-      Product: {
+Product: {
         Row: {
           category: string
           created_at: string | null
           description: string
-          price: number
+          price: number | string
           product_id: string
           product_seller_id: string
-          stock: number
+          stock: number | string
           thumbnail_url: string
           title: string
           updated_at: string | null
@@ -284,10 +284,10 @@ export type Database = {
           category: string
           created_at?: string | null
           description: string
-          price: number
+          price: number | string
           product_id: string
           product_seller_id: string
-          stock: number
+          stock: number | string
           thumbnail_url: string
           title: string
           updated_at?: string | null
@@ -296,10 +296,10 @@ export type Database = {
           category?: string
           created_at?: string | null
           description?: string
-          price?: number
+          price?: number | string
           product_id?: string
           product_seller_id?: string
-          stock?: number
+          stock?: number | string
           thumbnail_url?: string
           title?: string
           updated_at?: string | null
