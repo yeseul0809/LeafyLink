@@ -29,11 +29,11 @@ const PhoneForm = ({ onChange, initialPhone = '' }: PhoneFormProps) => {
   }, [phoneParts, onChange]);
 
   return (
-    <section className="flex items-center gap-2 w-full max-w-screen-sm">
+    <section className="flex items-center gap-2 w-full max-w-screen-sm mb-20 mt-3">
       <input
         type="text"
         placeholder="010"
-        className="border p-3 rounded flex-grow min-w-[0] box-border"
+        className="border p-4  flex-grow min-w-[0] box-border"
         maxLength={3}
         value={phoneParts.part1}
         onChange={(e) => handleInput('part1', e.target.value)} // 첫 번째 부분 입력 처리
@@ -42,7 +42,7 @@ const PhoneForm = ({ onChange, initialPhone = '' }: PhoneFormProps) => {
       <input
         type="text"
         placeholder="4444"
-        className="border p-3 rounded flex-grow min-w-[0] box-border"
+        className="border p-4  flex-grow min-w-[0] box-border"
         maxLength={4}
         value={phoneParts.part2}
         onChange={(e) => handleInput('part2', e.target.value)} // 두 번째 부분 입력 처리
@@ -51,7 +51,7 @@ const PhoneForm = ({ onChange, initialPhone = '' }: PhoneFormProps) => {
       <input
         type="text"
         placeholder="4444"
-        className="border p-3 rounded flex-grow min-w-[0] box-border"
+        className="border p-4  flex-grow min-w-[0] box-border"
         maxLength={4}
         value={phoneParts.part3}
         onChange={(e) => handleInput('part3', e.target.value)} // 세 번째 부분 입력 처리

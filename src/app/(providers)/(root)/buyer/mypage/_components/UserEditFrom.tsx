@@ -164,7 +164,7 @@ const UserEditForm = ({ initialData, userId }: UserEditFormProps) => {
   return (
     <div className="  ">
       {/* 이미지 컨테이너 */}
-      <div className=" flex justify-center mb-4 ">
+      <div className=" flex justify-center mb-8 ">
         <Image
           src={initialData.avatarUrl}
           width={300}
@@ -174,21 +174,21 @@ const UserEditForm = ({ initialData, userId }: UserEditFormProps) => {
         />
       </div>
       {/* 이름 입력 필드 */}
-      <label className="font-bold text-lg ">이름</label>
+      <label className="text-base font-normal leading-6 tracking-tighter ">이름</label>
       <input
         type="text"
-        className="border rounded w-full p-3  mb-3 mt-3 rounded "
+        className="border border-Line/Regular  bg-white w-full p-4  mb-6 mt-3  "
         value={userName}
         onChange={(e) => setUserName(e.target.value)}
       />
       {/* 우편번호 입력 필드 */}
       <label className="font-bold text-lg ">주소</label>
-      <div className="  w-full flex-grow ">
+      <div className="  ">
         <input
           type="text"
           id="sample3_postcode"
           placeholder="우편번호"
-          className=" border p-3 mb-3 mt-3  "
+          className=" border border-Line/Regular w-[160px] p-4 mb-3 mt-3  "
           value={postcode}
           readOnly
         />
@@ -198,16 +198,16 @@ const UserEditForm = ({ initialData, userId }: UserEditFormProps) => {
           type="button"
           onClick={() => window.sample3_execDaumPostcode()}
           value="주소검색"
-          className="border border-main500 bg-white text-main500 ml-3 cursor-pointer rounded-lg text-center p-3"
+          className="border border-primary-green-500 bg-white text-primary-green-500 ml-3 cursor-pointer rounded-lg text-center p-4"
         />
       </div>
       {/* 주소 검색 컨테이너 */}
       <div
         id="wrap"
         ref={wrapRef}
-        className="border w-full max-w-lg h-96 relative hidden bg-white rounded-lg shadow-lg"
+        className=" w-full max-w-lg h-96 relative hidden bg-white rounded-lg shadow-lg"
       >
-        <div className="flex justify-between items-center bg-gray-100 p-3 border-b border-gray-300">
+        <div className="flex justify-between items-center bg-gray-100 p-4 border-b">
           <h1 className="text-black font-bold">주소 검색</h1>
           <Image
             src="https://t1.daumcdn.net/postcode/resource/images/close.png"
@@ -224,7 +224,7 @@ const UserEditForm = ({ initialData, userId }: UserEditFormProps) => {
         type="text"
         id="sample3_address"
         placeholder="주소"
-        className="border p-3 mb-3 w-full max-w-2xl rounded"
+        className="border border-Line/Regular p-4 mb-3 w-full max-w-2xl "
         value={address}
         onChange={(e) => setAddress(e.target.value)}
       />
@@ -233,24 +233,24 @@ const UserEditForm = ({ initialData, userId }: UserEditFormProps) => {
         type="text"
         id="sample3_detailAddress"
         placeholder="상세주소"
-        className="border p-3 mb-3 w-full rounded"
+        className="border border-Line/Regular p-4 mb-6 w-full "
         value={detailAddress}
         onChange={(e) => setDetailAddress(e.target.value)}
       />
       {/* Phone Form 추가 */}
-      <label className="font-bold text-lg ">휴대폰 번호</label>
+      <label className="text-base font-normal leading-6 tracking-tighter mb-3 ">휴대폰 번호</label>
       <PhoneForm initialPhone={phone} onChange={handlePhoneChange} />
 
-      <div className="flex gap-4 mt-4">
+      <div className="flex gap-4 ">
         <button
           onClick={handleCancel}
-          className="flex-1 bg-main50 text-main400 font-bold p-4 cursor-pointer rounded"
+          className="flex-1 bg-primary-green-50 text-primary-green-400 font-bold p-4 cursor-pointer rounded-md "
         >
           취소
         </button>
         <button
           onClick={handleSave}
-          className="flex-1 bg-main500 text-white p-3 font-bold cursor-pointer rounded"
+          className="flex-1 bg-primary-green-500 text-white p-4 font-bold cursor-pointer text-white rounded-md "
         >
           회원정보수정
         </button>

@@ -18,8 +18,8 @@ export default async function BusinessCheck({ params }: BuyerMyPageProps) {
   }
 
   return (
-    <section className="max-w-screen-sm mx-auto">
-      <div className="mb-8">
+    <section className="">
+      <div className="">
         <SellerCheck userData={data} />
       </div>
     </section>

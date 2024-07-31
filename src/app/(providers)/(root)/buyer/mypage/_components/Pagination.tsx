@@ -54,7 +54,7 @@ export default function Pagination({
                 <div
                   className={`w-8 h-8 flex items-center justify-center rounded-full border ${
                     currentPage === pageNum
-                      ? 'bg-teal-700 text-white font-bold'
+                      ? ' text-font/main font-bold border-font/main border-[1px] bg-white'
                       : 'border-gray-300 hover:bg-gray-100'
                   }`}
                 >
