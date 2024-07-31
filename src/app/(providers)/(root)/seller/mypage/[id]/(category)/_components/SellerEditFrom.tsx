@@ -32,6 +32,7 @@ interface SellerEditFormProps {
     phone: string;
     avatar_url: string;
     address_code: string;
+    business_name: string;
   };
 }
 
@@ -41,7 +42,7 @@ const SellerEditForm = ({ sellerData }: SellerEditFormProps) => {
   const [postcode, setPostcode] = useState<string>(sellerData.address_code);
   const [detailAddress, setDetailAddress] = useState<string>(sellerData.address_detail);
   const [extraAddress, setExtraAddress] = useState<string>('');
-  const [userName, setUserName] = useState<string>(sellerData.user_name);
+  const [userName, setUserName] = useState<string>(sellerData.business_name);
   const [phone, setPhone] = useState<string>(sellerData.phone);
   const supabase = createClient();
 
@@ -185,7 +186,7 @@ const SellerEditForm = ({ sellerData }: SellerEditFormProps) => {
           className="w-24 h-24 rounded-full"
         />
       </div>
-      {/* 이름 입력 필드 */}
+      {/* 상호명 입력 필드 */}
       <label className="font-bold text-lg">상호명</label>
       <input
         type="text"

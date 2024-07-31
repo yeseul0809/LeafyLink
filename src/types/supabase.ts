@@ -15,18 +15,21 @@ export type Database = {
           cart_product_id: string
           cart_user_id: string
           count: number
+          is_checked: boolean
         }
         Insert: {
           cart_id?: string
           cart_product_id: string
           cart_user_id: string
           count: number
+          is_checked: boolean
         }
         Update: {
           cart_id?: string
           cart_product_id?: string
           cart_user_id?: string
           count?: number
+          is_checked?: boolean
         }
         Relationships: [
           {
@@ -49,21 +52,21 @@ export type Database = {
         Row: {
           chatroom_id: string
           chatroom_product_id: string | null
-          chatroom_seller_id: string | null
+          chatroom_seller_id: string
           chatroom_user_id: string
           created_at: string
         }
         Insert: {
           chatroom_id: string
           chatroom_product_id?: string | null
-          chatroom_seller_id?: string | null
+          chatroom_seller_id: string
           chatroom_user_id: string
           created_at?: string
         }
         Update: {
           chatroom_id?: string
           chatroom_product_id?: string | null
-          chatroom_seller_id?: string | null
+          chatroom_seller_id?: string
           chatroom_user_id?: string
           created_at?: string
         }
@@ -96,6 +99,7 @@ export type Database = {
           category: string | null
           create_at: string
           description: string
+          is_live: boolean
           livestream_id: string
           livestream_product_id: string
           livestream_seller_id: string | null
@@ -110,6 +114,7 @@ export type Database = {
           category?: string | null
           create_at?: string
           description: string
+          is_live: boolean
           livestream_id?: string
           livestream_product_id: string
           livestream_seller_id?: string | null
@@ -124,6 +129,7 @@ export type Database = {
           category?: string | null
           create_at?: string
           description?: string
+          is_live?: boolean
           livestream_id?: string
           livestream_product_id?: string
           livestream_seller_id?: string | null
@@ -354,8 +360,11 @@ export type Database = {
         Row: {
           address: string
           address_code: string
-          adress_detail: string | null
+          address_detail: string | null
           avatar_url: string
+          business_inception: string
+          business_name: string
+          business_number: string
           created_at: string
           email: string
           phone: string
@@ -363,10 +372,13 @@ export type Database = {
           user_name: string
         }
         Insert: {
-          address: string
+          address?: string
           address_code?: string
-          adress_detail?: string | null
+          address_detail?: string | null
           avatar_url: string
+          business_inception?: string
+          business_name?: string
+          business_number?: string
           created_at?: string
           email: string
           phone: string
@@ -376,8 +388,11 @@ export type Database = {
         Update: {
           address?: string
           address_code?: string
-          adress_detail?: string | null
+          address_detail?: string | null
           avatar_url?: string
+          business_inception?: string
+          business_name?: string
+          business_number?: string
           created_at?: string
           email?: string
           phone?: string

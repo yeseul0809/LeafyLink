@@ -43,7 +43,7 @@ const MyPageHeader = () => {
           </Link>
         </li>
         <li className="w-1/3">
-          <Link href={`/buyer/mypage/${id}/sellerAuth`}>
+          <Link href={`/buyer/mypage/${id}/BusinessCheck`}>
             <div
               className={`block text-center ${linkClassName} ${activeLink === `/buyer/mypage/${id}/business-verification` ? activeLinkClassName : ''}`}
             >
