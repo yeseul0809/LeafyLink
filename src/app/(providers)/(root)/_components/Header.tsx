@@ -116,11 +116,13 @@ function Header() {
   };
 
   // 검색 로직
-  const searchkeyword = (_: any, formData: FormData) => {
-    const keyword = formData.get('keyword');
-    router.push(`search/${keyword}`);
+  const searchKeyword = (_: any, formData: FormData) => {
+    const keyword = formData.get('keyword') as string;
+    setIsOpenSearch(false);
+    router.push(`/search?keyword=${encodeURIComponent(keyword)}&page=${1}`);
   };
-  const [state, formAction] = useFormState(searchkeyword, null);
+  const [state, formAction] = useFormState(searchKeyword, null);
+
   return (
     <section className="w-full h-auto bg-white sticky top-0 z-20">
       <div className="w-full lg:h-[45px] md:h-[40px] text-center flex items-center justify-center bg-zinc-50">

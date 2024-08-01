@@ -43,6 +43,30 @@ const nextConfig = {
       },
       {
         hostname: 'mooluckmooluck.com'
+      },
+      {
+        hostname: 'encrypted-tbn0.gstatic.com'
+      },
+      {
+        hostname: 'gdimg.gmarket.co.kr'
+      },
+      {
+        hostname: 'img.29cm.co.kr'
+      },
+      {
+        hostname: 'thumbnail6.coupangcdn.com'
+      },
+      {
+        hostname: 'asset.m-gs.kr'
+      },
+      {
+        hostname: 'dimg.donga.com'
+      },
+      {
+        hostname: 'm.livin.co.kr'
+      },
+      {
+        hostname: 'thumbnail10.coupangcdn.com'
       }
     ],
     domains: ['k.kakaocdn.net', 't1.kakaocdn.net'],
