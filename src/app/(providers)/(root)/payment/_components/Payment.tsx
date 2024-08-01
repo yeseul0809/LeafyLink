@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import React, { Suspense } from 'react';
+import React from 'react';
 import { createClient } from '@/supabase/supabaseClient';
 import { useQuery } from '@tanstack/react-query';
 import { useSearchParams } from 'next/navigation';
@@ -16,7 +16,7 @@ interface Product {
 
 interface CombinedProductData {
   product_id: string;
-  productseller_id: string;
+  product_seller_id: string;
   category: string;
   title: string;
   price: number;
@@ -105,6 +105,8 @@ export default function PaymentPage() {
     queryKey: ['getUserInfo'],
     queryFn: getUserInfo
   });
+
+  console.log('userData::', userData);
 
   if (!userFetched) {
     return null;
@@ -252,7 +254,7 @@ export default function PaymentPage() {
           </label>
         </div>
         <button
-          onClick={() => paymentHandler(productData as ProductInfo)}
+          onClick={() => paymentHandler(productData as ProductInfo, userData.user_id)}
           className="w-full bg-[#3BB873] rounded-md h-[48px] text-white"
         >
           {productData?.totalCost.toLocaleString()}원 결제하기

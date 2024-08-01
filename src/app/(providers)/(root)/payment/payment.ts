@@ -4,7 +4,7 @@ import { RequestPayParams, RequestPayResponse } from 'iamport-typings';
 import { createClient } from '@/supabase/supabaseClient';
 import { ProductInfo } from './_components/Payment';
 
-const paymentHandler = (productData: ProductInfo) => {
+const paymentHandler = (productData: ProductInfo, userId: string) => {
   if (!window.IMP) return;
   /* 1. 가맹점 식별하기 */
   const { IMP } = window;
@@ -27,22 +27,33 @@ const paymentHandler = (productData: ProductInfo) => {
 
   /* 4. 결제 창 호출하기 */
   // IMP.request_pay(data, callback);
-  IMP.request_pay(data, (rsp: RequestPayResponse) => callback(rsp, productData));
+  IMP.request_pay(data, (rsp: RequestPayResponse) => callback(rsp, productData, userId));
 };
 
-async function callback(rsp: any, productData: ProductInfo) {
+async function callback(rsp: any, productData: ProductInfo, userId: string) {
   const { success, error_msg, merchant_uid, imp_uid } = rsp;
   if (success) {
     const supabase = createClient();
     for (const product of productData.combinedData) {
-      const { error } = await supabase
+      const { error: cartError } = await supabase
         .from('Cart')
         .delete()
         .eq('cart_product_id', product.product_id);
 
-      if (error) {
-        console.error(`Error deleting product ${product.product_id} from Cart:`, error);
+      if (cartError) {
+        console.error(`Error deleting product ${product.product_id} from Cart:`, cartError);
       }
+
+      const orderData = {
+        order_user_id: userId,
+        order_product_id: product.product_id,
+        order_seller_id: product.product_seller_id,
+        quantity: product.quantity,
+        cost: product.price * product.quantity,
+        is_payed: true
+      };
+
+      const { error: orderError } = await supabase.from('Order').insert([orderData]);
     }
     alert('결제성공');
     window.location.href = '/';

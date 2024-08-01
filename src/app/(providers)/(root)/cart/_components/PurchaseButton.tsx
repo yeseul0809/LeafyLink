@@ -77,11 +77,7 @@ export default function PurchaseButton({ userId }: { userId: string }) {
   }
 
   return (
-    <button
-      disabled={isDisable}
-      onClick={handleNavigate}
-      className="bg-[#3BB873] mt-4 h-[51px] rounded-md text-[16px]"
-    >
+    <button onClick={handleNavigate} className="bg-[#3BB873] mt-4 h-[51px] rounded-md text-[16px]">
       구매하기
     </button>
   );
