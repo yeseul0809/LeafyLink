@@ -88,6 +88,8 @@ export default function PaymentPage() {
     queryFn: getProductInfo
   });
 
+  console.log('productData::', productData);
+
   const getUserInfo = async () => {
     const supabase = createClient();
     const { data: userData } = await supabase.auth.getUser();
@@ -259,24 +261,3 @@ export default function PaymentPage() {
     );
   }
 }
-
-// 상품id,수량 을 쿼리로 주고받는 방식
-
-// 1. 상세페이지에서 router.push(클라이언트 컴포넌트)
-// router.push(`/payment?productId=${productId}&quantity=${quantity}`);
-
-// 2. 상세페이지에서 Link(서버컴포넌트)
-//  const url = `/payment?productId=${productId}&quantity=${quantity}`;
-// return (
-//   <div>
-//     <h1>Home Page</h1>
-//     {/* 클라이언트 측에서 이 URL을 사용하여 페이지를 이동시킵니다 */}
-//     <Link href={url}>Go to Payment</Link>
-//   </div>
-// );
-
-// -> 둘 중 택1
-
-// 받는곳 - 결제페이지
-// const quantity = searchParams.get('productId'); // 쿼리 문자열 파라미터 - 상품id 캐치
-// const quantity = searchParams.get('quantity'); // 쿼리 문자열 파라미터 - 수량 캐치

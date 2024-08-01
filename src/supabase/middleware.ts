@@ -36,19 +36,35 @@ export async function updateSession(request: NextRequest) {
     data: { user }
   } = await supabase.auth.getUser();
 
-  const publicOnlyUrls: Routes = {
+  // const publicOnlyUrls: Routes = {
+  //   '/': true,
+  //   '/login': true,
+  //   '/auth/callback': true,
+  //   '/products': true,
+  //   '/search': true,
+  //   '/livestreaming': true,
+  //   '/login/needlogin': true
+  // };
+
+  const exactMatchUrls: Routes = {
     '/': true,
     '/login': true,
     '/auth/callback': true,
-    '/products': true,
-    '/search': true,
-    '/livestreaming': true,
     '/login/needlogin': true
   };
 
-  const isPublicPage = publicOnlyUrls[request.nextUrl.pathname] || false;
+  const prefixMatchUrls: Routes = {
+    '/products': true,
+    '/search': true,
+    '/livestreaming': true
+  };
 
-  if (!user && !isPublicPage) {
+  const isExactMatchPage = exactMatchUrls[request.nextUrl.pathname] || false;
+  const isPrefixMatchPage = Object.keys(prefixMatchUrls).some((path) =>
+    request.nextUrl.pathname.startsWith(path)
+  );
+
+  if (!user && !(isExactMatchPage || isPrefixMatchPage)) {
     return NextResponse.redirect(new URL('/login/needlogin', request.url));
   }
 
