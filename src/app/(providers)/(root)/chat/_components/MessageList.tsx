@@ -28,7 +28,7 @@ function MessageList({ isMessagesLoaded, messages, userId }: MessageListProps) {
             const dateDisplay = formattedDate !== previousFormattedDate && (
               <div
                 key={`date-${msg.message_id}`}
-                className="text-center mx-auto text-gray-500 my-8 p-1 w-24 rounded-full bg-secondary-main-100 "
+                className="text-center mx-auto text-gray-500 my-8 p-1 w-24 rounded-full bg-secondary-yellow-100 "
               >
                 {formattedDate}
               </div>
