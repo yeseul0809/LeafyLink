@@ -9,6 +9,7 @@ const ProductCard = ({ product }: { product: Product }) => {
     return new Intl.NumberFormat('en-US').format(price);
   };
   const router = useRouter();
+
   // 페이지 네비게이션
   const redirect = (e: string) => {
     router.push(`${e}`);
@@ -19,7 +20,7 @@ const ProductCard = ({ product }: { product: Product }) => {
       <div className="lg:w-[295px]">
         <div className="relative ">
           <div
-            onClick={() => redirect('/')}
+            onClick={() => redirect(`/products/${product.product_id}`)}
             className="cursor-pointer opacity-0 lg:w-[295px] lg:h-[295px] w-[164px] h-[164px] z-1 flex justify-center items-center absolute z-5 hover:backdrop-blur-sm hover:opacity-100"
           >
             <Link href={'cart'} className="mr-10" onClick={(event) => event.stopPropagation()}>

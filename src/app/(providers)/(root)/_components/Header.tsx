@@ -5,6 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useRef, useState } from 'react';
+import BestSeller from '../(home)/BestSeller';
 
 interface Weather {
   id: number;
@@ -29,7 +30,6 @@ function Header() {
   useEffect(() => {
     const supabase = createClient();
     supabase.auth.getUser().then((res) => {
-      console.log(res);
       if (res.data.user) {
         setIsLogin(true);
         setUserName(res.data.user.identities![0].identity_data?.full_name);
@@ -177,25 +177,25 @@ function Header() {
             >
               <ul className="flex">
                 <li className="text-zinc-700 hover:text-zinc-950">
-                  <a href="#">씨앗</a>
+                  <a href="/productsList/seed">씨앗</a>
                 </li>
                 <li className="ml-7 text-zinc-700 hover:text-zinc-950">
-                  <a href="#">모종</a>
+                  <a href="/productsList/seedling">모종</a>
                 </li>
                 <li className="ml-7 text-zinc-700 hover:text-zinc-950">
-                  <a href="#">재배키트</a>
+                  <a href="/productsList/kit">재배키트</a>
                 </li>
                 <li className="ml-7 text-zinc-700 hover:text-zinc-950">
-                  <a href="#">흙/비료</a>
+                  <a href="/productsList/soil">흙/비료</a>
                 </li>
                 <li className="ml-7 text-zinc-700 hover:text-zinc-950">
-                  <a href="#">원예용품</a>
+                  <a href="/productsList/goods">원예용품</a>
                 </li>
               </ul>
             </div>
           )}
           <button
-            className="ml-2 lg:ml-7 flex text-[#FF0000]"
+            className="ml-2 lg:ml-7 flex text-[#3BB873] font-semibold"
             onClick={() => {
               redirect('/livestreaming');
             }}
@@ -212,7 +212,7 @@ function Header() {
           <button
             className="ml-2 lg:ml-7 "
             onClick={() => {
-              redirect('/livestreaming');
+              redirect('/#bestSeller');
             }}
           >
             베스트셀러
@@ -220,7 +220,7 @@ function Header() {
           <button
             className="ml-2 lg:ml-7 "
             onClick={() => {
-              redirect('/livestreaming');
+              redirect('/#goods');
             }}
           >
             식집사템

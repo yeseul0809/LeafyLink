@@ -39,14 +39,14 @@ function Carousel() {
           </SwiperSlide>
         ))}
         <div className="w-full flex justify-between items-center z-10 absolute top-1/2">
-          <div className="custom-swiper-button custom-swiper-button-next px-10">
+          <div className="custom-swiper-button custom-swiper-button-prev px-10">
             <img
               src="/icons/button-left.svg"
               alt="left button"
               className="max-w-[72px] max-h-[72px]"
             />
           </div>
-          <div className="custom-swiper-button custom-swiper-button-prev px-10">
+          <div className="custom-swiper-button custom-swiper-button-next px-10">
             <img
               src="/icons/button-right.svg"
               alt="right button"
