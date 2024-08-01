@@ -27,15 +27,16 @@ interface CartState {
   updateQuantity: (productId: string, quantity: number) => void;
   removeItem: (productId: string) => void;
   initializeCart: (userId: string) => Promise<void>;
+  isAnyChecked: boolean;
 }
 
 export const useCartStore = create<CartState>((set) => ({
   cart: {},
   selectAll: false,
+  isAnyChecked: false,
   initializeCart: async (userId: string) => {
     try {
       const supabase = createClient();
-      // const userId = 'YOUR_USER_ID'; // Retrieve the user ID from session or authentication
       const { data: cartData, error } = await supabase
         .from('Cart')
         .select('*')
@@ -140,7 +141,7 @@ export const useCartStore = create<CartState>((set) => ({
   },
   removeItem: async (productId: string) => {
     try {
-      await deleteCart(productId); // 서버에서 아이템을 삭제합니다.
+      await deleteCart(productId);
       set((state) => {
         const newCart = { ...state.cart };
         delete newCart[productId];
@@ -151,50 +152,3 @@ export const useCartStore = create<CartState>((set) => ({
     }
   }
 }));
-
-// interface CartState {
-//   cart: { [productId: string]: any };
-//   updateQuantity: (productId: string, quantity: number) => void;
-//   removeItem: (productId: string) => void;
-// }
-
-// export const useCartStore = create<CartState>((set) => ({
-//   cart: {},
-//   updateQuantity: async (productId: string, quantity: number) => {
-//     try {
-//       const supabase = createClient();
-//       const { error } = await supabase
-//         .from('Cart')
-//         .update({ count: quantity })
-//         .eq('cart_product_id', productId);
-
-//       if (error) {
-//         throw error;
-//       }
-
-//       set((state) => ({
-//         cart: {
-//           ...state.cart,
-//           [productId]: {
-//             ...(state.cart[productId] || {}),
-//             quantity
-//           }
-//         }
-//       }));
-//     } catch (error) {
-//       console.error('Failed to update quantity in cart', error);
-//     }
-//   },
-//   removeItem: async (productId: string) => {
-//     try {
-//       await deleteCart(productId); // 서버에서 아이템을 삭제합니다.
-//       set((state) => {
-//         const newCart = { ...state.cart };
-//         delete newCart[productId];
-//         return { cart: newCart };
-//       });
-//     } catch (error) {
-//       console.error('Failed to delete item from cart', error);
-//     }
-//   }
-// }));

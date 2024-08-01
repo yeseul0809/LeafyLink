@@ -1,12 +1,31 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { createClient } from '@/supabase/supabaseClient';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
+import { useCartStore } from '@/stores';
 
-export default function PurchaseButton() {
+export default function PurchaseButton({ userId }: { userId: string }) {
+  const [isDisable, setIsDisable] = useState(true);
   const router = useRouter();
+  const { cart, isAnyChecked, initializeCart } = useCartStore((state) => ({
+    cart: state.cart,
+    isAnyChecked: state.isAnyChecked,
+    initializeCart: state.initializeCart
+  }));
+
+  useEffect(() => {
+    const checkCartStatus = async () => {
+      await initializeCart(userId);
+    };
+
+    checkCartStatus();
+  }, [initializeCart, userId]);
+
+  useEffect(() => {
+    setIsDisable(!isAnyChecked);
+  }, [isAnyChecked]);
 
   const getCartData = async () => {
     const supabase = createClient();
@@ -58,7 +77,11 @@ export default function PurchaseButton() {
   }
 
   return (
-    <button onClick={handleNavigate} className="bg-[#3BB873] mt-4 h-[51px] rounded-md text-[16px]">
+    <button
+      disabled={isDisable}
+      onClick={handleNavigate}
+      className="bg-[#3BB873] mt-4 h-[51px] rounded-md text-[16px]"
+    >
       구매하기
     </button>
   );

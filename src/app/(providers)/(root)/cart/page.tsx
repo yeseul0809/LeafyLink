@@ -22,16 +22,11 @@ export default async function CartPage() {
   let cartData, allProductData, checkedTrueDatas;
   if (userData) {
     cartData = await getCartData(userData.user.id);
-    // checkedTrueDatas = await getCheckedCartDatas(userData.user.id);
     if (cartData) {
       allProductData = await getProductData(cartData, 'all');
       checkedTrueDatas = await getProductData(cartData, 'checked');
     }
   }
-
-  // console.log('checkedTrueDatas::', checkedTrueDatas);
-
-  // console.log('productData::', productData);
 
   const productIds = allProductData?.map((data) => data.product_id);
 
@@ -87,7 +82,6 @@ export default async function CartPage() {
             <div className="ring-1 ring-[#D9D9D9] rounded-md w-full h-full flex flex-col items-end justify-center p-6">
               <div className="text-[14px] w-full text-center flex justify-between mb-3">
                 <span>총 상품금액</span>
-                {/* <ProductPrice checkedDatas={checkedTrueDatas} /> */}
                 <ProductPrice userId={userData?.user.id!} />
               </div>
               <div className="text-[14px] w-full text-center flex justify-between mb-3">
@@ -97,11 +91,10 @@ export default async function CartPage() {
               <div className="border-t border-gray-300 mt-2 w-full" />
               <div className="w-full text-center flex justify-between text-[16px] mt-5">
                 <span>결제 예정 금액</span>
-                {/* <ProductPrice checkedDatas={checkedTrueDatas} /> */}
                 <ProductPrice userId={userData?.user.id!} />
               </div>
             </div>
-            <PurchaseButton />
+            <PurchaseButton userId={userData?.user.id!} />
           </div>
         )}
       </div>

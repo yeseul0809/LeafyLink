@@ -4,18 +4,17 @@ import React, { useEffect, useState } from 'react';
 import { getUserSession, allToggleCheckbox, Product } from '../actions';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { createClient } from '@/supabase/supabaseClient';
-import { revalidatePath } from 'next/cache';
 import { useCartStore } from '@/stores';
 
-const getClientUserData = async () => {
-  const supabase = createClient();
-  const { data, error } = await supabase.auth.getUser();
-  if (error) {
-    console.error(error);
-  }
+// const getClientUserData = async () => {
+//   const supabase = createClient();
+//   const { data, error } = await supabase.auth.getUser();
+//   if (error) {
+//     console.error(error);
+//   }
 
-  return data.user!.id;
-};
+//   return data.user!.id;
+// };
 
 const getCartStatus = async (userId: string) => {
   if (!userId) {
@@ -44,15 +43,6 @@ export default function AllCheckbox({
   const [isChecked, setIsChecked] = useState(false);
   const updateCartCheck = useCartStore((state) => state.toggleSelectAll);
   const queryClient = useQueryClient();
-
-  // const {
-  //   data: userId,
-  //   error,
-  //   isFetched: isUserFetched
-  // } = useQuery({
-  //   queryKey: ['getUserId'],
-  //   queryFn: getClientUserData
-  // });
 
   const { data: cartStatus, isFetched: isCartFetched } = useQuery({
     queryKey: ['getCartStatus', userId],

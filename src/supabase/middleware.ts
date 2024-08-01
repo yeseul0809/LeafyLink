@@ -2,6 +2,9 @@ import { createServerClient } from '@supabase/ssr';
 import { NextResponse, type NextRequest } from 'next/server';
 import { Database } from '@/types/supabase';
 
+interface Routes {
+  [key: string]: boolean;
+}
 
 export async function updateSession(request: NextRequest) {
   let supabaseResponse = NextResponse.next({
@@ -24,19 +27,30 @@ export async function updateSession(request: NextRequest) {
           cookiesToSet.forEach(({ name, value, options }) =>
             supabaseResponse.cookies.set(name, value, options)
           );
-        } 
-  
+        }
       }
     }
-  ); 
+  );
 
   const {
     data: { user }
-  } = await supabase.auth.getUser();  
+  } = await supabase.auth.getUser();
 
-  // if (user && request.nextUrl.pathname.startsWith('/login')) {
-  //   return NextResponse.redirect(new URL('/', request.url));
-  // }
+  const publicOnlyUrls: Routes = {
+    '/': true,
+    '/login': true,
+    '/auth/callback': true,
+    '/products': true,
+    '/search': true,
+    '/livestreaming': true,
+    '/login/needlogin': true
+  };
+
+  const isPublicPage = publicOnlyUrls[request.nextUrl.pathname] || false;
+
+  if (!user && !isPublicPage) {
+    return NextResponse.redirect(new URL('/login/needlogin', request.url));
+  }
 
   return supabaseResponse;
 }
