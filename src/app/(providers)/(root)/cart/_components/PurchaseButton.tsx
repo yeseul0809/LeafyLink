@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createClient } from '@/supabase/supabaseClient';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 
 export default function PurchaseButton() {
@@ -18,7 +18,8 @@ export default function PurchaseButton() {
       const { data: cartData, error: cartError } = await supabase
         .from('Cart')
         .select()
-        .eq('cart_user_id', user.id);
+        .eq('cart_user_id', user.id)
+        .eq('is_checked', true);
 
       if (cartError) {
         console.error('Error fetching cart data:', cartError);
@@ -32,27 +33,32 @@ export default function PurchaseButton() {
     }
   };
 
-  const { data, error, isFetched } = useQuery({ queryKey: ['getCartInfo'], queryFn: getCartData });
+  const mutation = useMutation({
+    mutationFn: async () => {
+      const cartData = await getCartData();
+      return cartData;
+    },
+    onSuccess: (data) => {
+      const encodedData = encodeURIComponent(JSON.stringify(data));
+      router.push(`/payment?data=${encodedData}`);
+    }
+  });
 
-  if (error) {
-    console.error('Error fetching cart info:', error);
+  const handleNavigate = async () => {
+    try {
+      await mutation.mutateAsync();
+    } catch (error) {
+      console.error('Error during mutation:', error);
+    }
+  };
+
+  if (mutation.isError) {
+    console.error('Error fetching cart info:', mutation.error);
     return <p>Error fetching cart info. Please try again later.</p>;
   }
 
-  if (!isFetched) {
-    return <p>Loading...</p>;
-  }
-
-  const handleNavigate = (products: any) => {
-    const encodedData = encodeURIComponent(JSON.stringify(products));
-    router.push(`/payment?data=${encodedData}`);
-  };
-
   return (
-    <button
-      onClick={() => handleNavigate(data)}
-      className="bg-[#3BB873] mt-4 h-[51px] rounded-md text-[16px]"
-    >
+    <button onClick={handleNavigate} className="bg-[#3BB873] mt-4 h-[51px] rounded-md text-[16px]">
       구매하기
     </button>
   );
