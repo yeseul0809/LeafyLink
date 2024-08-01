@@ -88,8 +88,6 @@ export default function PaymentPage() {
     queryFn: getProductInfo
   });
 
-  console.log('productData::', productData);
-
   const getUserInfo = async () => {
     const supabase = createClient();
     const { data: userData } = await supabase.auth.getUser();
@@ -105,8 +103,6 @@ export default function PaymentPage() {
     queryKey: ['getUserInfo'],
     queryFn: getUserInfo
   });
-
-  console.log('userData::', userData);
 
   if (!userFetched) {
     return null;

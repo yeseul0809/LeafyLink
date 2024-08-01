@@ -5,6 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useRef, useState } from 'react';
+import { useFormState } from 'react-dom';
 
 interface Weather {
   id: number;
@@ -25,6 +26,7 @@ function Header() {
   const [isLogin, setIsLogin] = useState(false);
   const [userName, setUserName] = useState('');
   const [userAvatar, setUserAvatar] = useState('');
+
   // 로그인 상태
   useEffect(() => {
     const supabase = createClient();
@@ -112,6 +114,13 @@ function Header() {
   const redirect = (e: string) => {
     router.push(`${e}`);
   };
+
+  // 검색 로직
+  const searchkeyword = (_: any, formData: FormData) => {
+    const keyword = formData.get('keyword');
+    router.push(`search/${keyword}`);
+  };
+  const [state, formAction] = useFormState(searchkeyword, null);
   return (
     <section className="w-full h-auto bg-white sticky top-0 z-20">
       <div className="w-full lg:h-[45px] md:h-[40px] text-center flex items-center justify-center bg-zinc-50">
@@ -248,10 +257,15 @@ function Header() {
             <div className="absolute w-full h-auto flex justify-between py-[30px] px-[190px] border-b bg-white top-12 right-0 text-center">
               <p className="bold text-2xl font-semibold">SEARCH</p>
               <form
-                action="submit"
+                action={formAction}
                 className="flex justify-center items-center w-[540px] h-10 border rounded-full px-4"
               >
-                <input type="text" className="w-11/12 h-8" placeholder="어떤 식물을 찾으시나요?" />
+                <input
+                  type="text"
+                  className="w-11/12 h-8"
+                  placeholder="어떤 식물을 찾으시나요?"
+                  name="keyword"
+                />
                 <button type="submit">
                   <Image src="/icons/icon-search.svg" alt="search" width={24} height={24}></Image>
                 </button>
