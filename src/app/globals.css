@@ -18,3 +18,18 @@
 .szh-accordion__item-btn > div {
   @apply flex justify-between p-4 border-b border-gray-300 cursor-pointer bg-white;
 }
+
+/* 스크롤바 스타일 */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+  height: 242px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #f1f1f5;
+  border-radius: 9999px;
+}
