@@ -122,13 +122,13 @@ function ChatListPage() {
   };
 
   return (
-    <div className="max-w-[1180px] mx-auto p-4 mt-20 mb-[180px]">
+    <div className="max-w-[650px] mx-auto mt-12 mb-[180px]">
       <h1 className="text-[32px] font-bold border-b pb-8 flex justify-center">상담톡</h1>
       <div className="flex justify-center w-full">
         {chatrooms.length === 0 ? (
           <p className="mt-20 text-[15px]">채팅 상대가 아직 없습니다.</p>
         ) : (
-          <ul className="flex w-[624px] flex-col items-center pt-8 space-y-8 overflow-y-auto max-h-[350px] custom-scrollbar pr-[14px]">
+          <ul className="flex w-[650px] flex-col items-center">
             {chatrooms.map((chatroom) => {
               const isUser = user.id === chatroom.chatroom_user_id;
               const otherParty = isUser ? chatroom.chatroom_seller_id : chatroom.chatroom_user_id;
@@ -139,7 +139,7 @@ function ChatListPage() {
                 <li
                   key={chatroom.chatroom_id}
                   onClick={() => handleChatroomClick(chatroom.chatroom_id)}
-                  className="bg-white border-b cursor-pointer w-full max-w-[650px] hover:bg-gray-50 transition"
+                  className="bg-white border-b cursor-pointer w-full px-5 py-6 hover:bg-secondary-yellow-50 transition"
                 >
                   <div className="flex items-start pb-8 w-full sm:p-0">
                     <div className="w-12 h-12 flex-shrink-0 rounded-full overflow-hidden mr-4">
@@ -151,7 +151,7 @@ function ChatListPage() {
                         className="object-cover"
                       />
                     </div>
-                    <div className="flex flex-col w-full pb-8">
+                    <div className="flex flex-col w-full">
                       <div className="flex justify-between items-center w-full">
                         <strong className="block text-lg">
                           {otherInfo?.user_name || 'Unknown'}
@@ -165,7 +165,7 @@ function ChatListPage() {
 
                       <div className="flex justify-between items-center w-full mt-2">
                         <p className="text-sm text-gray-500 flex-1">
-                          {latestMessage ? latestMessage.payload : '메시지가 없습니다.'}
+                          {latestMessage ? latestMessage.payload : '이전 대화내역이 없습니다.'}
                         </p>
                         {unreadCounts[chatroom.chatroom_id] > 0 && (
                           <div className="w-5 h-5 bg-primary-green-500 text-white rounded-full flex items-center justify-center text-xs ml-2">

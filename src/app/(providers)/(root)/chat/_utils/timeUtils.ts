@@ -9,7 +9,15 @@ export function formatDate(date: Date): string {
     day: 'numeric',
     weekday: 'short'
   };
-  return date.toLocaleDateString('ko-KR', options);
+
+  const dateString = date.toLocaleDateString('ko-KR', options).replace(/\./g, '').trim();
+
+  const parts = dateString.split(' ');
+  const month = parts[0];
+  const day = parts[1];
+  const weekday = parts[2];
+
+  return `${month}/${day} ${weekday}`;
 }
 
 export const timeForToday = (value: string) => {
