@@ -42,30 +42,64 @@ interface CartProps {
   cart_product_id: string;
   count: number;
   cart_user_id: string;
+  is_checked: boolean;
 }
 
-export const getProductData = async (carts: CartProps[]): Promise<Product[]> => {
+export const getProductData = async (carts: CartProps[], type: string): Promise<Product[]> => {
   const supabaseSever = createClient();
-  let productIds: string[] = carts.map((cart) => cart.cart_product_id);
-  let productCounts: number[] = carts.map((cart) => cart.count);
+  let response;
+  if (type === 'all') {
+    let productIds: string[] = carts.map((cart) => cart.cart_product_id);
+    let productCounts: number[] = carts.map((cart) => cart.count);
 
-  const { data, error } = await supabaseSever.from('Product').select().in('product_id', productIds);
+    const { data, error } = await supabaseSever
+      .from('Product')
+      .select()
+      .in('product_id', productIds);
 
-  if (error) {
-    console.error('Error fetching posts:', error);
-    return [];
+    if (error) {
+      console.error('Error fetching posts:', error);
+      return [];
+    }
+
+    const result = data.map((product) => {
+      const index = productIds.indexOf(product.product_id);
+      const count = productCounts[index];
+      return {
+        ...product,
+        count: count
+      };
+    });
+
+    response = result;
+  } else if (type === 'checked') {
+    let filteredCarts = carts.filter((cart) => cart.is_checked);
+    let productIds: string[] = filteredCarts.map((cart) => cart.cart_product_id);
+    let productCounts: number[] = filteredCarts.map((cart) => cart.count);
+
+    const { data, error } = await supabaseSever
+      .from('Product')
+      .select()
+      .in('product_id', productIds);
+
+    if (error) {
+      console.error('Error fetching posts:', error);
+      return [];
+    }
+
+    const result = data.map((product) => {
+      const index = productIds.indexOf(product.product_id);
+      const count = productCounts[index];
+      return {
+        ...product,
+        count: count
+      };
+    });
+
+    response = result;
   }
 
-  const response = data.map((product) => {
-    const index = productIds.indexOf(product.product_id);
-    const count = productCounts[index];
-    return {
-      ...product,
-      count: count
-    };
-  });
-
-  return response;
+  return response as Product[];
 };
 
 export const deleteCart = async (productId: string) => {
@@ -105,6 +139,16 @@ export const getCartIsChecked = async (productId: string): Promise<IsCheck> => {
     .eq('cart_product_id', productId);
 
   return data![0] as IsCheck;
+};
+
+export const getCheckedCartDatas = async (userId: string) => {
+  const supabaseSever = createClient();
+  const { data, error } = await supabaseSever
+    .from('Cart')
+    .select()
+    .eq('is_checked', true)
+    .eq('cart_user_id', userId);
+  return data;
 };
 
 export const allToggleCheckbox = async (userId: string, isChecked: boolean) => {
