@@ -18,6 +18,7 @@ function ChatListPage() {
     [key: string]: { avatar_url: string; user_name: string } | null;
   }>({});
   const [unreadCounts, setUnreadCounts] = useState<{ [key: string]: number }>({});
+  const [latestMessages, setLatestMessages] = useState<{ [key: string]: string }>({});
 
   useEffect(() => {
     const fetchInfo = async () => {
@@ -30,6 +31,23 @@ function ChatListPage() {
           [chatroom.chatroom_user_id]: userInfo,
           [chatroom.chatroom_seller_id]: sellerInfo
         }));
+
+        const { data: messages, error } = await supabase
+          .from('Message')
+          .select('payload, created_at')
+          .eq('message_chatroom_id', chatroom.chatroom_id)
+          .order('created_at', { ascending: false })
+          .limit(1);
+
+        if (error) {
+          console.error('최근 메세지 가져오는 중 에러발생', error);
+        } else if (messages.length > 0) {
+          const latestMessage = messages[0];
+          setLatestMessages((prevMessages) => ({
+            ...prevMessages,
+            [chatroom.chatroom_id]: latestMessage.payload
+          }));
+        }
       }
     };
 
@@ -107,6 +125,9 @@ function ChatListPage() {
               </div>
               <div className="flex-grow">
                 <strong className="block text-lg">{otherInfo?.user_name || 'Unknown'}</strong>
+                <p className="text-sm text-gray-500">
+                  {latestMessages[chatroom.chatroom_id] || '메시지가 없습니다.'}
+                </p>
               </div>
               <div className="text-right">
                 {unreadCounts[chatroom.chatroom_id] > 0 && (
