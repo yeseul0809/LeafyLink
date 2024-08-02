@@ -111,16 +111,16 @@ export default function PaymentPage() {
 
   if (userData && productData) {
     return (
-      <div className="pt-[80px] pb-[180px]">
+      <div className="pt-[80px] pb-[180px] xs:pt-[62px] xs:pb-[45px]">
         <h1 className="text-[32px] font-semibold text-center">주문/결제</h1>
-        <p>주문자</p>
-        <form action="">
-          <input type="checkbox" id="sameaddress" />
+        <p className="mt-[32px] mb-[20px]">주문자</p>
+        <form action="" className="flex items-center gap-[8px] xs:mt-[16px]">
+          <input type="radio" id="sameaddress" defaultChecked className="w-[20px] h-[20px]" />
           <label htmlFor="sameaddress">회원 정보와 동일</label>
-          <input type="checkbox" id="newaddress" />
-          <label htmlFor="newaddress">새로운 배송지</label>
+          {/* <input type="checkbox" id="newaddress" /> */}
+          {/* <label htmlFor="newaddress">새로운 배송지</label> */}
         </form>
-        <section>
+        <section className="mt-[16px]">
           <UserEditForm
             initialAddress={userData.address}
             initialDetailAddress={userData.address_detail}
@@ -130,45 +130,45 @@ export default function PaymentPage() {
             userId={userData.user_id}
           />
           <div className="flex flex-col">
-            <div className="h-[64px]">
-              <label htmlFor="phone" className="w-20 mr-12">
+            <div className="h-[64px] flex xs:flex-col xs:mb-[16px]">
+              <label htmlFor="phone" className="w-20 mr-[38px] xs:mb-[8px] xs:mt-[16px]">
                 휴대폰번호
               </label>
-              <input
-                className="border p-3 mb-3 rounded w-1/4"
-                type="text"
-                id="phone"
-                defaultValue={userData.phone.split('-')[0]}
-                maxLength={3}
-              />
-              <span className="mx-2">-</span>
-              <input
-                className="border p-3 mb-3 rounded w-1/4"
-                type="text"
-                id="phone"
-                defaultValue={userData.phone.split('-')[1]}
-                maxLength={4}
-              />
-              <span className="mx-2">-</span>
-              <input
-                className="border p-3 mb-3 rounded w-1/4"
-                type="text"
-                id="phone"
-                defaultValue={userData.phone.split('-')[2]}
-                maxLength={4}
-              />
-              <label htmlFor=""></label>
-              <input type="text" />
+              <div>
+                <input
+                  className="border p-3 mb-3 rounded w-1/4"
+                  type="text"
+                  id="phone"
+                  defaultValue={userData.phone.split('-')[0]}
+                  maxLength={3}
+                />
+                <span className="mx-2">-</span>
+                <input
+                  className="border p-3 mb-3 rounded w-1/4"
+                  type="text"
+                  id="phone"
+                  defaultValue={userData.phone.split('-')[1]}
+                  maxLength={4}
+                />
+                <span className="mx-2">-</span>
+                <input
+                  className="border p-3 mb-3 rounded w-1/4"
+                  type="text"
+                  id="phone"
+                  defaultValue={userData.phone.split('-')[2]}
+                  maxLength={4}
+                />
+              </div>
             </div>
-            <div>
-              <label htmlFor="email" className="w-20 mr-[74px]">
+            <div className="flex xs:flex-col xs:mt-[42px] xs:gap-[8px]">
+              <label htmlFor="email" className="mr-[80px]">
                 이메일
               </label>
               <input
                 type="text"
                 id="email"
                 defaultValue={userData.email}
-                className="border p-3 mb-3 rounded w-1/2 h-[54px]"
+                className="border p-3 mb-3 rounded w-full h-[54px]"
               />
               {/* <select name="" id="">
                 <option value="">gmail.com</option>
@@ -238,7 +238,7 @@ export default function PaymentPage() {
         <section>
           <h2 className="text-[20px] font-semibold mb-4">결제수단</h2>
           <p className="mb-4">결제수단 선택</p>
-          <div className="border border-[#787878] w-full h-[48px] rounded-md flex items-center gap-2 justify-center">
+          <div className="border border-[#787878] w-[400px] h-[48px] rounded-md flex items-center gap-2 justify-center xs:w-full">
             <Image
               src="/icons/kakaotalk.png"
               alt="kakaotalk"
