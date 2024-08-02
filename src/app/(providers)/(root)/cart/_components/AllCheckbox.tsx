@@ -84,7 +84,7 @@ export default function AllCheckbox({
         id="allcheck"
         onChange={handleAllToggle}
         checked={isChecked}
-        className="w-[18px] h-[18px] mr-2"
+        className="w-[18px] h-[18px] mr-2 green-checkbox"
       />
       <label htmlFor="allcheck">모두 선택</label>
     </div>

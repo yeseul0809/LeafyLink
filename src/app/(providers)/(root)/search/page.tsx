@@ -25,14 +25,14 @@ export default async function SearchPage({ searchParams }: Props) {
   }
 
   return (
-    <div className="pt-[80px] pb-[180px]">
-      <h1 className="text-[32px] font-semibold text-center">검색 결과</h1>
+    <div className="pt-[80px] pb-[180px] xs:pt-[24px] xs:pb-[120px]">
+      <h1 className="text-[32px] font-semibold text-center xs:text-[20px]">검색 결과</h1>
       <Searchform defaultKeword={keyword} currentPage={currentPage} />
       <div className="border-t border-Line/Regular w-full mb-[48px]" />
       <p className="text-[15px] text-font/sub2 mb-[31px]">
         전체 <span className="text-black font-semibold">{allProductsData.length}</span> 개
       </p>
-      <div className="grid grid-cols-4 gap-4">
+      <div className="grid grid-cols-4 gap-[20px] xs:grid-cols-2 xs:gap-[7px]">
         {searchDatas.length === 0 ? (
           <p>검색 결과가 없습니다</p>
         ) : (
@@ -53,12 +53,12 @@ export default async function SearchPage({ searchParams }: Props) {
           ))
         )}
       </div>
-      <div className="flex justify-center gap-[37px] mt-[180px] items-center">
+      <div className="flex justify-center gap-[12px] mt-[180px] items-center xs:gap-[8px] xs:mt-[70px]">
         {Array.from({ length: totalPages }, (_, index) => (
           <Link
             key={index}
             href={`/search?keyword=${encodeURIComponent(keyword)}&page=${index + 1}`}
-            className={`font-semibold ${currentPage === index + 1 ? 'text-black border border-black rounded-[100px] w-[32px] h-[32px] flex items-center justify-center' : 'text-font/sub2'}`}
+            className={`font-semibold ${currentPage === index + 1 ? 'text-black border border-black rounded-[100px] w-[32px] h-[32px] flex items-center justify-center' : 'text-font/sub2 border border-white rounded-[100px] w-[32px] h-[32px] flex items-center justify-center'}`}
           >
             {index + 1}
           </Link>

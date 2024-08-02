@@ -238,7 +238,13 @@ export default function PaymentPage() {
           <h2 className="text-[20px] font-semibold mb-4">결제수단</h2>
           <p className="mb-4">결제수단 선택</p>
           <div className="border border-[#787878] w-full h-[48px] rounded-md flex items-center gap-2 justify-center">
-            <Image src="/icons/kakaotalk.png" alt="kakaotalk" width={20} height={20} />
+            <Image
+              src="/icons/kakaotalk.png"
+              alt="kakaotalk"
+              width={20}
+              height={20}
+              quality={100}
+            />
             <p>카카오 페이</p>
           </div>
         </section>

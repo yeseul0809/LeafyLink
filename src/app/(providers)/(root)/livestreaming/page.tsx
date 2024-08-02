@@ -1,10 +1,9 @@
 'use client';
 
 import React, { useState } from 'react';
-import LiveSection from './_components/LiveSection';
-import RecodeSection from './_components/RecodeSection';
 import Image from 'next/image';
 import Link from 'next/link';
+import StreamSection from './_components/RecodeSection';
 
 export default function StreamListPage() {
   const [activeCategory, setActiveCategory] = useState<string>('all');
@@ -63,8 +62,7 @@ export default function StreamListPage() {
         </Link>
       </div>
       <div className="mt-[80px] flex flex-col gap-[20px]">
-        <LiveSection category={activeCategory} />
-        <RecodeSection category={activeCategory} />
+        <StreamSection category={activeCategory} />
       </div>
     </div>
   );

@@ -11,6 +11,7 @@ export default async function RecodedVideoPage({ params }: { params: { id: strin
   const streamId = params.id.split('_')[1];
   const videoId = params.id.split('_')[2];
   const stream = await getStream(streamId);
+  console.log('stream::', stream);
 
   if (!stream) {
     return notFound();
@@ -31,7 +32,7 @@ export default async function RecodedVideoPage({ params }: { params: { id: strin
         />
         <div>
           <span className="font-bold">{`${sessionData.data.user?.user_metadata.full_name}`} </span>
-          <span>님의 녹화방송입니다.</span>
+          <span>님의 {stream.is_live ? '라이브' : '녹화'}방송입니다.</span>
         </div>
       </div>
       <div className="relative aspect-video">
@@ -62,11 +63,11 @@ export default async function RecodedVideoPage({ params }: { params: { id: strin
       {stream.livestream_seller_id === sessionId! ? (
         <div className="bg-yellow-200 text-black p-5 rounded-md">
           <div className="flex gap-2">
-            <span className="font-semibold">Stream URL:</span>
+            <span className="font-semibold">Stream URL: </span>
             <span>rtmps://live.cloudflare.com:443/live/</span>
           </div>
           <div className="flex flex-wrap">
-            <span className="font-semibold">Secret Key:</span>
+            <span className="font-semibold">Secret Key: </span>
             <span>{stream.stream_key}</span>
           </div>
           <LiveQuitButton streamId={streamId} />

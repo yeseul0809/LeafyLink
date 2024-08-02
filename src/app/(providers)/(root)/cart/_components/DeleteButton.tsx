@@ -1,6 +1,7 @@
 'use client';
 
 import { useCartStore } from '@/stores';
+import Image from 'next/image';
 import React from 'react';
 
 export default function DeleteButton({ productId }: { productId: string }) {
@@ -8,7 +9,7 @@ export default function DeleteButton({ productId }: { productId: string }) {
 
   return (
     <button onClick={() => removeItem(productId)}>
-      <img src="/icons/icon-close.svg" alt="closeButton" width={20} height={20} />
+      <Image src="/icons/icon-close.svg" alt="closeButton" width={20} height={20} />
     </button>
   );
 }
