@@ -10,18 +10,18 @@ function MessageInput({ newMessage, setNewMessage, sendMessage }: MessageInputPr
   return (
     <form
       onSubmit={sendMessage}
-      className="flex border rounded-full w-full items-center justify-between mt-5"
+      className="flex border rounded-full w-full items-center justify-between mt-5 focus-within:ring-2 focus-within:ring-primary-green-500 bg-secondary-yellow-50"
     >
       <input
         type="text"
         value={newMessage}
         onChange={(e) => setNewMessage(e.target.value)}
-        className="flex-grow p-3 rounded-l-full"
+        className="flex-grow p-3 rounded-full focus:outline-none bg-secondary-yellow-50"
         required
       />
       <button
         type="submit"
-        className="p-3 mr-3 rounded-r-full bg-no-repeat bg-center"
+        className="p-3 rounded-full bg-no-repeat bg-center focus:outline-none"
         style={{
           backgroundImage: `url('/icons/send.svg')`,
           backgroundSize: '20px',
