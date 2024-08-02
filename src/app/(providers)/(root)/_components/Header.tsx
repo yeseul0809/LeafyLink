@@ -44,13 +44,15 @@ function Header() {
               .from('Seller')
               .select('seller_id')
               .eq('seller_id', userId)
-              .single();
+              .maybeSingle();
 
             if (error) {
+              // console.error('Seller 데이터 조회 오류:', error.message);
               return null;
             }
             return data ? data.seller_id : null;
           } catch (error) {
+            // console.error('예상치 못한 오류 발생:', error);
             return null;
           }
         };
