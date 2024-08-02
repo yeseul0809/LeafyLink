@@ -2,7 +2,7 @@ import React from 'react';
 import { getSeedData } from '../actions';
 import ProductCard from '../../(home)/_components/ProductCard';
 import { Accordion } from '@szhsin/react-accordion';
-import AccordionMenu from '../../seller/mypage/[id]/(category)/_components/AccordionMenu';
+import AccordionMenu from '../../seller/mypage/(id)/(category)/_components/AccordionMenu';
 import SelectDropdown from '../../livestreaming/_components/SelectDropdown';
 import ProductsSortDropdown from '../_components/ProductsSortDropdown';
 
