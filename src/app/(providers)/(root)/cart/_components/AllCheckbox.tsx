@@ -86,7 +86,9 @@ export default function AllCheckbox({
         checked={isChecked}
         className="w-[18px] h-[18px] mr-2 green-checkbox"
       />
-      <label htmlFor="allcheck">모두 선택</label>
+      <label htmlFor="allcheck" className="xs:text-[14px] xs:w-[20px] xs:h-[20px]">
+        모두 선택
+      </label>
     </div>
   );
 }

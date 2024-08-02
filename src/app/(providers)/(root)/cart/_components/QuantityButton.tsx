@@ -126,7 +126,7 @@ export default function QuantityButton({
 
   return (
     <>
-      <div className="ring-1 ring-[#E5E5EC] w-[122px] h-[24px] mt-3 grid grid-cols-3">
+      <div className="ring-1 ring-[#E5E5EC] w-[122px] h-[24px] grid grid-cols-3 mr-[20px]">
         <button
           className="border-r border-[#E5E5EC] h-[24px] flex items-center justify-center"
           onClick={handleDecrease}
