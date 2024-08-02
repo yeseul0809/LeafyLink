@@ -20,7 +20,11 @@ export default async function BusinessCheck() {
     redirect('/login');
   }
 
-  const { data, error } = await supabase.from('User').select('*').eq('user_id', userId).single();
+  const { data, error } = await supabase
+    .from('User')
+    .select('*')
+    .eq('user_id', userId)
+    .maybeSingle();
 
   if (error) {
     return <div>오류가 발생했습니다: {error.message}</div>;
