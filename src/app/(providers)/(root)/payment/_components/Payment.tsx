@@ -14,7 +14,7 @@ interface Product {
   quantity: number;
 }
 
-interface CombinedProductData {
+export interface CombinedProductData {
   product_id: string;
   product_seller_id: string;
   category: string;
@@ -87,6 +87,7 @@ export default function PaymentPage() {
     queryKey: ['getProductInfo'],
     queryFn: getProductInfo
   });
+  console.log('productData::', productData);
 
   const getUserInfo = async () => {
     const supabase = createClient();

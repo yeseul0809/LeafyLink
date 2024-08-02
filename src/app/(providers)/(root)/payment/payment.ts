@@ -3,6 +3,7 @@
 import { RequestPayParams, RequestPayResponse } from 'iamport-typings';
 import { createClient } from '@/supabase/supabaseClient';
 import { ProductInfo } from './_components/Payment';
+import { updateStock } from './actions';
 
 const paymentHandler = (productData: ProductInfo, userId: string) => {
   if (!window.IMP) return;
@@ -54,7 +55,12 @@ async function callback(rsp: any, productData: ProductInfo, userId: string) {
       };
 
       const { error: orderError } = await supabase.from('Order').insert([orderData]);
+
+      if (orderError) {
+        console.error(`Error insert data to Order table:`, orderError);
+      }
     }
+    updateStock(productData);
     alert('결제성공');
     window.location.href = '/';
   } else {
