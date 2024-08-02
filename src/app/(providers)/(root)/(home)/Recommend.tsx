@@ -43,9 +43,6 @@ async function Recommend() {
           <h3 className="lg:text-[32px] font-semibold sm:text-sm text-sm">
             {formatPrice(recommendedData?.price!)}원
           </h3>
-          <p className="hidden lg:block line-clamp-3 mt-[20px] text-ellipsis overflow-hidden text-[#555555]">
-            {recommendedData?.description}
-          </p>
           <Link
             href={`products/${recommendedData?.product_id}`}
             className="hidden lg:block md:hidden sm:hidden"

@@ -1,6 +1,7 @@
 'use client';
 
 import { createClient } from '@/supabase/supabaseClient';
+import { URLSearchParams } from 'next/dist/compiled/@edge-runtime/primitives/url';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -26,6 +27,8 @@ function Header() {
   const [userName, setUserName] = useState('');
   const [userAvatar, setUserAvatar] = useState('');
   const [profileLink, setProfileLink] = useState('/');
+  const [searchTerm, setSearchTerm] = useState('');
+
   // 로그인 상태
   useEffect(() => {
     const supabase = createClient();
@@ -146,6 +149,18 @@ function Header() {
     setIsOpenMenu(false);
     console.log('열림');
   };
+
+  // 검색
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchTerm.trim()) {
+      router.push(`/search?query=${encodeURIComponent(searchTerm)}`);
+    }
+  };
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(e.target.value);
+  };
+
   // 페이지 네비게이션
   const redirect = (e: string) => {
     router.push(`${e}`);
@@ -215,19 +230,19 @@ function Header() {
             >
               <ul className="flex">
                 <li className="text-zinc-700 hover:text-zinc-950">
-                  <a href="#">씨앗</a>
+                  <a href="/productsList/seed">씨앗</a>
                 </li>
                 <li className="ml-7 text-zinc-700 hover:text-zinc-950">
-                  <a href="#">모종</a>
+                  <a href="/productsList/seedling">모종</a>
                 </li>
                 <li className="ml-7 text-zinc-700 hover:text-zinc-950">
-                  <a href="#">재배키트</a>
+                  <a href="/productsList/kit">재배키트</a>
                 </li>
                 <li className="ml-7 text-zinc-700 hover:text-zinc-950">
-                  <a href="#">흙/비료</a>
+                  <a href="/productsList/soils">흙/비료</a>
                 </li>
                 <li className="ml-7 text-zinc-700 hover:text-zinc-950">
-                  <a href="#">원예용품</a>
+                  <a href="/productsList/goods">원예용품</a>
                 </li>
               </ul>
             </div>
@@ -288,10 +303,16 @@ function Header() {
             <div className="absolute w-full h-auto flex justify-between py-[30px] px-[190px] border-b bg-white top-12 right-0 text-center">
               <p className="bold text-2xl font-semibold">SEARCH</p>
               <form
-                action="submit"
+                onSubmit={handleSearch}
                 className="flex justify-center items-center w-[540px] h-10 border rounded-full px-4"
               >
-                <input type="text" className="w-11/12 h-8" placeholder="어떤 식물을 찾으시나요?" />
+                <input
+                  type="text"
+                  value={searchTerm}
+                  onChange={handleInputChange}
+                  className="w-11/12 h-8"
+                  placeholder="어떤 식물을 찾으시나요?"
+                />
                 <button type="submit">
                   <Image src="/icons/icon-search.svg" alt="search" width={24} height={24}></Image>
                 </button>
