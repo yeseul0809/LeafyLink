@@ -49,12 +49,12 @@ const ProductCard = ({ product }: { product: Product }) => {
     router.push(`/payment?productId=${product.product_id}&quantity=1`);
   };
 
-  function handleBuyNowClick(event) {
+  function handleBuyNowClick(event: React.MouseEvent) {
     event.stopPropagation();
     handleBuyNow();
   }
 
-  function handleAddCartClick(event) {
+  function handleAddCartClick(event: React.MouseEvent) {
     event.stopPropagation();
     handleAddToCart();
   }
