@@ -31,8 +31,8 @@ function AuthCallback() {
 
       try {
         const supabase = createClient();
-        // const { error } = await supabase.from('User').upsert([userData]);
-        const { error } = await supabase.from('Seller').upsert([sellerData]);
+        const { error } = await supabase.from('User').upsert([userData]);
+        // const { error } = await supabase.from('Seller').upsert([sellerData]);
 
         if (error) {
           console.error('유저 정보를 데이터베이스에 저장하는 중 에러 발생:', error.message);

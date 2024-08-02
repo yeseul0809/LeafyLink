@@ -24,16 +24,17 @@ function TopSection({ product, averageRating, reviewCount }: TopSectionProps) {
 
   return (
     <div className="flex flex-col items-center md:items-start md:text-left">
-      <h1 className="text-3xl font-bold mb-4">{product.title}</h1>
+      <strong className="text-sm">예쁜꽃집</strong>
+      <h1 className="text-2xl mb-4">{product.title}</h1>
       <div className="flex justify-between w-full">
         <div className="flex items-center">
           {Array.from({ length: filledStars }).map((_, index) => (
-            <span key={index} className="text-green-300">
+            <span key={index} className="text-primary-green-500">
               ★
             </span>
           ))}
           {Array.from({ length: 5 - filledStars }).map((_, index) => (
-            <span key={index} className="text-gray-300">
+            <span key={index} className="text-Line/Regular">
               ★
             </span>
           ))}
@@ -42,7 +43,7 @@ function TopSection({ product, averageRating, reviewCount }: TopSectionProps) {
           </p>
         </div>
         <Image
-          src="/icons/share.svg"
+          src="/icons/link.svg"
           alt="share"
           width={30}
           height={30}
@@ -51,9 +52,15 @@ function TopSection({ product, averageRating, reviewCount }: TopSectionProps) {
           className="cursor-pointer"
         />
       </div>
-      <div className="border-t-2 border-b-2 my-4 py-2 w-full">
-        <p className="text-xl font-semibold mb-2">판매가: {product.price} 원</p>
-        <p className="text-md">배송비: 3,000원</p>
+      <div className="border-t border-b border-Line/Regular mt-8 py-8 w-full">
+        <div className="flex items-center justify-between font-semibold">
+          <p className="text-sm">판매가</p>
+          <p className="text-[32px]">{product.price} 원</p>
+        </div>
+        <div className="flex justify-between text-sm">
+          <p>배송비 </p>
+          <p>무료</p>
+        </div>
       </div>
     </div>
   );

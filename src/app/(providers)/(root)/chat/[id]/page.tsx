@@ -151,9 +151,9 @@ function ChatPage({ params }: ParamsProps) {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen mx-auto my-20 w-[610px]">
-      <div className="flex items-center mb-4 w-full px-4">
-        <button onClick={router.back} className="mr-4">
+    <div className="flex flex-col items-center justify-center mx-auto w-[610px] pt-[30px] pb-8">
+      <div className="flex items-center mb-7 w-full px-4">
+        <button onClick={router.back} className="mr-8">
           <Image src={'/icons/back.svg'} alt="back" width={24} height={24} />
         </button>
         {otherUserInfo && (
@@ -169,7 +169,13 @@ function ChatPage({ params }: ParamsProps) {
           </>
         )}
       </div>
-      <MessageList isMessagesLoaded={isMessagesLoaded} messages={messages} userId={user?.id} />
+      <div className="w-[610px] border-t border-#E5E5EC"></div>
+      <MessageList
+        isMessagesLoaded={isMessagesLoaded}
+        messages={messages}
+        userId={user?.id}
+        otherUserInfo={otherUserInfo}
+      />
       <MessageInput
         newMessage={newMessage}
         setNewMessage={setNewMessage}
