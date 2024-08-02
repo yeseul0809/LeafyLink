@@ -38,9 +38,7 @@ function TopSection({ product, averageRating, reviewCount }: TopSectionProps) {
               ★
             </span>
           ))}
-          <p className="text-lg ml-2">
-            {averageRating.toFixed(1)} ({reviewCount}개의 리뷰)
-          </p>
+          <p className="text-sm ml-2">{reviewCount}개의 리뷰</p>
         </div>
         <Image
           src="/icons/link.svg"
@@ -55,7 +53,7 @@ function TopSection({ product, averageRating, reviewCount }: TopSectionProps) {
       <div className="border-t border-b border-Line/Regular mt-8 py-8 w-full">
         <div className="flex items-center font-semibold">
           <p className="text-sm">판매가</p>
-          <p className="text-[32px] ml-[69px]">{product.price} 원</p>
+          <p className="text-[32px] ml-[69px]">{product.price?.toLocaleString('ko-KR')} 원</p>
         </div>
         <div className="flex text-sm">
           <p>배송비 </p>

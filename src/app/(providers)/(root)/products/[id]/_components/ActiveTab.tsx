@@ -4,11 +4,12 @@ interface ActiveTabProps {
   activeTab: string;
   setActiveTab: (tab: string) => void;
   handleScrollToReview: () => void;
+  reviewCount: number;
 }
 
-function ActiveTab({ activeTab, setActiveTab, handleScrollToReview }: ActiveTabProps) {
+function ActiveTab({ activeTab, reviewCount, setActiveTab, handleScrollToReview }: ActiveTabProps) {
   return (
-    <nav className="flex justify-center mt-[80px] mb-10 font-bold text-[22px]">
+    <nav className="flex justify-center mt-[80px] font-bold text-[22px]">
       <button
         onClick={() => {
           setActiveTab('description');
@@ -32,7 +33,7 @@ function ActiveTab({ activeTab, setActiveTab, handleScrollToReview }: ActiveTabP
             : 'border-gray-200'
         }`}
       >
-        리뷰
+        리뷰({reviewCount})
       </button>
     </nav>
   );

@@ -71,7 +71,9 @@ function TopButtons({ productState }: TopButtonsProps) {
         </div>
         <div className="flex justify-between items-center w-full">
           <p className="text-[14px]">총 상품금액</p>
-          <p className="text-xl font-bold text-right">{+product.price * count} 원</p>
+          <p className="text-xl font-bold text-right">
+            {(+product.price * count).toLocaleString('ko-KR')} 원
+          </p>
         </div>
       </div>
 

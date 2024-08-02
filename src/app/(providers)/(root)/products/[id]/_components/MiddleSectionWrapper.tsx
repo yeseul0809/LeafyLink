@@ -32,6 +32,7 @@ function MiddleSectionWrapper({
         activeTab={activeTab}
         setActiveTab={setActiveTab}
         handleScrollToReview={handleScrollToReview}
+        reviewCount={reviewCount}
       />
       <ProductDescription productDescription={productDescription} />
       <div ref={reviewRef} className="text-center">
