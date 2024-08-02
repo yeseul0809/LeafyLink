@@ -25,5 +25,12 @@ export default function LiveQuitButton({ streamId }: { streamId: string }) {
     }
     router.push('/');
   };
-  return <button onClick={() => deleteLivestreamDB(streamId)}>방송종료하기</button>;
+  return (
+    <button
+      onClick={() => deleteLivestreamDB(streamId)}
+      className="bg-red-500 py-2 rounded-md text-white"
+    >
+      방송종료하기
+    </button>
+  );
 }

@@ -22,14 +22,14 @@ export default function StreamSection({ category }: { category: string }) {
 
   if (recodedVideos && isFetched) {
     return (
-      <div className="grid grid-cols-2 w-full gap-[20px]">
+      <div className="grid grid-cols-2 w-full gap-[20px] xs:grid-cols-1">
         {recodedVideos.map((video) => {
           const hasStreamData = video.streamData && video.streamData.length > 0;
           return (
             <div key={video.uid} className="w-full relative">
               {hasStreamData && (
                 <>
-                  <div className="relative w-full h-[342px]">
+                  <div className="relative w-full h-[342px] xs:h-[183px]">
                     <Image
                       src={video.streamData[0].thumbnail_url}
                       alt="방송썸네일"
@@ -37,7 +37,7 @@ export default function StreamSection({ category }: { category: string }) {
                       className="rounded-2xl"
                     />
                   </div>
-                  <div className="flex justify-between mt-4 pr-6">
+                  <div className="flex justify-between mt-4 pr-6 xs:pr-0 xs:flex-col xs:mt-[16px]">
                     <div>
                       <h2 className="font-semibold">{video.streamData[0].stream_title}</h2>
                       <p className="text-[#555555]">{video.streamData[0].description}</p>
@@ -45,7 +45,7 @@ export default function StreamSection({ category }: { category: string }) {
                     <Link
                       href={`/livestreaming/video/${video.streamData[0].livestream_product_id}_${video.streamData[0].livestream_id}_${video.uid}`}
                     >
-                      <button className="bg-[#3BB873] text-white px-6 py-3 rounded-lg">
+                      <button className="bg-[#3BB873] text-white px-6 py-3 rounded-lg xs:mt-[16px] xs:w-full">
                         구매하러가기
                       </button>
                     </Link>
