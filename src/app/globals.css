@@ -16,5 +16,5 @@
 }
 
 .szh-accordion__item-btn > div {
-  @apply flex justify-between p-4 border-b border-gray-300 cursor-pointer bg-white;
+  @apply flex justify-between  border-b bg-white cursor-pointer;
 }

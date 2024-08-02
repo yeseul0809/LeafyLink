@@ -53,7 +53,8 @@ const config: Config = {
         'Line/Light': '#f1f1f5',
         'Line/Regular': '#e5e5ec',
         'Line/Strong': '#111111',
-        'Line/Disabled': '#cacad7'
+        'Line/Disabled': '#cacad7',
+        'BG/Light': '#F7F7FB'
       },
       fontFamily: {
         pretendard: ['var(--font-pretendard)']

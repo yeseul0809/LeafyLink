@@ -25,15 +25,38 @@ function Header() {
   const [isLogin, setIsLogin] = useState(false);
   const [userName, setUserName] = useState('');
   const [userAvatar, setUserAvatar] = useState('');
+  const [profileLink, setProfileLink] = useState('/');
   // 로그인 상태
   useEffect(() => {
     const supabase = createClient();
-    supabase.auth.getUser().then((res) => {
+    supabase.auth.getUser().then(async (res) => {
       console.log(res);
       if (res.data.user) {
         setIsLogin(true);
+        const userId = res.data.user.id;
         setUserName(res.data.user.identities![0].identity_data?.full_name);
         setUserAvatar(res.data.user.identities![0].identity_data?.avatar_url);
+
+        //seller_id를 확인하고 프로필 링크
+        const fetchSellerId = async (userId: string) => {
+          try {
+            const { data, error } = await supabase
+              .from('Seller')
+              .select('seller_id')
+              .eq('seller_id', userId)
+              .single();
+
+            if (error) {
+              return null;
+            }
+            return data ? data.seller_id : null;
+          } catch (error) {
+            return null;
+          }
+        };
+
+        const sellerId = await fetchSellerId(userId);
+        setProfileLink(sellerId ? '/seller/mypage/profile' : '/buyer/mypage/profile');
       } else {
         setIsLogin(false);
       }
@@ -137,7 +160,7 @@ function Header() {
               height={28}
               className="rounded-full h-[28px]"
             />
-            <Link href={'/mypage'}>
+            <Link href={profileLink}>
               <p className="ml-3 hover:text-zinc-950">{userName}님</p>
             </Link>
             <button className="ml-10 hover:text-zinc-950" onClick={logout}>
@@ -242,7 +265,9 @@ function Header() {
             <Image src="/icons/icon-cart.svg" alt="cart" width={32} height={32}></Image>
           </button>
           <button className="ml-[48px]">
-            <Image src="/icons/icon-mypage.svg" alt="mypage" width={32} height={32}></Image>
+            <Link href={profileLink}>
+              <Image src="/icons/icon-mypage.svg" alt="mypage" width={32} height={32}></Image>
+            </Link>
           </button>
           {isOpenSearch && (
             <div className="absolute w-full h-auto flex justify-between py-[30px] px-[190px] border-b bg-white top-12 right-0 text-center">
