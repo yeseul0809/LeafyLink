@@ -29,13 +29,13 @@ export default async function BuyerOrderListPage({ searchParams }: ProductPagePr
     error: userError
   } = await supabase.auth.getUser();
   const userId = user?.id;
-  // if (userError || !user) {
-  //   redirect('/login');
-  // }
+  if (userError || !user) {
+    redirect('/login');
+  }
 
-  // if (!userId) {
-  //   redirect('/login');
-  // }
+  if (!userId) {
+    redirect('/login');
+  }
 
   // 총 주문 수를 조회
   const { count: totalOrders, error: countError } = await supabase

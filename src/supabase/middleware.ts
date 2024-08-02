@@ -2,7 +2,6 @@ import { createServerClient } from '@supabase/ssr';
 import { NextResponse, type NextRequest } from 'next/server';
 import { Database } from '@/types/supabase';
 
-
 export async function updateSession(request: NextRequest) {
   let supabaseResponse = NextResponse.next({
     request
@@ -24,15 +23,14 @@ export async function updateSession(request: NextRequest) {
           cookiesToSet.forEach(({ name, value, options }) =>
             supabaseResponse.cookies.set(name, value, options)
           );
-        } 
-  
+        }
       }
     }
-  ); 
+  );
 
   const {
     data: { user }
-  } = await supabase.auth.getUser();  
+  } = await supabase.auth.getUser();
 
   // if (user && request.nextUrl.pathname.startsWith('/login')) {
   //   return NextResponse.redirect(new URL('/', request.url));
