@@ -141,26 +141,12 @@ function Header() {
   const toggleMenu = () => {
     setIsOpenMenu(!isOpenMenu);
     setIsOpenSearch(false);
-    console.log('열림');
   };
   // 검색창 토글
   const toggleSearch = () => {
     setIsOpenSearch(!isOpenSearch);
     setIsOpenMenu(false);
-    console.log('열림');
   };
-
-  // 검색
-  const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (searchTerm.trim()) {
-      router.push(`/search?query=${encodeURIComponent(searchTerm)}`);
-    }
-  };
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(e.target.value);
-  };
-
   // 페이지 네비게이션
   const redirect = (e: string) => {
     router.push(`${e}`);
@@ -190,7 +176,7 @@ function Header() {
               height={28}
               className="rounded-full h-[28px]"
             />
-            <Link href={profileLink}>
+            <Link href={'/mypage'}>
               <p className="ml-3 hover:text-zinc-950">{userName}님</p>
             </Link>
             <button className="ml-10 hover:text-zinc-950" onClick={logout}>
@@ -239,7 +225,7 @@ function Header() {
                   <a href="/productsList/kit">재배키트</a>
                 </li>
                 <li className="ml-7 text-zinc-700 hover:text-zinc-950">
-                  <a href="/productsList/soils">흙/비료</a>
+                  <a href="/productsList/soil">흙/비료</a>
                 </li>
                 <li className="ml-7 text-zinc-700 hover:text-zinc-950">
                   <a href="/productsList/goods">원예용품</a>
@@ -248,7 +234,7 @@ function Header() {
             </div>
           )}
           <button
-            className="ml-2 lg:ml-7 flex text-[#FF0000]"
+            className="ml-2 lg:ml-7 flex text-[#3BB873] font-semibold"
             onClick={() => {
               redirect('/livestreaming');
             }}
@@ -265,7 +251,7 @@ function Header() {
           <button
             className="ml-2 lg:ml-7 "
             onClick={() => {
-              redirect('/livestreaming');
+              redirect('/#bestSeller');
             }}
           >
             베스트셀러
@@ -273,7 +259,7 @@ function Header() {
           <button
             className="ml-2 lg:ml-7 "
             onClick={() => {
-              redirect('/livestreaming');
+              redirect('/#goods');
             }}
           >
             식집사템
@@ -291,28 +277,30 @@ function Header() {
           >
             <Image src="/icons/icon-message.svg" alt="message" width={32} height={32}></Image>
           </button>
-          <button className="ml-[48px]">
+          <button
+            className="ml-[48px]"
+            onClick={() => {
+              redirect('/cart');
+            }}
+          >
             <Image src="/icons/icon-cart.svg" alt="cart" width={32} height={32}></Image>
           </button>
-          <button className="ml-[48px]">
-            <Link href={profileLink}>
-              <Image src="/icons/icon-mypage.svg" alt="mypage" width={32} height={32}></Image>
-            </Link>
+          <button
+            className="ml-[48px]"
+            onClick={() => {
+              redirect(`/mypage`);
+            }}
+          >
+            <Image src="/icons/icon-mypage.svg" alt="mypage" width={32} height={32}></Image>
           </button>
           {isOpenSearch && (
             <div className="absolute w-full h-auto flex justify-between py-[30px] px-[190px] border-b bg-white top-12 right-0 text-center">
               <p className="bold text-2xl font-semibold">SEARCH</p>
               <form
-                onSubmit={handleSearch}
+                action="submit"
                 className="flex justify-center items-center w-[540px] h-10 border rounded-full px-4"
               >
-                <input
-                  type="text"
-                  value={searchTerm}
-                  onChange={handleInputChange}
-                  className="w-11/12 h-8"
-                  placeholder="어떤 식물을 찾으시나요?"
-                />
+                <input type="text" className="w-11/12 h-8" placeholder="어떤 식물을 찾으시나요?" />
                 <button type="submit">
                   <Image src="/icons/icon-search.svg" alt="search" width={24} height={24}></Image>
                 </button>
