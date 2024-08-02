@@ -37,13 +37,13 @@ function LiveCommerce() {
 
   return (
     <section className="w-full h-[800px] bg-[#F7FDFA] mx-auto lg:mt-[145px] lg:pb-[145px] mt-[48px] pb-[48px]">
-      <div className="flex justify-around items-center text-center">
+      <div className="flex justify-around items-end text-center">
         <div></div>
         <h2 className="text-center text-[32px] lg:mb-[38px] lg:pt-[85px] pt-[16px]">
           라이브커머스
         </h2>
         <button
-          className="border-2 px-3 py-2"
+          className=" border-2 px-3 py-2 text-[13px]"
           onClick={() => {
             redirect('/livestreaming');
           }}
