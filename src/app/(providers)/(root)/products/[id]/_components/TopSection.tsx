@@ -53,13 +53,13 @@ function TopSection({ product, averageRating, reviewCount }: TopSectionProps) {
         />
       </div>
       <div className="border-t border-b border-Line/Regular mt-8 py-8 w-full">
-        <div className="flex items-center justify-between font-semibold">
+        <div className="flex items-center font-semibold">
           <p className="text-sm">판매가</p>
-          <p className="text-[32px]">{product.price} 원</p>
+          <p className="text-[32px] ml-[69px]">{product.price} 원</p>
         </div>
-        <div className="flex justify-between text-sm">
+        <div className="flex text-sm">
           <p>배송비 </p>
-          <p>무료</p>
+          <p className="ml-[69px]">무료</p>
         </div>
       </div>
     </div>

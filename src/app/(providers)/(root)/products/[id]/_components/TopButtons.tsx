@@ -76,16 +76,25 @@ function TopButtons({ productState }: TopButtonsProps) {
       </div>
 
       <div className="flex space-x-[6px]">
-        <button className="flex items-center justify-center w-[52px] h-[56px] border border-gray-300 rounded-lg">
+        <button
+          onClick={handleStartChat}
+          className="flex items-center justify-center p-4 w-[52px] h-[56px] border border-gray-300 rounded-lg"
+        >
           <Image src="/icons/productchat.svg" alt="문의하기" width={24} height={24} />
         </button>
 
-        <button className="flex items-center justify-center w-[220.5px] h-[56px] border border-primary-green-500 rounded-lg">
+        <button
+          onClick={handleAddToCart}
+          className="flex items-center justify-center p-4 w-[220.5px] h-[56px] border border-primary-green-500 rounded-lg"
+        >
           <span className="text-primary-green-500">장바구니</span>
           <Image src="/icons/productcart.svg" alt="장바구니" width={24} height={24} />
         </button>
 
-        <button className="flex items-center justify-center w-[220.5px] h-[56px] bg-primary-green-500 text-white rounded-lg">
+        <button
+          onClick={handleBuyNow}
+          className="flex items-center justify-center p-4 w-[220.5px] h-[56px] bg-primary-green-500 text-white rounded-lg"
+        >
           <span className="mr-1">바로구매</span>
           <Image src="/icons/productcard.svg" alt="바로구매" width={24} height={24} />
         </button>

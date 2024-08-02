@@ -9,9 +9,14 @@ import ReviewEdit from './ReviewEdit';
 interface MiddleSectionWrapperProps {
   productDescription: string;
   reviewProductId: string;
+  reviewCount: number;
 }
 
-function MiddleSectionWrapper({ productDescription, reviewProductId }: MiddleSectionWrapperProps) {
+function MiddleSectionWrapper({
+  productDescription,
+  reviewProductId,
+  reviewCount
+}: MiddleSectionWrapperProps) {
   const [activeTab, setActiveTab] = useState('description');
   const reviewRef = useRef<HTMLDivElement | null>(null);
 
@@ -30,7 +35,7 @@ function MiddleSectionWrapper({ productDescription, reviewProductId }: MiddleSec
       />
       <ProductDescription productDescription={productDescription} />
       <div ref={reviewRef} className="text-center">
-        <ReviewEdit reviewProductId={reviewProductId} />
+        <ReviewEdit reviewProductId={reviewProductId} reviewCount={reviewCount} />
       </div>
     </>
   );
