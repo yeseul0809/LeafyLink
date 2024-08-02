@@ -8,7 +8,7 @@ interface ActiveTabProps {
 
 function ActiveTab({ activeTab, setActiveTab, handleScrollToReview }: ActiveTabProps) {
   return (
-    <nav className="flex justify-center gap-7 mt-20 mb-10 font-bold text-[22px]">
+    <nav className="flex justify-center gap-7 mt-[120px] mb-10 font-bold text-[22px]">
       <button
         onClick={() => {
           setActiveTab('description');
