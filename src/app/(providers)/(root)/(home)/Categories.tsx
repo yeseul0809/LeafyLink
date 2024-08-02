@@ -46,7 +46,7 @@ function Categories() {
   };
 
   return (
-    <div className="lg:w-[1020px] sm:w-[351px] flex justify-between justify-center items-center mx-auto mt-[120px] text-center justify-items-center">
+    <div className="lg:w-[1020px] md:w-[600px] sm:w-[351px] flex justify-between justify-center items-center mx-auto lg:mt-[120px] mt-[40px] px-[24px] text-center justify-items-center">
       {categoryIcons.map((category) => (
         <button
           onClick={() => {

@@ -5,20 +5,39 @@ import React from 'react';
 function Footer() {
   return (
     <section>
-      <div className="w-full h-auto sticky bottom-0 bg-white px-[190px] py-[37px] border-y text-[14px] text-[#505050]">
-        <Link href={'/'}>
-          <Image src="/icons/logo.svg" alt="logo" width={100} height={30}></Image>
-        </Link>
-        <div className="flex justify-left items-center mt-5 mb-7">
-          <a href="#">회사소개</a>
-          <span className="px-7">|</span>
-          <a href="#">이용약관</a>
-          <span className="px-7">|</span>
-          <a href="#" className="font-semibold text-black">
-            개인정보처리방침
-          </a>
-          <span className="px-7">|</span>
-          <a href="#">제휴광고</a>
+      <div className="w-full h-auto lg:flex justify-between px-[30px] sticky bottom-0 bg-white lg:px-[190px] py-[28px] border-y text-[14px] text-[#505050] text-center lg:text-left">
+        <div>
+          <div className="flex justify-center lg:justify-start items-center mb-[16px] ">
+            <Link href={'/'}>
+              <Image
+                src="/icons/logo.svg"
+                alt="logo"
+                width={100}
+                height={30}
+                className="lg:w-[152px] "
+              ></Image>
+            </Link>
+          </div>
+          <div className="flex justify-between mt-5 mb-[24px] lg:w-[386px] lg:mt-[32px]">
+            <a href="#" className="w-auto tracking-tighter leading-5 px-0">
+              회사소개
+            </a>
+            <span>|</span>
+            <a href="#" className="w-auto tracking-tighter leading-5">
+              이용약관
+            </a>
+            <span>|</span>
+            <a
+              href="#"
+              className="lg:font-semibold lg:text-black w-auto tracking-tighter leading-5"
+            >
+              개인정보처리방침
+            </a>
+            <span>|</span>
+            <a href="#" className="w-auto tracking-tighter leading-5">
+              제휴광고
+            </a>
+          </div>
         </div>
         <div className="leading-loose text-[13px]">
           <p>

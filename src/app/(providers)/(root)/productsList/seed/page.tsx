@@ -10,7 +10,7 @@ async function Seed() {
   const seedData = await getSeedData();
 
   const countProduct = seedData?.length;
-  console.log(seedData?.length);
+  // countProduct === 0 ? 상품이 없다는 표시 : 상품리스트 보여주기
 
   return (
     <section className="lg:w-[1240px] mx-auto lg:mt-[80px] lg:mb-[180px]">

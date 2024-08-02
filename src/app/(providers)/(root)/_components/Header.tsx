@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useRef, useState } from 'react';
 import BestSeller from '../(home)/BestSeller';
+import { getUserInfo } from './actions';
 
 interface Weather {
   id: number;
@@ -26,19 +27,26 @@ function Header() {
   const [isLogin, setIsLogin] = useState(false);
   const [userName, setUserName] = useState('');
   const [userAvatar, setUserAvatar] = useState('');
+  const [userId, setUserId] = useState('');
+
+  // useEffect를 왜 쓸까요?? 오래 걸리는 함수를 다른거 하면서 실행시키고 싶을 때 조금 이따가 실행하고 싶을 때 => X
+  // useEffect 안에 대괄호가 바뀔 떄 마다 실행되고 싶을 때 => O
+  // 맨 처음에 받아져셔 ? 50점
+  // 빈배열 => 처음 실행될 때에만.
+  // 처음 데이터를 불러오고, setState할 때
+
   // 로그인 상태
   useEffect(() => {
-    const supabase = createClient();
-    supabase.auth.getUser().then((res) => {
-      if (res.data.user) {
-        setIsLogin(true);
-        setUserName(res.data.user.identities![0].identity_data?.full_name);
-        setUserAvatar(res.data.user.identities![0].identity_data?.avatar_url);
-      } else {
-        setIsLogin(false);
-      }
-    });
+    const getUserData = async () => {
+      const userInfo = await getUserInfo();
+      setIsLogin(true);
+      setUserName(userInfo?.identities![0].identity_data?.full_name);
+      setUserAvatar(userInfo?.identities![0].identity_data?.avatar_url);
+      setUserId(userInfo?.identities![0].user_id!);
+    };
+    getUserData();
   }, []);
+
   // 로그아웃 상태
   const logout = async () => {
     const supabase = createClient();
@@ -49,6 +57,7 @@ function Header() {
       window.location.href = '/';
     }
   };
+
   // user 위치
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
@@ -100,13 +109,11 @@ function Header() {
   const toggleMenu = () => {
     setIsOpenMenu(!isOpenMenu);
     setIsOpenSearch(false);
-    console.log('열림');
   };
   // 검색창 토글
   const toggleSearch = () => {
     setIsOpenSearch(!isOpenSearch);
     setIsOpenMenu(false);
-    console.log('열림');
   };
   // 페이지 네비게이션
   const redirect = (e: string) => {
@@ -238,10 +245,20 @@ function Header() {
           >
             <Image src="/icons/icon-message.svg" alt="message" width={32} height={32}></Image>
           </button>
-          <button className="ml-[48px]">
+          <button
+            className="ml-[48px]"
+            onClick={() => {
+              redirect('/cart');
+            }}
+          >
             <Image src="/icons/icon-cart.svg" alt="cart" width={32} height={32}></Image>
           </button>
-          <button className="ml-[48px]">
+          <button
+            className="ml-[48px]"
+            onClick={() => {
+              redirect(`/mypage`);
+            }}
+          >
             <Image src="/icons/icon-mypage.svg" alt="mypage" width={32} height={32}></Image>
           </button>
           {isOpenSearch && (
