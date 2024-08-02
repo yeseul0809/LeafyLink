@@ -29,22 +29,30 @@ function Header() {
   const [userAvatar, setUserAvatar] = useState('');
   const [userId, setUserId] = useState('');
 
-  // useEffect를 왜 쓸까요?? 오래 걸리는 함수를 다른거 하면서 실행시키고 싶을 때 조금 이따가 실행하고 싶을 때 => X
-  // useEffect 안에 대괄호가 바뀔 떄 마다 실행되고 싶을 때 => O
-  // 맨 처음에 받아져셔 ? 50점
-  // 빈배열 => 처음 실행될 때에만.
-  // 처음 데이터를 불러오고, setState할 때
-
   // 로그인 상태
+  // useEffect(() => {
+  //   const getUserData = async () => {
+  //     const userInfo = await getUserInfo();
+  //     if (userInfo != null) {
+  //       setIsLogin(true);
+  //       setUserName(userInfo?.identities![0].identity_data?.full_name);
+  //       setUserAvatar(userInfo?.identities![0].identity_data?.avatar_url);
+  //       setUserId(userInfo?.identities![0].user_id!);
+  //     }
+  //   };
+  //   getUserData();
+  // }, [isLogin]);
   useEffect(() => {
-    const getUserData = async () => {
-      const userInfo = await getUserInfo();
-      setIsLogin(true);
-      setUserName(userInfo?.identities![0].identity_data?.full_name);
-      setUserAvatar(userInfo?.identities![0].identity_data?.avatar_url);
-      setUserId(userInfo?.identities![0].user_id!);
-    };
-    getUserData();
+    const supabase = createClient();
+    supabase.auth.getUser().then((res) => {
+      if (res.data.user) {
+        setIsLogin(true);
+        setUserName(res.data.user.identities![0].identity_data?.full_name);
+        setUserAvatar(res.data.user.identities![0].identity_data?.avatar_url);
+      } else {
+        setIsLogin(false);
+      }
+    });
   }, []);
 
   // 로그아웃 상태
