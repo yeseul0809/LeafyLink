@@ -1,5 +1,4 @@
 'use client';
-
 import React, { useEffect, useRef, useState } from 'react';
 import PhoneForm from './PhoneForm';
 import { createClient } from '@/supabase/supabaseClient';
@@ -167,28 +166,32 @@ const UserEditForm = ({ initialData, userId }: UserEditFormProps) => {
       <div className=" flex justify-center mb-8 ">
         <Image
           src={initialData.avatarUrl}
-          width={300}
-          height={300}
+          width={86}
+          height={86}
           alt="Profile Image"
-          className="w-24 h-24 rounded-full"
+          className="w-[86px] h-[86px] rounded-full"
         />
       </div>
       {/* 이름 입력 필드 */}
-      <label className="text-base font-normal leading-6 tracking-tighter ">이름</label>
+      <label className="text-[16px] font-normal leading-[24px] tracking-[-0.4px] text-font/main ">
+        이름
+      </label>
       <input
         type="text"
-        className="border border-Line/Regular  bg-white w-full p-4  mb-6 mt-3  "
+        className="border border-Line/Regular  bg-white w-full p-4  mb-6 mt-3 text-[16px] font-normal leading-[24px] tracking-[-0.4px] text-font/main  "
         value={userName}
         onChange={(e) => setUserName(e.target.value)}
       />
       {/* 우편번호 입력 필드 */}
-      <label className="font-bold text-lg ">주소</label>
+      <label className="text-[16px] font-normal leading-[24px] tracking-[-0.4px] text-font/main ">
+        주소
+      </label>
       <div className="  ">
         <input
           type="text"
           id="sample3_postcode"
           placeholder="우편번호"
-          className=" border border-Line/Regular w-[160px] p-4 mb-3 mt-3  "
+          className=" border border-Line/Regular w-[160px] p-4 mt-3 mb-3 text-[16px] font-normal leading-[24px] tracking-[-0.4px] text-font/main   "
           value={postcode}
           readOnly
         />
@@ -198,7 +201,7 @@ const UserEditForm = ({ initialData, userId }: UserEditFormProps) => {
           type="button"
           onClick={() => window.sample3_execDaumPostcode()}
           value="주소검색"
-          className="border border-primary-green-500 bg-white text-primary-green-500 ml-3 cursor-pointer rounded-lg text-center p-4"
+          className="border border-primary-green-500 bg-white text-primary-green-500 ml-3 cursor-pointer rounded-lg text-center p-4 text-[16px] font-normal leading-[24px] tracking-[-0.4px] text-font/main "
         />
       </div>
       {/* 주소 검색 컨테이너 */}
@@ -224,7 +227,7 @@ const UserEditForm = ({ initialData, userId }: UserEditFormProps) => {
         type="text"
         id="sample3_address"
         placeholder="주소"
-        className="border border-Line/Regular p-4 mb-3 w-full max-w-2xl "
+        className="border border-Line/Regular p-4 mb-3 w-full max-w-2xl text-[16px] font-normal leading-[24px] tracking-[-0.4px] text-font/main "
         value={address}
         onChange={(e) => setAddress(e.target.value)}
       />
@@ -233,12 +236,14 @@ const UserEditForm = ({ initialData, userId }: UserEditFormProps) => {
         type="text"
         id="sample3_detailAddress"
         placeholder="상세주소"
-        className="border border-Line/Regular p-4 mb-6 w-full "
+        className="border border-Line/Regular p-4 mb-6 w-full text-[16px] font-normal leading-[24px] tracking-[-0.4px] text-font/main "
         value={detailAddress}
         onChange={(e) => setDetailAddress(e.target.value)}
       />
       {/* Phone Form 추가 */}
-      <label className="text-base font-normal leading-6 tracking-tighter mb-3 ">휴대폰 번호</label>
+      <label className="text-[16px] font-normal leading-[24px] tracking-[-0.4px] text-font/main mb-3 text-font/main">
+        휴대폰 번호
+      </label>
       <PhoneForm initialPhone={phone} onChange={handlePhoneChange} />
 
       <div className="flex gap-4 ">

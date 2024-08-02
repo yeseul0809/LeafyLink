@@ -24,7 +24,9 @@ export const handleImage = (quillRef: React.RefObject<ReactQuill>) => {
       return;
     }
 
-    const response = supabase.storage.from('product-image').getPublicUrl(`product_imgs/${fileNewName}`);
+    const response = supabase.storage
+      .from('product-image')
+      .getPublicUrl(`product_imgs/${fileNewName}`);
     if (!response.data) {
       console.error('No public URL found in response data.');
       return;

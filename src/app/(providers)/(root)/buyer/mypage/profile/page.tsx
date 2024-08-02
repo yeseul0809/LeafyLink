@@ -1,13 +1,24 @@
-import UserEditFrom from '../../_components/UserEditFrom';
 import { createClient } from '@/supabase/supabaseServer';
+import UserEditForm from '../_components/UserEditFrom';
+import { redirect } from 'next/navigation';
 
-interface BuyerMyPageProps {
-  params: { id: string };
-}
-
-export default async function BuyerMyPage({ params }: BuyerMyPageProps) {
+export default async function BuyerMyPage() {
   const supabase = createClient();
-  const { data, error } = await supabase.from('User').select('*').eq('user_id', params.id).single();
+
+  const {
+    data: { user },
+    error: userError
+  } = await supabase.auth.getUser();
+  const userId = user?.id;
+  if (userError || !user) {
+    redirect('/login');
+  }
+
+  if (!userId) {
+    redirect('/login');
+  }
+
+  const { data, error } = await supabase.from('User').select('*').eq('user_id', userId).single();
 
   if (error) {
     return <div>오류가 발생했습니다: {error.message}</div>;
@@ -28,8 +39,8 @@ export default async function BuyerMyPage({ params }: BuyerMyPageProps) {
 
   return (
     <section className="max-w-sm mx-auto">
-      <div className="mb-8">
-        <UserEditFrom initialData={initialData} userId={params.id} />
+      <div className="mb-[180px]">
+        <UserEditForm initialData={initialData} userId={userId} />
       </div>
     </section>
   );

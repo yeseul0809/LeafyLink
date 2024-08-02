@@ -150,51 +150,59 @@ function SellerCheck({ userData }: SellerCheckProps) {
         }}
       >
         <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700">사업자 등록번호</label>
+          <label className="block text-[16px] font-normal leading-[24px] tracking-[-0.4px] text-font/main mb-3">
+            사업자 번호
+          </label>
           <input
             type="text"
             value={businessNumber}
             onChange={(e) => setBusinessNumber(e.target.value.replace(/\D/g, ''))}
             maxLength={10}
             placeholder="사업자 번호를 입력해 주세요"
-            className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-primary-green-500 focus:border-primary-green-500"
+            className="mb-6  block w-full p-4 border border-gray-300 shadow-sm focus:ring-primary-green-500 focus:border-primary-green-500 text-[16px] font-normal leading-[24px] tracking-[-0.4px] text-font/main"
           />
         </div>
 
         <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700">대표자 성명</label>
+          <label className="block text-[16px] font-normal leading-[24px] tracking-[-0.4px] text-font/main mb-3">
+            대표자 성명
+          </label>
           <input
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="대표자 성명을 입력해 주세요"
-            className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-primary-green-500 focus:border-primary-green-500"
+            className="mb-6  block w-full p-4 border border-gray-300 shadow-sm focus:ring-primary-green-500 focus:border-primary-green-500 text-[16px] font-normal leading-[24px] tracking-[-0.4px] text-font/main"
           />
         </div>
         <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700">상호명</label>
+          <label className="block text-[16px] font-normal leading-[24px] tracking-[-0.4px] text-font/main mb-3">
+            상호명
+          </label>
           <input
             type="text"
             value={businessName}
             onChange={(e) => setBusinessName(e.target.value)}
             placeholder="상호명을 입력해 주세요"
-            className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-primary-green-500 focus:border-primary-green-500"
+            className="mb-6  block w-full p-4 border border-gray-300 shadow-sm focus:ring-primary-green-500 focus:border-primary-green-500  text-[16px] font-normal leading-[24px] tracking-[-0.4px] text-font/main"
           />
         </div>
         <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700">개업일자</label>
+          <label className="block text-[16px] font-normal leading-[24px] tracking-[-0.4px] text-font/main mb-3">
+            개업일자
+          </label>
           <input
             type="text"
             value={startDate}
             onChange={(e) => setStartDate(e.target.value)}
-            placeholder="YYYY.MM.DD"
-            className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-primary-green-500 focus:border-primary-green-500"
+            placeholder="YYYYMMDD"
+            className="mb-6  block w-full p-4 border border-gray-300 shadow-sm focus:ring-primary-green-500 focus:border-primary-green-500 text-[16px] font-normal leading-[24px] tracking-[-0.4px] text-font/main"
           />
         </div>
         <div className="flex justify-center">
           <button
             type="submit"
-            className="w-full py-2 px-4 bg-primary-green-500 text-white font-semibold rounded-md shadow-sm hover:bg-primary-green-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-green-500"
+            className=" w-full mt-20 mb-[180px] p-4 bg-primary-green-500 text-white rounded-md font-semibold shadow-sm hover:bg-primary-green-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-green-500"
           >
             인증하기
           </button>

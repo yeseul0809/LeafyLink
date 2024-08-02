@@ -54,6 +54,7 @@ const config: Config = {
         'Line/Regular': '#e5e5ec',
         'Line/Strong': '#111111',
         'Line/Disabled': '#cacad7',
+        'BG/Light': '#F7F7FB',
         'BG/Regular': '#F1F1F5'
       },
       fontFamily: {
