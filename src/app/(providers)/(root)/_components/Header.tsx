@@ -25,43 +25,43 @@ function Header() {
   const [isLogin, setIsLogin] = useState(false);
   const [userName, setUserName] = useState('');
   const [userAvatar, setUserAvatar] = useState('');
-  const [profileLink, setProfileLink] = useState('/');
-  // 로그인 상태
-  useEffect(() => {
-    const supabase = createClient();
-    supabase.auth.getUser().then(async (res) => {
-      console.log(res);
-      if (res.data.user) {
-        setIsLogin(true);
-        const userId = res.data.user.id;
-        setUserName(res.data.user.identities![0].identity_data?.full_name);
-        setUserAvatar(res.data.user.identities![0].identity_data?.avatar_url);
+  // const [profileLink, setProfileLink] = useState('/');
+  // // 로그인 상태
+  // useEffect(() => {
+  //   const supabase = createClient();
+  //   supabase.auth.getUser().then(async (res) => {
+  //     console.log(res);
+  //     if (res.data.user) {
+  //       setIsLogin(true);
+  //       const userId = res.data.user.id;
+  //       setUserName(res.data.user.identities![0].identity_data?.full_name);
+  //       setUserAvatar(res.data.user.identities![0].identity_data?.avatar_url);
 
-        // Seller 테이블에서 seller_id를 확인하여 프로필 링크 설정
-        const fetchSellerId = async (userId: string) => {
-          try {
-            const { data, error } = await supabase
-              .from('Seller')
-              .select('seller_id')
-              .eq('seller_id', userId)
-              .maybeSingle();
+  //       // Seller 테이블에서 seller_id를 확인하여 프로필 링크 설정
+  //       const fetchSellerId = async (userId: string) => {
+  //         try {
+  //           const { data, error } = await supabase
+  //             .from('Seller')
+  //             .select('seller_id')
+  //             .eq('seller_id', userId)
+  //             .maybeSingle();
 
-            if (error) {
-              return null;
-            }
-            return data ? data.seller_id : null;
-          } catch (error) {
-            return null;
-          }
-        };
+  //           if (error) {
+  //             return null;
+  //           }
+  //           return data ? data.seller_id : null;
+  //         } catch (error) {
+  //           return null;
+  //         }
+  //       };
 
-        const sellerId = await fetchSellerId(userId);
-        setProfileLink(sellerId ? '/seller/mypage/profile' : '/buyer/mypage/profile');
-      } else {
-        setIsLogin(false);
-      }
-    });
-  }, []);
+  //       const sellerId = await fetchSellerId(userId);
+  //       setProfileLink(sellerId ? '/seller/mypage/profile' : '/buyer/mypage/profile');
+  //     } else {
+  //       setIsLogin(false);
+  //     }
+  //   });
+  // }, []);
 
   // 로그인 상태
   // useEffect(() => {
@@ -76,6 +76,19 @@ function Header() {
   //   };
   //   getUserData();
   // }, [isLogin]);
+
+  useEffect(() => {
+    const supabase = createClient();
+    supabase.auth.getUser().then((res) => {
+      if (res.data.user) {
+        setIsLogin(true);
+        setUserName(res.data.user.identities![0].identity_data?.full_name);
+        setUserAvatar(res.data.user.identities![0].identity_data?.avatar_url);
+      } else {
+        setIsLogin(false);
+      }
+    });
+  }, []);
 
   // 로그아웃 상태
   const logout = async () => {
@@ -175,9 +188,9 @@ function Header() {
               height={28}
               className="rounded-full h-[28px]"
             />
-            <Link href={profileLink}>
+            {/* <Link href={profileLink}>
               <p className="ml-3 hover:text-zinc-950">{userName}님</p>
-            </Link>
+            </Link> */}
             <button className="ml-10 hover:text-zinc-950" onClick={logout}>
               로그아웃
             </button>
@@ -279,11 +292,11 @@ function Header() {
           <button className="ml-[48px]">
             <Image src="/icons/icon-cart.svg" alt="cart" width={32} height={32}></Image>
           </button>
-          <button className="ml-[48px]">
+          {/* <button className="ml-[48px]">
             <Link href={profileLink}>
               <Image src="/icons/icon-mypage.svg" alt="mypage" width={32} height={32}></Image>
             </Link>
-          </button>
+          </button> */}
           {isOpenSearch && (
             <div className="absolute w-full h-auto flex justify-between py-[30px] px-[190px] border-b bg-white top-12 right-0 text-center">
               <p className="bold text-2xl font-semibold">SEARCH</p>

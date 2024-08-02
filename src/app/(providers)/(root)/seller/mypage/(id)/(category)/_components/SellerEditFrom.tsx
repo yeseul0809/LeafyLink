@@ -42,7 +42,7 @@ const SellerEditForm = ({ sellerData }: SellerEditFormProps) => {
   const [postcode, setPostcode] = useState<string>(sellerData.address_code);
   const [detailAddress, setDetailAddress] = useState<string>(sellerData.address_detail);
   const [extraAddress, setExtraAddress] = useState<string>('');
-  const [userName, setUserName] = useState<string>(sellerData.business_name);
+  const [businessName, setBusinessName] = useState<string>(sellerData.business_name);
   const [phone, setPhone] = useState<string>(sellerData.phone);
   const supabase = createClient();
 
@@ -136,7 +136,7 @@ const SellerEditForm = ({ sellerData }: SellerEditFormProps) => {
       address: fullAddress,
       address_detail: newDetailAddress,
       address_code: newAddressCode,
-      user_name: userName,
+      business_name: businessName,
       phone: phone
     };
 
@@ -169,7 +169,7 @@ const SellerEditForm = ({ sellerData }: SellerEditFormProps) => {
     setPostcode('');
     setDetailAddress(sellerData.address_detail);
     setExtraAddress('');
-    setUserName(sellerData.user_name);
+    setBusinessName(sellerData.business_name);
     setPhone(sellerData.phone);
     alert('변경 사항이 취소되었습니다.');
   };
@@ -193,8 +193,8 @@ const SellerEditForm = ({ sellerData }: SellerEditFormProps) => {
       <input
         type="text"
         className="border border-Line/Regular  bg-white w-full p-4  mb-6 mt-3 text-[16px] font-normal leading-[24px] tracking-[-0.4px] text-font/main  "
-        value={userName}
-        onChange={(e) => setUserName(e.target.value)}
+        value={businessName}
+        onChange={(e) => setBusinessName(e.target.value)}
       />
       {/* 우편번호 입력 필드 */}
       <label className="text-[16px] font-normal leading-[24px] tracking-[-0.4px] text-font/main ">
