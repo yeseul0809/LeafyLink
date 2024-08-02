@@ -24,14 +24,14 @@ async function ProductDetailPage({ params }: ParamsProps) {
   const averageRating = reviewCount > 0 ? totalRating / reviewCount : 0;
 
   return (
-    <div className="container mx-auto max-w-screen-lg p-4">
-      <section className="flex flex-col md:flex-row my-8 gap-12">
-        <div className="md:w-1/2 flex justify-center mb-4 md:mb-0">
+    <div className="container mx-auto max-w-screen-lg p-20">
+      <section className="flex flex-col md:flex-row gap-[80px]">
+        <div className="md:w-1/2 flex-shrink-0 justify-center rounded-[28px] mb-4 md:mb-0">
           <Image
             src={product.thumbnail_url}
             alt={product.title}
-            width={640}
-            height={640}
+            width={485}
+            height={485}
             className="rounded-lg"
           />
         </div>

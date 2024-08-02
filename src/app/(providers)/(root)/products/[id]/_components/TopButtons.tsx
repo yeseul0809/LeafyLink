@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import React from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { createChatroom, findExistingChatroom } from '../../../chat/_utils/chatroomUtils';
+import Image from 'next/image';
 
 interface TopButtonsProps {
   productState: {
@@ -58,29 +59,35 @@ function TopButtons({ productState }: TopButtonsProps) {
 
   return (
     <>
-      <div className="mb-5 flex justify-end">
-        <div>
-          <div className="mb-3 flex items-center">
-            <button className="border px-4 py-2 rounded" onClick={() => setCount(count - 1)}>
-              -
-            </button>
-            <div className="border p-2 text-center w-12 mx-2 rounded">{count}</div>
-            <button className="border px-4 py-2 rounded" onClick={() => setCount(count + 1)}>
-              +
-            </button>
-          </div>
-          <p className="text-xl font-bold text-right">총 상품금액: {+product.price * count} 원</p>
+      <div className="mb-5 flex-col w-full">
+        <div className="mt-6 mb-5 flex justify-end">
+          <button className="w-9 h-9 border px-4 py-2" onClick={() => setCount(count - 1)}>
+            -
+          </button>
+          <div className="w-[52px] h-9 border p-2 text-center">{count}</div>
+          <button className="w-9 h-9 border px-4 py-2" onClick={() => setCount(count + 1)}>
+            +
+          </button>
+        </div>
+        <div className="flex justify-between items-center w-full">
+          <p className="text-[14px]">총 상품금액</p>
+          <p className="text-xl font-bold text-right">{+product.price * count} 원</p>
         </div>
       </div>
-      <div className="flex justify-between items-center gap-2">
-        <button onClick={handleStartChat} className="bg-black text-white px-4 py-2 rounded flex-1">
-          문의하기
+
+      <div className="flex space-x-[6px]">
+        <button className="flex items-center justify-center w-[52px] h-[56px] border border-gray-300 rounded-lg">
+          <Image src="/icons/productchat.svg" alt="문의하기" width={24} height={24} />
         </button>
-        <button onClick={handleAddToCart} className="bg-black text-white px-4 py-2 rounded flex-1">
-          장바구니
+
+        <button className="flex items-center justify-center w-[220.5px] h-[56px] border border-primary-green-500 rounded-lg">
+          <span className="text-primary-green-500">장바구니</span>
+          <Image src="/icons/productcart.svg" alt="장바구니" width={24} height={24} />
         </button>
-        <button onClick={handleBuyNow} className="bg-black text-white px-4 py-2 rounded flex-1">
-          바로구매
+
+        <button className="flex items-center justify-center w-[220.5px] h-[56px] bg-primary-green-500 text-white rounded-lg">
+          <span className="mr-1">바로구매</span>
+          <Image src="/icons/productcard.svg" alt="바로구매" width={24} height={24} />
         </button>
       </div>
     </>
