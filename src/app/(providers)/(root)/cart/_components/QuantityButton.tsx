@@ -2,10 +2,20 @@
 
 import { createClient } from '@/supabase/supabaseClient';
 import React, { useEffect, useState } from 'react';
-import { useQuantityStore } from '@/stores';
+import { useQuantityStore, useCartStore } from '@/stores';
 
-export default function QuantityButton({ productId, price }: { productId: string; price: number }) {
+export default function QuantityButton({
+  productId,
+  price,
+  userId
+}: {
+  productId: string;
+  price: number;
+  userId: string;
+}) {
   const setQuantity = useQuantityStore((state) => state.setQuantity);
+  const updateQuantity = useCartStore((state) => state.updateQuantity);
+  // const initializeCart = useCartStore((state) => state.initializeCart);
   const [value, setValue] = useState<number>(1);
 
   useEffect(() => {
@@ -13,84 +23,110 @@ export default function QuantityButton({ productId, price }: { productId: string
       const supabase = createClient();
       const { data: cartData, error } = await supabase
         .from('Cart')
-        .select()
-        .eq('cart_product_id', productId);
+        .select('count')
+        .eq('cart_product_id', productId)
+        .single();
       if (error) {
         console.error('Error fetching quantity:', error);
         return;
       }
-      const quantity = cartData[0]?.count ?? 1;
-
+      const quantity = cartData?.count ?? 1;
       setValue(quantity);
     };
     getProductQuantity();
   }, [productId]);
 
   useEffect(() => {
+    // Update quantity in the store
     setQuantity(productId, value, price);
   }, [value, productId, price, setQuantity]);
 
-  const handleIncrease = async () => {
-    const supabase = createClient();
-    const { data: cartData, error: fetchError } = await supabase
-      .from('Cart')
-      .select('count')
-      .eq('cart_product_id', productId)
-      .single(); // 단일 데이터만 필요하므로 .single() 사용
+  // useEffect(() => {
+  //   initializeCart(userId); // Fetch cart data on mount
+  // }, []);
 
-    if (fetchError) {
-      console.error('Error fetching cart data:', fetchError);
-      return;
-    }
+  // useEffect(() => {
+  //   setQuantity(productId, value, price);
+  //   updateQuantity(productId, value);
+  // }, [value, productId, price, setQuantity, updateQuantity]);
 
-    const currentCount = cartData?.count ?? 0;
-    const newCount = currentCount + 1;
+  // const handleIncrease = async () => {
+  //   const supabase = createClient();
+  //   const { data: cartData, error: fetchError } = await supabase
+  //     .from('Cart')
+  //     .select('count')
+  //     .eq('cart_product_id', productId)
+  //     .single(); // 단일 데이터만 필요하므로 .single() 사용
 
-    const { error: updateError } = await supabase
-      .from('Cart')
-      .update({ count: newCount })
-      .eq('cart_product_id', productId);
+  //   if (fetchError) {
+  //     console.error('Error fetching cart data:', fetchError);
+  //     return;
+  //   }
 
-    if (updateError) {
-      console.error('Error updating cart count:', updateError);
-      return;
-    }
+  //   console.log('cartData::', cartData);
 
-    setValue((prev) => prev + 1);
+  //   const currentCount = cartData?.count ?? 0;
+  //   const newCount = currentCount + 1;
+
+  //   const { error: updateError } = await supabase
+  //     .from('Cart')
+  //     .update({ count: newCount })
+  //     .eq('cart_product_id', productId);
+
+  //   if (updateError) {
+  //     console.error('Error updating cart count:', updateError);
+  //     return;
+  //   }
+
+  //   setValue((prev) => prev + 1);
+  // };
+
+  const handleIncrease = async (): Promise<void> => {
+    const newValue = value + 1;
+    setValue(newValue);
+    await updateQuantity(productId, newValue);
   };
 
+  // const handleDecrease = async () => {
+  //   const supabase = createClient();
+  //   const { data: cartData, error: fetchError } = await supabase
+  //     .from('Cart')
+  //     .select('count')
+  //     .eq('cart_product_id', productId)
+  //     .single(); // 단일 데이터만 필요하므로 .single() 사용
+
+  //   if (fetchError) {
+  //     console.error('Error fetching cart data:', fetchError);
+  //     return;
+  //   }
+
+  //   const currentCount = cartData?.count ?? 0;
+  //   const newCount = currentCount - 1;
+
+  //   const { error: updateError } = await supabase
+  //     .from('Cart')
+  //     .update({ count: newCount })
+  //     .eq('cart_product_id', productId);
+
+  //   if (updateError) {
+  //     console.error('Error updating cart count:', updateError);
+  //     return;
+  //   }
+
+  //   setValue((prev) => prev - 1);
+  // };
+
   const handleDecrease = async () => {
-    const supabase = createClient();
-    const { data: cartData, error: fetchError } = await supabase
-      .from('Cart')
-      .select('count')
-      .eq('cart_product_id', productId)
-      .single(); // 단일 데이터만 필요하므로 .single() 사용
-
-    if (fetchError) {
-      console.error('Error fetching cart data:', fetchError);
-      return;
+    if (value > 1) {
+      const newValue = value - 1;
+      setValue(newValue);
+      await updateQuantity(productId, newValue);
     }
-
-    const currentCount = cartData?.count ?? 0;
-    const newCount = currentCount - 1;
-
-    const { error: updateError } = await supabase
-      .from('Cart')
-      .update({ count: newCount })
-      .eq('cart_product_id', productId);
-
-    if (updateError) {
-      console.error('Error updating cart count:', updateError);
-      return;
-    }
-
-    setValue((prev) => prev - 1);
   };
 
   return (
     <>
-      <div className="ring-1 ring-[#E5E5EC] w-[122px] h-[24px] mt-3 grid grid-cols-3">
+      <div className="ring-1 ring-[#E5E5EC] w-[122px] h-[24px] grid grid-cols-3 mr-[20px]">
         <button
           className="border-r border-[#E5E5EC] h-[24px] flex items-center justify-center"
           onClick={handleDecrease}

@@ -68,5 +68,6 @@ export const getBestSellerProducts = async (orderData: Order[]) => {
       `product_id.eq.${orderData[0].order_product_id}, product_id.eq.${orderData[1].order_product_id}, product_id.eq.${orderData[2].order_product_id}, product_id.eq.${orderData[3].order_product_id}`
     );
   if (productsError) throw productsError;
+
   return products as Product[];
 };
