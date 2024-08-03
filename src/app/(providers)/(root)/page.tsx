@@ -8,8 +8,6 @@ import Recommend from './(home)/Recommend';
 import BestSeller from './(home)/BestSeller';
 import Advertising from './(home)/Advertising';
 
-// 1. 서버컴포넌트로 살릴 수 있는 컴포넌트는 살린다.
-
 function Home() {
   return (
     <div className="w-full">

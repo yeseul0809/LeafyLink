@@ -1,10 +1,15 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+import localFont from 'next/font/local';
 import './globals.css';
 import Script from 'next/script';
 import Header from './(providers)/(root)/_components/Header';
 
-const inter = Inter({ subsets: ['latin'] });
+const pretendard = localFont({
+  src: '../fonts/PretendardVariable.woff2',
+  display: 'swap',
+  weight: '45 920',
+  variable: '--font-pretendard'
+});
 
 export const metadata: Metadata = {
   title: 'LeafyLink',
@@ -17,14 +22,14 @@ function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="kr">
       <head>
         <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js" async></script>
       </head>
 
       <Script src="https://cdn.iamport.kr/v1/iamport.js" />
 
-      <body className={inter.className}>{children}</body>
+      <body className={pretendard.className}>{children}</body>
     </html>
   );
 }

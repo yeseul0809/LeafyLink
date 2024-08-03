@@ -35,14 +35,6 @@ export async function updateSession(request: NextRequest) {
   const {
     data: { user }
   } = await supabase.auth.getUser();
-  //   '/': true,
-  //   '/login': true,
-  //   '/auth/callback': true,
-  //   '/products': true,
-  //   '/search': true,
-  //   '/livestreaming': true,
-  //   '/login/needlogin': true
-  // };
 
   const exactMatchUrls: Routes = {
     '/': true,
