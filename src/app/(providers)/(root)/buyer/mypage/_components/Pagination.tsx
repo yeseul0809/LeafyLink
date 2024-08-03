@@ -31,15 +31,21 @@ export default function Pagination({
 
   // 이전 및 다음 버튼 클릭 시 페이지 범위 이동
   const handlePrev = () => {
-    setStartPage((prev) => Math.max(prev - pageCount, 1));
+    if (startPage > 1) {
+      const newStartPage = Math.max(startPage - pageCount, 1);
+      setStartPage(newStartPage);
+    }
   };
 
   const handleNext = () => {
-    setStartPage((prev) => Math.min(prev + pageCount, totalPages));
+    if (endPage < totalPages) {
+      const newStartPage = Math.min(startPage + pageCount, totalPages);
+      setStartPage(newStartPage);
+    }
   };
 
   return (
-    <div className="flex justify-center items-center mt-8 text-gray-500 text-sm">
+    <div className="flex justify-center items-center mt-8 text-gray-500 text-sm mb-[180px]">
       <ul className="flex items-center space-x-2">
         <li className={`relative cursor-pointer ${startPage === 1 ? 'invisible' : ''}`}>
           <div className="w-12 h-6 flex items-center justify-center" onClick={handlePrev}>
@@ -54,7 +60,7 @@ export default function Pagination({
                 <div
                   className={`w-8 h-8 flex items-center justify-center rounded-full border ${
                     currentPage === pageNum
-                      ? ' text-font/main font-bold border-font/main border-[1px] bg-white'
+                      ? 'text-font/main font-bold border-font/main border-[1px] bg-white'
                       : 'border-gray-300 hover:bg-gray-100'
                   }`}
                 >

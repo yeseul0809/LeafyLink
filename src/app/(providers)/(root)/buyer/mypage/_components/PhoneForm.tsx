@@ -33,25 +33,29 @@ const PhoneForm = ({ onChange, initialPhone = '' }: PhoneFormProps) => {
       <input
         type="text"
         placeholder="010"
-        className="border p-4  flex-grow min-w-[0] box-border"
+        className="border p-4 flex-grow min-w-[0] box-border text-[16px] font-normal leading-[24px] tracking-[-0.4px] text-font/main mb-3 text-font/main"
         maxLength={3}
         value={phoneParts.part1}
         onChange={(e) => handleInput('part1', e.target.value)} // 첫 번째 부분 입력 처리
       />
-      <span className="text-lg font-semibold">-</span>
+      <span className="text-[16px] font-normal leading-[24px] tracking-[-0.4px] text-font/main mb-3 text-font/main">
+        -
+      </span>
       <input
         type="text"
         placeholder="4444"
-        className="border p-4  flex-grow min-w-[0] box-border"
+        className="border p-4  flex-grow min-w-[0] box-border text-[16px] font-normal leading-[24px] tracking-[-0.4px] text-font/main mb-3 text-font/main"
         maxLength={4}
         value={phoneParts.part2}
         onChange={(e) => handleInput('part2', e.target.value)} // 두 번째 부분 입력 처리
       />
-      <span className="text-lg font-semibold">-</span>
+      <span className="text-[16px] font-normal leading-[24px] tracking-[-0.4px] text-font/main mb-3 text-font/main">
+        -
+      </span>
       <input
         type="text"
         placeholder="4444"
-        className="border p-4  flex-grow min-w-[0] box-border"
+        className="border p-4  flex-grow min-w-[0] box-border text-[16px] font-normal leading-[24px] tracking-[-0.4px] text-font/main mb-3 text-font/main"
         maxLength={4}
         value={phoneParts.part3}
         onChange={(e) => handleInput('part3', e.target.value)} // 세 번째 부분 입력 처리
