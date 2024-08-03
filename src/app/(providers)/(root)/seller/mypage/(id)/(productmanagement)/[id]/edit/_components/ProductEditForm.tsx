@@ -53,7 +53,6 @@ function ProductEditForm({ product }: ProductEditFormProps) {
     } else {
       // 수정 후, 상품 상세페이지로 이동
       router.push(`/products/${product.product_id}`);
-      //   router.refresh();
     }
   };
 

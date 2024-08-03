@@ -1,15 +1,25 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Product } from '@/types/product';
 import { INITIAL_STATE } from '../_utils/constants';
 import handleSubmit from '../_utils/handleSubmit';
 import InputField from './InputField';
 import QuillEditor from './QuillEditor';
+import { useRouter } from 'next/navigation';
+import useUser from '@/hooks/useUser';
+import { createClient } from '@/supabase/supabaseClient';
 
 export default function ProductRegisterForm() {
   const [state, setState] = useState<Product>(INITIAL_STATE);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const { user } = useUser();
+  const router = useRouter();
+
+  if (!user) {
+    return;
+  }
+  const sellerId = user.id;
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -30,9 +40,10 @@ export default function ProductRegisterForm() {
   };
 
   const handleInputSubmit = async () => {
-    await handleSubmit({ state, setState });
+    await handleSubmit({ state, sellerId });
     setState(INITIAL_STATE);
     setImagePreview(null);
+    router.push(`/seller/mypage/products`);
   };
 
   return (

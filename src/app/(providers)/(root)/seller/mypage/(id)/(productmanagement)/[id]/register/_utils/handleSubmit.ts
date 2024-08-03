@@ -1,15 +1,16 @@
 import { v4 as uuidv4 } from 'uuid';
 import { Product, ProductProps } from '@/types/product';
 import { createClient } from '@/supabase/supabaseClient';
+import useUser from '@/hooks/useUser';
 
 interface handleSubmitProps {
   state: ProductProps;
-  setState: React.Dispatch<React.SetStateAction<ProductProps>>;
+  sellerId: string;
 }
+const supabase = createClient();
 
-async function handleSubmit({ state, setState }: handleSubmitProps) {
+async function handleSubmit({ state, sellerId }: handleSubmitProps) {
   let thumbnail_url = '';
-  const supabase = createClient();
 
   if (state.thumbnail) {
     const { data, error } = await supabase.storage
@@ -27,7 +28,7 @@ async function handleSubmit({ state, setState }: handleSubmitProps) {
 
   const { error } = await supabase.from('Product').insert([
     {
-      product_seller_id: '00067b01-245f-452f-8cd0-8639df5e9ef7',
+      product_seller_id: sellerId,
       product_id: uuidv4(),
       category: state.category,
       title: state.title,

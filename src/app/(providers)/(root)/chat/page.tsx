@@ -29,8 +29,6 @@ function ChatListPage() {
         const userInfo = await fetchUserInfo(chatroom.chatroom_user_id);
         const sellerInfo = await fetchSellerInfo(chatroom.chatroom_seller_id);
 
-        console.log('Seller Info:', sellerInfo);
-
         setAvatars((prevAvatars) => ({
           ...prevAvatars,
           [chatroom.chatroom_user_id]: {
@@ -142,7 +140,6 @@ function ChatListPage() {
               const otherParty = isUser ? chatroom.chatroom_seller_id : chatroom.chatroom_user_id;
               const otherInfo = avatars[otherParty];
               const latestMessage = latestMessages[chatroom.chatroom_id];
-              console.log('Other Info:', otherInfo);
               return (
                 <li
                   key={chatroom.chatroom_id}
