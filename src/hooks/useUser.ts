@@ -1,5 +1,4 @@
 import { createClient } from '@/supabase/supabaseClient';
-// import supabase from "@/supabase/supabaseClient";
 import { useEffect, useState } from 'react';
 
 function useUser() {

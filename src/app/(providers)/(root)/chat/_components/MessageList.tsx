@@ -7,7 +7,7 @@ interface MessageListProps {
   isMessagesLoaded: boolean;
   messages: Message[];
   userId: string;
-  otherUserInfo: { user_name: string; avatar_url: string } | null;
+  otherUserInfo: { user_name?: string; business_name?: string; avatar_url: string } | null;
 }
 
 function MessageList({ isMessagesLoaded, messages, userId, otherUserInfo }: MessageListProps) {

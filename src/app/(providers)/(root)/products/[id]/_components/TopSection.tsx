@@ -3,7 +3,9 @@
 import { Product } from '@/types/product';
 import showSwal from '@/utils/swal';
 import Image from 'next/image';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { getSellerName } from '../../../(home)/actions';
+import { useSellerStore } from '@/stores/sellerStore';
 
 export interface TopSectionProps {
   product: Product;
@@ -12,6 +14,12 @@ export interface TopSectionProps {
 }
 
 function TopSection({ product, averageRating, reviewCount }: TopSectionProps) {
+  const { businessName, setbusinessName } = useSellerStore();
+
+  useEffect(() => {
+    setbusinessName(product.product_seller_id);
+  }, [product.product_seller_id]);
+
   const handleCopyToClipboard = async () => {
     try {
       await navigator.clipboard.writeText(window.location.href);
@@ -24,7 +32,7 @@ function TopSection({ product, averageRating, reviewCount }: TopSectionProps) {
 
   return (
     <div className="flex flex-col items-center md:items-start md:text-left">
-      <strong className="text-sm">예쁜꽃집</strong>
+      <strong className="text-sm">{businessName}</strong>
       <h1 className="text-2xl mb-4">{product.title}</h1>
       <div className="flex justify-between w-full">
         <div className="flex items-center">
