@@ -68,7 +68,7 @@ function BottomTab({ productState }: BottomTabProps) {
           <p className="text-xl font-bold">{(+product.price * count).toLocaleString('ko-KR')} 원</p>
           <button
             onClick={handleAddToCart}
-            className="flex items-center justify-center ml-8 p-4 w-[102px] h-[44px] border rounded-md border-primary-green-500"
+            className="flex items-center justify-center ml-8 p-3 w-[102px] h-[44px] border rounded-md border-primary-green-500"
           >
             <p className="text-sm text-primary-green-500">장바구니</p>
             <Image src="/icons/productcart.svg" alt="장바구니" width={20} height={20} />
@@ -76,7 +76,7 @@ function BottomTab({ productState }: BottomTabProps) {
 
           <button
             onClick={handleBuyNow}
-            className="flex items-center justify-center ml-[6px] p-4 w-[102px] h-[44px] rounded-md bg-primary-green-500 text-white"
+            className="flex items-center justify-center ml-[6px] p-3 w-[102px] h-[44px] rounded-md bg-primary-green-500 text-white"
           >
             <p className="text-sm">바로구매</p>
             <Image src="/icons/productcard.svg" alt="바로구매" width={20} height={20} />

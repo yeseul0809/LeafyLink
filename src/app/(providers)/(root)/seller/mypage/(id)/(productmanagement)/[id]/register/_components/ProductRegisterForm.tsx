@@ -36,26 +36,29 @@ export default function ProductRegisterForm() {
   };
 
   return (
-    <div className="flex flex-col">
-      <div className="flex justify-end mb-4">
-        <button className="px-4 py-2 bg-black text-white rounded-md" onClick={handleInputSubmit}>
+    <div className="flex flex-col pb-[180px]">
+      <div className="flex justify-end">
+        <button
+          className="w-[80px] h-[44px] text-[14px] px-3 py-3 mb-3 bg-primary-green-500 text-white rounded-md hover:bg-primary-green-700"
+          onClick={handleInputSubmit}
+        >
           등록하기
         </button>
       </div>
 
-      <div className="grid grid-cols-6 gap-6">
-        <section className="col-span-2 border p-4 rounded-md">
-          <h2 className="text-xl text-center font-semibold mb-4">상품 설정</h2>
+      <div className="flex">
+        <section className="flex-shrink border h-[716px] w-[295px]">
+          <h2 className="text-sm text-center font-semibold border-b py-4 mb-4">상품 설정</h2>
 
-          <div className="mb-4">
-            <label className="block font-semibold mb-1" htmlFor="category">
+          <div className="mb-6 px-3 text-[14px]">
+            <label className="text-[14px] block mt-6 mb-3" htmlFor="category">
               카테고리
             </label>
             <select
               name="category"
               value={state.category}
               onChange={handleChange}
-              className="w-full p-2 border rounded-md"
+              className="w-[271px] h-[44px] px-3 border text-font/sub2 text-right"
             >
               <option value="" disabled>
                 카테고리를 선택하세요
@@ -75,7 +78,7 @@ export default function ProductRegisterForm() {
             value={state.title}
             onChange={handleChange}
             placeholder="상품명을 입력해주세요"
-            labelText="이름"
+            labelText="상품명"
           />
 
           <InputField
@@ -85,21 +88,28 @@ export default function ProductRegisterForm() {
             value={state.price}
             onChange={handleChange}
             placeholder="원"
-            labelText="정가"
+            labelText="정가 (소비자가)"
           />
 
-          <div className="mb-4">
-            <label className="block font-semibold mb-1" htmlFor="image">
-              대표 이미지
+          <div className="mb-6 px-3">
+            <p className="text-[14px] mt-6 mb-2">대표이미지</p>
+            <label className="pt-[3px] mb-[15px] cursor-pointer w-[60px] h-[24px] border border-primary-green-500 text-primary-green-500 text-[12px] text-center rounded-[4px] inline-block">
+              파일 선택
+              <input type="file" className="hidden" onChange={handleThumbnailChange} />
             </label>
-            <div className="w-full h-48 flex flex-col items-center justify-center border-dashed border-2 rounded-md">
-              <input type="file" className="text-gray-400" onChange={handleThumbnailChange} />
+            <div className="w-[271px] h-[152px] mb-6 flex flex-col text-[13px] text-font/sub2 items-center justify-center border relative overflow-hidden">
               {imagePreview && (
                 <img
                   src={imagePreview}
                   alt="썸네일 미리보기"
-                  className="mt-2 max-h-full max-w-full"
+                  className="p-1 absolute inset-0 max-h-full max-w-full object-contain"
                 />
+              )}
+              {!imagePreview && (
+                <>
+                  <p>가로 900px 이상,</p>
+                  <p>확대 기능 사용시 2000px 이상</p>
+                </>
               )}
             </div>
           </div>
@@ -115,8 +125,8 @@ export default function ProductRegisterForm() {
           />
         </section>
 
-        <section className="col-span-4 border p-4 rounded-md">
-          <h2 className="text-xl text-center font-semibold mb-4">상세 설명</h2>
+        <section className="flex-1 h-[716px] border">
+          <h2 className="text-sm text-center border-b font-semibold py-4 mb-4">상세 설명</h2>
           <QuillEditor value={state.description} onChange={handleDescriptionChange} />
         </section>
       </div>

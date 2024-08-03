@@ -28,6 +28,9 @@ const nextConfig = {
       },
       {
         hostname: 'sitem.ssgcdn.com'
+      },
+      {
+        hostname: 'housoop.com'
       }
     ],
     domains: ['k.kakaocdn.net', 't1.kakaocdn.net'],
