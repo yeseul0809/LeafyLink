@@ -11,6 +11,7 @@ export default async function RecodedVideoPage({ params }: { params: { id: strin
   const streamId = params.id.split('_')[1];
   const videoId = params.id.split('_')[2];
   const stream = await getStream(streamId);
+  // console.log('stream::', stream);
 
   if (!stream) {
     return notFound();
@@ -30,7 +31,7 @@ export default async function RecodedVideoPage({ params }: { params: { id: strin
           className="rounded-full"
         />
         <div>
-          <span className="font-bold">{`${sessionData.data.user?.user_metadata.full_name}`} </span>
+          <span className="font-bold">{`${sellerData![0].user_name}`} </span>
           <span>님의 {stream.is_live ? '라이브' : '녹화'}방송입니다.</span>
         </div>
       </div>
