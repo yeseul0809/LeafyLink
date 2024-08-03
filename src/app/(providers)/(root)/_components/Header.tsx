@@ -188,9 +188,9 @@ function Header() {
               height={28}
               className="rounded-full h-[28px]"
             />
-            {/* <Link href={profileLink}>
+            <Link href={profileLink}>
               <p className="ml-3 hover:text-zinc-950">{userName}님</p>
-            </Link> */}
+            </Link>
             <button className="ml-10 hover:text-zinc-950" onClick={logout}>
               로그아웃
             </button>
@@ -228,25 +228,25 @@ function Header() {
             >
               <ul className="flex">
                 <li className="text-zinc-700 hover:text-zinc-950">
-                  <a href="#">씨앗</a>
+                  <a href="/productsList/seed">씨앗</a>
                 </li>
                 <li className="ml-7 text-zinc-700 hover:text-zinc-950">
-                  <a href="#">모종</a>
+                  <a href="/productsList/seedling">모종</a>
                 </li>
                 <li className="ml-7 text-zinc-700 hover:text-zinc-950">
-                  <a href="#">재배키트</a>
+                  <a href="/productsList/kit">재배키트</a>
                 </li>
                 <li className="ml-7 text-zinc-700 hover:text-zinc-950">
-                  <a href="#">흙/비료</a>
+                  <a href="/productsList/soil">흙/비료</a>
                 </li>
                 <li className="ml-7 text-zinc-700 hover:text-zinc-950">
-                  <a href="#">원예용품</a>
+                  <a href="/productsList/goods">원예용품</a>
                 </li>
               </ul>
             </div>
           )}
           <button
-            className="ml-2 lg:ml-7 flex text-[#FF0000]"
+            className="ml-2 lg:ml-7 flex text-[#3BB873] font-semibold"
             onClick={() => {
               redirect('/livestreaming');
             }}
@@ -263,7 +263,7 @@ function Header() {
           <button
             className="ml-2 lg:ml-7 "
             onClick={() => {
-              redirect('/livestreaming');
+              redirect('/#bestSeller');
             }}
           >
             베스트셀러
@@ -271,7 +271,7 @@ function Header() {
           <button
             className="ml-2 lg:ml-7 "
             onClick={() => {
-              redirect('/livestreaming');
+              redirect('/#goods');
             }}
           >
             식집사템
@@ -289,14 +289,20 @@ function Header() {
           >
             <Image src="/icons/icon-message.svg" alt="message" width={32} height={32}></Image>
           </button>
-          <button className="ml-[48px]">
+          <button
+            className="ml-[48px]"
+            onClick={() => {
+              redirect('/cart');
+            }}
+          >
             <Image src="/icons/icon-cart.svg" alt="cart" width={32} height={32}></Image>
           </button>
-          {/* <button className="ml-[48px]">
+          <button className="ml-[48px]">
             <Link href={profileLink}>
               <Image src="/icons/icon-mypage.svg" alt="mypage" width={32} height={32}></Image>
             </Link>
-          </button> */}
+          </button>
+
           {isOpenSearch && (
             <div className="absolute w-full h-auto flex justify-between py-[30px] px-[190px] border-b bg-white top-12 right-0 text-center">
               <p className="bold text-2xl font-semibold">SEARCH</p>
