@@ -51,16 +51,34 @@ export default function PaymentPage() {
     queryFn: getUserInfo
   });
 
+  // console.log('userData::', userData);
+
   const [isOrderAble, setIsOrderAble] = useState(false);
-  const [phoneNumber, setPhoneNumber] = useState('00000000000');
-  const [phoneParts, setPhoneParts] = useState(['', '', '']);
-  const [restAddress, setRestAddress] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState(userData && userData.phone);
+  const [phoneParts, setPhoneParts] = useState([
+    userData?.phone.slice(0, 3) || '',
+    userData?.phone.slice(3, 7) || '',
+    userData?.phone.slice(7) || ''
+  ]);
+
+  const [restAddress, setRestAddress] = useState(userData && userData.address_detail);
 
   let products: Product[] = [];
   const searchParams = useSearchParams();
   const dataString = searchParams.get('data');
   const productId = searchParams.get('productId');
   const quantity = searchParams.get('quantity');
+
+  useEffect(() => {
+    if (userData) {
+      setPhoneNumber(userData.phone);
+      setPhoneParts([
+        userData.phone.slice(0, 3),
+        userData.phone.slice(3, 7),
+        userData.phone.slice(7)
+      ]);
+    }
+  }, [userData]);
 
   const saveRestData = async () => {
     const supabase = createClient();

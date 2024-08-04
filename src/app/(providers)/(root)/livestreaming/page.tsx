@@ -1,9 +1,11 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import StreamSection from './_components/StreamSection';
+import { useQuery } from '@tanstack/react-query';
+import { createClient } from '@/supabase/supabaseClient';
 
 export default function StreamListPage() {
   const [activeCategory, setActiveCategory] = useState<string>('all');
@@ -11,6 +13,38 @@ export default function StreamListPage() {
   const handleClick = (buttonId: string) => {
     setActiveCategory(activeCategory === buttonId ? 'none' : buttonId);
   };
+
+  const checkSellerUser = async () => {
+    const supabae = createClient();
+    const { data: userData, error: userError } = await supabae.auth.getUser();
+    if (userData) {
+      const { data: sellerData, error: sellerError } = await supabae
+        .from('Seller')
+        .select()
+        .eq('seller_id', userData!.user!.id);
+      if (sellerData && sellerData.length !== 0) {
+        return true;
+      }
+    }
+    return false;
+  };
+
+  const {
+    data: sellerCheck,
+    error,
+    isFetched
+  } = useQuery({
+    queryKey: ['getSellerSessionCheck'],
+    queryFn: checkSellerUser
+  });
+
+  if (!isFetched) {
+    return (
+      <div className="h-screen flex justify-center items-center z-1000">
+        <Image src="/loading.gif" alt="로딩이미지" width={463} height={124} className="" />
+      </div>
+    );
+  }
 
   return (
     <div className="pt-[80px] pb-[180px] xs:pt-[24px] xs:pb-[60px]">
@@ -54,12 +88,14 @@ export default function StreamListPage() {
             원예용품
           </button>
         </div>
-        <Link href={'/livestreaming/register'}>
-          <button className="flex items-center text-[13px] text-primary-green-500 border border-primary-green-500 rounded px-[12px] py-[9px]">
-            <Image src="/icons/start-stream.png" alt="startStream-icon" width={16} height={16} />
-            방송시작
-          </button>
-        </Link>
+        {sellerCheck && (
+          <Link href={'/livestreaming/register'}>
+            <button className="flex items-center text-[13px] text-primary-green-500 border border-primary-green-500 rounded px-[12px] py-[9px]">
+              <Image src="/icons/start-stream.png" alt="startStream-icon" width={16} height={16} />
+              방송시작
+            </button>
+          </Link>
+        )}
       </div>
       <div className="mt-[80px] flex flex-col gap-[20px] xs:mt-[17px]">
         <StreamSection category={activeCategory} />

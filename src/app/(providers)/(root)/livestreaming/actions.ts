@@ -93,13 +93,15 @@ export const startLiveStreaming = async (_: any, formData: FormData) => {
 
   const streamServerData = await response.json();
   const sellerSession = await supabaseServer.auth.getUser();
-  console.log('streamServerData::', streamServerData);
+  console.log('sellerSession::', sellerSession);
 
   const productId = InputDatas.product;
   let splitProductId;
   if (productId) {
-    splitProductId = productId.split('/')[2];
+    splitProductId = productId.split('/')[4];
   }
+
+  console.log('splitProductId::', splitProductId);
 
   if (InputDatas.thumbnail instanceof File) {
     const filename = `stream/${sellerSession.data.user?.id}/${uuidv4()}-${InputDatas.thumbnail.name}`;
