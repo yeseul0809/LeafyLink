@@ -16,11 +16,9 @@ export default function StreamSection({ category }: { category: string }) {
     queryFn: () => getVideos(category!)
   });
 
-  console.log('recodedVideos::', recodedVideos);
-
   if (!isFetched) {
     return (
-      <div className="w-full h-full flex justify-center items-center">
+      <div className="w-full h-[200px] flex justify-center items-center">
         <Image src="/loading.gif" alt="로딩이미지" width={200} height={100} className="" />
       </div>
     );
