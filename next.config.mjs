@@ -34,6 +34,9 @@ const nextConfig = {
       },
       {
         hostname: 't1.kakaocdn.net'
+      },
+      {
+        hostname: 'image.guud.com'
       }
     ],
     disableStaticImages: true
