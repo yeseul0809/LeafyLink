@@ -77,20 +77,6 @@ function Header() {
     });
   }, []);
 
-  // 로그인 상태
-  // useEffect(() => {
-  //   const getUserData = async () => {
-  //     const userInfo = await getUserInfo();
-  //     if (userInfo != null) {
-  //       setIsLogin(true);
-  //       setUserName(userInfo?.identities![0].identity_data?.full_name);
-  //       setUserAvatar(userInfo?.identities![0].identity_data?.avatar_url);
-  //       setUserId(userInfo?.identities![0].user_id!);
-  //     }
-  //   };
-  //   getUserData();
-  // }, [isLogin]);
-
   // 로그아웃 상태
   const logout = async () => {
     const supabase = createClient();
@@ -308,13 +294,10 @@ function Header() {
           >
             <Image src="/icons/icon-cart.svg" alt="cart" width={32} height={32}></Image>
           </button>
-          <button
-            className="ml-[48px]"
-            onClick={() => {
-              redirect(`/mypage`);
-            }}
-          >
-            <Image src="/icons/icon-mypage.svg" alt="mypage" width={32} height={32}></Image>
+          <button className="ml-[48px]">
+            <Link href={profileLink}>
+              <Image src="/icons/icon-mypage.svg" alt="mypage" width={32} height={32}></Image>
+            </Link>
           </button>
 
           {isOpenSearch && (
