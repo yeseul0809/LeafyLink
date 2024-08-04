@@ -82,7 +82,7 @@ function SellerCheck({ userData }: SellerCheckProps) {
       }
 
       const result = await response.json();
-      console.log(result);
+      // console.log(result);
 
       if (result.status_code === 'OK' && result.valid_cnt === 1) {
         setResult(result.data[0]);
@@ -104,7 +104,7 @@ function SellerCheck({ userData }: SellerCheckProps) {
       .from('Seller')
       .select('seller_id')
       .eq('seller_id', user_id)
-      .single();
+      .maybeSingle();
 
     if (fetchError && fetchError.code !== 'PGRST116') {
       alert('판매자 확인 중 오류가 발생했습니다: ' + fetchError.message);

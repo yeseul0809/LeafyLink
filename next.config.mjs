@@ -28,9 +28,15 @@ const nextConfig = {
       },
       {
         hostname: 'sitem.ssgcdn.com'
+      },
+      {
+        hostname: 'housoop.com'
+      },
+      {
+        hostname: 't1.kakaocdn.net'
       }
     ],
-    domains: ['k.kakaocdn.net', 't1.kakaocdn.net'],
+
     disableStaticImages: true
   },
   eslint: {

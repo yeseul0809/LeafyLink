@@ -36,7 +36,7 @@ export default async function BuyerMyPage() {
   }
 
   return (
-    <section className="max-w-sm mx-auto">
+    <section className="max-w-sm mx-auto mt-20">
       <div className="mb-8">
         <SellerEditFrom sellerData={data} />
       </div>
