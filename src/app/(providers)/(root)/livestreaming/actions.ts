@@ -162,6 +162,7 @@ interface Livestream {
   thumbnail_url: string;
   product_title: string;
   livestream_seller_id: string;
+  is_live: boolean;
 }
 
 export const getStream = async (id: string): Promise<Livestream | null> => {
@@ -285,4 +286,13 @@ export const getSellerData = async (sellerId: string) => {
   const supabaseServer = createClient();
   const { data, error } = await supabaseServer.from('Seller').select().eq('seller_id', sellerId);
   return data;
+};
+
+export const getStreamUid = async (livestreamId: string) => {
+  const supabaseServer = createClient();
+  const { data, error } = await supabaseServer
+    .from('Livestream')
+    .select('stream_id')
+    .eq('livestream_id', livestreamId);
+  return data![0].stream_id;
 };

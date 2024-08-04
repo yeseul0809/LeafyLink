@@ -2,6 +2,10 @@ import { createServerClient } from '@supabase/ssr';
 import { NextResponse, type NextRequest } from 'next/server';
 import { Database } from '@/types/supabase';
 
+interface Routes {
+  [key: string]: boolean;
+}
+
 export async function updateSession(request: NextRequest) {
   let supabaseResponse = NextResponse.next({
     request
@@ -32,9 +36,27 @@ export async function updateSession(request: NextRequest) {
     data: { user }
   } = await supabase.auth.getUser();
 
-  // if (user && request.nextUrl.pathname.startsWith('/login')) {
-  //   return NextResponse.redirect(new URL('/', request.url));
-  // }
+  const exactMatchUrls: Routes = {
+    '/': true,
+    '/login': true,
+    '/auth/callback': true,
+    '/login/needlogin': true
+  };
+
+  const prefixMatchUrls: Routes = {
+    '/products': true,
+    '/search': true,
+    '/livestreaming': true
+  };
+
+  const isExactMatchPage = exactMatchUrls[request.nextUrl.pathname] || false;
+  const isPrefixMatchPage = Object.keys(prefixMatchUrls).some((path) =>
+    request.nextUrl.pathname.startsWith(path)
+  );
+
+  if (!user && !(isExactMatchPage || isPrefixMatchPage)) {
+    return NextResponse.redirect(new URL('/login/needlogin', request.url));
+  }
 
   return supabaseResponse;
 }

@@ -32,3 +32,8 @@
   background-color: #f1f1f5;
   border-radius: 9999px;
 }
+
+.custom-quill .ql-editor {
+  height: 100%;
+  overflow: hidden;
+}

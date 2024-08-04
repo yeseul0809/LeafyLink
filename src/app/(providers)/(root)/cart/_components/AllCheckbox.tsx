@@ -4,17 +4,17 @@ import React, { useEffect, useState } from 'react';
 import { getUserSession, allToggleCheckbox, Product } from '../actions';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { createClient } from '@/supabase/supabaseClient';
-import { revalidatePath } from 'next/cache';
+import { useCartStore } from '@/stores';
 
-const getClientUserData = async () => {
-  const supabase = createClient();
-  const { data, error } = await supabase.auth.getUser();
-  if (error) {
-    console.error(error);
-  }
+// const getClientUserData = async () => {
+//   const supabase = createClient();
+//   const { data, error } = await supabase.auth.getUser();
+//   if (error) {
+//     console.error(error);
+//   }
 
-  return data.user!.id;
-};
+//   return data.user!.id;
+// };
 
 const getCartStatus = async (userId: string) => {
   if (!userId) {
@@ -33,18 +33,16 @@ const getCartStatus = async (userId: string) => {
   return data || [];
 };
 
-export default function AllCheckbox({ productIds }: { productIds: string[] }) {
-  const [isChecked, setIsChecked] = useState(true);
+export default function AllCheckbox({
+  productIds,
+  userId
+}: {
+  productIds: string[];
+  userId: string;
+}) {
+  const [isChecked, setIsChecked] = useState(false);
+  const updateCartCheck = useCartStore((state) => state.toggleSelectAll);
   const queryClient = useQueryClient();
-
-  const {
-    data: userId,
-    error,
-    isFetched: isUserFetched
-  } = useQuery({
-    queryKey: ['getUserId'],
-    queryFn: getClientUserData
-  });
 
   const { data: cartStatus, isFetched: isCartFetched } = useQuery({
     queryKey: ['getCartStatus', userId],
@@ -58,6 +56,10 @@ export default function AllCheckbox({ productIds }: { productIds: string[] }) {
       setIsChecked(allChecked);
     }
   }, [cartStatus, isCartFetched]);
+
+  useEffect(() => {
+    updateCartCheck(userId, isChecked);
+  }, [userId, isChecked, updateCartCheck]);
 
   const handleAllToggle = async () => {
     const newCheckedStatus = !isChecked;
@@ -75,18 +77,18 @@ export default function AllCheckbox({ productIds }: { productIds: string[] }) {
     }
   };
 
-  if (isUserFetched) {
-    return (
-      <div>
-        <input
-          type="checkbox"
-          id="allcheck"
-          onChange={handleAllToggle}
-          checked={isChecked}
-          className="w-[18px] h-[18px] mr-2"
-        />
-        <label htmlFor="allcheck">모두 선택</label>
-      </div>
-    );
-  }
+  return (
+    <div>
+      <input
+        type="checkbox"
+        id="allcheck"
+        onChange={handleAllToggle}
+        checked={isChecked}
+        className="w-[18px] h-[18px] mr-2 green-checkbox"
+      />
+      <label htmlFor="allcheck" className="xs:text-[14px] xs:w-[20px] xs:h-[20px]">
+        모두 선택
+      </label>
+    </div>
+  );
 }

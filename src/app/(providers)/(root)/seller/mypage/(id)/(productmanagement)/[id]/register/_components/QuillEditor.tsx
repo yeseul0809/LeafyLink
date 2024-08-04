@@ -54,7 +54,7 @@ function QuillEditor({ value, onChange }: QuillEditorProps) {
     []
   );
   return (
-    <>
+    <div className="h-[585px] px-3">
       <DynamicReactQuill
         forwardedRef={quillRef}
         value={value}
@@ -63,9 +63,9 @@ function QuillEditor({ value, onChange }: QuillEditorProps) {
         modules={modules}
         formats={FORMATS}
         placeholder="등록할 상품의 상세내용을 작성해주세요."
-        className="h-[500px] border-[#f0f0f0]"
+        className="h-full border-[#f0f0f0]"
       />
-    </>
+    </div>
   );
 }
 

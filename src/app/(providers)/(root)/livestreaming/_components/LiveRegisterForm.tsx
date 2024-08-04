@@ -47,7 +47,7 @@ function LiveRegisterForm() {
   };
   return (
     <form action={formAction} className="flex flex-col gap-[12px]">
-      <div className="flex gap-[16px] items-center">
+      <div className="flex gap-[16px] items-center xs:flex-col xs:items-start xs:gap-[8px]">
         <label htmlFor="liveTitle" className="w-[120px] text-[14px]">
           라이브 타이틀
         </label>
@@ -61,8 +61,8 @@ function LiveRegisterForm() {
           required
         />
       </div>
-      <div className="flex gap-[16px]">
-        <div className="flex items-center gap-[4px]">
+      <div className="flex gap-[16px] xs:flex-col">
+        <div className="flex items-center gap-[4px] xs:flex-col xs:items-start xs:gap-[8px]">
           <p className="w-[120px] text-[14px]">대표 이미지 등록</p>
           <div className="">
             <label
@@ -99,7 +99,7 @@ function LiveRegisterForm() {
           <p>글자가 포함되지 않은 이미지를 사용해주세요.</p>
         </div>
       </div>
-      <div className="flex items-center w-full gap-[16px]">
+      <div className="flex items-center w-full gap-[16px] xs:flex-col xs:items-start xs:gap-[8px]">
         <label htmlFor="product" className="w-[120px] text-[14px]">
           소개할 상품
         </label>
@@ -112,13 +112,13 @@ function LiveRegisterForm() {
           required
         />
       </div>
-      <div className="flex items-center w-full gap-[16px]">
+      <div className="flex items-center w-full gap-[16px] xs:flex-col xs:items-start xs:gap-[8px]">
         <label htmlFor="category" className="w-[120px] text-[14px]">
           카테고리
         </label>
         <SelectDropdown onCategoryChange={handleCategoryChange} />
       </div>
-      <div className="w-full flex gap-[16px]">
+      <div className="w-full flex gap-[16px] xs:flex-col xs:items-start xs:gap-[8px]">
         <label htmlFor="description" className="w-[120px] text-[14px]">
           라이브 한줄 설명
         </label>
@@ -132,7 +132,7 @@ function LiveRegisterForm() {
         />
       </div>
       <input type="hidden" name="category" value={selectedCategory || ''} />
-      <button className="w-full bg-primary-green-500 h-[56px] rounded-[6px] text-white mt-16 text-[16px] hover:bg-primary-green-700 transition-colors">
+      <button className="w-full bg-primary-green-500 h-[56px] rounded-[6px] text-white mt-16 text-[16px] hover:bg-primary-green-700 transition-colors xs:mt-[16px]">
         라이브 시작하기
       </button>
     </form>

@@ -24,7 +24,7 @@ async function ProductDetailPage({ params }: ParamsProps) {
   const averageRating = reviewCount > 0 ? totalRating / reviewCount : 0;
 
   return (
-    <div className="container mx-auto max-w-screen-lg p-20">
+    <div className="container mx-auto max-w-screen-lg py-20">
       <section className="flex flex-col md:flex-row gap-[80px]">
         <div className="md:w-1/2 flex-shrink-0 justify-center rounded-[28px] mb-4 md:mb-0">
           <Image
@@ -35,7 +35,7 @@ async function ProductDetailPage({ params }: ParamsProps) {
             className="rounded-lg"
           />
         </div>
-        <div className="md:w-1/2 flex flex-col justify-center">
+        <div className="md:w-1/2 flex flex-col justify-center w-[505px] h-[437px]">
           <TopSection product={product} averageRating={averageRating} reviewCount={reviewCount} />
           <ButtonsWrapper
             productId={product.product_id}
@@ -45,7 +45,11 @@ async function ProductDetailPage({ params }: ParamsProps) {
           />
         </div>
       </section>
-      <MiddleSectionWrapper productDescription={product.description} reviewProductId={id} />
+      <MiddleSectionWrapper
+        productDescription={product.description}
+        reviewProductId={id}
+        reviewCount={reviewCount}
+      />
       <ProductReviewList productId={product.product_id} reviewsPerPage={reviewsPerPage} />
     </div>
   );

@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { useEffect, useState } from 'react';
 
 interface BottomTabProps {
@@ -41,30 +42,44 @@ function BottomTab({ productState }: BottomTabProps) {
 
   return (
     <div
-      className={`fixed bottom-0 left-0 right-0 z-1000 max-w-screen-xl mx-auto p-4 bg-green-600 shadow-lg rounded-lg transition-transform transform ${
+      className={`fixed bottom-0 left-0 right-0 z-1000 max-w-[1240px] mx-auto px-8 py-4 bg-white border border-Line/Regular transition-transform transform ${
         visible ? 'translate-y-0' : 'translate-y-full'
       }`}
     >
-      <div className="max-w-screen-lg mx-auto flex justify-between items-center">
-        <strong className="font-bold text-white text-3xl mr-4">{product.title}</strong>
-        <section className="flex items-center gap-4">
+      <div className="max-w-[1240px] mx-auto flex justify-between items-center">
+        <p className="flex text-[24px]">{product.title}</p>
+        <section className="flex items-center">
           <div className="flex items-center">
-            <button className="border px-4 py-2 rounded" onClick={() => setCount(count - 1)}>
+            <button
+              className="border border-Line/Regular px-4 py-2"
+              onClick={() => setCount(count - 1)}
+            >
               -
             </button>
-            <div className="border p-2 text-center w-12 mx-2 rounded">{count}</div>
-            <button className="border px-4 py-2 rounded" onClick={() => setCount(count + 1)}>
+            <div className="border border-Line/Regular p-2 text-center w-12">{count}</div>
+            <button
+              className="border border-Line/Regular px-4 py-2"
+              onClick={() => setCount(count + 1)}
+            >
               +
             </button>
           </div>
-          <p className="text-xl font-bold  text-white mx-4">
-            총 상품금액: {+product.price * count} 원
-          </p>
-          <button onClick={handleAddToCart} className="bg-white px-4 py-2 rounded">
-            장바구니
+          <p className="text-sm ml-5 mr-2">총 상품금액: </p>
+          <p className="text-xl font-bold">{(+product.price * count).toLocaleString('ko-KR')} 원</p>
+          <button
+            onClick={handleAddToCart}
+            className="flex items-center justify-center ml-8 p-3 w-[102px] h-[44px] border rounded-md border-primary-green-500"
+          >
+            <p className="text-sm text-primary-green-500">장바구니</p>
+            <Image src="/icons/productcart.svg" alt="장바구니" width={20} height={20} />
           </button>
-          <button onClick={handleBuyNow} className="bg-white px-4 py-2 rounded">
-            바로구매
+
+          <button
+            onClick={handleBuyNow}
+            className="flex items-center justify-center ml-[6px] p-3 w-[102px] h-[44px] rounded-md bg-primary-green-500 text-white"
+          >
+            <p className="text-sm">바로구매</p>
+            <Image src="/icons/productcard.svg" alt="바로구매" width={20} height={20} />
           </button>
         </section>
       </div>

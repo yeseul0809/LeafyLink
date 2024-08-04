@@ -2,8 +2,8 @@ import ProductRegisterForm from './_components/ProductRegisterForm';
 
 function ProductRegisterPage() {
   return (
-    <div className="container mx-auto p-6 flex flex-col">
-      <h1 className="text-3xl text-center font-bold my-6">상품 등록</h1>
+    <div className="mx-auto flex flex-col max-w-[1240px] w-full">
+      <h1 className="text-[32px] font-semibold pt-[80px] pb-[24px] text-center">상품 등록</h1>
       <ProductRegisterForm />
     </div>
   );

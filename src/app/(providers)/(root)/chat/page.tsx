@@ -16,7 +16,7 @@ function ChatListPage() {
   const router = useRouter();
   const { chatrooms } = useChatrooms(user ? user.id : '');
   const [avatars, setAvatars] = useState<{
-    [key: string]: { avatar_url: string; user_name: string } | null;
+    [key: string]: { avatar_url: string; user_name?: string; business_name?: string } | null;
   }>({});
   const [unreadCounts, setUnreadCounts] = useState<{ [key: string]: number }>({});
   const [latestMessages, setLatestMessages] = useState<{
@@ -31,8 +31,14 @@ function ChatListPage() {
 
         setAvatars((prevAvatars) => ({
           ...prevAvatars,
-          [chatroom.chatroom_user_id]: userInfo,
-          [chatroom.chatroom_seller_id]: sellerInfo
+          [chatroom.chatroom_user_id]: {
+            avatar_url: userInfo?.avatar_url,
+            user_name: userInfo?.user_name
+          },
+          [chatroom.chatroom_seller_id]: {
+            avatar_url: sellerInfo?.avatar_url,
+            business_name: sellerInfo?.business_name
+          }
         }));
 
         const { data: messages, error } = await supabase
@@ -134,7 +140,6 @@ function ChatListPage() {
               const otherParty = isUser ? chatroom.chatroom_seller_id : chatroom.chatroom_user_id;
               const otherInfo = avatars[otherParty];
               const latestMessage = latestMessages[chatroom.chatroom_id];
-
               return (
                 <li
                   key={chatroom.chatroom_id}
@@ -154,7 +159,9 @@ function ChatListPage() {
                     <div className="flex flex-col w-full">
                       <div className="flex justify-between items-center w-full">
                         <strong className="block text-lg">
-                          {otherInfo?.user_name || 'Unknown'}
+                          {isUser
+                            ? otherInfo?.business_name || 'Unknown'
+                            : otherInfo?.user_name || 'Unknown'}
                         </strong>
                         {latestMessage && (
                           <p className="text-sm text-gray-400 ml-auto">
