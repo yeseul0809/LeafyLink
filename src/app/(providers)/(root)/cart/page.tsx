@@ -29,7 +29,6 @@ export default async function CartPage() {
   }
 
   const productIds = allProductData?.map((data) => data.product_id);
-  console.log('productIds::', productIds);
 
   return (
     <div className="pt-[80px] pb-[180px] xs:pt-[24px] xs:pb-[43px]">

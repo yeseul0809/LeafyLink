@@ -232,14 +232,14 @@ export default function UserEditForm({
             onChange={(e) => setAddress(e.target.value)}
           />
           {/* 상세주소 입력 필드 */}
-          <input
+          {/* <input
             type="text"
             // id="sample3_detailAddress"
             placeholder="나머지 상세주소"
             className="border p-3 mb-3 rounded w-full"
             value={detailAddress}
             onChange={(e) => setDetailAddress(e.target.value)}
-          />
+          /> */}
         </div>
       </div>
     </div>

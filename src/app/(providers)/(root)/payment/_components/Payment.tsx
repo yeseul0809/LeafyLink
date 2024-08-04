@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { createClient } from '@/supabase/supabaseClient';
 import { useQuery } from '@tanstack/react-query';
 import { useSearchParams } from 'next/navigation';
@@ -35,13 +35,71 @@ export interface ProductInfo {
 }
 
 export default function PaymentPage() {
-  // const [restAddress, setRestAddress] = useState('');
-  const [phoneNumber, setPhoneNnumber] = useState(0);
+  const getUserInfo = async () => {
+    const supabase = createClient();
+    const { data: userData } = await supabase.auth.getUser();
+    const userInfo = await getUserDate(userData.user?.id!);
+    return userInfo![0];
+  };
+
+  const {
+    data: userData,
+    error: userError,
+    isFetched: userFetched
+  } = useQuery({
+    queryKey: ['getUserInfo'],
+    queryFn: getUserInfo
+  });
+
+  const [isOrderAble, setIsOrderAble] = useState(false);
+  const [phoneNumber, setPhoneNumber] = useState('00000000000');
+  const [phoneParts, setPhoneParts] = useState(['', '', '']);
+  const [restAddress, setRestAddress] = useState('');
+
   let products: Product[] = [];
   const searchParams = useSearchParams();
   const dataString = searchParams.get('data');
   const productId = searchParams.get('productId');
   const quantity = searchParams.get('quantity');
+
+  const saveRestData = async () => {
+    const supabase = createClient();
+    const { data: userData, error: userError } = await supabase.auth.getUser();
+
+    const { error } = await supabase
+      .from('User')
+      .update({
+        address_detail: restAddress,
+        phone: phoneNumber
+      })
+      .eq('user_id', userData!.user!.id);
+  };
+
+  const handlePhoneNumber = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { id, value } = event.target;
+    let newPhoneParts = [...phoneParts];
+
+    switch (id) {
+      case 'phone1':
+        newPhoneParts[0] = value.slice(0, 3);
+        break;
+      case 'phone2':
+        newPhoneParts[1] = value.slice(0, 4);
+        break;
+      case 'phone3':
+        newPhoneParts[2] = value.slice(0, 4);
+        break;
+      default:
+        break;
+    }
+
+    setPhoneParts(newPhoneParts);
+    setPhoneNumber(newPhoneParts.join(''));
+  };
+
+  const handleOrderAble = () => {
+    setIsOrderAble((prev) => !prev);
+  };
 
   if (dataString) {
     try {
@@ -92,22 +150,6 @@ export default function PaymentPage() {
     queryFn: getProductInfo
   });
 
-  const getUserInfo = async () => {
-    const supabase = createClient();
-    const { data: userData } = await supabase.auth.getUser();
-    const userInfo = await getUserDate(userData.user?.id!);
-    return userInfo![0];
-  };
-
-  const {
-    data: userData,
-    error: userError,
-    isFetched: userFetched
-  } = useQuery({
-    queryKey: ['getUserInfo'],
-    queryFn: getUserInfo
-  });
-
   if (!userFetched) {
     return null;
   }
@@ -133,6 +175,19 @@ export default function PaymentPage() {
             userId={userData.user_id}
           />
           <div className="flex flex-col">
+            <div className="flex">
+              <label
+                htmlFor="phone"
+                className="xs:mb-[8px] xs:mt-[16px] mr-[48px] w-[80px] xs:w-0 xs:mr-0"
+              ></label>
+              <input
+                type="text"
+                placeholder="나머지 상세주소"
+                className="border p-3 mb-3 rounded w-full xs:ml-0"
+                defaultValue={userData.address_detail}
+                onChange={(e) => setRestAddress(e.target.value)}
+              />
+            </div>
             <div className="h-[64px] flex xs:flex-col xs:mb-[16px]">
               <label htmlFor="phone" className="w-20 mr-[38px] xs:mb-[8px] xs:mt-[16px]">
                 휴대폰번호
@@ -141,28 +196,28 @@ export default function PaymentPage() {
                 <input
                   className="border p-3 mb-3 rounded w-1/4"
                   type="text"
-                  id="phone"
-                  // defaultValue={userData.phone.split('-')[0]}
+                  id="phone1"
                   defaultValue={userData.phone.slice(0, 3)}
                   maxLength={3}
+                  onChange={handlePhoneNumber}
                 />
                 <span className="mx-2">-</span>
                 <input
                   className="border p-3 mb-3 rounded w-1/4"
                   type="text"
-                  id="phone"
-                  // defaultValue={userData.phone.split('-')[1]}
+                  id="phone2"
                   defaultValue={userData.phone.slice(3, 7)}
                   maxLength={4}
+                  onChange={handlePhoneNumber}
                 />
                 <span className="mx-2">-</span>
                 <input
                   className="border p-3 mb-3 rounded w-1/4"
                   type="text"
-                  id="phone"
-                  // defaultValue={userData.phone.split('-')[2]}
+                  id="phone3"
                   defaultValue={userData.phone.slice(7)}
                   maxLength={4}
+                  onChange={handlePhoneNumber}
                 />
               </div>
             </div>
@@ -177,10 +232,16 @@ export default function PaymentPage() {
                 className="border p-3 mb-3 rounded w-full h-[54px]"
               />
             </div>
-            {/* <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2">
               <label htmlFor="saveData">기본 배송지 정보로 저장</label>
-              <input type="checkbox" id="saveData" className="green-checkbox" />
-            </div> */}
+              <input
+                type="checkbox"
+                id="saveData"
+                className="green-checkbox"
+                defaultChecked={false}
+                onChange={saveRestData}
+              />
+            </div>
           </div>
           <div className="border-t w-full my-10" />
         </section>
@@ -252,14 +313,20 @@ export default function PaymentPage() {
         </section>
         <div className="border-b w-full my-10" />
         <div className="mb-10 flex items-center gap-2">
-          <input type="checkbox" id="agreement" className="green-checkbox" />
+          <input
+            type="checkbox"
+            id="agreement"
+            className="green-checkbox"
+            onChange={handleOrderAble}
+          />
           <label htmlFor="agreement" className="text-[15px]">
             주문 내용을 확인하였으며 약관에 동의합니다.
           </label>
         </div>
         <button
           onClick={() => paymentHandler(productData as ProductInfo, userData.user_id)}
-          className="w-full bg-[#3BB873] rounded-md h-[48px] text-white"
+          className={`w-full ${!isOrderAble === false ? 'bg-[#3BB873]' : 'bg-primary-green-100'}  rounded-md h-[48px] text-white`}
+          disabled={!isOrderAble}
         >
           {productData?.totalCost.toLocaleString()}원 결제하기
         </button>
