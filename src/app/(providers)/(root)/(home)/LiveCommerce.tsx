@@ -2,25 +2,43 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination, Navigation, Autoplay } from 'swiper/modules';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 // Import Swiper styles
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
-import LiveSection from '../livestreaming/_components/LiveSection';
-// import RecodeSection from '../livestreaming/_components/RecodeSection';
+import StreamSection from '../livestreaming/_components/StreamSection';
+import { useQuery } from '@tanstack/react-query';
+import { getAllLiveStreamDB, getVideos } from '../livestreaming/actions';
+import LivestreamingCard from './_components/LivestreamingCard';
 
-function LiveCommerce() {
-  const [activeCategory, setActiveCategory] = useState<string>('all');
-  const handleClick = (buttonId: string) => {
-    setActiveCategory(activeCategory === buttonId ? 'none' : buttonId);
-  };
+function LiveCommerce({ category }: { category: string }) {
+  // 지금 진행중인 생방송 있으면 > 생방송 먼저 띄워주기
+  // 지금 진행중인 생방송 없으면 > 이전 방송 띄워주기
+  // 갯수는 4개
 
   // 페이지 네비게이션
   const router = useRouter();
   const redirect = (e: string) => {
     router.push(`${e}`);
   };
+
+  const {
+    data: recodedVideos,
+    error,
+    isFetched
+  } = useQuery({
+    queryKey: ['getRecodeStreamList2', category],
+    queryFn: () => getVideos(category!)
+  });
+
+  if (!isFetched) {
+    return <p>로딩중</p>;
+  }
+
+  // 4개 자르기
+  const videosData = recodedVideos?.slice(0, 4);
+  // console.log(videosData[0]);
 
   return (
     <section className="w-full h-[800px] bg-[#F7FDFA] mx-auto lg:mt-[145px] lg:pb-[145px] mt-[48px] pb-[48px]">
@@ -38,8 +56,9 @@ function LiveCommerce() {
           더보기 &gt;
         </button>
       </div>
-      <div>
-        <Swiper
+      <div className="flex">
+        {videosData?.map((video) => <LivestreamingCard videosData={video} />)}
+        {/* <Swiper
           slidesPerView={3}
           spaceBetween={30}
           loop={true}
@@ -57,7 +76,7 @@ function LiveCommerce() {
           modules={[Autoplay, Pagination, Navigation]}
           className="mySwiper lg:w-full lg:h-[461px] sm:w-[375px] sm:h-[200px] w-[375px] h-[200px]"
         >
-          <LiveSection category={activeCategory} />
+          {videosData?.map((video) => <LivestreamingCard key={video.uid} />)}
 
           <div className="w-full flex justify-between items-center z-10 absolute top-1/2">
             <div className="custom-swiper-button custom-swiper-button-prev lg:px-10 px-[20px]">
@@ -75,10 +94,11 @@ function LiveCommerce() {
               />
             </div>
           </div>
-        </Swiper>
+        </Swiper> */}
       </div>
     </section>
   );
+  // }
 }
 
 export default LiveCommerce;

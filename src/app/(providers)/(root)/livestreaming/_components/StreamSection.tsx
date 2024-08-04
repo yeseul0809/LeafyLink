@@ -19,7 +19,7 @@ export default function StreamSection({ category }: { category: string }) {
   if (!isFetched) {
     return <p>로딩중</p>;
   }
-
+  console.log(recodedVideos);
   if (recodedVideos && isFetched) {
     return (
       <div className="grid grid-cols-2 w-full gap-[20px] xs:grid-cols-1">

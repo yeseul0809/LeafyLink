@@ -34,7 +34,6 @@ function Header() {
   useEffect(() => {
     const supabase = createClient();
     supabase.auth.getUser().then(async (res) => {
-      console.log(res);
       if (res.data.user) {
         setIsLogin(true);
         const userId = res.data.user.id;

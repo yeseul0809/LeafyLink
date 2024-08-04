@@ -14,7 +14,7 @@ function Home() {
       <Carousel />
       <Categories />
       <NewProduct />
-      <LiveCommerce />
+      <LiveCommerce category="all" />
       <Goods />
       <Recommend />
       <BestSeller />
