@@ -81,7 +81,7 @@ function ReviewEdit({ reviewProductId, reviewCount }: ReviewEditProps) {
           </div>
           <button
             type="submit"
-            className="bg-primary-green-500 text-white px-3 py-[9px] rounded-[4px] hover:bg-gray-600"
+            className="bg-primary-green-500 text-white px-3 py-[9px] rounded-[4px] hover:bg-primary-green-700"
           >
             리뷰남기기
           </button>

@@ -1,6 +1,7 @@
 'use client';
 
 import { createClient } from '@/supabase/supabaseClient';
+import { URLSearchParams } from 'next/dist/compiled/@edge-runtime/primitives/url';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -33,7 +34,6 @@ function Header() {
   useEffect(() => {
     const supabase = createClient();
     supabase.auth.getUser().then(async (res) => {
-      console.log(res);
       if (res.data.user) {
         setIsLogin(true);
         const userId = res.data.user.id;
@@ -152,13 +152,11 @@ function Header() {
   const toggleMenu = () => {
     setIsOpenMenu(!isOpenMenu);
     setIsOpenSearch(false);
-    console.log('열림');
   };
   // 검색창 토글
   const toggleSearch = () => {
     setIsOpenSearch(!isOpenSearch);
     setIsOpenMenu(false);
-    console.log('열림');
   };
   // 페이지 네비게이션
   const redirect = (e: string) => {
@@ -310,10 +308,13 @@ function Header() {
           >
             <Image src="/icons/icon-cart.svg" alt="cart" width={32} height={32}></Image>
           </button>
-          <button className="ml-[48px]">
-            <Link href={profileLink}>
-              <Image src="/icons/icon-mypage.svg" alt="mypage" width={32} height={32}></Image>
-            </Link>
+          <button
+            className="ml-[48px]"
+            onClick={() => {
+              redirect(`/mypage`);
+            }}
+          >
+            <Image src="/icons/icon-mypage.svg" alt="mypage" width={32} height={32}></Image>
           </button>
 
           {isOpenSearch && (
