@@ -36,7 +36,6 @@ const nextConfig = {
         hostname: 't1.kakaocdn.net'
       }
     ],
-
     disableStaticImages: true
   },
   eslint: {

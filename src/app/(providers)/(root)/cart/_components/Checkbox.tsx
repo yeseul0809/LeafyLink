@@ -14,7 +14,7 @@ export default function Checkbox({ productId, userId }: { productId: string; use
     isFetched
   } = useQuery({
     queryKey: ['getCartIschecked', productId],
-    queryFn: () => getCartIsChecked(productId)
+    queryFn: () => getCartIsChecked(productId, userId)
   });
 
   const handleToggle = async () => {

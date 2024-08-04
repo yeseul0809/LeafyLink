@@ -3,6 +3,7 @@
 import React, { useEffect } from 'react';
 import { createClient } from '@/supabase/supabaseClient';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 
 function AuthCallback() {
   const router = useRouter();
@@ -15,7 +16,7 @@ function AuthCallback() {
         user_name: user.user_metadata.full_name,
         avatar_url: user.user_metadata.avatar_url,
         email: user.email,
-        phone: '000-0000-0000',
+        phone: '00000000000',
         address: '',
         created_at: user.created_at
       };
@@ -81,7 +82,11 @@ function AuthCallback() {
     handleAuthCallback();
   }, [router]);
 
-  return <div>로그인 중...</div>;
+  return (
+    <div className="w-full h-[200px] flex justify-center items-center">
+      <Image src="/loading.gif" alt="로딩이미지" width={200} height={100} className="" />
+    </div>
+  );
 }
 
 export default AuthCallback;

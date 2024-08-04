@@ -29,9 +29,9 @@ function ButtonsWrapper({
       cart_product_id: productId,
       count: count,
       cart_user_id: user.id,
-      is_checked: true
+      is_checked: false
     };
-    const result = await createCartItem(cartItemData);
+    const result = await createCartItem(cartItemData, user.id);
 
     if (result) {
       alert('선택하신 상품이 장바구니에 추가되었습니다.');

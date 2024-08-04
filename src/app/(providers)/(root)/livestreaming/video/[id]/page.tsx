@@ -11,7 +11,6 @@ export default async function RecodedVideoPage({ params }: { params: { id: strin
   const streamId = params.id.split('_')[1];
   const videoId = params.id.split('_')[2];
   const stream = await getStream(streamId);
-  // console.log('stream::', stream);
 
   if (!stream) {
     return notFound();
