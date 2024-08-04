@@ -72,8 +72,6 @@ export default function AccordionMenu({ orders }: AccordionMenuProps) {
     <div className="max-w-screen-xl mx-auto mt-20 mb-20  w-m-[1240px]">
       <div>
         <div>
-          {/* <div className="flex justify-between  bg-secondary-yellow-100">
-           */}
           <div className="flex items-start self-stretch bg-secondary-yellow-100">
             <span className=" w-[16%] text-font/main text-[16px] font-normal leading-[24px] tracking-[-0.4px] p-4 text-center">
               주문 번호
@@ -90,10 +88,10 @@ export default function AccordionMenu({ orders }: AccordionMenuProps) {
                 key={order.order_id}
                 header={
                   <div className="flex items-start self-stretch py-[22px] ">
-                    <span className="w-[178px] text-[16px] font-normal leading-[24px] tracking-[-0.4px] text font/sub2 text-center px-4">
+                    <span className="w-[178px] text-[16px]  font-normal leading-[24px] tracking-[-0.4px] text-font/sub2 text-center px-4">
                       {order.order_id}
                     </span>
-                    <span className=" w-[84%] text-font/main text-[16px] font-normal leading-[24px] tracking-[-0.4px] px-4 ">
+                    <span className=" w-[84%] text-font/main text-[16px] font-normal leading-[24px] tracking-[-0.4px] px-4 overflow-hidden whitespace-nowrap text-ellipsis ">
                       {order.Product?.title || '제품 없음'}
                     </span>
                   </div>
@@ -103,38 +101,38 @@ export default function AccordionMenu({ orders }: AccordionMenuProps) {
                   <div className="w-1/2">
                     <div className="pb-6 text-font/sub1">[상품 정보]</div>
                     <div className="flex">
-                      <div className="w-[100px] pt-[16px] pr-[0px] pb-[16px] pl-[16px]  bg-BG/Light  border-t border-Line/Light text-[14px] font-normal leading-[20px] tracking-[-0.35px] text-font/main">
+                      <div className="flex w-[101px] p-[16px_0_16px_16px] items-start  self-stretch bg-BG/Light  border-t border-Line/Light text-[14px] font-normal leading-[20px] tracking-[-0.35px] text-font/main">
                         결제금액
                       </div>
-                      <div className="flex-grow p-4 border-b border-t border-Line/Light text-[14px] font-normal leading-[20px] tracking-[-0.35px] text-font/main">
+                      <div className="flex-1 p-4 justify-center items-center  flex-1 border-b border-t border-Line/Light text-[14px] font-normal leading-[20px] tracking-[-0.35px] text-font/main truncate">
                         {formatCurrency(order.cost)}원
                       </div>
                     </div>
 
                     <div className="flex">
-                      <div className="pt-[16px] pr-[0px] pb-[16px] pl-[16px] w-[100px] bg-BG/Light  border-t border-Line/Light text-[14px] font-normal leading-[20px] tracking-[-0.35px] text-font/main">
+                      <div className="flex w-[101px] p-[16px_0_16px_16px] items-start  self-stretch bg-BG/Light  border-t border-Line/Light text-[14px] font-normal leading-[20px] tracking-[-0.35px] text-font/main">
                         수량
                       </div>
-                      <div className="flex-grow p-4 border-b border-t border-Line/Light text-[14px] font-normal leading-[20px] tracking-[-0.35px] text-font/main">
+                      <div className="flex-1 p-4 justify-center items-center  flex-1 border-b border-t border-Line/Light text-[14px] font-normal leading-[20px] tracking-[-0.35px] text-font/main truncate">
                         {formatCurrency(order.quantity)}
                         <label>개</label>
                       </div>
                     </div>
 
                     <div className="flex">
-                      <div className="pt-[16px] pr-[0px] pb-[16px] pl-[16px] w-[100px] bg-BG/Light  border-t border-Line/Light text-[14px] font-normal leading-[20px] tracking-[-0.35px] text-font/main">
+                      <div className="flex w-[101px] p-[16px_0_16px_16px] items-start  self-stretch bg-BG/Light  border-t border-Line/Light text-[14px] font-normal leading-[20px] tracking-[-0.35px] text-font/main ">
                         주문일자
                       </div>
-                      <div className=" flex-grow p-4 border-b border-t border-Line/Light text-[14px] font-normal leading-[20px] tracking-[-0.35px] text-font/main">
+                      <div className=" flex-1 p-4 justify-center items-center  flex-1 border-b border-t border-Line/Light text-[14px] font-normal leading-[20px] tracking-[-0.35px] text-font/main truncate">
                         {formatDate(order.order_date)}
                       </div>
                     </div>
 
                     <div className="flex ">
-                      <div className="pt-[16px] pr-[0px] pb-[16px] pl-[16px] w-[100px] bg-BG/Light  border-t border-Line/Light text-[14px] font-normal leading-[20px] tracking-[-0.35px] text-font/main">
+                      <div className="flex w-[101px] p-[16px_0_16px_16px] items-start  self-stretch bg-BG/Light  border-t border-Line/Light text-[14px] font-normal leading-[20px] tracking-[-0.35px] text-font/main">
                         주문자
                       </div>
-                      <div className=" flex-grow p-4 border-b border-t border-Line/Light text-[14px] font-normal leading-[20px] tracking-[-0.35px] text-font/main ">
+                      <div className=" flex-1 p-4 justify-center items-center  flex-1 border-b border-t border-Line/Light text-[14px] font-normal leading-[20px] tracking-[-0.35px] text-font/main truncate">
                         {' '}
                         {order.User?.user_name || 'N/A'}
                       </div>
@@ -144,34 +142,34 @@ export default function AccordionMenu({ orders }: AccordionMenuProps) {
                   <div className="w-1/2">
                     <div className="pb-6 text-font/sub1 ">[주문자 정보]</div>
                     <div className="flex">
-                      <div className="pt-[16px] pr-[0px] pb-[16px] pl-[16px] w-[100px] bg-BG/Light  border-t border-Line/Light text-[14px] font-normal leading-[20px] tracking-[-0.35px] text-font/main">
+                      <div className="flex w-[101px] p-[16px_0_16px_16px] items-start  self-stretch bg-BG/Light  border-t border-Line/Light text-[14px] font-normal leading-[20px] tracking-[-0.35px] text-font/main">
                         이름
                       </div>
-                      <div className="flex-grow p-4 border-b border-t border-Line/Light text-[14px] font-normal leading-[20px] tracking-[-0.35px] text-font/main">
+                      <div className="flex-1 p-4 justify-center items-center  flex-1 border-b border-t border-Line/Light text-[14px] font-normal leading-[20px] tracking-[-0.35px] text-font/main truncate">
                         {order.User?.user_name || 'N/A'}
                       </div>
                     </div>
                     <div className="flex">
-                      <div className="pt-[16px] pr-[0px] pb-[16px] pl-[16px] w-[100px] bg-BG/Light  border-t border-Line/Light text-[14px] font-normal leading-[20px] tracking-[-0.35px] text-font/main">
+                      <div className="flex w-[101px] p-[16px_0_16px_16px] items-start  self-stretch bg-BG/Light  border-t border-Line/Light text-[14px] font-normal leading-[20px] tracking-[-0.35px] text-font/main">
                         전화번호
                       </div>
-                      <div className="flex-grow p-4 border-b border-t border-Line/Light text-[14px] font-normal leading-[20px] tracking-[-0.35px] text-font/main">
+                      <div className="flex-1 p-4 justify-center items-center  flex-1 border-b border-t border-Line/Light text-[14px] font-normal leading-[20px] tracking-[-0.35px] text-font/main truncate">
                         {formatPhoneNumber(order.User?.phone) || 'N/A'}
                       </div>
                     </div>
                     <div className="flex">
-                      <div className="pt-[16px] pr-[0px] pb-[16px] pl-[16px] w-[100px] bg-BG/Light  border-t border-Line/Light text-[14px] font-normal leading-[20px] tracking-[-0.35px] text-font/main">
+                      <div className="flex w-[101px] p-[16px_0_16px_16px] items-start  self-stretch bg-BG/Light  border-t border-Line/Light text-[14px] font-normal leading-[20px] tracking-[-0.35px] text-font/main">
                         주소
                       </div>
-                      <div className="flex-grow p-4  border-b border-t border-Line/Light text-[14px] font-normal leading-[20px] tracking-[-0.35px] text-font/main">
+                      <div className="flex-1 p-4 justify-center items-center  flex-1 border-b border-t border-Line/Light text-[14px] font-normal leading-[20px] tracking-[-0.35px] text-font/main truncate">
                         {order.User?.address || 'N/A'} {order.User?.address_detail || 'N/A'}
                       </div>
                     </div>
                     <div className="flex">
-                      <div className="pt-[16px] pr-[0px] pb-[16px] pl-[16px] w-[100px] bg-BG/Light  border-t border-Line/Light text-[14px] font-normal leading-[20px] tracking-[-0.35px] text-font/main">
+                      <div className="flex w-[101px] p-[16px_0_16px_16px] items-start  self-stretch bg-BG/Light  border-t border-Line/Light text-[14px] font-normal leading-[20px] tracking-[-0.35px] text-font/main">
                         이메일
                       </div>
-                      <div className="flex-grow p-4 border-b border-t border-Line/Light text-[14px] font-normal leading-[20px] tracking-[-0.35px] text-font/main">
+                      <div className="flex-1 p-4 justify-center items-center  flex-1 border-b border-t border-Line/Light text-[14px] font-normal leading-[20px] tracking-[-0.35px] text-font/main truncate">
                         {order.User?.email || 'N/A'}
                       </div>
                     </div>

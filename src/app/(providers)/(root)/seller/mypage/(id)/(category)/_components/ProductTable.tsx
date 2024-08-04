@@ -37,13 +37,13 @@ export default function ProductTable({ sellerId }: ProductTableProps) {
 
   // 판매자 유효성 확인 함수
   const checkSellerValidity = async () => {
-    const { data, error } = await supabase
+    const { data: user, error: userErr } = await supabase
       .from('Seller')
       .select('*')
       .eq('seller_id', sellerId)
       .single();
 
-    if (error || !data) {
+    if (userErr || !user) {
       // 오류가 발생했거나 판매자가 존재하지 않을 경우
       router.push('/');
     } else {
@@ -93,6 +93,7 @@ export default function ProductTable({ sellerId }: ProductTableProps) {
 
     setProducts(data || []);
     setLoading(false);
+    console.log('테스트:', data);
   };
 
   useEffect(() => {
@@ -104,12 +105,12 @@ export default function ProductTable({ sellerId }: ProductTableProps) {
     }
   }, [searchParams, sellerId, itemsPerPage, categoryFilter, isSellerValid]);
 
-  const handleCategoryChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const selectedCategory = event.target.value;
-    setCategoryFilter(selectedCategory);
-    setCurrentPage(1);
-    router.push(`?page=1`);
-  };
+  // const handleCategoryChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+  //   const selectedCategory = event.target.value;
+  //   setCategoryFilter(selectedCategory);
+  //   setCurrentPage(1);
+  //   router.push(`?page=1`);
+  // };
 
   const handleMoveEditPage = (id: string) => {
     router.push(`/seller/mypage/${id}/edit`);
@@ -140,71 +141,75 @@ export default function ProductTable({ sellerId }: ProductTableProps) {
   }
 
   return (
-    <section className="max-w-screen-xl mx-auto mt-20 mb-20  w-[1240px]">
-      <div className="flex">
-        <div className="ml-auto ">
-          <Link
-            href={`/seller/mypage/${sellerId}/register`}
-            className="px-[12px] py-[9px] bg-primary-green-500 rounded text-white"
-          >
-            상품 등록
-          </Link>
-        </div>
+    <section className="max-w-screen-xl mx-auto  mb-20">
+      <div className="flex justify-end mt-[28px] mb-[16px] ">
+        <Link
+          href={`/seller/mypage/${sellerId}/register`}
+          className="px-[12px] py-[9px] bg-primary-green-500 rounded text-white text-[13px] font-normal leading-[18px] tracking-[-0.325px] "
+        >
+          상품 등록
+        </Link>
       </div>
+      {/* </div> */}
       <div className="">
-        <table className=" flex flex-col items-start bg-white border-collapse">
-          <thead>
-            <tr className="bg-secondary-yellow-100">
-              <th className=" p-4 border-b text-center">카테고리</th>
-              <th className="p-4 border-b">상품명</th>
-              <th className=" p-4 border-b text-center">가격</th>
-              <th className=" p-4 border-b text-center">수량</th>
-              <th className=" p-4 border-b text-center">상태</th>
-              <th className=" p-4 border-b text-center">수정</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredProducts.length > 0 ? (
-              filteredProducts.map((product) => (
-                <tr key={product.product_id}>
-                  <td className="p-[22px] border-b text-center">{product.category}</td>
-                  <td className="p-[22px] border-b">{product.title}</td>
-                  <td className="p-[22px] border-b text-center">
-                    {formatCurrency(product.price ?? 0)} <label>개</label>
-                  </td>
-                  <td className="p-[22px] border-b text-center">
-                    {formatCurrency(product.stock ?? 0)} <label>개</label>
-                  </td>
-                  <td className="p-[22px] border-b text-center">
-                    <span
-                      className={
-                        product.stock === 0 ? 'text-font/Disabled' : 'text-primary-green-500'
-                      }
-                    >
-                      {product.stock === 0 ? '품절' : '판매중'}
-                    </span>
-                  </td>
-                  <td className="p-4 border-b text-center">
-                    <button
-                      onClick={() => handleMoveEditPage(product.product_id)}
-                      className="px-[12px] py-[9px] border border-primary-green-500 bg-white rounded text-primary-green-500"
-                    >
-                      상품 수정
-                    </button>
-                  </td>
-                </tr>
-              ))
-            ) : (
-              <tr>
-                <td colSpan={6} className="p-4 text-center">
-                  판매중인 제품이 없습니다.
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
-      </div>
+        <div className="flex items-start bg-secondary-yellow-100 ">
+          <div className="w-[178px] h-[56px] p-[16px] flex justify-center items-center">
+            카테고리
+          </div>
+          <div className="flex p-[16px] justify-center items-center flex-1">상품명</div>
+          <div className="w-[130px] h-[56px] p-[16px] flex justify-center items-center text-[16px] font-normal leading-[24px] tracking-[-0.4px]">
+            가격
+          </div>
+          <div className="w-[130px] h-[56px] p-[16px] flex justify-center items-center text-[16px] font-normal leading-[24px] tracking-[-0.4px]">
+            수량
+          </div>
+          <div className="w-[130px] h-[56px] p-[16px] flex justify-center items-center text-[16px] font-normal leading-[24px] tracking-[-0.4px]">
+            상태
+          </div>
+          <div className="w-[130px] h-[56px] p-[16px] flex justify-center items-center text-[16px] font-normal leading-[24px] tracking-[-0.4px]">
+            수정
+          </div>
+        </div>
 
+        {products.length > 0 ? (
+          products.map((product) => (
+            <div
+              key={product.product_id}
+              className="flex items-start self-stretch border-b border-Line/Light border-b border-Line/Light"
+            >
+              <div className="flex w-[178px] h-[64px] p-[22px_16px] justify-center items-center gap-2.5 text-[14px] font-normal leading-[20px] tracking-[-0.35px] text-font/sub2 ">
+                {product.category}
+              </div>
+              <div className="flex p-[22px_16px] items-center gap-2.5 flex-1 text-[14px] font-normal leading-[20px] tracking-[-0.35px] text-font/main text-font/sub2 overflow-hidden whitespace-nowrap text-ellipsis ">
+                {product.title}
+              </div>
+              <div className="flex w-[130px] h-[64px] p-[22px_16px] justify-center items-center gap-2.5 text-[14px] font-normal leading-[20px] tracking-[-0.35px] text-font/sub2 overflow-hidden whitespace-nowrap text-ellipsis">
+                {formatCurrency(product.price ?? 0)}원
+              </div>
+              <div className="flex w-[130px] h-[64px] p-[22px_16px] justify-center items-center gap-2.5 text-[14px] font-normal leading-[20px] tracking-[-0.35px] text-font/sub2 ">
+                {product.stock ?? 0}
+              </div>
+              <div className="flex w-[130px] h-[64px] p-[22px_16px] justify-center items-center gap-2.5 text-[14px] font-normal leading-[20px] tracking-[-0.35px] ">
+                <span
+                  className={product.stock === 0 ? 'text-font/Disabled' : 'text-primary-green-500'}
+                >
+                  {product.stock === 0 ? '품절' : '판매중'}
+                </span>
+              </div>
+              <div className="flex w-[130px] h-[64px] p-[22px_16px] justify-center items-center gap-2.5 ">
+                <button
+                  onClick={() => handleMoveEditPage(product.product_id)}
+                  className="px-[12px] py-[9px] border border-primary-green-500 bg-white rounded text-primary-green-500 text-[13px] font-normal leading-[18px] tracking-[-0.325px]"
+                >
+                  상품 수정
+                </button>
+              </div>
+            </div>
+          ))
+        ) : (
+          <div className="p-4 text-center">판매중인 제품이 없습니다.</div>
+        )}
+      </div>
       <Pagination
         totalItems={totalProducts}
         currentPage={currentPage}
