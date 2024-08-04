@@ -263,13 +263,15 @@ const SellerEditForm = ({ sellerData }: SellerEditFormProps) => {
       <div className="flex gap-4 ">
         <button
           onClick={handleCancel}
-          className="flex-1 bg-primary-green-50 text-primary-green-400 font-bold p-4 cursor-pointer rounded-md "
+          className="flex-1 bg-primary-green-50 text-primary-green-400 font-bold p-4 cursor-pointer rounded-md
+          transition-colors duration-300 hover:bg-primary-green-100 hover:text-primary-green-400 "
         >
           취소
         </button>
         <button
           onClick={handleSave}
-          className="flex-1 bg-primary-green-500 text-white p-4 font-bold cursor-pointer text-white rounded-md "
+          className="flex-1 bg-primary-green-500 text-white p-4 font-bold cursor-pointer text-white rounded-md
+          transition-colors duration-300 hover:bg-primary-green-700 hover:text-white "
         >
           회원정보수정
         </button>

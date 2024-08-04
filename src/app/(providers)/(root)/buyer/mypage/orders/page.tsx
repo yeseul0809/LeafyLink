@@ -21,7 +21,7 @@ interface ProductPageProps {
 export default async function BuyerOrderListPage({ searchParams }: ProductPageProps) {
   const page = searchParams.page ? parseInt(searchParams.page as string, 10) : 1;
   const currentPage = page || 1;
-  const itemsPerPage = 1;
+  const itemsPerPage = 10;
   const supabase = createClient();
 
   const {
@@ -104,21 +104,21 @@ export default async function BuyerOrderListPage({ searchParams }: ProductPagePr
 
   return (
     <>
-      <div className="max-w-screen-xl mx-auto mt-20 mb-20  w-m-[1240px] ">
-        <div className="overflow-x-auto">
+      <div className="max-w-screen-xl mx-auto mt-20 mb-20  ">
+        <div className="overflow-x-auto mb-20">
           <table className="min-w-full bg-white border-collapse">
             <thead>
               <tr className="bg-secondary-yellow-100">
-                <th className="w-[15%] px-4 py-[22px] border-b text-[16px] font-normal leading-[24px] tracking-[-0.4px]-font/main">
+                <th className="w-[178px] px-4 py-[22px] border-b text-[16px] font-normal leading-[24px] tracking-[-0.4px] text-font/main">
                   주문 번호
                 </th>
                 <th className="px-4 py-[22px] border-b text-[16px] font-normal leading-[24px] tracking-[-0.4px] text-font/main">
                   상품명
                 </th>
-                <th className="w-[12%] px-4 py-[22px] border-b text-[16px] font-normal leading-[24px] tracking-[-0.4px] text-font/main">
+                <th className="w-[130px] px-4 py-[22px] border-b text-[16px] font-normal leading-[24px] tracking-[-0.4px] text-font/main">
                   주문 날짜
                 </th>
-                <th className="w-[12%] px-4 py-[22px] border-b text-[16px] font-normal leading-[24px] tracking-[-0.4px] text-font/main">
+                <th className="w-[130px] px-4 py-[22px] border-b text-[16px] font-normal leading-[24px] tracking-[-0.4px] text-font/main">
                   결제 금액
                 </th>
               </tr>
@@ -130,7 +130,7 @@ export default async function BuyerOrderListPage({ searchParams }: ProductPagePr
                     <td className="px-4 py-[22px] text-font/sub2 text-[14px] font-normal leading-[20px] tracking-[-0.35px]  text-center border-b">
                       {order.order_id}
                     </td>
-                    <td className="px-4 py-[22px] font/main text-[14px] font-normal leading-[20px] tracking-[-0.35px border-b ">
+                    <td className="px-4 py-[22px] text-font/main text-[14px] font-normal leading-[20px] tracking-[-0.35px border-b overflow-hidden truncate">
                       {order.Product?.title || '제품 없음'}
                     </td>
                     <td className="px-4 py-[22px] text-font/sub2 text-[14px] font-normal leading-[20px] tracking-[-0.35px] border-b text-center">
