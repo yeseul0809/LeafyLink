@@ -15,7 +15,7 @@ type VideoData = {
 function LivestreamingCard({ videosData }: { videosData: VideoData }) {
   console.log(videosData);
   return (
-    <div className="w-[505px]">
+    <div className="lg:w-[505px] mr-5">
       <div>
         <div>
           <Link

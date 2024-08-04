@@ -15,7 +15,6 @@ export default function QuantityButton({
 }) {
   const setQuantity = useQuantityStore((state) => state.setQuantity);
   const updateQuantity = useCartStore((state) => state.updateQuantity);
-  // const initializeCart = useCartStore((state) => state.initializeCart);
   const [value, setValue] = useState<number>(1);
 
   useEffect(() => {
@@ -25,6 +24,7 @@ export default function QuantityButton({
         .from('Cart')
         .select('count')
         .eq('cart_product_id', productId)
+        .eq('cart_user_id', userId)
         .single();
       if (error) {
         console.error('Error fetching quantity:', error);
@@ -34,93 +34,23 @@ export default function QuantityButton({
       setValue(quantity);
     };
     getProductQuantity();
-  }, [productId]);
+  }, [productId, userId]);
 
   useEffect(() => {
-    // Update quantity in the store
     setQuantity(productId, value, price);
   }, [value, productId, price, setQuantity]);
-
-  // useEffect(() => {
-  //   initializeCart(userId); // Fetch cart data on mount
-  // }, []);
-
-  // useEffect(() => {
-  //   setQuantity(productId, value, price);
-  //   updateQuantity(productId, value);
-  // }, [value, productId, price, setQuantity, updateQuantity]);
-
-  // const handleIncrease = async () => {
-  //   const supabase = createClient();
-  //   const { data: cartData, error: fetchError } = await supabase
-  //     .from('Cart')
-  //     .select('count')
-  //     .eq('cart_product_id', productId)
-  //     .single(); // 단일 데이터만 필요하므로 .single() 사용
-
-  //   if (fetchError) {
-  //     console.error('Error fetching cart data:', fetchError);
-  //     return;
-  //   }
-
-  //   console.log('cartData::', cartData);
-
-  //   const currentCount = cartData?.count ?? 0;
-  //   const newCount = currentCount + 1;
-
-  //   const { error: updateError } = await supabase
-  //     .from('Cart')
-  //     .update({ count: newCount })
-  //     .eq('cart_product_id', productId);
-
-  //   if (updateError) {
-  //     console.error('Error updating cart count:', updateError);
-  //     return;
-  //   }
-
-  //   setValue((prev) => prev + 1);
-  // };
 
   const handleIncrease = async (): Promise<void> => {
     const newValue = value + 1;
     setValue(newValue);
-    await updateQuantity(productId, newValue);
+    updateQuantity(productId, newValue);
   };
-
-  // const handleDecrease = async () => {
-  //   const supabase = createClient();
-  //   const { data: cartData, error: fetchError } = await supabase
-  //     .from('Cart')
-  //     .select('count')
-  //     .eq('cart_product_id', productId)
-  //     .single(); // 단일 데이터만 필요하므로 .single() 사용
-
-  //   if (fetchError) {
-  //     console.error('Error fetching cart data:', fetchError);
-  //     return;
-  //   }
-
-  //   const currentCount = cartData?.count ?? 0;
-  //   const newCount = currentCount - 1;
-
-  //   const { error: updateError } = await supabase
-  //     .from('Cart')
-  //     .update({ count: newCount })
-  //     .eq('cart_product_id', productId);
-
-  //   if (updateError) {
-  //     console.error('Error updating cart count:', updateError);
-  //     return;
-  //   }
-
-  //   setValue((prev) => prev - 1);
-  // };
 
   const handleDecrease = async () => {
     if (value > 1) {
       const newValue = value - 1;
       setValue(newValue);
-      await updateQuantity(productId, newValue);
+      updateQuantity(productId, newValue);
     }
   };
 

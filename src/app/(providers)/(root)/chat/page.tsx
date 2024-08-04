@@ -103,29 +103,19 @@ function ChatListPage() {
     fetchUnreadCounts();
   }, [chatrooms, user]);
 
-  if (!user) {
-    return (
-      <div className="max-w-[1180px] mx-auto p-4 mt-20 mb-[180px]">
-        <h1 className="text-[32px] font-semibold border-b pb-8 flex justify-center">
-          로그인이 필요합니다.
-        </h1>
-        <div className="flex justify-center items-center">
-          <div className="text-center">
-            <button
-              onClick={() => router.push('/login')}
-              className="mt-8 px-16 py-2 bg-primary-green-500 text-white rounded-lg hover:bg-primary-green-700"
-            >
-              LOGIN
-            </button>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
   const handleChatroomClick = (chatroomId: string) => {
     router.push(`/chat/${chatroomId}`);
   };
+
+  const sortedChatrooms = chatrooms.slice().sort((a, b) => {
+    const chatRoomA = latestMessages[a.chatroom_id]
+      ? new Date(latestMessages[a.chatroom_id].createdAt).getTime()
+      : new Date(0).getTime();
+    const chatRoomB = latestMessages[b.chatroom_id]
+      ? new Date(latestMessages[b.chatroom_id].createdAt).getTime()
+      : new Date(0).getTime();
+    return chatRoomB - chatRoomA;
+  });
 
   return (
     <div className="max-w-[650px] mx-auto mt-12 mb-[180px]">
@@ -135,7 +125,7 @@ function ChatListPage() {
           <p className="mt-20 text-[15px]">채팅 상대가 아직 없습니다.</p>
         ) : (
           <ul className="flex w-[650px] flex-col items-center">
-            {chatrooms.map((chatroom) => {
+            {sortedChatrooms.map((chatroom) => {
               const isUser = user.id === chatroom.chatroom_user_id;
               const otherParty = isUser ? chatroom.chatroom_seller_id : chatroom.chatroom_user_id;
               const otherInfo = avatars[otherParty];
@@ -191,4 +181,5 @@ function ChatListPage() {
     </div>
   );
 }
+
 export default ChatListPage;

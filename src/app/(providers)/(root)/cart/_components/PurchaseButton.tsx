@@ -5,6 +5,7 @@ import { createClient } from '@/supabase/supabaseClient';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { useCartStore } from '@/stores';
+import CartPage from '../page';
 
 export default function PurchaseButton({ userId }: { userId: string }) {
   const [isDisable, setIsDisable] = useState(true);
@@ -55,9 +56,17 @@ export default function PurchaseButton({ userId }: { userId: string }) {
   const mutation = useMutation({
     mutationFn: async () => {
       const cartData = await getCartData();
+      if (cartData?.length === 0) {
+        return null;
+      }
       return cartData;
     },
     onSuccess: (data) => {
+      if (data === null) {
+        console.log('선택된 상품이 없습니다.');
+        return;
+      }
+
       const encodedData = encodeURIComponent(JSON.stringify(data));
       router.push(`/payment?data=${encodedData}`);
     }

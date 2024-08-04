@@ -28,7 +28,7 @@ function Header() {
   const [userName, setUserName] = useState('');
   const [userAvatar, setUserAvatar] = useState('');
   const [profileLink, setProfileLink] = useState('/');
-  const [searchTerm, setSearchTerm] = useState('');
+  const [businessName, setBusinessName] = useState('');
 
   // 로그인 상태
   useEffect(() => {
@@ -41,25 +41,36 @@ function Header() {
         setUserAvatar(res.data.user.identities![0].identity_data?.avatar_url);
 
         // Seller 테이블에서 seller_id를 확인하여 프로필 링크 설정
-        const fetchSellerId = async (userId: string) => {
+        const fetchSellerData = async (userId: string) => {
           try {
             const { data, error } = await supabase
               .from('Seller')
-              .select('seller_id')
+              .select('seller_id, business_name')
               .eq('seller_id', userId)
               .maybeSingle();
 
             if (error) {
+              console.log('Error fetching seller data:', error);
               return null;
             }
-            return data ? data.seller_id : null;
+
+            console.log('Fetched Seller Data:', data); // 데이터 구조 확인
+            return data; // seller_id와 business_name이 포함된 데이터 반환
           } catch (error) {
+            console.log('Error in fetchSellerData:', error);
             return null;
           }
         };
 
-        const sellerId = await fetchSellerId(userId);
-        setProfileLink(sellerId ? '/seller/mypage/profile' : '/buyer/mypage/profile');
+        const sellerData = await fetchSellerData(userId);
+        if (sellerData) {
+          console.log('Seller Data:', sellerData); // sellerData 확인
+          setBusinessName(sellerData.business_name); // business_name 설정
+          console.log('Updated Business Name:', sellerData.business_name); // 추가된 로그
+          setProfileLink('/seller/mypage/profile');
+        } else {
+          setProfileLink('/buyer/mypage/profile');
+        }
       } else {
         setIsLogin(false);
       }
@@ -188,8 +199,8 @@ function Header() {
               height={28}
               className="rounded-full h-[28px]"
             />
-            <Link href={'/mypage'}>
-              <p className="ml-3 hover:text-zinc-950">{userName}님</p>
+            <Link href={profileLink}>
+              <p className="ml-3 hover:text-zinc-950">{businessName || userName}</p>
             </Link>
             <button className="ml-10 hover:text-zinc-950" onClick={logout}>
               로그아웃

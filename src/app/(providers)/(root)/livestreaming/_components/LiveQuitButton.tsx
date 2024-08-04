@@ -11,10 +11,7 @@ export default function LiveQuitButton({ streamId }: { streamId: string }) {
     console.log('streamId::', streamId);
 
     const supabase = createClient();
-    // const { error: deleteError } = await supabase
-    //   .from('Livestream')
-    //   .delete()
-    //   .eq('livestream_id', streamId);
+
     const { error } = await supabase
       .from('Livestream')
       .update({ is_live: false })

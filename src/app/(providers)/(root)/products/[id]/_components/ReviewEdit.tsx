@@ -6,6 +6,8 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Review, ReviewInput } from '@/types/review';
 import { createReview, getReviews } from '../_actions/productActions';
 import StarRating from './StarRating';
+import showSwal from '@/utils/swal';
+import { useRouter } from 'next/navigation';
 
 interface ReviewEditProps {
   reviewProductId: string;
@@ -17,6 +19,7 @@ function ReviewEdit({ reviewProductId, reviewCount }: ReviewEditProps) {
   const queryClient = useQueryClient();
   const [rating, setRating] = useState<number>(0);
   const [review, setReview] = useState<string>('');
+  const router = useRouter();
 
   const mutation = useMutation<Review[], Error, ReviewInput>({
     mutationFn: createReview,
@@ -34,7 +37,8 @@ function ReviewEdit({ reviewProductId, reviewCount }: ReviewEditProps) {
     e.preventDefault();
 
     if (!user) {
-      console.error('로그인된 유저의 정보를 가져올 수 없습니다.');
+      showSwal('로그인이 필요한 서비스입니다.<br>로그인 후 이용해주세요.');
+      router.push('/login');
       return;
     }
 
@@ -77,7 +81,7 @@ function ReviewEdit({ reviewProductId, reviewCount }: ReviewEditProps) {
           </div>
           <button
             type="submit"
-            className="bg-primary-green-500 text-white px-3 py-[9px] rounded-[4px] hover:bg-gray-600"
+            className="bg-primary-green-500 text-white px-3 py-[9px] rounded-[4px] hover:bg-primary-green-700"
           >
             리뷰남기기
           </button>

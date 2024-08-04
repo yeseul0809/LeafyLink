@@ -23,7 +23,7 @@ function TopSection({ product, averageRating, reviewCount }: TopSectionProps) {
   const handleCopyToClipboard = async () => {
     try {
       await navigator.clipboard.writeText(window.location.href);
-      showSwal({ icon: 'success', title: '링크가 복사되었습니다!' });
+      showSwal('링크가 복사되었습니다!');
     } catch (error) {
       console.error('클립보드로 링크복사 실패', error);
     }

@@ -11,13 +11,9 @@ import StreamSection from '../livestreaming/_components/StreamSection';
 import { useQuery } from '@tanstack/react-query';
 import { getAllLiveStreamDB, getVideos } from '../livestreaming/actions';
 import LivestreamingCard from './_components/LivestreamingCard';
+import Image from 'next/image';
 
 function LiveCommerce({ category }: { category: string }) {
-  // 지금 진행중인 생방송 있으면 > 생방송 먼저 띄워주기
-  // 지금 진행중인 생방송 없으면 > 이전 방송 띄워주기
-  // 갯수는 4개
-
-  // 페이지 네비게이션
   const router = useRouter();
   const redirect = (e: string) => {
     router.push(`${e}`);
@@ -32,16 +28,14 @@ function LiveCommerce({ category }: { category: string }) {
     queryFn: () => getVideos(category!)
   });
 
-  if (!isFetched) {
-    return <p>로딩중</p>;
-  }
+  // if (!isFetched) {
+  //   return <Image src="/loading.gif" alt="로딩이미지" width={200} height={100} className="" />;
+  // }
 
-  // 4개 자르기
   const videosData = recodedVideos?.slice(0, 4);
-  // console.log(videosData[0]);
 
   return (
-    <section className="w-full h-[800px] bg-[#F7FDFA] mx-auto lg:mt-[145px] lg:pb-[145px] mt-[48px] pb-[48px]">
+    <section className="w-full h-[604px] bg-[#F7FDFA] mx-auto lg:mt-[145px] lg:pb-[145px] mt-[48px] pb-[48px]">
       <div className="flex justify-around items-end text-center">
         <div></div>
         <h2 className="text-center text-[32px] lg:mb-[38px] lg:pt-[85px] pt-[16px]">
@@ -56,7 +50,7 @@ function LiveCommerce({ category }: { category: string }) {
           더보기 &gt;
         </button>
       </div>
-      <div className="flex">
+      <div className="flex w-[1240px] m-auto overflow-hidden">
         {videosData?.map((video) => <LivestreamingCard videosData={video} />)}
         {/* <Swiper
           slidesPerView={3}

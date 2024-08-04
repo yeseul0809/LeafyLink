@@ -145,29 +145,8 @@ export default function UserEditForm({
     }
   };
 
-  const handleSave = () => {
-    const fullAddress = `${address}${extraAddress}`;
-    handleAddressUpdate(fullAddress, detailAddress, postcode, extraAddress);
-    alert('회원정보가 저장되었습니다.');
-  };
-
-  const handlePhoneChange = (newPhone: string) => {
-    setPhone(newPhone);
-  };
-
-  // const handleCancel = () => {
-  //   setAddress(initialAddress);
-  //   setPostcode(initialAddressCode);
-  //   setDetailAddress(initialDetailAddress);
-  //   setExtraAddress('');
-  //   setUserName(initialUserName);
-  //   setPhone(initialPhone);
-  //   alert('변경 사항이 취소되었습니다.');
-  // };
-
   return (
     <div>
-      {/* 이름 입력 필드 */}
       <div className="flex items-center xs:flex-col xs:items-start">
         <label className="w-20 mr-12" htmlFor="receiver">
           받는 사람
@@ -181,7 +160,6 @@ export default function UserEditForm({
           onChange={(e) => setUserName(e.target.value)}
         />
       </div>
-      {/* 우편번호 입력 필드 */}
 
       <div className="flex justify-start items-start xs:flex-col xs:items-start">
         <div className="w-20 mr-12 xs:mb-[8px] xs:mt-[12px]">주소</div>
@@ -195,7 +173,6 @@ export default function UserEditForm({
             readOnly
           />
 
-          {/* 우편번호 찾기 버튼 */}
           <input
             type="button"
             onClick={() => window.sample3_execDaumPostcode()}
@@ -203,7 +180,6 @@ export default function UserEditForm({
             className="bg-white text-[#3BB873] border border-[#3BB873] cursor-pointer rounded w-[87px] h-[50px] ml-3"
           />
 
-          {/* 주소 검색 컨테이너 */}
           <div
             id="wrap"
             ref={wrapRef}
@@ -222,23 +198,13 @@ export default function UserEditForm({
               />
             </div>
           </div>
-          {/* 주소 입력 필드 */}
+
           <input
             type="text"
-            // id="sample3_address"
             placeholder="기본주소"
             className="border p-3 mb-3 w-full rounded"
             value={address}
             onChange={(e) => setAddress(e.target.value)}
-          />
-          {/* 상세주소 입력 필드 */}
-          <input
-            type="text"
-            // id="sample3_detailAddress"
-            placeholder="나머지 상세주소"
-            className="border p-3 mb-3 rounded w-full"
-            value={detailAddress}
-            onChange={(e) => setDetailAddress(e.target.value)}
           />
         </div>
       </div>
