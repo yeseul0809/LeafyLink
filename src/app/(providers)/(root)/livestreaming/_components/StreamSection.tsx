@@ -17,9 +17,12 @@ export default function StreamSection({ category }: { category: string }) {
   });
 
   if (!isFetched) {
-    return <p>로딩중</p>;
+    return (
+      <div className="w-full h-[200px] flex justify-center items-center">
+        <Image src="/loading.gif" alt="로딩이미지" width={200} height={100} className="" />
+      </div>
+    );
   }
-  console.log(recodedVideos);
 
   if (recodedVideos && isFetched) {
     return (
@@ -31,12 +34,16 @@ export default function StreamSection({ category }: { category: string }) {
               {hasStreamData && (
                 <>
                   <div className="relative w-full h-[342px] xs:h-[183px]">
-                    <Image
-                      src={video.streamData[0].thumbnail_url}
-                      alt="방송썸네일"
-                      fill
-                      className="rounded-2xl"
-                    />
+                    <Link
+                      href={`/livestreaming/video/${video.streamData[0].livestream_product_id}_${video.streamData[0].livestream_id}_${video.uid}`}
+                    >
+                      <Image
+                        src={video.streamData[0].thumbnail_url}
+                        alt="방송썸네일"
+                        fill
+                        className="rounded-2xl"
+                      />
+                    </Link>
                   </div>
                   <div className="flex justify-between mt-4 pr-6 xs:pr-0 xs:flex-col xs:mt-[16px]">
                     <div>
@@ -44,7 +51,8 @@ export default function StreamSection({ category }: { category: string }) {
                       <p className="text-[#555555]">{video.streamData[0].description}</p>
                     </div>
                     <Link
-                      href={`/livestreaming/video/${video.streamData[0].livestream_product_id}_${video.streamData[0].livestream_id}_${video.uid}`}
+                      href={`/products/${video.streamData[0].livestream_product_id}`}
+                      className="cursor-pointer"
                     >
                       <button className="bg-[#3BB873] text-white px-6 py-3 rounded-lg xs:mt-[16px] xs:w-full">
                         구매하러가기
