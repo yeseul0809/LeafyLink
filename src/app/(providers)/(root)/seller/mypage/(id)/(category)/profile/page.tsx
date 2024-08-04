@@ -23,10 +23,6 @@ export default async function BuyerMyPage() {
     .eq('seller_id', userId)
     .single();
 
-  console.log('User ID:', userId); // userId 로그
-  console.log('Seller Data:', data); // data 로그
-  console.log('Error:', error); // 에러 로그
-
   // 오류가 발생한 경우
   if (error) {
     if (error.code === 'PGRST116') {

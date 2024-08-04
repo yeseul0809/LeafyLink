@@ -93,7 +93,6 @@ export default function ProductTable({ sellerId }: ProductTableProps) {
 
     setProducts(data || []);
     setLoading(false);
-    console.log('테스트:', data);
   };
 
   useEffect(() => {

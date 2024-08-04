@@ -64,7 +64,7 @@ export default function AccordionMenu({ orders }: AccordionMenuProps) {
       .replace('KRW', '')
       .trim();
   };
-  console.log(orders);
+
   return (
     <div className="max-w-screen-xl mx-auto mt-20 mb-20  ">
       <div>

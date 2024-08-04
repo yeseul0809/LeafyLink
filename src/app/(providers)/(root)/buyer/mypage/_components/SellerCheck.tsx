@@ -84,7 +84,6 @@ function SellerCheck({ userData }: SellerCheckProps) {
       }
 
       const result = await response.json();
-      // console.log(result);
 
       if (result.status_code === 'OK' && result.valid_cnt === 1) {
         setResult(result.data[0]);

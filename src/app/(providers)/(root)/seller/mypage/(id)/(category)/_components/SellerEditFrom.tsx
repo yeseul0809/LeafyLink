@@ -140,8 +140,6 @@ const SellerEditForm = ({ sellerData }: SellerEditFormProps) => {
       phone: phone
     };
 
-    console.log('Updating Seller with payload:', payload);
-
     const { error } = await supabase
       .from('Seller')
       .update(payload)
