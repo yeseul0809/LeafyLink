@@ -4,6 +4,7 @@ import { Review } from '@/types/review';
 import { useState, useEffect } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { getReviews } from '../_actions/productActions';
+import ReviewToggle from './ReviewToggle';
 
 interface ProductReviewProps {
   productId: string;
@@ -13,6 +14,22 @@ interface ProductReviewProps {
 const fetchReviews = async (productId: string, reviewsPerPage: number, currentPage: number) => {
   const offset = (currentPage - 1) * reviewsPerPage;
   return getReviews(productId, reviewsPerPage, offset);
+};
+
+const formatDateTime = (dateString: string) => {
+  const date = new Date(dateString);
+  const formattedDate = date.toLocaleDateString('ko-KR', {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit'
+  });
+  const formattedTime = date.toLocaleTimeString('ko-KR', {
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: true
+  });
+
+  return `${formattedDate} ${formattedTime}`;
 };
 
 const ProductReviewList = ({ productId, reviewsPerPage }: ProductReviewProps) => {
@@ -39,49 +56,45 @@ const ProductReviewList = ({ productId, reviewsPerPage }: ProductReviewProps) =>
   };
 
   return (
-    <div className="w-full mx-auto my-20">
+    <div className="w-full mx-auto">
       {isLoading ? (
         <p>리뷰를 불러오는 중입니다...</p>
       ) : error ? (
         <p>리뷰를 불러오는 중 에러가 발생했습니다: {error.message}</p>
       ) : (
         <>
-          <ul className="space-y-4 text-left">
+          <ul className="text-left">
             {reviewData?.reviews.map((review: Review) => (
-              <li key={review.review_id} className="p-4 border rounded shadow-md">
+              <li key={review.review_id} className="pt-12 pb-10 border-b rounded">
                 <div className="mb-2">
-                  <p className="font-bold">작성자: {review.review_user_name}</p>
+                  <p className="text-[13px]">작성자: {review.review_user_name}</p>
                 </div>
-                <div className="flex items-center mb-2">
-                  <div className="flex items-center">
-                    {Array.from({ length: review.rating || 0 }).map((_, index) => (
-                      <span key={index} className="text-green-300">
-                        ★
-                      </span>
-                    ))}
-                    {Array.from({ length: 5 - (review.rating || 0) }).map((_, index) => (
-                      <span key={index} className="text-gray-300">
-                        ★
-                      </span>
-                    ))}
-                    <span className="text-xl font-bold ml-2">{review.rating}.0</span>
-                  </div>
+                <div className="flex items-center pb-6">
+                  {Array.from({ length: review.rating || 0 }).map((_, index) => (
+                    <span key={index} className="text-primary-green-500">
+                      ★
+                    </span>
+                  ))}
+                  {Array.from({ length: 5 - (review.rating || 0) }).map((_, index) => (
+                    <span key={index} className="text-gray-300">
+                      ★
+                    </span>
+                  ))}
+                  <span className="text-xl font-bold ml-2">{review.rating}.0</span>
                 </div>
-                <p className="mb-2">{review.description}</p>
+                <ReviewToggle description={review.description} />
                 <span className="text-gray-500 text-sm">
-                  {review.created_at
-                    ? new Date(review.created_at).toLocaleDateString()
-                    : '날짜 정보 없음'}
+                  {review.created_at ? formatDateTime(review.created_at) : '날짜 정보 없음'}
                 </span>
               </li>
             ))}
           </ul>
-          <div className="flex items-center justify-center mt-5">
+          <div className="flex items-center justify-center mt-20">
             {Array.from({ length: totalPages }).map((_, index) => (
               <button
                 key={index}
                 onClick={() => handlePageChange(index + 1)}
-                className={`mx-1 px-3 py-1 border rounded-md ${currentPage === index + 1 ? 'bg-green-300' : 'bg-white'}`}
+                className={`w-8 h-8 mx-[6px] px-3 py-1 rounded-full ${currentPage === index + 1 ? 'border border-Line/Strong' : 'bg-white'}`}
               >
                 {index + 1}
               </button>

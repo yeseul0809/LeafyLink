@@ -21,7 +21,8 @@ function ChatPage({ params }: ParamsProps) {
   const [newMessage, setNewMessage] = useState<string>('');
   const [sellerId, setSellerId] = useState<string>('');
   const [otherUserInfo, setOtherUserInfo] = useState<{
-    user_name: string;
+    user_name?: string;
+    business_name?: string;
     avatar_url: string;
   } | null>(null);
   const [isSeller, setIsSeller] = useState<boolean>(false);
@@ -67,21 +68,31 @@ function ChatPage({ params }: ParamsProps) {
       .eq('chatroom_id', chatroomId)
       .single();
 
-    if (error) {
+    if (error || !data) {
       console.log('채팅방 정보 가져오는 중 에러발생', error);
-    } else if (data) {
-      setSellerId(data.chatroom_seller_id);
-      setIsSeller(data.chatroom_seller_id === user.id);
+      return;
+    }
 
-      if (data.chatroom_seller_id === user.id) {
-        const buyerInfo = await fetchUserInfo(data.chatroom_user_id);
-        if (buyerInfo) {
-          setOtherUserInfo(buyerInfo);
-        }
-      } else {
-        const sellerInfo = await fetchSellerInfo(data.chatroom_seller_id);
-        setOtherUserInfo(sellerInfo);
+    setSellerId(data.chatroom_seller_id);
+    setIsSeller(data.chatroom_seller_id === user.id);
+
+    const buyerInfo = await fetchUserInfo(data.chatroom_user_id);
+    const sellerInfo = await fetchSellerInfo(data.chatroom_seller_id);
+
+    if (data.chatroom_seller_id === user.id) {
+      if (buyerInfo) {
+        setOtherUserInfo({
+          user_name: buyerInfo.user_name,
+          avatar_url: buyerInfo.avatar_url,
+          business_name: sellerInfo?.business_name
+        });
       }
+    } else {
+      setOtherUserInfo({
+        user_name: buyerInfo?.user_name,
+        avatar_url: sellerInfo?.avatar_url,
+        business_name: sellerInfo?.business_name
+      });
     }
   };
 
@@ -165,7 +176,9 @@ function ChatPage({ params }: ParamsProps) {
               height={40}
               className="w-10 h-10 rounded-full mr-4"
             />
-            <span className="text-xl font-bold">{otherUserInfo.user_name}</span>
+            <span className="text-xl font-bold">
+              {isSeller ? otherUserInfo.user_name : otherUserInfo.business_name}
+            </span>
           </>
         )}
       </div>

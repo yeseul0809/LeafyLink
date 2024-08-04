@@ -1,5 +1,4 @@
 import { createClient } from '@/supabase/supabaseClient';
-// import supabase from "@/supabase/supabaseClient";
 import { useEffect, useState } from 'react';
 
 function useUser() {
@@ -9,11 +8,8 @@ function useUser() {
   useEffect(() => {
     const fetchUser = async () => {
       const { data: userData, error } = await supabase.auth.getUser();
-      if (error) {
-        console.error('로그인한 유저 정보 가져오는 중 에러 발생', error);
-      } else {
-        setUser(userData?.user);
-      }
+
+      setUser(userData?.user);
     };
     fetchUser();
   }, [supabase.auth]);
