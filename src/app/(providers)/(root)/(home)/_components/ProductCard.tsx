@@ -26,7 +26,6 @@ const ProductCard = ({ product }: { product: Product }) => {
     sellerName();
   }, []);
 
-  // 페이지 네비게이션
   const redirect = (e: string) => {
     router.push(`${e}`);
   };

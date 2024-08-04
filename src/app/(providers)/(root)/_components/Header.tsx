@@ -40,7 +40,6 @@ function Header() {
         setUserName(res.data.user.identities![0].identity_data?.full_name);
         setUserAvatar(res.data.user.identities![0].identity_data?.avatar_url);
 
-        // Seller 테이블에서 seller_id를 확인하여 프로필 링크 설정
         const fetchSellerData = async (userId: string) => {
           try {
             const { data, error } = await supabase
@@ -54,8 +53,8 @@ function Header() {
               return null;
             }
 
-            console.log('Fetched Seller Data:', data); // 데이터 구조 확인
-            return data; // seller_id와 business_name이 포함된 데이터 반환
+            console.log('Fetched Seller Data:', data);
+            return data;
           } catch (error) {
             console.log('Error in fetchSellerData:', error);
             return null;
@@ -64,9 +63,9 @@ function Header() {
 
         const sellerData = await fetchSellerData(userId);
         if (sellerData) {
-          console.log('Seller Data:', sellerData); // sellerData 확인
-          setBusinessName(sellerData.business_name); // business_name 설정
-          console.log('Updated Business Name:', sellerData.business_name); // 추가된 로그
+          console.log('Seller Data:', sellerData);
+          setBusinessName(sellerData.business_name);
+          console.log('Updated Business Name:', sellerData.business_name);
           setProfileLink('/seller/mypage/profile');
         } else {
           setProfileLink('/buyer/mypage/profile');
@@ -87,6 +86,7 @@ function Header() {
       window.location.href = '/';
     }
   };
+
   // user 위치
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
@@ -100,6 +100,7 @@ function Header() {
       }
     );
   }, []);
+
   // 날씨 api
   useEffect(() => {
     if (latitude && longitude) {
@@ -118,6 +119,7 @@ function Header() {
         });
     }
   }, [latitude, longitude]);
+
   // 날씨 안내 문구
   const weatherComment = (description: string) => {
     if (description.includes('구름') || description.includes('흐림')) {
@@ -134,16 +136,19 @@ function Header() {
       return '날씨 정보가 없어요.';
     }
   };
+
   // 메뉴 토글
   const toggleMenu = () => {
     setIsOpenMenu(!isOpenMenu);
     setIsOpenSearch(false);
   };
+
   // 검색창 토글
   const toggleSearch = () => {
     setIsOpenSearch(!isOpenSearch);
     setIsOpenMenu(false);
   };
+
   // 페이지 네비게이션
   const redirect = (e: string) => {
     router.push(`${e}`);
