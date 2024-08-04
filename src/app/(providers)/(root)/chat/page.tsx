@@ -107,6 +107,16 @@ function ChatListPage() {
     router.push(`/chat/${chatroomId}`);
   };
 
+  const sortedChatrooms = chatrooms.slice().sort((a, b) => {
+    const chatRoomA = latestMessages[a.chatroom_id]
+      ? new Date(latestMessages[a.chatroom_id].createdAt).getTime()
+      : new Date(0).getTime();
+    const chatRoomB = latestMessages[b.chatroom_id]
+      ? new Date(latestMessages[b.chatroom_id].createdAt).getTime()
+      : new Date(0).getTime();
+    return chatRoomB - chatRoomA;
+  });
+
   return (
     <div className="max-w-[650px] mx-auto mt-12 mb-[180px]">
       <h1 className="text-[32px] font-bold border-b pb-8 flex justify-center">상담톡</h1>
@@ -115,7 +125,7 @@ function ChatListPage() {
           <p className="mt-20 text-[15px]">채팅 상대가 아직 없습니다.</p>
         ) : (
           <ul className="flex w-[650px] flex-col items-center">
-            {chatrooms.map((chatroom) => {
+            {sortedChatrooms.map((chatroom) => {
               const isUser = user.id === chatroom.chatroom_user_id;
               const otherParty = isUser ? chatroom.chatroom_seller_id : chatroom.chatroom_user_id;
               const otherInfo = avatars[otherParty];
@@ -171,4 +181,5 @@ function ChatListPage() {
     </div>
   );
 }
+
 export default ChatListPage;
