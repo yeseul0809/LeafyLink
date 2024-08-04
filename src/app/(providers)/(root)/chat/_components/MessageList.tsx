@@ -26,7 +26,7 @@ function MessageList({ isMessagesLoaded, messages, userId, otherUserInfo }: Mess
   return (
     <div className="w-full max-h-[484px] overflow-y-auto custom-scrollbar pr-[14px]">
       {isMessagesLoaded && messages.length === 0 ? (
-        <p>이전 대화내역이 없습니다.</p>
+        <p className="flex justify-center pt-7">이전 대화내역이 없습니다.</p>
       ) : (
         <div>
           {messages.map((msg, index) => {

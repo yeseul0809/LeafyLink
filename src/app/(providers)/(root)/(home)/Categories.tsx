@@ -39,7 +39,6 @@ function Categories() {
     }
   ]);
 
-  // 페이지 네비게이션
   const router = useRouter();
   const redirect = (e: string) => {
     router.push(`${e}`);

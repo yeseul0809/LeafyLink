@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import { createCartItem } from '../../products/[id]/_actions/cartActions';
 import useUser from '@/hooks/useUser';
 import { getSellerName } from '../actions';
+import showSwal from '@/utils/swal';
 
 const ProductCard = ({ product }: { product: Product }) => {
   const formatPrice = (price: number) => {
@@ -25,7 +26,6 @@ const ProductCard = ({ product }: { product: Product }) => {
     sellerName();
   }, []);
 
-  // 페이지 네비게이션
   const redirect = (e: string) => {
     router.push(`${e}`);
   };
@@ -40,7 +40,7 @@ const ProductCard = ({ product }: { product: Product }) => {
     const result = await createCartItem(cartItemData, user.id);
 
     if (result) {
-      alert('선택하신 상품이 장바구니에 추가되었습니다.');
+      showSwal('선택하신 상품이 장바구니에 추가되었습니다.');
     }
   };
 
