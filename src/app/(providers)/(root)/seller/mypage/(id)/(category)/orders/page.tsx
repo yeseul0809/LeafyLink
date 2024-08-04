@@ -62,9 +62,6 @@ export default async function SellerOrderListPage({ searchParams }: ProductPageP
     redirect('/');
   }
 
-  console.log('userId:', userId);
-  console.log('sellerData:', sellerData);
-
   // 판매자 데이터가 존재하지 않거나 seller_id가 userId와 다를 경우 홈으로 리디렉션
   if (sellerData.seller_id !== userId) {
     redirect('/');
@@ -107,7 +104,6 @@ export default async function SellerOrderListPage({ searchParams }: ProductPageP
     return <div>주문 데이터 조회 에러: {orderError.message}</div>;
   }
 
-  console.log('페이지주문데이터:', orders);
   if (!orders || orders.length === 0) {
     return (
       <div className="mt-[80px] mb-[421px] text-center text-[15px] font-normal leading-[22px] tracking-[-0.375px] text-font/main truncate">
