@@ -5,7 +5,7 @@ import Image from 'next/image';
 
 const setRecommendPlant = (products: Product[]) => {
   const findData = products.find(
-    (data) => data.stock !== null && data.stock !== 0 && data.stock < 100
+    (data) => data.stock !== null && data.stock !== 0 && data.stock < 50
   );
   return findData;
 };
