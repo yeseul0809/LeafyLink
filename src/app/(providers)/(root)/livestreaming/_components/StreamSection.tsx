@@ -17,7 +17,11 @@ export default function StreamSection({ category }: { category: string }) {
   });
 
   if (!isFetched) {
-    return <p>로딩중</p>;
+    return (
+      <div className="w-full h-full flex justify-center items-center">
+        <Image src="/loading.gif" alt="로딩이미지" width={200} height={100} className="" />
+      </div>
+    );
   }
 
   if (recodedVideos && isFetched) {

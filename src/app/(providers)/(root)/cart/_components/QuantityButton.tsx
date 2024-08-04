@@ -25,6 +25,7 @@ export default function QuantityButton({
         .from('Cart')
         .select('count')
         .eq('cart_product_id', productId)
+        .eq('cart_user_id', userId)
         .single();
       if (error) {
         console.error('Error fetching quantity:', error);
@@ -34,7 +35,7 @@ export default function QuantityButton({
       setValue(quantity);
     };
     getProductQuantity();
-  }, [productId]);
+  }, [productId, userId]);
 
   useEffect(() => {
     // Update quantity in the store

@@ -69,7 +69,6 @@ const nextConfig = {
         hostname: 'thumbnail10.coupangcdn.com'
       }
     ],
-    domains: ['k.kakaocdn.net', 't1.kakaocdn.net'],
     disableStaticImages: true
   },
   eslint: {

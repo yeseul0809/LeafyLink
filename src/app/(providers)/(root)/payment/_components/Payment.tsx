@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import React from 'react';
+import React, { useState } from 'react';
 import { createClient } from '@/supabase/supabaseClient';
 import { useQuery } from '@tanstack/react-query';
 import { useSearchParams } from 'next/navigation';
@@ -35,6 +35,8 @@ export interface ProductInfo {
 }
 
 export default function PaymentPage() {
+  // const [restAddress, setRestAddress] = useState('');
+  const [phoneNumber, setPhoneNnumber] = useState(0);
   let products: Product[] = [];
   const searchParams = useSearchParams();
   const dataString = searchParams.get('data');
@@ -79,6 +81,8 @@ export default function PaymentPage() {
     return { combinedData, totalCost, cart: !!dataString };
   };
 
+  const saveRestUserData = async () => {};
+
   const {
     data: productData,
     error: productError,
@@ -87,7 +91,6 @@ export default function PaymentPage() {
     queryKey: ['getProductInfo'],
     queryFn: getProductInfo
   });
-  console.log('productData::', productData);
 
   const getUserInfo = async () => {
     const supabase = createClient();
@@ -139,7 +142,8 @@ export default function PaymentPage() {
                   className="border p-3 mb-3 rounded w-1/4"
                   type="text"
                   id="phone"
-                  defaultValue={userData.phone.split('-')[0]}
+                  // defaultValue={userData.phone.split('-')[0]}
+                  defaultValue={userData.phone.slice(0, 3)}
                   maxLength={3}
                 />
                 <span className="mx-2">-</span>
@@ -147,7 +151,8 @@ export default function PaymentPage() {
                   className="border p-3 mb-3 rounded w-1/4"
                   type="text"
                   id="phone"
-                  defaultValue={userData.phone.split('-')[1]}
+                  // defaultValue={userData.phone.split('-')[1]}
+                  defaultValue={userData.phone.slice(3, 7)}
                   maxLength={4}
                 />
                 <span className="mx-2">-</span>
@@ -155,13 +160,14 @@ export default function PaymentPage() {
                   className="border p-3 mb-3 rounded w-1/4"
                   type="text"
                   id="phone"
-                  defaultValue={userData.phone.split('-')[2]}
+                  // defaultValue={userData.phone.split('-')[2]}
+                  defaultValue={userData.phone.slice(7)}
                   maxLength={4}
                 />
               </div>
             </div>
             <div className="flex xs:flex-col xs:mt-[42px] xs:gap-[8px]">
-              <label htmlFor="email" className="mr-[80px]">
+              <label htmlFor="email" className="mr-[44px] w-[80px]">
                 이메일
               </label>
               <input
@@ -170,15 +176,10 @@ export default function PaymentPage() {
                 defaultValue={userData.email}
                 className="border p-3 mb-3 rounded w-full h-[54px]"
               />
-              {/* <select name="" id="">
-                <option value="">gmail.com</option>
-                <option value="">naver.com</option>
-                <option value="">hanmail.net</option>
-              </select> */}
             </div>
             {/* <div className="flex items-center gap-2">
-              <input type="checkbox" id="default" className="green-checkbox" />
-              <label htmlFor="default">기본 배송지로 저장</label>
+              <label htmlFor="saveData">기본 배송지 정보로 저장</label>
+              <input type="checkbox" id="saveData" className="green-checkbox" />
             </div> */}
           </div>
           <div className="border-t w-full my-10" />

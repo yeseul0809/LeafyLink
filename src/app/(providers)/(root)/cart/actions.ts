@@ -131,12 +131,13 @@ export interface IsCheck {
   is_checked: boolean;
 }
 
-export const getCartIsChecked = async (productId: string): Promise<IsCheck> => {
+export const getCartIsChecked = async (productId: string, userId: string): Promise<IsCheck> => {
   const supabaseSever = createClient();
   const { data, error } = await supabaseSever
     .from('Cart')
     .select('is_checked')
-    .eq('cart_product_id', productId);
+    .eq('cart_product_id', productId)
+    .eq('cart_user_id', userId);
 
   return data![0] as IsCheck;
 };
