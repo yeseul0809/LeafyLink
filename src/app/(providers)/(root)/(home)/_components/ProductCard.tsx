@@ -45,7 +45,6 @@ const ProductCard = ({ product }: { product: Product }) => {
   };
 
   const handleBuyNow = () => {
-    console.log('나는 productId =>', product.product_id);
     router.push(`/payment?productId=${product.product_id}&quantity=1`);
   };
 
