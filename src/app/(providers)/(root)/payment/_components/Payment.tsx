@@ -162,8 +162,6 @@ export default function PaymentPage() {
         <form action="" className="flex items-center gap-[8px] xs:mt-[16px]">
           <input type="radio" id="sameaddress" defaultChecked className="w-[20px] h-[20px]" />
           <label htmlFor="sameaddress">회원 정보와 동일</label>
-          {/* <input type="checkbox" id="newaddress" /> */}
-          {/* <label htmlFor="newaddress">새로운 배송지</label> */}
         </form>
         <section className="mt-[16px]">
           <UserEditForm

@@ -12,7 +12,6 @@ const handleSocialLogin = async (provider: OAuthProvider) => {
     provider: provider,
     options: {
       redirectTo: `${window.location.origin}/auth/callback`
-      // redirectTo: `${process.env.NEXT_PUBLIC_REDIRECT_URL}/auth/callback`
     }
   });
 

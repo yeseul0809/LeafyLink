@@ -1,17 +1,12 @@
 'use server';
 
 import { createClient } from '@/supabase/supabaseServer';
-import { CombinedProductData, ProductInfo } from './_components/Payment';
+import { ProductInfo } from './_components/Payment';
 
 export const getUserDate = async (userId: string) => {
   const supabaseSever = createClient();
   const { data, error } = await supabaseSever.from('User').select().eq('user_id', userId);
   return data;
-};
-
-export const getOrderData = async (userId: string) => {
-  const supabaseSever = createClient();
-  const { data, error } = await supabaseSever.from('Order').select().eq('order_user_id', userId);
 };
 
 export const updateStock = async (combinedData: ProductInfo) => {
@@ -40,11 +35,7 @@ export const updateStock = async (combinedData: ProductInfo) => {
       if (error) {
         throw error;
       }
-
-      console.log(`Stock updated for product_id ${product_id}: ${newStock}`);
     }
-
-    console.log('Stock updated successfully');
   } catch (error) {
     console.error('Error updating stock:', error);
   }

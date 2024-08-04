@@ -2,7 +2,7 @@
 
 import { useQuery } from '@tanstack/react-query';
 import React from 'react';
-import { getAllRecodeStramDB, getVideos } from '../actions';
+import { getVideos } from '../actions';
 import Link from 'next/link';
 import Image from 'next/image';
 
