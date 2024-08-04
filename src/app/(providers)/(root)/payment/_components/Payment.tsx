@@ -51,8 +51,6 @@ export default function PaymentPage() {
     queryFn: getUserInfo
   });
 
-  // console.log('userData::', userData);
-
   const [isOrderAble, setIsOrderAble] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState(userData && userData.phone);
   const [phoneParts, setPhoneParts] = useState([
@@ -156,8 +154,6 @@ export default function PaymentPage() {
 
     return { combinedData, totalCost, cart: !!dataString };
   };
-
-  const saveRestUserData = async () => {};
 
   const {
     data: productData,
