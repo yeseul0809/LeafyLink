@@ -3,27 +3,30 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 
 type VideoData = {
-  thumbnail_url: string;
-  stream_title: string;
-  description: string;
-  streamData: string;
-  livestream_id: string;
-  livestream_product_id: string;
-  uid: string;
+  streamData: [
+    {
+      thumbnail_url: string;
+      stream_title: string;
+      description: string;
+      livestream_id: string;
+      livestream_product_id: string;
+      uid: string;
+    }
+  ];
 };
 
 function LivestreamingCard({ videosData }: { videosData: VideoData }) {
   console.log(videosData);
   return (
-    <div className="lg:w-[505px] mr-5">
+    <div className="w-[505px]">
       <div>
         <div>
           <Link
-            href={`/livestreaming/video/${videosData.livestream_product_id}_${videosData.livestream_id}_${videosData.uid}`}
+            href={`/livestreaming/video/${videosData.streamData[0].livestream_product_id}_${videosData.streamData[0].livestream_id}_${videosData.streamData[0].uid}`}
           >
             <img
               src={videosData.streamData[0].thumbnail_url}
-              className="lg:w-full lg:h-[284px] w-[164px] h-[164px] bg-zinc-300 rounded-2xl cursor-pointer"
+              className="w-full h-[284px] bg-zinc-300 rounded-2xl cursor-pointer"
             ></img>
           </Link>
         </div>
@@ -40,7 +43,9 @@ function LivestreamingCard({ videosData }: { videosData: VideoData }) {
         <Link
           href={`/livestreaming/${videosData.livestream_product_id}_${videosData.livestream_id}_${videosData.uid}`}
         >
-          <button className="bg-[#3BB873] text-white px-6 py-3 rounded-lg">방송보러가기</button>
+          <button className="lg:w-[123px] lg:h-[44px] bg-[#3BB873] text-white px-6 py-3 rounded-lg text-sm">
+            방송보러가기
+          </button>
         </Link>
       </div>
     </div>
