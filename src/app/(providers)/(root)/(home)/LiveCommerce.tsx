@@ -35,7 +35,7 @@ function LiveCommerce({ category }: { category: string }) {
   const videosData = recodedVideos?.slice(0, 6);
 
   return (
-    <section className="w-full h-[604px] bg-[#F7FDFA] mx-auto lg:mt-[145px] lg:pb-[145px] mt-[48px] pb-[48px]">
+    <section className="w-full h-[604px] mx-auto mt-[140px] pb-[48px]">
       <div className="flex justify-around items-end text-center lg:pt-[85px] pt-[16px] mb-8">
         <div></div>
         <h2 className="text-center text-[32px] lg:mb-[38px]">라이브커머스</h2>

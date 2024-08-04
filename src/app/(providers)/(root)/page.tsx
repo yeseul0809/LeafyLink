@@ -11,14 +11,12 @@ import Advertising from './(home)/Advertising';
 function Home() {
   return (
     <div className="w-full">
-      <Carousel />
       <Categories />
       <NewProduct />
       <LiveCommerce category="all" />
       <Goods />
       <Recommend />
       <BestSeller />
-      <Advertising />
     </div>
   );
 }

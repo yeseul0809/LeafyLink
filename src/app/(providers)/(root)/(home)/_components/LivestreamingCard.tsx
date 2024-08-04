@@ -41,7 +41,7 @@ function LivestreamingCard({ videosData }: { videosData: VideoData }) {
           </p>
         </div>
         <Link
-          href={`/livestreaming/${videosData.livestream_product_id}_${videosData.livestream_id}_${videosData.uid}`}
+          href={`/livestreaming/${videosData.streamData[0].livestream_product_id}_${videosData.streamData[0].livestream_id}_${videosData.streamData[0].uid}`}
         >
           <button className="lg:w-[123px] lg:h-[44px] bg-[#3BB873] text-white px-6 py-3 rounded-lg text-sm">
             방송보러가기
