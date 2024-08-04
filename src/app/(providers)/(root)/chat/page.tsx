@@ -103,26 +103,6 @@ function ChatListPage() {
     fetchUnreadCounts();
   }, [chatrooms, user]);
 
-  if (!user) {
-    return (
-      <div className="max-w-[1180px] mx-auto p-4 mt-20 mb-[180px]">
-        <h1 className="text-[32px] font-semibold border-b pb-8 flex justify-center">
-          로그인이 필요합니다.
-        </h1>
-        <div className="flex justify-center items-center">
-          <div className="text-center">
-            <button
-              onClick={() => router.push('/login')}
-              className="mt-8 px-16 py-2 bg-primary-green-500 text-white rounded-lg hover:bg-primary-green-700"
-            >
-              LOGIN
-            </button>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
   const handleChatroomClick = (chatroomId: string) => {
     router.push(`/chat/${chatroomId}`);
   };

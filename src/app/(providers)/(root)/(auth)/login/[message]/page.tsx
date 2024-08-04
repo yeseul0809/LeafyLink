@@ -6,7 +6,7 @@ import showSwal from '../../../../../../utils/swal';
 
 function LoginPage({ params }: { params: { message: string } }) {
   useEffect(() => {
-    showSwal({ icon: 'info', title: '로그인이 필요한서비스입니다' });
+    showSwal('로그인이 필요한 서비스입니다.<br>로그인 후 이용해주세요.');
   }, []);
 
   return (
