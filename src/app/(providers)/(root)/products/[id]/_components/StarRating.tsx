@@ -7,11 +7,11 @@ interface StarRatingProps {
 
 function StarRating({ rating, setRating }: StarRatingProps) {
   return (
-    <div className="flex justify-center mb-4">
+    <div className="flex justify-center mb-8">
       {Array.from({ length: 5 }, (_, index) => {
         const star = index + 1;
         const isActive = rating >= star;
-        const starClass = `cursor-pointer text-4xl ${isActive ? 'text-green-300' : 'text-gray-400'}`;
+        const starClass = `cursor-pointer text-4xl ml-1 ${isActive ? 'text-primary-green-500' : 'text-BG/Regular'}`;
         return (
           <label key={star} className={starClass} htmlFor={`rating-${star}`}>
             <input

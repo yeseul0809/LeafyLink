@@ -1,5 +1,5 @@
 import React from 'react';
-import { getStream, getSellerData } from '../actions';
+import { getStream, getSellerData, getStreamUid } from '../actions';
 import { notFound } from 'next/navigation';
 import { createClient } from '@/supabase/supabaseServer';
 import Image from 'next/image';
@@ -10,6 +10,9 @@ export default async function StreamingPage({ params }: { params: { id: string }
   const supabaseServer = createClient();
   const streamId = params.id.split('_')[1];
   const stream = await getStream(streamId);
+
+  const streamUid = await getStreamUid(streamId);
+  console.log('streamUid::', streamUid);
 
   if (!stream) {
     return notFound();
@@ -35,7 +38,7 @@ export default async function StreamingPage({ params }: { params: { id: string }
       </div>
       <div className="relative aspect-video">
         <iframe
-          src={`https://${process.env.CLOUDFLARE_DOMAIN}/${streamId}/iframe`}
+          src={`https://${process.env.CLOUDFLARE_DOMAIN}/${streamUid}/iframe`}
           allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
           className="w-full h-[698px] rounded-2xl"
         ></iframe>

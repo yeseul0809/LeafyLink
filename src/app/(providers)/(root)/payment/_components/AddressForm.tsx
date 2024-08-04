@@ -168,7 +168,7 @@ export default function UserEditForm({
   return (
     <div>
       {/* 이름 입력 필드 */}
-      <div className="flex items-center">
+      <div className="flex items-center xs:flex-col xs:items-start">
         <label className="w-20 mr-12" htmlFor="receiver">
           받는 사람
         </label>
@@ -183,8 +183,8 @@ export default function UserEditForm({
       </div>
       {/* 우편번호 입력 필드 */}
 
-      <div className="flex justify-start items-start">
-        <div className="w-20 mr-12">주소</div>
+      <div className="flex justify-start items-start xs:flex-col xs:items-start">
+        <div className="w-20 mr-12 xs:mb-[8px] xs:mt-[12px]">주소</div>
         <div className="w-full">
           <input
             type="text"
@@ -242,7 +242,6 @@ export default function UserEditForm({
           />
         </div>
       </div>
-      {/* Phone Form 추가 */}
     </div>
   );
 }

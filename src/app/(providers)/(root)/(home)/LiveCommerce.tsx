@@ -7,8 +7,15 @@ import { useState } from 'react';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
+import LiveSection from '../livestreaming/_components/LiveSection';
+// import RecodeSection from '../livestreaming/_components/RecodeSection';
 
 function LiveCommerce() {
+  const [activeCategory, setActiveCategory] = useState<string>('all');
+  const handleClick = (buttonId: string) => {
+    setActiveCategory(activeCategory === buttonId ? 'none' : buttonId);
+  };
+
   // 페이지 네비게이션
   const router = useRouter();
   const redirect = (e: string) => {
@@ -33,7 +40,7 @@ function LiveCommerce() {
       </div>
       <div>
         <Swiper
-          slidesPerView={1}
+          slidesPerView={3}
           spaceBetween={30}
           loop={true}
           autoplay={{
@@ -50,15 +57,8 @@ function LiveCommerce() {
           modules={[Autoplay, Pagination, Navigation]}
           className="mySwiper lg:w-full lg:h-[461px] sm:w-[375px] sm:h-[200px] w-[375px] h-[200px]"
         >
-          {/* {images.map((src, index) => (
-            <SwiperSlide key={index} className="flex items-center justify-center relative">
-              <img
-                src={src}
-                className="object-cover lg:w-full lg:h-[461px] sm:w-[375px] sm:h-[200px] w-[375px] h-[200px]"
-                alt={`slide-${index}`}
-              />
-            </SwiperSlide>
-          ))} */}
+          <LiveSection category={activeCategory} />
+
           <div className="w-full flex justify-between items-center z-10 absolute top-1/2">
             <div className="custom-swiper-button custom-swiper-button-prev lg:px-10 px-[20px]">
               <img
