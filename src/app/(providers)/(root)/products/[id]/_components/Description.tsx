@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import DOMPurify from 'dompurify';
+import 'react-quill/dist/quill.snow.css';
 
 interface ProductDescriptionProps {
   productDescription: string;
@@ -16,8 +17,8 @@ function ProductDescription({ productDescription }: ProductDescriptionProps) {
   }, [productDescription]);
 
   return (
-    <section className="py-11 flex flex-col text-center items-center w-full">
-      <div dangerouslySetInnerHTML={{ __html: sanitizedProduct }} />
+    <section className="pt-[82px] px-[270px] pb-[110px] flex flex-col text-center items-center w-full">
+      <div className="ql-editor w-[700px]" dangerouslySetInnerHTML={{ __html: sanitizedProduct }} />
     </section>
   );
 }

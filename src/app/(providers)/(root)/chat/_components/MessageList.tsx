@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { addHours, formatDate } from '../_utils/timeUtils';
 import { Message } from '@/types/message';
 import Image from 'next/image';
@@ -7,10 +7,22 @@ interface MessageListProps {
   isMessagesLoaded: boolean;
   messages: Message[];
   userId: string;
-  otherUserInfo: { user_name: string; avatar_url: string } | null;
+  otherUserInfo: { user_name?: string; business_name?: string; avatar_url: string } | null;
 }
 
 function MessageList({ isMessagesLoaded, messages, userId, otherUserInfo }: MessageListProps) {
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  const scrollToBottom = () => {
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
+
   return (
     <div className="w-full max-h-[484px] overflow-y-auto custom-scrollbar pr-[14px]">
       {isMessagesLoaded && messages.length === 0 ? (
@@ -84,6 +96,7 @@ function MessageList({ isMessagesLoaded, messages, userId, otherUserInfo }: Mess
               </div>
             );
           })}
+          <div ref={messagesEndRef} />
         </div>
       )}
     </div>
