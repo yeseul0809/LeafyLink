@@ -6,12 +6,11 @@
   @apply w-5 h-5 appearance-none border border-black checked:bg-[#3BB873] checked:bg-[url(/icons/check.png)] checked:border-0 bg-no-repeat bg-center;
 }
 
-/* 아코디언 커스텀 스타일 추가 */
 .szh-accordion__item-btn {
-  @apply block w-full p-0 bg-none border-none text-left cursor-pointer;
+  @apply block w-full p-0 bg-none border-none cursor-pointer;
 }
 
-.szh-accordion__item-btn:focus {
+.szh-accordion__item-btn:focus .szh-accordion__item-btn:focus-visible {
   @apply outline-none;
 }
 

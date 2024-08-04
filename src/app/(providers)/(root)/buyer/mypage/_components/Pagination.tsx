@@ -45,7 +45,7 @@ export default function Pagination({
   };
 
   return (
-    <div className="flex justify-center items-center mt-8 text-gray-500 text-sm mb-[180px]">
+    <div className="flex justify-center items-center mt-[80px] text-gray-500 text-sm mb-[180px]">
       <ul className="flex items-center space-x-2">
         <li className={`relative cursor-pointer ${startPage === 1 ? 'invisible' : ''}`}>
           <div className="w-12 h-6 flex items-center justify-center" onClick={handlePrev}>
