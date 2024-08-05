@@ -49,23 +49,18 @@ function Header() {
               .maybeSingle();
 
             if (error) {
-              console.log('Error fetching seller data:', error);
               return null;
             }
 
-            console.log('Fetched Seller Data:', data);
             return data;
           } catch (error) {
-            console.log('Error in fetchSellerData:', error);
             return null;
           }
         };
 
         const sellerData = await fetchSellerData(userId);
         if (sellerData) {
-          console.log('Seller Data:', sellerData);
           setBusinessName(sellerData.business_name);
-          console.log('Updated Business Name:', sellerData.business_name);
           setProfileLink('/seller/mypage/profile');
         } else {
           setProfileLink('/buyer/mypage/profile');
@@ -96,7 +91,6 @@ function Header() {
       },
       (error) => {
         setLoading(false);
-        console.log('위도경도 에러', error);
       }
     );
   }, []);

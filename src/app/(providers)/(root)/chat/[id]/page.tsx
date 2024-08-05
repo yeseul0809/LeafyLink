@@ -69,7 +69,6 @@ function ChatPage({ params }: ParamsProps) {
       .single();
 
     if (error || !data) {
-      console.log('채팅방 정보 가져오는 중 에러발생', error);
       return;
     }
 

@@ -8,8 +8,6 @@ export default function LiveQuitButton({ streamId }: { streamId: string }) {
   const router = useRouter();
 
   const deleteLivestreamDB = async (streamId: string) => {
-    console.log('streamId::', streamId);
-
     const supabase = createClient();
 
     const { error } = await supabase
