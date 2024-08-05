@@ -1,8 +1,8 @@
 'use client';
 
 import React, { useEffect, useRef, useState } from 'react';
-import { createClient } from '@/supabase/supabaseClient';
 import Image from 'next/image';
+import { createClient } from '@/supabase/supabaseClient';
 
 declare global {
   interface Window {
@@ -27,7 +27,6 @@ interface AddressFormProps {
   initialDetailAddress: string;
   initialAddressCode: string;
   initialUserName: string;
-  // avatarUrl?: string;
   initialPhone: string;
   userId: string;
 }

@@ -58,8 +58,6 @@ function transformProductData(productData: ProductData): TransformedProduct[] {
 }
 
 async function callback(rsp: any, productData: ProductInfo, userId: string) {
-  console.log('productData::', productData);
-
   const { success, error_msg, merchant_uid, imp_uid } = rsp;
   if (success) {
     const supabase = createClient();

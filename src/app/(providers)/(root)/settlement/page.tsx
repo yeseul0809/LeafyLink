@@ -1,6 +1,6 @@
 import React from 'react';
-import { TransformedProduct } from '../payment/payment';
 import Image from 'next/image';
+import { TransformedProduct } from '../payment/payment';
 import { getUserData } from './actions';
 import RedirectButton from './_components/RedirectButton';
 

@@ -1,8 +1,8 @@
 'use client';
 
-import React, { useState } from 'react';
-import { getCartIsChecked, toggleCheckbox } from '../actions';
+import React from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { getCartIsChecked, toggleCheckbox } from '../actions';
 import { useCartStore } from '@/stores';
 
 export default function Checkbox({ productId, userId }: { productId: string; userId: string }) {

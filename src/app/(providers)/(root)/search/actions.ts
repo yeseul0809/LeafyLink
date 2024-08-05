@@ -1,3 +1,5 @@
+'use server';
+
 import { createClient } from '@/supabase/supabaseClient';
 
 interface Product {

@@ -1,9 +1,9 @@
 'use client';
 
 import React, { useEffect } from 'react';
-import { createClient } from '@/supabase/supabaseClient';
-import { useRouter } from 'next/navigation';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
+import { createClient } from '@/supabase/supabaseClient';
 
 function AuthCallback() {
   const router = useRouter();
@@ -20,21 +20,10 @@ function AuthCallback() {
         address: '',
         created_at: user.created_at
       };
-      const sellerData = {
-        // 판매자
-        seller_id: user.id,
-        email: user.email,
-        user_name: user.user_metadata.full_name,
-        address: '',
-        phone: '000-0000-0000',
-        avatar_url: user.user_metadata.avatar_url
-      };
 
       try {
         const supabase = createClient();
         const { error } = await supabase.from('User').upsert([userData]);
-        // const { error } = await supabase.from('Seller').upsert([sellerData]);
-
         if (error) {
           console.error('유저 정보를 데이터베이스에 저장하는 중 에러 발생:', error.message);
         } else {
@@ -52,8 +41,6 @@ function AuthCallback() {
         .select('user_id')
         .eq('user_id', userId)
         .single();
-
-      console.log('error::', error);
 
       if (error && error.code !== 'PGRST116') {
         // PGRST116 is the code for no rows found in supabase-js

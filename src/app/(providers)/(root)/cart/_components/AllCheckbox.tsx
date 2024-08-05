@@ -1,10 +1,10 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { getUserSession, allToggleCheckbox, Product } from '../actions';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { createClient } from '@/supabase/supabaseClient';
 import { useCartStore } from '@/stores';
+import { createClient } from '@/supabase/supabaseClient';
+import { allToggleCheckbox } from '../actions';
 
 const getCartStatus = async (userId: string) => {
   if (!userId) {

@@ -1,10 +1,10 @@
 'use client';
 
-import { useQuery } from '@tanstack/react-query';
 import React from 'react';
-import { getAllRecodeStramDB, getVideos } from '../actions';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useQuery } from '@tanstack/react-query';
+import { getVideos } from '../actions';
 
 export default function StreamSection({ category }: { category: string }) {
   const {

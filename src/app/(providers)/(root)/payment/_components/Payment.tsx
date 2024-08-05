@@ -2,12 +2,12 @@
 
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
-import { createClient } from '@/supabase/supabaseClient';
 import { useQuery } from '@tanstack/react-query';
 import { useSearchParams } from 'next/navigation';
 import { getUserDate } from '../actions';
 import UserEditForm from './AddressForm';
 import paymentHandler from '../payment';
+import { createClient } from '@/supabase/supabaseClient';
 
 interface Product {
   productId: string;

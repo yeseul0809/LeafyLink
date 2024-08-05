@@ -1,8 +1,7 @@
 'use server';
 
-import { createClient } from '@/supabase/supabaseServer';
-import { Database } from '@/types/supabase';
 import { revalidatePath } from 'next/cache';
+import { createClient } from '@/supabase/supabaseServer';
 
 export const getUserSession = async () => {
   const supabaseSever = createClient();
@@ -22,8 +21,8 @@ export interface Product {
   thumbnail_url: string;
   description: string;
   stock: number;
-  created_at: string; // ISO 날짜 형식
-  updated_at: string; // ISO 날짜 형식
+  created_at: string;
+  updated_at: string;
   product_seller_id: string;
   count: number;
 }

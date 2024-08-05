@@ -1,14 +1,12 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
-import { createClient } from '@/supabase/supabaseClient';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import React, { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import { useMutation } from '@tanstack/react-query';
+import { createClient } from '@/supabase/supabaseClient';
 import { useCartStore } from '@/stores';
-import CartPage from '../page';
 
 export default function PurchaseButton({ userId }: { userId: string }) {
-  const [isDisable, setIsDisable] = useState(true);
   const router = useRouter();
   const { cart, isAnyChecked, initializeCart } = useCartStore((state) => ({
     cart: state.cart,
@@ -20,13 +18,8 @@ export default function PurchaseButton({ userId }: { userId: string }) {
     const checkCartStatus = async () => {
       await initializeCart(userId);
     };
-
     checkCartStatus();
   }, [initializeCart, userId]);
-
-  useEffect(() => {
-    setIsDisable(!isAnyChecked);
-  }, [isAnyChecked]);
 
   const getCartData = async () => {
     const supabase = createClient();

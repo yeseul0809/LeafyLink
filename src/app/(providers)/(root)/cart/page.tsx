@@ -1,6 +1,6 @@
 import React from 'react';
-import { getCartData, getProductData, getUserSession } from './actions';
 import Image from 'next/image';
+import { getCartData, getProductData, getUserSession } from './actions';
 import QuantityButton from './_components/QuantityButton';
 import ProductPrice from './_components/ProductPrice';
 import DeleteButton from './_components/DeleteButton';

@@ -1,7 +1,6 @@
-import { notFound } from 'next/navigation';
 import Image from 'next/image';
-import { getProductCount, getProductDatas, getTotalPages } from './actions';
 import Link from 'next/link';
+import { getProductCount, getProductDatas, getTotalPages } from './actions';
 import Searchform from './_components/Searchform';
 import SelectBox from './_components/SelectBox';
 

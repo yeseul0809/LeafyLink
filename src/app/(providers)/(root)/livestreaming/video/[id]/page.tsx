@@ -1,9 +1,9 @@
+import Link from 'next/link';
+import Image from 'next/image';
+import { notFound } from 'next/navigation';
 import { createClient } from '@/supabase/supabaseServer';
 import { getSellerData, getStream } from '../../actions';
-import { notFound } from 'next/navigation';
-import Link from 'next/link';
 import LiveQuitButton from '../../_components/LiveQuitButton';
-import Image from 'next/image';
 
 export default async function RecodedVideoPage({ params }: { params: { id: string } }) {
   const supabaseServer = createClient();
@@ -44,12 +44,12 @@ export default async function RecodedVideoPage({ params }: { params: { id: strin
       <div className="flex justify-between mt-[32px] xs:mt-[16px] xs:flex-col w-full">
         <div className="flex gap-[32px] justify-between items-start xs:mb-[16px]">
           <div className="flex flex-col gap-[8px]">
-            <div className="flex gap-[16px]">
-              <div className="rounded-full bg-[#16140b] px-[16px] py-[9px] text-[13px] h-[36px] text-center xs:py-[6px] xs:px-[12px]">
+            <div className="flex gap-[16px] items-center mb-[20px] xs:mb-[16px]">
+              <div className="rounded-full bg-[#F9F3CF] px-[16px] py-[9px] text-[13px] h-[36px] text-center xs:py-[9px] xs:px-[8px] xs:w-[68px]">
                 {stream.category}
               </div>
               <div>
-                <p className="text-[20px] font-semibold mb-[20px]">{stream.stream_title}</p>
+                <p className="text-[20px] font-semibold xs:text-[16px]">{stream.stream_title}</p>
               </div>
             </div>
             <p className="text-[14px]">{stream.description}</p>
@@ -68,15 +68,15 @@ export default async function RecodedVideoPage({ params }: { params: { id: strin
 
       {stream.livestream_seller_id === sessionId! ? (
         <div className="bg-yellow-200 text-black p-5 rounded-md mt-[12px] w-full flex flex-col gap-[8px]">
-          <div className="flex flex-wrap">
+          <div className="flex flex-wrap gap-1">
             <span className="font-semibold">Stream URL: </span>
             <span>rtmps://live.cloudflare.com:443/live/</span>
           </div>
-          <div className="flex flex-wrap">
+          <div className="flex flex-wrap gap-1">
             <span className="font-semibold">Secret Key: </span>
             <span className="break-all">{stream.stream_key}</span>
           </div>
-          <LiveQuitButton streamId={streamId} />
+          {/* <LiveQuitButton streamId={streamId} /> */}
         </div>
       ) : null}
     </div>

@@ -1,10 +1,10 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import StreamSection from './_components/StreamSection';
 import { useQuery } from '@tanstack/react-query';
+import StreamSection from './_components/StreamSection';
 import { createClient } from '@/supabase/supabaseClient';
 
 export default function StreamListPage() {

@@ -44,7 +44,6 @@ export default function SelectDropdown({ onCategoryChange }: SelectDropdownProps
       ...provided,
       height: '58px',
       borderRadius: 0
-      // minHeight: '40px'
     }),
     singleValue: (provided: any) => ({
       ...provided,
@@ -52,10 +51,10 @@ export default function SelectDropdown({ onCategoryChange }: SelectDropdownProps
     }),
     option: (provided: any, state: any) => ({
       ...provided,
-      color: state.isSelected ? '#111' : '#111', // 선택된 옵션 색상
-      backgroundColor: state.isSelected ? '#3BB873' : '#fff', // 선택된 옵션 배경색
+      color: state.isSelected ? '#111' : '#111',
+      backgroundColor: state.isSelected ? '#3BB873' : '#fff',
       '&:hover': {
-        backgroundColor: '#F7F7FB' // 옵션에 마우스를 올렸을 때 배경색
+        backgroundColor: '#F7F7FB'
       }
     }),
     menu: (provided: any) => ({
