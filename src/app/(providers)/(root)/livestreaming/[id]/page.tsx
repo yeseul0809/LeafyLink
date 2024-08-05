@@ -12,7 +12,6 @@ export default async function StreamingPage({ params }: { params: { id: string }
   const stream = await getStream(streamId);
 
   const streamUid = await getStreamUid(streamId);
-  console.log('streamUid::', streamUid);
 
   if (!stream) {
     return notFound();
