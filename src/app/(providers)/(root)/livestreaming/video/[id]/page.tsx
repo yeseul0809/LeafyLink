@@ -45,7 +45,7 @@ export default async function RecodedVideoPage({ params }: { params: { id: strin
         <div className="flex gap-[32px] justify-between items-start xs:mb-[16px]">
           <div className="flex flex-col gap-[8px]">
             <div className="flex gap-[16px]">
-              <div className="rounded-full bg-[#F9F3CF] px-[16px] py-[9px] text-[13px] h-[36px] text-center xs:py-[6px] xs:px-[12px]">
+              <div className="rounded-full bg-[#16140b] px-[16px] py-[9px] text-[13px] h-[36px] text-center xs:py-[6px] xs:px-[12px]">
                 {stream.category}
               </div>
               <div>

@@ -308,13 +308,10 @@ function Header() {
           >
             <Image src="/icons/icon-cart.svg" alt="cart" width={32} height={32}></Image>
           </button>
-          <button
-            className="ml-[48px]"
-            onClick={() => {
-              redirect(`/mypage`);
-            }}
-          >
-            <Image src="/icons/icon-mypage.svg" alt="mypage" width={32} height={32}></Image>
+          <button className="ml-[48px]">
+            <Link href={profileLink}>
+              <Image src="/icons/icon-mypage.svg" alt="mypage" width={32} height={32}></Image>
+            </Link>
           </button>
 
           {isOpenSearch && (

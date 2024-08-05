@@ -33,6 +33,7 @@ function LiveCommerce({ category }: { category: string }) {
   // }
 
   const videosData = recodedVideos?.slice(0, 6);
+  console.log('videosData:::', videosData);
 
   return (
     <section className="w-full h-[604px] mx-auto mt-[140px] pb-[48px]">
@@ -51,7 +52,7 @@ function LiveCommerce({ category }: { category: string }) {
       <div className="flex w-[1240px] m-auto overflow-hidden">
         <Swiper slidesPerView={2.5} spaceBetween={80} className="mySwiper">
           {videosData?.map((video) => (
-            <SwiperSlide>
+            <SwiperSlide key={video.streamData[0].livestream_id}>
               <LivestreamingCard videosData={video} />
             </SwiperSlide>
           ))}

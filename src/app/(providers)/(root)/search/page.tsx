@@ -1,23 +1,26 @@
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
-import { getAllProductDatas, getProductDatas, getTotalPages } from './actions';
+import { getProductCount, getProductDatas, getTotalPages } from './actions';
 import Link from 'next/link';
 import Searchform from './_components/Searchform';
+import SelectBox from './_components/SelectBox';
 
 interface Props {
   searchParams: {
     page?: string;
     keyword: string;
+    sort?: string;
   };
 }
 
 export default async function SearchPage({ searchParams }: Props) {
   const keyword = decodeURIComponent(searchParams.keyword || '');
   const currentPage = parseInt(searchParams.page || '1', 10);
+  const sortParam = searchParams.sort || 'new';
   const perPage = 20;
 
-  const allProductsData = await getAllProductDatas(keyword);
-  const searchDatas = await getProductDatas(keyword, currentPage, perPage);
+  const allProductsData = await getProductCount(keyword);
+  const searchDatas = await getProductDatas(keyword, currentPage, perPage, sortParam);
   const totalPages = await getTotalPages(keyword, perPage);
 
   return (
@@ -25,9 +28,12 @@ export default async function SearchPage({ searchParams }: Props) {
       <h1 className="text-[32px] font-semibold text-center xs:text-[20px]">검색 결과</h1>
       <Searchform defaultKeword={keyword} currentPage={currentPage} />
       <div className="border-t border-Line/Regular w-full mb-[48px]" />
-      <p className="text-[15px] text-font/sub2 mb-[31px]">
-        전체 <span className="text-black font-semibold">{allProductsData.length}</span> 개
-      </p>
+      <div className="flex justify-between mb-[31px] items-center">
+        <p className="text-[15px] text-font/sub2">
+          전체 <span className="text-black font-semibold">{allProductsData}</span> 개
+        </p>
+        <SelectBox />
+      </div>
       {searchDatas.length === 0 ? (
         <div className="flex flex-col items-center justify-center mt-[87px] gap-[16px]">
           <p className="text-[20px] font-semibold">검색결과가 없습니다.</p>

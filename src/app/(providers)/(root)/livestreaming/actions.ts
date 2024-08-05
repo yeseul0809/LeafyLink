@@ -93,15 +93,11 @@ export const startLiveStreaming = async (_: any, formData: FormData) => {
 
   const streamServerData = await response.json();
   const sellerSession = await supabaseServer.auth.getUser();
-  console.log('sellerSession::', sellerSession);
-
   const productId = InputDatas.product;
   let splitProductId;
   if (productId) {
     splitProductId = productId.split('/')[4];
   }
-
-  console.log('splitProductId::', splitProductId);
 
   if (InputDatas.thumbnail instanceof File) {
     const filename = `stream/${sellerSession.data.user?.id}/${uuidv4()}-${InputDatas.thumbnail.name}`;
@@ -170,7 +166,6 @@ interface Livestream {
 export const getStream = async (id: string): Promise<Livestream | null> => {
   const supabaseServer = createClient();
   const { data, error } = await supabaseServer.from('Livestream').select().eq('livestream_id', id);
-  console.log(data);
 
   if (error) {
     console.error('Error fetching stream:', error);

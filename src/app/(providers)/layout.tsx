@@ -11,10 +11,9 @@ const ProvidersLayout = ({ children }: PropsWithChildren) => {
   return (
     <QueryProvider>
       <Header />
-      <Carousel />
+
       <div className="max-w-[1280px] px-[20px] mx-auto">{children}</div>
 
-      <Advertising />
       <TopButton />
       <Footer />
     </QueryProvider>

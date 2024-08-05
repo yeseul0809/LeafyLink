@@ -57,6 +57,10 @@ export default function SelectDropdown({ onCategoryChange }: SelectDropdownProps
       '&:hover': {
         backgroundColor: '#F7F7FB' // 옵션에 마우스를 올렸을 때 배경색
       }
+    }),
+    menu: (provided: any) => ({
+      ...provided,
+      marginTop: '0px'
     })
   };
 

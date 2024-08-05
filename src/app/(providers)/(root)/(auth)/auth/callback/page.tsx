@@ -53,6 +53,8 @@ function AuthCallback() {
         .eq('user_id', userId)
         .single();
 
+      console.log('error::', error);
+
       if (error && error.code !== 'PGRST116') {
         // PGRST116 is the code for no rows found in supabase-js
         console.error('사용자 확인 중 에러 발생:', error.message);
