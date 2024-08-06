@@ -33,8 +33,8 @@ export default async function SettlementPage({ searchParams }: { searchParams: a
         </h2>
         {productDatas.map((data) => {
           return (
-            <>
-              <div key={data.product_id} className="flex items-center gap-[20px] xs:gap-[12px]">
+            <div key={data.product_id}>
+              <div className="flex items-center gap-[20px] xs:gap-[12px]">
                 <div className="w-[96px] h-[96px] relative xs:w-[100px] xs:h-[100px]">
                   <Image
                     src={data.thumbnail_url}
@@ -49,7 +49,7 @@ export default async function SettlementPage({ searchParams }: { searchParams: a
                 </div>
               </div>
               <div className="w-full border-b border-Line/Regular mb-[32px] mt-[32px] xs:mb-[24px] xs:mt-[24px]" />
-            </>
+            </div>
           );
         })}
         <div>

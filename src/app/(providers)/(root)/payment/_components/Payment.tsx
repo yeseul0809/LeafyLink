@@ -60,8 +60,6 @@ export default function PaymentPage() {
     queryFn: getUserInfo
   });
 
-  // console.log('userData::', userData.user_id);
-
   let products: Product[] = [];
   const searchParams = useSearchParams();
   const dataString = searchParams.get('data');

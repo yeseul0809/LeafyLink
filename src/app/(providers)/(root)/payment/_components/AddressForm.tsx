@@ -29,7 +29,7 @@ interface AddressFormProps {
   initialUserName: string;
   initialPhone: string;
   userId: string;
-  onFormCheckChange: (isFormCheck: boolean) => void; // 추가된 콜백 함수
+  onFormCheckChange: (isFormCheck: boolean) => void;
 }
 
 export default function UserEditForm({
