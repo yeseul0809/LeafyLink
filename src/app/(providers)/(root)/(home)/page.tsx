@@ -1,12 +1,12 @@
 import React from 'react';
-import Carousel from './(home)/Carousel';
-import Categories from './(home)/Categories';
-import NewProduct from './(home)/NewProduct';
-import LiveCommerce from './(home)/LiveCommerce';
-import Goods from './(home)/Goods';
-import Recommend from './(home)/Recommend';
-import BestSeller from './(home)/BestSeller';
-import Advertising from './(home)/Advertising';
+import Carousel from './Carousel';
+import Categories from './Categories';
+import NewProduct from './NewProduct';
+import LiveCommerce from './LiveCommerce';
+import Goods from './Goods';
+import Recommend from './Recommend';
+import BestSeller from './BestSeller';
+import Advertising from './Advertising';
 
 function Home() {
   return (
