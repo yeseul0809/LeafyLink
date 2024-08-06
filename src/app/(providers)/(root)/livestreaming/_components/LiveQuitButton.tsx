@@ -1,8 +1,8 @@
 'use client';
 
-import { createClient } from '@/supabase/supabaseClient';
 import React from 'react';
 import { useRouter } from 'next/navigation';
+import { createClient } from '@/supabase/supabaseClient';
 
 export default function LiveQuitButton({ streamId }: { streamId: string }) {
   const router = useRouter();
@@ -20,6 +20,7 @@ export default function LiveQuitButton({ streamId }: { streamId: string }) {
     }
     router.push('/');
   };
+
   return (
     <button
       onClick={() => deleteLivestreamDB(streamId)}

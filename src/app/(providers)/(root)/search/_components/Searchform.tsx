@@ -1,8 +1,8 @@
 'use client';
 
 import React from 'react';
-import { useRouter } from 'next/navigation';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
 export default function Searchform({
   defaultKeword,
@@ -26,21 +26,21 @@ export default function Searchform({
   return (
     <form
       onSubmit={handleSubmit}
-      className="relative flex justify-center mt-[32px] mb-[48px] xs:mt-[16px] xs:mb-[20px]"
+      className="relative flex justify-center mt-[32px] mb-[48px] xs:mt-[16px] xs:mb-[20px] "
     >
       <div className="relative">
         <input
           type="text"
           name="keyword"
           defaultValue={defaultKeword}
-          className="pr-[20px] py-[16px] pl-[46px] text-font/sub2 border border-Line/Regular rounded-[100px] w-[820px] text-[16px]"
+          className="pr-[20px] py-[16px] pl-[46px] text-font/sub2 border border-Line/Regular rounded-[100px] w-[820px] text-[16px] xs:w-[337px]"
         />
         <Image
           src="/icons/reading-glasses.png"
           alt="돋보기"
           width={20}
           height={20}
-          className="absolute top-5 left-[2%]"
+          className="absolute top-5 left-[20px]"
         />
       </div>
     </form>

@@ -1,10 +1,10 @@
 'use client';
 
 import React, { useState } from 'react';
-import SelectDropdown from './SelectDropdown';
 import { useFormState } from 'react-dom';
-import { startLiveStreaming } from '../actions';
 import Image from 'next/image';
+import SelectDropdown from './SelectDropdown';
+import { startLiveStreaming } from '../actions';
 
 function LiveRegisterForm() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
@@ -18,7 +18,6 @@ function LiveRegisterForm() {
 
     if (!files) return;
     const file = files[0];
-
     const validImageTypes = ['image/jpeg', 'image/png', 'image/jpg'];
 
     if (file) {
@@ -28,7 +27,8 @@ function LiveRegisterForm() {
         return;
       }
 
-      const maxSize = 2 * 1024 * 1024; // 2MB
+      const maxSize = 2 * 1024 * 1024;
+
       if (file.size > maxSize) {
         alert('파일 크기는 2MB 이하이어야 합니다');
         event.target.value = '';
@@ -45,6 +45,7 @@ function LiveRegisterForm() {
   const handleCategoryChange = (category: string) => {
     setSelectedCategory(category);
   };
+
   return (
     <form action={formAction} className="flex flex-col gap-[12px]">
       <div className="flex gap-[16px] items-center xs:flex-col xs:items-start xs:gap-[8px]">

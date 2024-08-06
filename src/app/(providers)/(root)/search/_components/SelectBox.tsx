@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import Select, { SingleValue, ActionMeta } from 'react-select';
 
 interface Option {
@@ -8,20 +9,23 @@ interface Option {
   label: string;
 }
 
-interface SelectDropdownProps {
-  onCategoryChange: (category: string) => void;
-}
-
-export default function SelectDropdown({ onCategoryChange }: SelectDropdownProps) {
+export default function SelectBox() {
   const category: Option[] = [
-    { value: 'null', label: '카테고리를 선택하세요' },
-    { value: '씨앗', label: '씨앗' },
-    { value: '모종', label: '모종' },
-    { value: '재배키트', label: '재배키트' },
-    { value: '흙,비료', label: '흙,비료' },
-    { value: '원예용품', label: '원예용품' }
+    { value: 'new', label: '신상품' },
+    { value: 'name', label: '상품명' },
+    { value: 'low', label: '낮은가격' },
+    { value: 'high', label: '높은가격' },
+    { value: 'popular', label: '인기상품' },
+    { value: 'review', label: '사용후기' }
   ];
-  const [categoryState, setCategoryState] = useState<Option | null>(category[0]);
+
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const sortParam = searchParams.get('sort') || 'new';
+  const initialOption = category.find((option) => option.value === sortParam) || category[0];
+
+  const [categoryState, setCategoryState] = useState<Option | null>(initialOption);
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
@@ -31,7 +35,9 @@ export default function SelectDropdown({ onCategoryChange }: SelectDropdownProps
   const handleChange = (newValue: SingleValue<Option>, actionMeta: ActionMeta<Option>) => {
     setCategoryState(newValue);
     if (newValue) {
-      onCategoryChange(newValue.value);
+      const url = new URL(window.location.href);
+      url.searchParams.set('sort', newValue.value);
+      router.push(url.toString());
     }
   };
 
@@ -42,23 +48,28 @@ export default function SelectDropdown({ onCategoryChange }: SelectDropdownProps
   const customStyles = {
     control: (provided: any) => ({
       ...provided,
-      height: '58px',
+      height: '36px',
+      width: '110px',
       borderRadius: 0
     }),
     singleValue: (provided: any) => ({
       ...provided,
-      color: '#767676'
+      color: '#767676',
+      width: '110px'
     }),
     option: (provided: any, state: any) => ({
       ...provided,
+      width: '110px',
       color: state.isSelected ? '#111' : '#111',
-      backgroundColor: state.isSelected ? '#3BB873' : '#fff',
+      backgroundColor: state.isSelected ? '#fff' : '#fff',
+      fontWeight: state.isSelected ? 'bold' : 'normal',
       '&:hover': {
         backgroundColor: '#F7F7FB'
       }
     }),
     menu: (provided: any) => ({
       ...provided,
+      width: '110px',
       marginTop: '0px'
     })
   };
@@ -68,8 +79,7 @@ export default function SelectDropdown({ onCategoryChange }: SelectDropdownProps
       styles={customStyles}
       options={category}
       onChange={handleChange}
-      defaultValue={category[0]}
-      className="w-full"
+      value={categoryState}
     />
   );
 }

@@ -40,3 +40,15 @@ export const updateStock = async (combinedData: ProductInfo) => {
     console.error('Error updating stock:', error);
   }
 };
+
+export const updateUserData = async (
+  userId: string,
+  addressDetail: string,
+  phoneNumber: string
+) => {
+  const supabaseServer = createClient();
+  const { error } = await supabaseServer
+    .from('User')
+    .update({ address_detail: addressDetail, phone: phoneNumber })
+    .eq('user_id', userId);
+};
