@@ -136,7 +136,7 @@ export default function ProductTable({ sellerId }: ProductTableProps) {
   };
 
   if (loading) {
-    return <div>Loading...</div>;
+    return;
   }
 
   return (
@@ -156,19 +156,19 @@ export default function ProductTable({ sellerId }: ProductTableProps) {
               <div className="w-[178px] h-[56px] p-[16px] flex justify-center items-center">
                 카테고리
               </div>
-              <div className="flex-1 p-[16px] flex justify-center items-center overflow-hidden whitespace-nowrap text-ellipsis">
+              <div className="flex-1 px-[20px] py-[16px] flex justify-center items-center truncate ">
                 상품명
               </div>
-              <div className="w-[130px] h-[56px] p-[16px] flex justify-center items-center text-[16px] font-normal leading-[24px] tracking-[-0.4px]">
+              <div className="w-[130px] h-[56px] p-[16px] flex justify-center items-center ">
                 가격
               </div>
-              <div className="w-[130px] h-[56px] p-[16px] flex justify-center items-center text-[16px] font-normal leading-[24px] tracking-[-0.4px]">
+              <div className="w-[130px] h-[56px] p-[16px] flex justify-center items-center ">
                 수량
               </div>
-              <div className="w-[130px] h-[56px] p-[16px] flex justify-center items-center text-[16px] font-normal leading-[24px] tracking-[-0.4px]">
+              <div className="w-[130px] h-[56px] p-[16px] flex justify-center items-center ">
                 상태
               </div>
-              <div className="w-[130px] h-[56px] p-[16px] flex justify-center items-center text-[16px] font-normal leading-[24px] tracking-[-0.4px]">
+              <div className="w-[130px] h-[56px] p-[16px] flex justify-center items-center ">
                 수정
               </div>
             </div>
@@ -181,9 +181,11 @@ export default function ProductTable({ sellerId }: ProductTableProps) {
                 <div className="flex w-[178px] h-[64px] p-[22px_16px] justify-center items-center gap-2.5 text-[14px] font-normal leading-[20px] tracking-[-0.35px] text-font/sub2">
                   {product.category}
                 </div>
-                <div className="flex p-[22px_16px] items-center gap-2.5 flex-1 text-[14px] font-normal leading-[20px] tracking-[-0.35px] text-font/main  overflow-hidden whitespace-nowrap text-ellipsis">
+
+                <div className="flex p-[22px_16px] items-center gap-2.5 flex-1 text-[14px] font-normal leading-[20px] tracking-[-0.35px] text-font/main overflow-hidden whitespace-nowrap flex p-[22px_16px] items-center gap-2.5 flex-1 text-[14px] font-normal leading-[20px] tracking-[-0.35px] text-font/main truncate">
                   {product.title}
                 </div>
+
                 <div className="flex w-[130px] h-[64px] p-[22px_16px] justify-center items-center gap-2.5 text-[14px] font-normal leading-[20px] tracking-[-0.35px] text-font/sub2 overflow-hidden whitespace-nowrap text-ellipsis">
                   {formatCurrency(product.price ?? 0)}원
                 </div>
