@@ -9,14 +9,14 @@ interface ActiveTabProps {
 
 function ActiveTab({ activeTab, reviewCount, setActiveTab, handleScrollToReview }: ActiveTabProps) {
   return (
-    <nav className="flex justify-center mt-[80px] font-bold text-[22px]">
+    <nav className="flex justify-center mt-[80px]  text-[22px]">
       <button
         onClick={() => {
           setActiveTab('description');
         }}
         className={`w-full border-b-2 py-3 text-[18px] ${
           activeTab === 'description'
-            ? 'border-primary-green-500 text-primary-green-500'
+            ? 'border-primary-green-500 text-primary-green-500 font-bold'
             : 'border-gray-200'
         }`}
       >
@@ -29,7 +29,7 @@ function ActiveTab({ activeTab, reviewCount, setActiveTab, handleScrollToReview 
         }}
         className={`w-full border-b-2 py-3 text-[18px] ${
           activeTab === 'reviews'
-            ? 'border-primary-green-500 text-primary-green-500'
+            ? 'border-primary-green-500 text-primary-green-500 font-bold'
             : 'border-gray-200'
         }`}
       >

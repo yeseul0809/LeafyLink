@@ -31,6 +31,12 @@ const ProductCard = ({ product }: { product: Product }) => {
   };
 
   const handleAddToCart = async () => {
+    if (!user) {
+      showSwal('로그인이 필요한 서비스입니다.<br>로그인 후 이용해주세요.');
+      router.push(`/login`);
+      return;
+    }
+
     const cartItemData = {
       cart_product_id: product.product_id,
       count: count,
@@ -40,7 +46,7 @@ const ProductCard = ({ product }: { product: Product }) => {
     const result = await createCartItem(cartItemData, user.id);
 
     if (result) {
-      showSwal('선택하신 상품이 장바구니에 추가되었습니다.');
+      showSwal('장바구니에 상품이 정상적으로 담겼습니다.');
     }
   };
 

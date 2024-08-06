@@ -25,7 +25,7 @@ function TopSection({ product, averageRating, reviewCount }: TopSectionProps) {
       await navigator.clipboard.writeText(window.location.href);
       showSwal('링크가 복사되었습니다!');
     } catch (error) {
-      console.error('클립보드로 링크복사 실패', error);
+      showSwal('링크복사를 실패했습니다.');
     }
   };
   const filledStars = Math.floor(averageRating);

@@ -68,7 +68,7 @@ function ReviewEdit({ reviewProductId, reviewCount }: ReviewEditProps) {
             onChange={(e) => setReview(e.target.value)}
             placeholder="소중한 리뷰를 작성해주세요."
             required
-            className="w-full px-5 py-16 border rounded overflow-y-auto custom-scrollbar"
+            className="w-full h-40 p-5 border-2 rounded overflow-y-auto custom-scrollbar"
           />
         </div>
         <div className="flex justify-between gap-4">

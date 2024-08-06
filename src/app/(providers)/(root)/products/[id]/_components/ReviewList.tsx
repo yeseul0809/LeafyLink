@@ -61,6 +61,8 @@ const ProductReviewList = ({ productId, reviewsPerPage }: ProductReviewProps) =>
         <p>리뷰를 불러오는 중입니다...</p>
       ) : error ? (
         <p>리뷰를 불러오는 중 에러가 발생했습니다: {error.message}</p>
+      ) : reviewData?.reviews.length === 0 ? (
+        <p className="flex justify-center text-[15px] pt-12 pb-[164px]">리뷰가 아직 없습니다.</p>
       ) : (
         <>
           <ul className="text-left">

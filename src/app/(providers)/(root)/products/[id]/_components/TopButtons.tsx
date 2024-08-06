@@ -6,6 +6,7 @@ import React from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { createChatroom, findExistingChatroom } from '../../../chat/_utils/chatroomUtils';
 import Image from 'next/image';
+import showSwal from '@/utils/swal';
 
 interface TopButtonsProps {
   productState: {
@@ -29,7 +30,8 @@ function TopButtons({ productState }: TopButtonsProps) {
 
   const handleStartChat = async () => {
     if (!user) {
-      console.error('사용자가 로그인되어 있지 않습니다.');
+      showSwal('로그인이 필요한 서비스입니다.<br>로그인 후 이용해주세요.');
+      router.push(`/login`);
       return;
     }
 
@@ -59,12 +61,24 @@ function TopButtons({ productState }: TopButtonsProps) {
     <>
       <div className="mb-5 flex-col w-full">
         <div className="mt-6 mb-5 flex justify-end">
-          <button className="w-9 h-9 border px-4 py-2" onClick={() => setCount(count - 1)}>
-            -
+          <button
+            className="items-center justify-center flex w-9 h-9 border"
+            onClick={() => {
+              if (count > 1) {
+                setCount(count - 1);
+              }
+            }}
+          >
+            <Image src="/icons/minus.svg" alt="-" width={16} height={16} />
           </button>
-          <div className="w-[52px] h-9 border p-2 text-center">{count}</div>
-          <button className="w-9 h-9 border px-4 py-2" onClick={() => setCount(count + 1)}>
-            +
+          <div className="w-[52px] h-9 border text-center items-center justify-center flex">
+            {count}
+          </div>
+          <button
+            className="items-center justify-center flex w-9 h-9 border"
+            onClick={() => setCount(count + 1)}
+          >
+            <Image src="/icons/plus.svg" alt="+" width={16} height={16} />
           </button>
         </div>
         <div className="flex justify-between items-center w-full">
@@ -85,7 +99,7 @@ function TopButtons({ productState }: TopButtonsProps) {
 
         <button
           onClick={handleAddToCart}
-          className="flex items-center justify-center p-4 w-[220.5px] h-[56px] border border-primary-green-500 rounded-lg"
+          className="flex items-center justify-center p-4 w-[220.5px] h-[56px] border border-primary-green-500 hover:bg-primary-green-50 rounded-lg"
         >
           <span className="text-primary-green-500">장바구니</span>
           <Image src="/icons/productcart.svg" alt="장바구니" width={24} height={24} />
@@ -93,7 +107,7 @@ function TopButtons({ productState }: TopButtonsProps) {
 
         <button
           onClick={handleBuyNow}
-          className="flex items-center justify-center p-4 w-[220.5px] h-[56px] bg-primary-green-500 text-white rounded-lg"
+          className="flex items-center justify-center p-4 w-[220.5px] h-[56px] bg-primary-green-500 hover:bg-primary-green-700 text-white rounded-lg"
         >
           <span className="mr-1">바로구매</span>
           <Image src="/icons/productcard.svg" alt="바로구매" width={24} height={24} />

@@ -49,36 +49,42 @@ function BottomTab({ productState }: BottomTabProps) {
       <div className="max-w-[1240px] mx-auto flex justify-between items-center">
         <p className="flex text-[24px]">{product.title}</p>
         <section className="flex items-center">
-          <div className="flex items-center">
+          <p className="text-sm ml-5 mr-2">총 상품금액 </p>
+          <p className="text-xl font-bold">{(+product.price * count).toLocaleString('ko-KR')} 원</p>
+          <div className="flex items-center ml-[20px]">
             <button
-              className="border border-Line/Regular px-4 py-2"
-              onClick={() => setCount(count - 1)}
+              className="items-center justify-center flex w-9 h-9 border border-Line/Regular "
+              onClick={() => {
+                if (count > 1) {
+                  setCount(count - 1);
+                }
+              }}
             >
-              -
+              <Image src="/icons/minus.svg" alt="-" width={16} height={16} />
             </button>
-            <div className="border border-Line/Regular p-2 text-center w-12">{count}</div>
+            <div className="border border-Line/Regular p-2 items-center justify-center flex w-[52px] h-9">
+              {count}
+            </div>
             <button
-              className="border border-Line/Regular px-4 py-2"
+              className="items-center justify-center flex w-9 h-9 border border-Line/Regular "
               onClick={() => setCount(count + 1)}
             >
-              +
+              <Image src="/icons/plus.svg" alt="+" width={16} height={16} />
             </button>
           </div>
-          <p className="text-sm ml-5 mr-2">총 상품금액: </p>
-          <p className="text-xl font-bold">{(+product.price * count).toLocaleString('ko-KR')} 원</p>
           <button
             onClick={handleAddToCart}
-            className="flex items-center justify-center ml-8 p-3 w-[102px] h-[44px] border rounded-md border-primary-green-500"
+            className="flex items-center justify-center ml-10 p-3 w-[102px] h-[44px] border rounded-md border-primary-green-500 hover:bg-primary-green-50"
           >
-            <p className="text-sm text-primary-green-500">장바구니</p>
+            <p className="text-sm font-semibold text-primary-green-500">장바구니</p>
             <Image src="/icons/productcart.svg" alt="장바구니" width={20} height={20} />
           </button>
 
           <button
             onClick={handleBuyNow}
-            className="flex items-center justify-center ml-[6px] p-3 w-[102px] h-[44px] rounded-md bg-primary-green-500 text-white"
+            className="flex items-center justify-center ml-[6px] p-3 w-[102px] h-[44px] rounded-md bg-primary-green-500 text-white hover:bg-primary-green-700"
           >
-            <p className="text-sm">바로구매</p>
+            <p className="text-sm font-semibold">바로구매</p>
             <Image src="/icons/productcard.svg" alt="바로구매" width={20} height={20} />
           </button>
         </section>

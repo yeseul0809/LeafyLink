@@ -75,3 +75,38 @@
 .swal-confirm-button:hover {
   background-color: #236c44;
 }
+
+.swal-actions {
+  display: flex;
+  justify-content: center;
+  width: 420px;
+  gap: 8px;
+  padding: 24px 32px 12px 32px;
+  margin: 0;
+}
+
+.swal-cart-button,
+.swal-continue-button {
+  background-color: #ffffff;
+  color: #3bb873;
+  border-radius: 4px;
+  width: 174px;
+  padding: 9px 12px;
+  border: 1px solid var(--primary-500-main, #3bb873);
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.swal-cart-button {
+  background-color: #3bb873;
+  color: #ffffff;
+  border: none;
+}
+
+.swal-cart-button:hover {
+  background-color: #236c44;
+}
+
+.swal-continue-button:hover {
+  background-color: #f7fdfa;
+}

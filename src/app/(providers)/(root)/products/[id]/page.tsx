@@ -26,13 +26,13 @@ async function ProductDetailPage({ params }: ParamsProps) {
   return (
     <div className="container mx-auto max-w-screen-lg py-20">
       <section className="flex flex-col md:flex-row gap-[80px]">
-        <div className="md:w-1/2 flex-shrink-0 justify-center rounded-[28px] mb-4 md:mb-0">
+        <div className="w-[485px] h-[485px] overflow-hidden md:w-1/2 flex-shrink-0 justify-center rounded-[28px] mb-4 md:mb-0">
           <Image
             src={product.thumbnail_url}
             alt={product.title}
             width={485}
             height={485}
-            className="rounded-lg"
+            className="rounded-lg object-cover w-full h-full"
           />
         </div>
         <div className="md:w-1/2 flex flex-col justify-center w-[505px] h-[437px]">
