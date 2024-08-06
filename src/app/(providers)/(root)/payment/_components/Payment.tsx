@@ -2,8 +2,8 @@
 
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
-import { useSearchParams } from 'next/navigation';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { getUserDate, updateUserData } from '../actions';
 import UserEditForm from './AddressForm';
 import paymentHandler from '../payment';
@@ -65,6 +65,7 @@ export default function PaymentPage() {
   const dataString = searchParams.get('data');
   const productId = searchParams.get('productId');
   const quantity = searchParams.get('quantity');
+  const router = useRouter();
 
   useEffect(() => {
     if (userData) {
@@ -120,15 +121,6 @@ export default function PaymentPage() {
       setIsFormAlldone(false);
     }
   }, [isFormCheck, restAddress, phoneNumber]);
-
-  // const handleOrderAble = () => {
-  //   if (!isFormAlldone) {
-  //     setFormError('모든 필드를 올바르게 입력해 주세요.');
-  //     return;
-  //   }
-  //   setIsOrderAble((prev) => !prev);
-  //   setFormError('');
-  // };
 
   if (dataString) {
     try {
@@ -188,6 +180,23 @@ export default function PaymentPage() {
   useEffect(() => {
     setIsOrderAble(isFormAlldone && isAgreementChecked);
   }, [isFormAlldone, isAgreementChecked]);
+
+  const queryClient = useQueryClient();
+
+  const updateCartCount = async (productData: any, userId: string) => {
+    const supabase = createClient();
+    for (const product of productData.combinedData) {
+      if (product.quantity > product.stock) {
+        const { error } = await supabase
+          .from('Cart')
+          .update({ count: product.stock })
+          .eq('cart_product_id', product.product_id)
+          .eq('cart_user_id', userData.user_id);
+      }
+    }
+    await new Promise((resolve) => setTimeout(resolve, 5000));
+    queryClient.invalidateQueries({ queryKey: ['getProductInfo'] });
+  };
 
   if (!userFetched) {
     return null;
@@ -366,14 +375,24 @@ export default function PaymentPage() {
           {formError && <p className="text-red-500">{formError}</p>}
           <button
             onClick={async () => {
+              const exceedsStock = productData.combinedData.some(
+                (product) => product.quantity > product.stock
+              );
+
               if (!isOrderAble) {
                 setFormError('모든 필드를 올바르게 입력해 주세요.');
                 return;
-              } else {
-                setFormError('');
-                await updateUserData(userData.user_id, restAddress, phoneNumber);
-                paymentHandler(productData as ProductInfo, userData.user_id);
+              } else if (exceedsStock) {
+                setFormError(
+                  `재고가 부족한 상품이 존재합니다. 구매 수량을 재고 수량으로 수정했습니다.`
+                );
+                await updateCartCount(productData, userData.user_id);
+                router.push('/cart');
+                return;
               }
+              setFormError('');
+              await updateUserData(userData.user_id, restAddress, phoneNumber);
+              paymentHandler(productData as ProductInfo, userData.user_id);
             }}
             className={`w-full ${isOrderAble ? 'bg-[#3BB873]' : 'bg-primary-green-100'} rounded-md h-[48px] text-white`}
           >
