@@ -134,7 +134,6 @@ export const startLiveStreaming = async (_: any, formData: FormData) => {
   const { data, error } = await supabaseServer.from('Livestream').insert([stream]).select('*');
 
   if (error) {
-    console.log('error::', error);
     return;
   }
 

@@ -70,6 +70,9 @@ const nextConfig = {
       },
       {
         hostname: 'th1.tmon.kr'
+      },
+      {
+        hostname: 'image.guud.com'
       }
     ],
     disableStaticImages: true

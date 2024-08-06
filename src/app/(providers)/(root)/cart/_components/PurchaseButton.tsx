@@ -56,7 +56,6 @@ export default function PurchaseButton({ userId }: { userId: string }) {
     },
     onSuccess: (data) => {
       if (data === null) {
-        console.log('선택된 상품이 없습니다.');
         return;
       }
 

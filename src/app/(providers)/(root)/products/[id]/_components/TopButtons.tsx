@@ -42,7 +42,6 @@ function TopButtons({ productState }: TopButtonsProps) {
 
     if (existingChatrooms && existingChatrooms.length > 0) {
       const existingChatroom = existingChatrooms[0];
-      console.log('기존채팅방이 존재합니다', existingChatroom);
       router.push(`/chat/${existingChatroom.chatroom_id}`);
     } else {
       const chatroomId = uuidv4();
@@ -52,7 +51,6 @@ function TopButtons({ productState }: TopButtonsProps) {
         product.product_seller_id,
         product.product_id
       );
-      console.log('새로운 채팅방이 생성되었습니다.', newChatroom);
       router.push(`/chat/${chatroomId}`);
     }
   };

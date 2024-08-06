@@ -19,12 +19,10 @@ const MyPageHeader = () => {
 
   return (
     <div className="max-w-screen-xl mx-auto mt-20 mb-20  w-m-[1240px] ">
-      {/* Title */}
       <h1 className="text-center text-[32px] font-semibold leading-[42px] tracking-[-0.8px] mb-[51px]">
         마이페이지
       </h1>
 
-      {/* Links */}
       <ul className="flex items-start  ">
         <li
           className={`w-1/3  p-4 text-center ${linkClassName} ${activeLink === `/buyer/mypage/orders` ? activeLinkClassName : ''}`}

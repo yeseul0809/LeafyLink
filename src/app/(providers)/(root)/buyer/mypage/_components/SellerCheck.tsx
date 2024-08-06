@@ -1,5 +1,6 @@
 'use client';
 import { createClient } from '@/supabase/supabaseClient';
+import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
 
 interface BusinessInfoResponse {
@@ -35,6 +36,7 @@ function SellerCheck({ userData }: SellerCheckProps) {
   const [businessName, setBusinessName] = useState('');
   const [result, setResult] = useState<BusinessInfoResponse | null>(null);
   const [hydrated, setHydrated] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     setHydrated(true);
@@ -82,7 +84,6 @@ function SellerCheck({ userData }: SellerCheckProps) {
       }
 
       const result = await response.json();
-      // console.log(result);
 
       if (result.status_code === 'OK' && result.valid_cnt === 1) {
         setResult(result.data[0]);
@@ -134,12 +135,22 @@ function SellerCheck({ userData }: SellerCheckProps) {
       alert('판매자 생성 중 오류가 발생했습니다: ' + error.message);
     } else {
       alert('판매자 정보가 성공적으로 저장되었습니다.');
+
+      window.location.replace('/');
     }
   };
 
   if (!hydrated) {
     return null;
   }
+  const isFormValid = () => {
+    return (
+      businessNumber.length === 10 &&
+      name.trim() !== '' &&
+      startDate.trim() !== '' &&
+      startDate.length === 8
+    );
+  };
 
   return (
     <div className="max-w-[400px] mx-auto p-4">
@@ -194,15 +205,25 @@ function SellerCheck({ userData }: SellerCheckProps) {
           <input
             type="text"
             value={startDate}
-            onChange={(e) => setStartDate(e.target.value)}
+            onChange={(e) => {
+              const value = e.target.value;
+              if (/^\d*$/.test(value) && value.length <= 8) {
+                setStartDate(value);
+              }
+            }}
             placeholder="YYYYMMDD"
-            className="mb-6  block w-full p-4 border border-gray-300 shadow-sm focus:ring-primary-green-500 focus:border-primary-green-500 text-[16px] font-normal leading-[24px] tracking-[-0.4px] text-font/main"
+            className="mb-6 block w-full p-4 border border-gray-300 shadow-sm focus:ring-primary-green-500 focus:border-primary-green-500 text-[16px] font-normal leading-[24px] tracking-[-0.4px] text-font/main"
           />
         </div>
         <div className="flex justify-center">
           <button
             type="submit"
-            className=" w-full mt-20 mb-[180px] p-4 bg-primary-green-500 text-white rounded-md font-semibold shadow-sm hover:bg-primary-green-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-green-500"
+            className={`w-full text-white mt-20 mb-[180px] p-4 rounded-md font-semibold shadow-sm transition-colors duration-300 ${
+              isFormValid()
+                ? 'bg-primary-green-500 text-white hover:bg-primary-green-700'
+                : 'bg-primary-green-100 text-gray-500 cursor-not-allowed'
+            }`}
+            disabled={!isFormValid()}
           >
             인증하기
           </button>
