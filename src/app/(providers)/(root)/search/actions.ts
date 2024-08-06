@@ -1,6 +1,7 @@
 'use server';
 
 import { createClient } from '@/supabase/supabaseClient';
+import { revalidatePath } from 'next/cache';
 
 interface Product {
   product_id: string;
@@ -21,7 +22,9 @@ export const getProductCount = async (keyword: string): Promise<number> => {
   const { data, error } = await supabaseServer
     .from('Product')
     .select('product_id')
-    .ilike('title', `%${keyword}%`);
+    .ilike('title', `%${keyword}%`)
+    .neq('stock', 0);
+  console.log('data::', data);
 
   if (error) {
     console.error('Error fetching product count:', error);
@@ -44,7 +47,7 @@ export const getProductDatas = async (
 
   const { data: products, error: productError } = await supabaseServer
     .from('Product')
-    .select('product_id, title, price,thumbnail_url,created_at')
+    .select('product_id, title, price,thumbnail_url,created_at,stock')
     .ilike('title', `%${keyword}%`)
     .neq('stock', 0)
     .range((page - 1) * perPage, page * perPage - 1);
@@ -116,7 +119,7 @@ export const getProductDatas = async (
       );
       break;
   }
-
+  revalidatePath('/search');
   return productsWithDetails.map(
     ({ totalQuantity, reviewCount, ...product }) => product
   ) as Product[];

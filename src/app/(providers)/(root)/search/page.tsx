@@ -22,6 +22,10 @@ export default async function SearchPage({ searchParams }: Props) {
   const searchDatas = await getProductDatas(keyword, currentPage, perPage, sortParam);
   const totalPages = await getTotalPages(keyword, perPage);
 
+  console.log('allProductsData::', allProductsData);
+
+  console.log('searchDatas::', searchDatas);
+
   return (
     <div className="pt-[80px] pb-[180px] xs:pt-[24px] xs:pb-[120px] w-full">
       <h1 className="text-[32px] font-semibold text-center xs:text-[20px]">검색 결과</h1>
