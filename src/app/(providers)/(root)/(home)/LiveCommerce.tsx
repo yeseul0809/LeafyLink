@@ -1,13 +1,12 @@
 'use client';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { useRouter } from 'next/navigation';
-
-import 'swiper/css';
-import 'swiper/css/pagination';
-import 'swiper/css/navigation';
 import { useQuery } from '@tanstack/react-query';
 import { getVideos } from '../livestreaming/actions';
 import LivestreamingCard from './_components/LivestreamingCard';
+import 'swiper/css';
+import 'swiper/css/pagination';
+import 'swiper/css/navigation';
 
 function LiveCommerce({ category }: { category: string }) {
   const router = useRouter();
@@ -51,7 +50,6 @@ function LiveCommerce({ category }: { category: string }) {
       </div>
     </section>
   );
-  // }
 }
 
 export default LiveCommerce;

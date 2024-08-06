@@ -1,6 +1,7 @@
 import React from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import Image from 'next/image';
 
 type VideoData = {
   streamData: [
@@ -17,16 +18,19 @@ type VideoData = {
 
 function LivestreamingCard({ videosData }: { videosData: VideoData }) {
   return (
-    <div className="w-[505px]">
+    <div className="lg:w-[505px] w-[280px]">
       <div>
         <div>
           <Link
             href={`/livestreaming/video/${videosData.streamData[0].livestream_product_id}_${videosData.streamData[0].livestream_id}_${videosData.streamData[0].uid}`}
           >
-            <img
+            <Image
+              alt="streaming image"
+              width={280}
+              height={158}
               src={videosData.streamData[0].thumbnail_url}
-              className="w-full h-[284px] bg-zinc-300 rounded-2xl cursor-pointer"
-            ></img>
+              className="w-full h-full bg-zinc-300 rounded-2xl cursor-pointer object-cover"
+            ></Image>
           </Link>
         </div>
       </div>

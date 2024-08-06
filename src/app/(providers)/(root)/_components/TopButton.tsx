@@ -11,7 +11,7 @@ const moveToTop = () => {
 
 function TopButton() {
   return (
-    <div className="fixed right-10 bottom-10 z-10">
+    <div className="lg:fixed lg:block right-10 bottom-10 z-10 hidden">
       <button onClick={moveToTop}>
         <Image src="/icons/button-top.svg" alt="top button" width={64} height={64} />
       </button>

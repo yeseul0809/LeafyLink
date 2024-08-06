@@ -3,9 +3,6 @@ import { PropsWithChildren } from 'react';
 import Header from './(root)/_components/Header';
 import Footer from './(root)/_components/Footer';
 import TopButton from './(root)/_components/TopButton';
-import Carousel from './(root)/(home)/Carousel';
-import LiveCommerce from './(root)/(home)/LiveCommerce';
-import Advertising from './(root)/(home)/Advertising';
 
 const ProvidersLayout = ({ children }: PropsWithChildren) => {
   return (

@@ -7,6 +7,7 @@ import { createCartItem } from '../../products/[id]/_actions/cartActions';
 import useUser from '@/hooks/useUser';
 import { getSellerName } from '../actions';
 import showSwal from '@/utils/swal';
+import Image from 'next/image';
 
 const ProductCard = ({ product }: { product: Product }) => {
   const formatPrice = (price: number) => {
@@ -64,7 +65,7 @@ const ProductCard = ({ product }: { product: Product }) => {
         <div className="relative ">
           <div
             onClick={() => redirect(`/products/${product.product_id}`)}
-            className="cursor-pointer opacity-0 lg:w-[295px] lg:h-[295px] w-[164px] h-[164px] z-1 flex justify-center items-center absolute z-5 hover:backdrop-blur-sm hover:opacity-100"
+            className="hidden lg:block cursor-pointer opacity-0 lg:w-[295px] lg:h-[295px] w-[164px] h-[164px] z-1 lg:flex justify-center items-center absolute z-5 hover:backdrop-blur-sm hover:opacity-100"
           >
             <button className="mr-10" onClick={handleAddCartClick}>
               <img src="/icons/icon-card-cart.svg" alt="cart" />
@@ -77,7 +78,9 @@ const ProductCard = ({ product }: { product: Product }) => {
           <Link href={'/상세페이지'}>
             <img
               src={product.thumbnail_url}
-              className="lg:w-[295px] lg:h-[295px] w-[164px] h-[164px] bg-zinc-300 rounded-2xl hover:bg-white cursor-pointer"
+              // alt="product_image"
+              // layout="fill"
+              className="lg:w-[295px] lg:h-[295px] w-[164px] h-[164px] bg-zinc-300 rounded-2xl hover:bg-white cursor-pointer object-cover"
             ></img>
           </Link>
         </div>
