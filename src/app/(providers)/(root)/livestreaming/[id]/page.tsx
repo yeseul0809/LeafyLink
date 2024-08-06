@@ -1,17 +1,18 @@
-import Link from 'next/link';
-import Image from 'next/image';
+import React from 'react';
+import { getStream, getSellerData, getStreamUid } from '../actions';
 import { notFound } from 'next/navigation';
 import { createClient } from '@/supabase/supabaseServer';
-import { getSellerData, getStream } from '../../actions';
-import LiveQuitButton from '../../_components/LiveQuitButton';
-import TruncatedText from '../../_components/TruncatedText';
+import Image from 'next/image';
+import Link from 'next/link';
+import LiveQuitButton from '../_components/LiveQuitButton';
+import TruncatedText from '../_components/TruncatedText';
 
-export default async function RecodedVideoPage({ params }: { params: { id: string } }) {
+export default async function StreamingPage({ params }: { params: { id: string } }) {
   const supabaseServer = createClient();
-  // const productId = params.id.split('_')[0];
   const streamId = params.id.split('_')[1];
-  const videoId = params.id.split('_')[2];
   const stream = await getStream(streamId);
+
+  const streamUid = await getStreamUid(streamId);
 
   if (!stream) {
     return notFound();
@@ -21,7 +22,7 @@ export default async function RecodedVideoPage({ params }: { params: { id: strin
   const sessionId = sessionData.data.user?.id;
 
   return (
-    <div className="pt-[80px] pb-[180px] xs:pt-[24px] xs:pb-[188px]">
+    <div className="pt-[80px] pb-[180px] xs:pt-[12px] xs:pb-[188px]">
       <div className="flex items-center mb-[40px] gap-3 xs:mb-[12px]">
         <Image
           src={sellerData![0].avatar_url}
@@ -31,15 +32,15 @@ export default async function RecodedVideoPage({ params }: { params: { id: strin
           className="rounded-full"
         />
         <div>
-          <span className="font-bold">{`${sellerData![0].user_name}`} </span>
-          <span>님의 {stream.is_live ? '라이브' : '녹화'}방송입니다.</span>
+          <span className="font-bold">{sellerData![0].user_name} </span>
+          <span>님의 라이브 방송입니다.</span>
         </div>
       </div>
       <div className="relative aspect-video">
         <iframe
-          src={`https://${process.env.CLOUDFLARE_DOMAIN}/${videoId}/iframe`}
+          src={`https://${process.env.CLOUDFLARE_DOMAIN}/${streamUid}/iframe`}
           allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
-          className="w-full h-[698px] xs:w-full xs:h-[188px] rounded-2xl"
+          className="w-full h-[698px] rounded-2xl xs:h-[188px]"
         ></iframe>
       </div>
       <div className="flex justify-between mt-[32px] xs:mt-[20px] xs:flex-col w-full">

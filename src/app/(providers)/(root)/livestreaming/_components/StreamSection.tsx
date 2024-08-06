@@ -30,7 +30,7 @@ export default function StreamSection({ category }: { category: string }) {
         {recodedVideos.map((video) => {
           const hasStreamData = video.streamData && video.streamData.length > 0;
           return (
-            <div key={video.uid} className="w-full relative">
+            <div key={video.uid} className="w-full relative xs:mb-[32px]">
               {hasStreamData && (
                 <>
                   <div className="relative w-full h-[342px] xs:h-[183px]">
