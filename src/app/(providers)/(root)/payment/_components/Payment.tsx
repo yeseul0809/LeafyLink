@@ -51,8 +51,6 @@ export default function PaymentPage() {
     queryFn: getUserInfo
   });
 
-  // console.log('userData::', userData);
-
   const [isOrderAble, setIsOrderAble] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState(userData && userData.phone);
   const [phoneParts, setPhoneParts] = useState([

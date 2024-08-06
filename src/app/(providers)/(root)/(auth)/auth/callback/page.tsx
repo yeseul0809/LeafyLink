@@ -38,7 +38,6 @@ function AuthCallback() {
         if (error) {
           console.error('유저 정보를 데이터베이스에 저장하는 중 에러 발생:', error.message);
         } else {
-          console.log('유저 정보를 데이터베이스에 성공적으로 저장');
         }
       } catch (error: any) {
         console.error('유저 정보를 데이터베이스에 저장하는 중 에러 발생:', error.message);
@@ -54,7 +53,6 @@ function AuthCallback() {
         .single();
 
       if (error && error.code !== 'PGRST116') {
-        // PGRST116 is the code for no rows found in supabase-js
         console.error('사용자 확인 중 에러 발생:', error.message);
         return false;
       }
