@@ -29,6 +29,7 @@ interface AddressFormProps {
   initialUserName: string;
   initialPhone: string;
   userId: string;
+  onFormCheckChange: (isFormCheck: boolean) => void; // 추가된 콜백 함수
 }
 
 export default function UserEditForm({
@@ -37,7 +38,8 @@ export default function UserEditForm({
   initialAddressCode,
   initialUserName,
   initialPhone,
-  userId
+  userId,
+  onFormCheckChange
 }: AddressFormProps) {
   const wrapRef = useRef<HTMLDivElement>(null);
   const [address, setAddress] = useState<string>(initialAddress);
@@ -120,6 +122,11 @@ export default function UserEditForm({
       }
     };
   }, []);
+
+  useEffect(() => {
+    const isFormCheck = address !== '' && postcode !== '';
+    onFormCheckChange(isFormCheck);
+  }, [address, postcode, onFormCheckChange]);
 
   const handleAddressUpdate = async (
     newAddress: string,

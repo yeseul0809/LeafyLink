@@ -16,7 +16,7 @@ function AuthCallback() {
         user_name: user.user_metadata.full_name,
         avatar_url: user.user_metadata.avatar_url,
         email: user.email,
-        phone: '00000000000',
+        phone: '',
         address: '',
         created_at: user.created_at
       };
