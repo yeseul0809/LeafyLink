@@ -46,6 +46,7 @@ export const getProductDatas = async (
     .from('Product')
     .select('product_id, title, price,thumbnail_url,created_at')
     .ilike('title', `%${keyword}%`)
+    .neq('stock', 0)
     .range((page - 1) * perPage, page * perPage - 1);
 
   if (productError) {
