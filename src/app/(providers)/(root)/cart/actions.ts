@@ -102,8 +102,8 @@ export const getProductData = async (carts: CartProps[], type: string): Promise<
 };
 
 export const deleteCart = async (productId: string) => {
-  const supabaseSever = createClient();
-  const { data, error } = await supabaseSever
+  const supabaseServer = createClient();
+  const { data, error } = await supabaseServer
     .from('Cart')
     .delete()
     .eq('cart_product_id', productId);
@@ -116,13 +116,14 @@ export const deleteCart = async (productId: string) => {
 };
 
 export const toggleCheckbox = async (productId: string, isChecked: boolean) => {
-  const supabaseSever = createClient();
+  const supabaseServer = createClient();
 
-  const { data, error } = await supabaseSever
+  const { data, error } = await supabaseServer
     .from('Cart')
     .update({ is_checked: isChecked })
     .eq('cart_product_id', productId);
 
+  revalidatePath('/cart');
   return data;
 };
 
@@ -131,8 +132,8 @@ export interface IsCheck {
 }
 
 export const getCartIsChecked = async (productId: string, userId: string): Promise<IsCheck> => {
-  const supabaseSever = createClient();
-  const { data, error } = await supabaseSever
+  const supabaseServer = createClient();
+  const { data, error } = await supabaseServer
     .from('Cart')
     .select('is_checked')
     .eq('cart_product_id', productId)
@@ -142,8 +143,8 @@ export const getCartIsChecked = async (productId: string, userId: string): Promi
 };
 
 export const getCheckedCartDatas = async (userId: string) => {
-  const supabaseSever = createClient();
-  const { data, error } = await supabaseSever
+  const supabaseServer = createClient();
+  const { data, error } = await supabaseServer
     .from('Cart')
     .select()
     .eq('is_checked', true)
@@ -151,15 +152,20 @@ export const getCheckedCartDatas = async (userId: string) => {
   return data;
 };
 
-export const allToggleCheckbox = async (userId: string, isChecked: boolean) => {
+export const allToggleCheckbox = async (
+  userId: string,
+  productIds: string[],
+  newCheckedStatus: boolean
+) => {
   const supabaseSever = createClient();
 
-  const { data, error } = await supabaseSever
+  const { error } = await supabaseSever
     .from('Cart')
-    .update({ is_checked: isChecked })
-    .eq('cart_user_id', userId);
+    .update({ is_checked: newCheckedStatus })
+    .eq('cart_user_id', userId)
+    .in('cart_product_id', productIds);
 
-  return data;
+  // revalidatePath('/cart');
 };
 
 export const deleteSelectCart = async (userId: string) => {

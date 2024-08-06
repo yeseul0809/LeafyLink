@@ -47,21 +47,20 @@ export default function AllCheckbox({
     }
   }, [cartStatus, isCartFetched]);
 
-  useEffect(() => {
-    updateCartCheck(userId, isChecked);
-  }, [userId, isChecked, updateCartCheck]);
-
   const handleAllToggle = async () => {
     const newCheckedStatus = !isChecked;
     setIsChecked(newCheckedStatus);
     if (userId) {
-      await allToggleCheckbox(userId, newCheckedStatus);
+      updateCartCheck(userId, productIds, newCheckedStatus);
 
-      await Promise.all(
-        productIds.map((productId) =>
-          queryClient.invalidateQueries({ queryKey: ['getCartIschecked', productId] })
-        )
-      );
+      productIds.forEach((productId) => {
+        queryClient.setQueryData(['getCartIschecked', productId, userId], (oldData: any) => {
+          return { ...oldData, is_checked: newCheckedStatus };
+        });
+      });
+
+      await allToggleCheckbox(userId, productIds, newCheckedStatus);
+      queryClient.invalidateQueries({ queryKey: ['getCartStatus', userId] });
     }
   };
 

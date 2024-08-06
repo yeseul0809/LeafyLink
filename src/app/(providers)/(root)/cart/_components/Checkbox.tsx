@@ -8,20 +8,21 @@ import { useCartStore } from '@/stores';
 export default function Checkbox({ productId, userId }: { productId: string; userId: string }) {
   const queryClient = useQueryClient();
   const updateCartCheck = useCartStore((state) => state.updateItem);
+
   const {
     data: isChecked,
     error,
     isFetched
   } = useQuery({
-    queryKey: ['getCartIschecked', productId],
+    // queryKey: ['getCartIschecked'],
+    queryKey: ['getCartIschecked', productId, userId],
     queryFn: () => getCartIsChecked(productId, userId)
   });
 
   const handleToggle = async () => {
     const newCheckedStatus = !isChecked?.is_checked;
-    await toggleCheckbox(productId, newCheckedStatus);
     updateCartCheck(productId, newCheckedStatus, userId);
-    queryClient.invalidateQueries({ queryKey: ['getCartIschecked', productId] });
+    queryClient.invalidateQueries({ queryKey: ['getCartIschecked', productId, userId] });
   };
 
   if (isFetched && isChecked) {
@@ -34,4 +35,11 @@ export default function Checkbox({ productId, userId }: { productId: string; use
       />
     );
   }
+
+  return (
+    <input
+      type="checkbox"
+      className="absolute -top-[0%] left-[0%] w-[18px] h-[18px] green-checkbox"
+    />
+  );
 }
