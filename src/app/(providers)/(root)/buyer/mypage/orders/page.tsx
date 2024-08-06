@@ -104,63 +104,67 @@ export default async function BuyerOrderListPage({ searchParams }: ProductPagePr
 
   return (
     <>
-      <div className="max-w-screen-xl mx-auto mt-20 mb-20  ">
-        <div className="overflow-x-auto mb-20">
-          <table className="min-w-full bg-white border-collapse">
-            <thead>
-              <tr className="bg-secondary-yellow-100">
-                <th className="w-[178px] px-4 py-[22px] border-b text-[16px] font-normal leading-[24px] tracking-[-0.4px] text-font/main">
-                  주문 번호
-                </th>
-                <th className="px-4 py-[22px] border-b text-[16px] font-normal leading-[24px] tracking-[-0.4px] text-font/main">
-                  상품명
-                </th>
-                <th className="w-[130px] px-4 py-[22px] border-b text-[16px] font-normal leading-[24px] tracking-[-0.4px] text-font/main">
-                  주문 날짜
-                </th>
-                <th className="w-[130px] px-4 py-[22px] border-b text-[16px] font-normal leading-[24px] tracking-[-0.4px] text-font/main">
-                  결제 금액
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {Array.isArray(ordersWithProducts) && ordersWithProducts.length > 0 ? (
-                ordersWithProducts.map((order) => (
-                  <tr key={order.order_id}>
-                    <td className="px-4 py-[22px] text-font/sub2 text-[14px] font-normal leading-[20px] tracking-[-0.35px]  text-center border-b">
-                      {order.order_id}
-                    </td>
-                    <td className="px-4 py-[22px] text-font/main text-[14px] font-normal leading-[20px] tracking-[-0.35px border-b overflow-hidden truncate">
-                      {order.Product?.title || '제품 없음'}
-                    </td>
-                    <td className="px-4 py-[22px] text-font/sub2 text-[14px] font-normal leading-[20px] tracking-[-0.35px] border-b text-center">
-                      {formatDate(order.order_date)}
-                    </td>
-                    <td className="px-4 py-[22px] text-font/sub2 text-[14px] font-normal leading-[20px] tracking-[-0.35px] border-b text-center">
-                      {formatCurrency(order.cost)}원
-                    </td>
-                  </tr>
-                ))
-              ) : (
-                <tr>
-                  <td
-                    colSpan={4}
-                    className=" text-center pt-20 text-[15px] font-normal leading-[22px] tracking-[-0.375px] text-font/main"
-                  >
-                    구매내역이 아직 없습니다.
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </table>
+      <section className="max-w-screen-xl mx-auto my-20">
+        <ul className="flex items-start bg-secondary-yellow-100 border-b border-Line/Light text-font/main">
+          <li className="flex w-[178px] h-[56px] p-[16px] justify-center items-center gap-[10px]  ">
+            <label className="text-center text-font/main text-16-n-24-40">주문 번호</label>
+          </li>
+          <li className="flex p-[16px] justify-center items-center gap-[10px] flex-1">
+            <label className="flex-1 overflow-hidden whitespace-nowrap text-ellipsis text-center text-font/main text-16-n-24-40">
+              상품명
+            </label>
+          </li>
+          <li className="flex w-[130px] h-[56px] p-[16px] justify-center items-center gap-[10px] ">
+            <label className="text-center text-font/main text-16-n-24-40">주문 날짜</label>
+          </li>
+          <li className="flex w-[130px] h-[56px] p-[16px] justify-center items-center gap-[10px] ">
+            <label className="text-center text-font/main text-16-n-24-40">결제 금액</label>
+          </li>
+        </ul>
+
+        <div>
+          {Array.isArray(ordersWithProducts) && ordersWithProducts.length > 0 ? (
+            ordersWithProducts.map((order) => (
+              <ul
+                key={order.order_id}
+                className="flex items-start border-b border-Line/Light bg-white"
+              >
+                <li className="flex w-[178px] h-[64px] p-[22px_16px] justify-center items-center gap-[10px]">
+                  <label className="text-16-n-24-40 text-center text-font/sub2">
+                    {order.order_id}
+                  </label>
+                </li>
+                <li className="flex p-[22px_16px] items-center gap-[10px] flex-1 overflow-hidden whitespace-nowrap text-ellipsis text text-center">
+                  <label className="flex-1 overflow-hidden whitespace-nowrap text-ellipsis text-16-n-24-40 text-left">
+                    {order.Product?.title || '제품 없음'}
+                  </label>
+                </li>
+                <li className="flex w-[130px] h-[64px] p-[22px_16px] justify-center items-center gap-[10px]">
+                  <label className="text-16-n-24-40 text-center text-font/sub2">
+                    {formatDate(order.order_date)}
+                  </label>
+                </li>
+                <li className="flex w-[130px] h-[64px] p-[22px_16px] justify-center items-center gap-[10px]">
+                  <label className="text-16-n-24-40 text-center text-font/sub2">
+                    {formatCurrency(order.cost)}원
+                  </label>
+                </li>
+              </ul>
+            ))
+          ) : (
+            <div className="text-center text-[15px] font-normal leading-[22px] tracking-[-0.375px] text-font/main mt-20">
+              구매내역이 아직 없습니다.
+            </div>
+          )}
         </div>
+
         <Pagination
-          totalItems={totalOrders || 0} // 전체 주문의 총 개수
-          currentPage={currentPage} // 현재 페이지 번호
-          pageCount={10} // 페이지 버튼의 최대 개수
-          itemCountPerPage={itemsPerPage} // 한 페이지에 표시할 아이템 수
+          totalItems={totalOrders || 0}
+          currentPage={currentPage}
+          pageCount={10}
+          itemCountPerPage={itemsPerPage}
         />
-      </div>
+      </section>
     </>
   );
 }

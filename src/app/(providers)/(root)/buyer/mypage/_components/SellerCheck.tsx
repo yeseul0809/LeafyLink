@@ -135,7 +135,49 @@ function SellerCheck({ userData }: SellerCheckProps) {
       alert('판매자 생성 중 오류가 발생했습니다: ' + error.message);
     } else {
       alert('판매자 정보가 성공적으로 저장되었습니다.');
+      window.location.replace('/');
+    }
+  };
 
+  //UT 기간용 인증
+  const createSellerUserTest = async () => {
+    const supabase = createClient();
+    const { user_id, phone, avatar_url } = userData;
+
+    const { data: existingSeller, error: fetchError } = await supabase
+      .from('Seller')
+      .select('seller_id')
+      .eq('seller_id', user_id)
+      .maybeSingle();
+
+    if (fetchError && fetchError.code !== 'PGRST116') {
+      alert('판매자 확인 중 오류가 발생했습니다: ' + fetchError.message);
+      return;
+    }
+
+    if (existingSeller) {
+      alert('이미 등록된 판매자입니다.');
+      return;
+    }
+
+    const { error } = await supabase.from('Seller').insert({
+      seller_id: user_id,
+      business_number: businessNumber,
+      business_name: businessName,
+      business_inception: startDate,
+      user_name: name,
+      email: userData.email,
+      address_code: userData.address_code,
+      address: userData.address,
+      address_detail: userData.address_detail,
+      phone: phone,
+      avatar_url: avatar_url
+    });
+
+    if (error) {
+      alert('판매자 생성 중 오류가 발생했습니다: ' + error.message);
+    } else {
+      alert('판매자 정보가 성공적으로 저장되었습니다.');
       window.location.replace('/');
     }
   };
@@ -143,6 +185,7 @@ function SellerCheck({ userData }: SellerCheckProps) {
   if (!hydrated) {
     return null;
   }
+
   const isFormValid = () => {
     return (
       businessNumber.length === 10 &&
@@ -169,8 +212,8 @@ function SellerCheck({ userData }: SellerCheckProps) {
             value={businessNumber}
             onChange={(e) => setBusinessNumber(e.target.value.replace(/\D/g, ''))}
             maxLength={10}
-            placeholder="사업자 번호를 입력해 주세요"
-            className="mb-6  block w-full p-4 border border-gray-300 shadow-sm focus:ring-primary-green-500 focus:border-primary-green-500 text-[16px] font-normal leading-[24px] tracking-[-0.4px] text-font/main"
+            placeholder="사업자 번호 10자리를 입력해 주세요"
+            className="mb-6 block w-full p-4 border border-gray-300 shadow-sm focus:ring-primary-green-500 focus:border-primary-green-500 text-[16px] font-normal leading-[24px] tracking-[-0.4px] text-font/main"
           />
         </div>
 
@@ -183,7 +226,7 @@ function SellerCheck({ userData }: SellerCheckProps) {
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="대표자 성명을 입력해 주세요"
-            className="mb-6  block w-full p-4 border border-gray-300 shadow-sm focus:ring-primary-green-500 focus:border-primary-green-500 text-[16px] font-normal leading-[24px] tracking-[-0.4px] text-font/main"
+            className="mb-6 block w-full p-4 border border-gray-300 shadow-sm focus:ring-primary-green-500 focus:border-primary-green-500 text-[16px] font-normal leading-[24px] tracking-[-0.4px] text-font/main"
           />
         </div>
         <div className="mb-4">
@@ -195,7 +238,7 @@ function SellerCheck({ userData }: SellerCheckProps) {
             value={businessName}
             onChange={(e) => setBusinessName(e.target.value)}
             placeholder="상호명을 입력해 주세요"
-            className="mb-6  block w-full p-4 border border-gray-300 shadow-sm focus:ring-primary-green-500 focus:border-primary-green-500  text-[16px] font-normal leading-[24px] tracking-[-0.4px] text-font/main"
+            className="mb-6 block w-full p-4 border border-gray-300 shadow-sm focus:ring-primary-green-500 focus:border-primary-green-500 text-[16px] font-normal leading-[24px] tracking-[-0.4px] text-font/main"
           />
         </div>
         <div className="mb-4">
@@ -218,7 +261,7 @@ function SellerCheck({ userData }: SellerCheckProps) {
         <div className="flex justify-center">
           <button
             type="submit"
-            className={`w-full text-white mt-20 mb-[180px] p-4 rounded-md font-semibold shadow-sm transition-colors duration-300 ${
+            className={`w-full text-white mt-20 mb-4 p-4 rounded-md font-semibold shadow-sm transition-colors duration-300 ${
               isFormValid()
                 ? 'bg-primary-green-500 text-white hover:bg-primary-green-700'
                 : 'bg-primary-green-100 text-gray-500 cursor-not-allowed'
@@ -226,6 +269,20 @@ function SellerCheck({ userData }: SellerCheckProps) {
             disabled={!isFormValid()}
           >
             인증하기
+          </button>
+        </div>
+        <div className="flex justify-center">
+          <button
+            type="button"
+            onClick={createSellerUserTest}
+            className={`w-full text-white mb-[180px] p-4 rounded-md font-semibold shadow-sm transition-colors duration-300 ${
+              isFormValid()
+                ? 'bg-primary-green-500 text-white hover:bg-primary-green-700'
+                : 'bg-primary-green-100 text-gray-500 cursor-not-allowed'
+            }`}
+            disabled={!isFormValid()}
+          >
+            판매자로 전환하기
           </button>
         </div>
       </form>
