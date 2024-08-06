@@ -26,8 +26,8 @@ export default async function SearchPage({ searchParams }: Props) {
     <div className="pt-[80px] pb-[180px] xs:pt-[24px] xs:pb-[120px] w-full">
       <h1 className="text-[32px] font-semibold text-center xs:text-[20px]">검색 결과</h1>
       <Searchform defaultKeword={keyword} currentPage={currentPage} />
-      <div className="border-t border-Line/Regular w-full mb-[48px]" />
-      <div className="flex justify-between mb-[31px] items-center">
+      <div className="border-t border-Line/Regular w-full mb-[48px] xs:mb-[20px]" />
+      <div className="flex justify-between mb-[31px] items-center xs:mb-[12px]">
         <p className="text-[15px] text-font/sub2">
           전체 <span className="text-black font-semibold">{allProductsData}</span> 개
         </p>
