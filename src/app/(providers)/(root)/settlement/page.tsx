@@ -16,7 +16,10 @@ export default async function SettlementPage({ searchParams }: { searchParams: a
       <h1 className="text-[32px] font-semibold text-center mb-[32px] xs:mb-[24px]">주문 완료</h1>
       <div className="mb-[32px] xs:mb-[24px]">
         <p className="text-[20px] font-semibold mb-[12px] xs:mb-[8px]">{userData![0].user_name}</p>
-        <p className="text-[15px]">{userData![0].address + userData![0].address_detail}</p>
+        <div className="flex items-center gap-[4px]">
+          <p className="text-[15px]">{userData![0].address}</p>
+          <p className="text-[15px]">{userData![0].address_detail}</p>
+        </div>
         <div className="flex">
           <p className="text-[15px]">{userData![0].phone.slice(0, 3)}-</p>
           <p className="text-[15px]">{userData![0].phone.slice(3, 7)}-</p>
