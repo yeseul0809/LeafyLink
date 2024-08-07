@@ -30,7 +30,7 @@ function ReviewToggle({ description }: ReviewToggleProps) {
         style={{
           maxHeight: isExpanded ? 'none' : '72px'
         }}
-        className={`text-ellipsis ${isExpanded ? 'overflow-visible' : 'overflow-hidden'} text-#111111 text-[15px] leading-[24px] pb-[20px]`}
+        className={`text-ellipsis ${isExpanded ? 'overflow-visible' : 'overflow-hidden'} text-#111111 text-[15px] leading-[22px] md:leading-[24px] pb-[12px] md:pb-[20px]`}
       >
         {description}
       </p>

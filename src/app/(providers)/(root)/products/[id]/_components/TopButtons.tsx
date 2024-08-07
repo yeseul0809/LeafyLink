@@ -6,6 +6,7 @@ import React from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { createChatroom, findExistingChatroom } from '../../../chat/_utils/chatroomUtils';
 import Image from 'next/image';
+import showSwal from '@/utils/swal';
 
 interface TopButtonsProps {
   productState: {
@@ -29,7 +30,8 @@ function TopButtons({ productState }: TopButtonsProps) {
 
   const handleStartChat = async () => {
     if (!user) {
-      console.error('사용자가 로그인되어 있지 않습니다.');
+      showSwal('로그인이 필요한 서비스입니다.<br>로그인 후 이용해주세요.');
+      router.push(`/login`);
       return;
     }
 
@@ -57,14 +59,32 @@ function TopButtons({ productState }: TopButtonsProps) {
 
   return (
     <>
-      <div className="mb-5 flex-col w-full">
-        <div className="mt-6 mb-5 flex justify-end">
-          <button className="w-9 h-9 border px-4 py-2" onClick={() => setCount(count - 1)}>
-            -
+      <div className="mb-5 flex-col w-[335px] md:w-full">
+        <div className="w-[335px] md:w-full md:mt-6 md:mb-5 mt-4 mb-3 flex justify-end">
+          <button
+            className="items-center justify-center flex w-6 h-6 md:w-9 md:h-9 border"
+            onClick={() => {
+              if (count > 1) {
+                setCount(count - 1);
+              }
+            }}
+          >
+            <Image
+              src="/icons/minus.svg"
+              alt="-"
+              width={12}
+              height={12}
+              className="md:w-4 md:h-4"
+            />
           </button>
-          <div className="w-[52px] h-9 border p-2 text-center">{count}</div>
-          <button className="w-9 h-9 border px-4 py-2" onClick={() => setCount(count + 1)}>
-            +
+          <div className="w-10 h-6 md:w-[52px] md:h-9 border text-center items-center justify-center flex">
+            {count}
+          </div>
+          <button
+            className="items-center justify-center flex w-6 h-6 md:w-9 md:h-9 border"
+            onClick={() => setCount(count + 1)}
+          >
+            <Image src="/icons/plus.svg" alt="+" width={12} height={12} className="md:w-4 md:h-4" />
           </button>
         </div>
         <div className="flex justify-between items-center w-full">
@@ -75,28 +95,46 @@ function TopButtons({ productState }: TopButtonsProps) {
         </div>
       </div>
 
-      <div className="flex space-x-[6px]">
+      <div className="flex gap-[6px]">
         <button
           onClick={handleStartChat}
-          className="flex items-center justify-center p-4 w-[52px] h-[56px] border border-gray-300 rounded-lg"
+          className="flex items-center justify-center md:p-4 w-[52px] h-[48px] md:h-[56px] border border-gray-300 hover:bg-primary-green-50 rounded-md md:rounded-lg"
         >
-          <Image src="/icons/productchat.svg" alt="문의하기" width={24} height={24} />
+          <Image
+            src="/icons/productchat.svg"
+            alt="문의하기"
+            width={20}
+            height={20}
+            className="md:w-6 md:h-6"
+          />
         </button>
 
         <button
           onClick={handleAddToCart}
-          className="flex items-center justify-center p-4 w-[220.5px] h-[56px] border border-primary-green-500 rounded-lg"
+          className="flex items-center justify-center md:p-4 px-4 py-[14px] w-[135.5px] h-[48px] md:w-[220.5px] md:h-[56px] border border-primary-green-500 hover:bg-primary-green-50 rounded-md md:rounded-lg"
         >
-          <span className="text-primary-green-500">장바구니</span>
-          <Image src="/icons/productcart.svg" alt="장바구니" width={24} height={24} />
+          <span className="text-[14px] md:text-[16px] text-primary-green-500">장바구니</span>
+          <Image
+            src="/icons/productcart.svg"
+            alt="장바구니"
+            width={20}
+            height={20}
+            className="md:w-6 md:h-6"
+          />
         </button>
 
         <button
           onClick={handleBuyNow}
-          className="flex items-center justify-center p-4 w-[220.5px] h-[56px] bg-primary-green-500 text-white rounded-lg"
+          className="flex items-center justify-center p-4 w-[135.5px] h-[48px] md:w-[220.5px] md:h-[56px] bg-primary-green-500 hover:bg-primary-green-700 text-white rounded-md md:rounded-lg"
         >
-          <span className="mr-1">바로구매</span>
-          <Image src="/icons/productcard.svg" alt="바로구매" width={24} height={24} />
+          <span className="text-[14px] md:text-[16px] mr-1">바로구매</span>
+          <Image
+            src="/icons/productcard.svg"
+            alt="바로구매"
+            width={20}
+            height={20}
+            className="md:w-6 md:h-6"
+          />
         </button>
       </div>
     </>

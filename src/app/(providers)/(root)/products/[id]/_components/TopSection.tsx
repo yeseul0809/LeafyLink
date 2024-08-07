@@ -25,15 +25,15 @@ function TopSection({ product, averageRating, reviewCount }: TopSectionProps) {
       await navigator.clipboard.writeText(window.location.href);
       showSwal('링크가 복사되었습니다!');
     } catch (error) {
-      console.error('클립보드로 링크복사 실패', error);
+      showSwal('링크복사를 실패했습니다.');
     }
   };
   const filledStars = Math.floor(averageRating);
 
   return (
-    <div className="flex flex-col items-center md:items-start md:text-left">
-      <strong className="text-sm">{businessName}</strong>
-      <h1 className="text-2xl mb-4">{product.title}</h1>
+    <div className="flex w-[335px] md:w-full flex-col md:items-start md:text-left">
+      <p className="text-[12px] leading-[18px] font-semibold md:text-sm">{businessName}</p>
+      <h1 className="text-[16px] md:text-2xl md:mb-4">{product.title}</h1>
       <div className="flex justify-between w-full">
         <div className="flex items-center">
           {Array.from({ length: filledStars }).map((_, index) => (
@@ -51,21 +51,22 @@ function TopSection({ product, averageRating, reviewCount }: TopSectionProps) {
         <Image
           src="/icons/link.svg"
           alt="share"
-          width={30}
-          height={30}
-          style={{ width: 'auto', height: 'auto' }}
+          width={20}
+          height={20}
           onClick={handleCopyToClipboard}
-          className="cursor-pointer"
+          className="cursor-pointer w-[20px] h-[20px] md:w-[24px] md:h-[24px]"
         />
       </div>
-      <div className="border-t border-b border-Line/Regular mt-8 py-8 w-full">
+      <div className="border-t border-b border-Line/Regular mt-[16px] md:mt-8 py-4 md:py-8 w-full">
         <div className="flex items-center font-semibold">
-          <p className="text-sm">판매가</p>
-          <p className="text-[32px] ml-[69px]">{product.price?.toLocaleString('ko-KR')} 원</p>
+          <p className="text-[12px] md:text-sm">판매가</p>
+          <p className="text-[20px] md:text-[32px] ml-[55px] md:ml-[69px]">
+            {product.price?.toLocaleString('ko-KR')} 원
+          </p>
         </div>
-        <div className="flex text-sm">
+        <div className="flex text-[12px] md:text-sm">
           <p>배송비 </p>
-          <p className="ml-[69px]">무료</p>
+          <p className="ml-[55px] md:ml-[69px]">무료</p>
         </div>
       </div>
     </div>
