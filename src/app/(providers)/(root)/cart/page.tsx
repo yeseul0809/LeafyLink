@@ -54,7 +54,7 @@ export default async function CartPage() {
                         className="rounded-[6px]"
                       />
                     </div>
-                    <div className="flex justify-between items-center w-full xs:flex-col xs:items-start">
+                    <div className="flex justify-between items-center w-full xs:flex-col xs:items-start max_md:flex-col max_md:items-start">
                       <div className="ml-[20px] xs:ml-[15px]">
                         <p className="text-[18px] font-semibold mb-2 xs:text-[14px]">
                           {data.title}
@@ -62,7 +62,7 @@ export default async function CartPage() {
                         <p className="text-[12px]">배송비 무료</p>
                       </div>
                       <div className="flex items-center">
-                        <div className="flex xs:flex-col xs:mt-[12px] xs:ml-[15px] items-center xs:items-start">
+                        <div className="flex xs:flex-col xs:mt-[12px] xs:ml-[15px] items-center xs:items-start max_md:flex-col max_md:items-start max_md:ml-[15px] max_md:mt-[12px]">
                           <QuantityButton
                             productId={data.product_id}
                             price={data.price}
