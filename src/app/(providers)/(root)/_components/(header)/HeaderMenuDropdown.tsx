@@ -4,7 +4,7 @@ import React, { useRef } from 'react';
 
 function HeaderMenuDropdown() {
   const dropdownRef = useRef<HTMLDivElement>(null);
-  const { isLogin } = useAuthStore();
+  const { isLogin, setLogout } = useAuthStore();
   return (
     <div>
       <div
@@ -48,15 +48,21 @@ function HeaderMenuDropdown() {
           <ul>
             {isLogin ? (
               <li className="pb-2">
-                <a href="">로그아웃</a>
+                <button
+                  onClick={() => {
+                    setLogout(isLogin);
+                  }}
+                >
+                  로그아웃
+                </button>
               </li>
             ) : (
               <>
                 <li className="pb-2">
-                  <a href="">로그인</a>
+                  <button>로그인</button>
                 </li>
                 <li className="pb-2">
-                  <a href="">회원가입</a>
+                  <button>회원가입</button>
                 </li>
               </>
             )}

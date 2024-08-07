@@ -1,12 +1,32 @@
+'use client';
+import { createClient } from '@/supabase/supabaseClient';
 import { create } from 'zustand';
 
 interface AuthState {
   isLogin: boolean;
+  isSeller: boolean;
   setIsLogin: (state: boolean) => void;
+  setLogout: (state: boolean) => void;
 }
 
-// 로그인 했는지 안했는지 검사
+// 로그인 상태
 export const useAuthStore = create<AuthState>((set) => ({
   isLogin: false,
-  setIsLogin: (state: boolean) => set({ isLogin: state })
+  isSeller: false,
+  setIsSeller: (state: boolean) => {
+    set({ isLogin: state });
+  },
+  setIsLogin: async (state: boolean) => {
+    set({ isLogin: state });
+  },
+  setLogout: async (state: boolean) => {
+    try {
+      const supabase = createClient();
+      await supabase.auth.signOut();
+      set({ isLogin: state });
+      window.location.href = '/';
+    } catch (error) {
+      console.error('로그아웃 실패', error);
+    }
+  }
 }));
