@@ -22,7 +22,7 @@ function HeaderLogin() {
   const [profileLink, setProfileLink] = useState('/');
 
   const { userData } = useGetUser()!;
-  const { sellerData } = useGetSeller(); //todo 조건부 호출
+  const { sellerData } = useGetSeller(userData?.user_id!); //todo 조건부 호출
   console.log(userData);
 
   // 페이지 네비게이션
@@ -34,14 +34,12 @@ function HeaderLogin() {
   useEffect(() => {
     if (userData) {
       setIsLogin(true);
-      console.log('userData 있음!');
       if (sellerData) {
         setProfileLink('/seller/mypage/profile');
       } else {
         setProfileLink('/buyer/mypage/profile');
       }
     } else {
-      console.log('userData 없음!');
       setIsLogin(false);
     }
   }, [userData]);
@@ -91,8 +89,8 @@ function HeaderLogin() {
             <button
               className="ml-10 hover:text-zinc-950"
               onClick={() => {
-                queryClient.invalidateQueries({ queryKey: ['user'] });
                 setLogout(isLogin);
+                queryClient.invalidateQueries({ queryKey: ['user'] });
               }}
             >
               로그아웃
