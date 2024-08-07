@@ -4,11 +4,11 @@ import { Seller } from '@/types/seller';
 import { useState, useEffect } from 'react';
 
 // 샐러인지 아닌지 검사
-const useGetSeller = () => {
+const useGetSeller = (userId: string) => {
   const supabase = createClient();
   const getSeller = async () => {
-    const { data } = await supabase.auth.getUser();
-    const userId = data?.user?.id;
+    // const { data } = await supabase.auth.getUser();
+    // const userId = data?.user?.id;
 
     if (userId) {
       try {
@@ -37,7 +37,8 @@ const useGetSeller = () => {
     isPending
   } = useQuery<Seller>({
     queryKey: ['seller'],
-    queryFn: getSeller
+    queryFn: getSeller,
+    enabled: !!userId
   });
   if (error) {
     console.log('tanstack error : seller =>', error);
