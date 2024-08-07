@@ -18,10 +18,21 @@ const config: Config = {
       },
       screens: {
         xs: { max: '375px' },
+        max_lg: { max: '1024px' },
+        max_md: { max: '768px' },
+        max_sm: { max: '640px' },
         xs_max: { max: '440px' },
         sm: '640px',
         md: '768px',
-        lg: '1024px'
+        lg: '1024px',
+        //
+        m: { max: '1240px' },
+        s: { max: '764px' }
+      },
+      maxWidth: {
+        'container-l': '1280px',
+        'container-m': '744px',
+        'container-s': '375px'
       },
       colors: {
         'primary-green-50': '#f7fdfa',

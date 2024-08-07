@@ -45,7 +45,7 @@ export default function StreamSection({ category }: { category: string }) {
                       />
                     </Link>
                   </div>
-                  <div className="flex justify-between mt-4 pr-6 xs:pr-0 xs:flex-col xs:mt-[16px]">
+                  <div className="flex justify-between mt-4 pr-6 xs:pr-0 xs:flex-col xs:mt-[16px] max_lg:flex max_lg:flex-col max_lg:gap-[4px]">
                     <div>
                       <h2 className="font-semibold">{video.streamData[0].stream_title}</h2>
                       <p className="text-[#555555]">{video.streamData[0].description}</p>

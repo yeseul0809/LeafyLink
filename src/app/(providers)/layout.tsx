@@ -7,10 +7,12 @@ import Header from './(root)/_components/(header)/Header';
 const ProvidersLayout = ({ children }: PropsWithChildren) => {
   return (
     <QueryProvider>
-      <Header />
-      <div className="max-w-[1280px] w-full lg:px-[20px] xs:px-0 mx-auto">{children}</div>
-      <TopButton />
-      <Footer />
+      <div className="w-full mx-auto max-w-container-l m:max-w-container-m s:max-w-container-s">
+        <Header />
+        <div className="max-w-[1280px] w-full lg:px-[20px] xs:px-0 mx-auto">{children}</div>
+        <TopButton />
+        <Footer />
+      </div>
     </QueryProvider>
   );
 };

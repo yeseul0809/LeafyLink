@@ -136,9 +136,9 @@ function ChatListPage() {
                 <li
                   key={chatroom.chatroom_id}
                   onClick={() => handleChatroomClick(chatroom.chatroom_id)}
-                  className="bg-white border-b cursor-pointer w-full px-5 py-4 md:py-6 hover:bg-secondary-yellow-50 transition"
+                  className="bg-white border-b cursor-pointer h-[78px] w-full px-5 py-4 md:py-6 hover:bg-secondary-yellow-50 transition"
                 >
-                  <div className="flex items-start pb-8 w-full sm:p-0">
+                  <div className="flex items-start md:pb-8 w-full sm:p-0">
                     <div className="w-12 h-12 flex-shrink-0 rounded-full overflow-hidden mr-4">
                       <Image
                         src={otherInfo?.avatar_url || '/default-avatar.png'}
@@ -150,24 +150,24 @@ function ChatListPage() {
                     </div>
                     <div className="flex flex-col w-full">
                       <div className="flex justify-between items-center w-full">
-                        <strong className="block text-lg">
+                        <p className="block text-[14px] font-semibold md:text-lg">
                           {isUser
                             ? otherInfo?.business_name || 'Unknown'
                             : otherInfo?.user_name || 'Unknown'}
-                        </strong>
+                        </p>
                         {latestMessage && (
-                          <p className="text-sm text-gray-400 ml-auto">
+                          <p className="text-[11px] md:text-sm text-gray-400 ml-auto">
                             {timeForToday(latestMessage.createdAt)}
                           </p>
                         )}
                       </div>
 
                       <div className="flex justify-between items-center w-full mt-2">
-                        <p className="text-sm text-gray-500 flex-1">
+                        <p className="text-[12px] md:text-sm text-gray-500 flex-1">
                           {latestMessage ? latestMessage.payload : '이전 대화내역이 없습니다.'}
                         </p>
                         {unreadCounts[chatroom.chatroom_id] > 0 && (
-                          <div className="w-5 h-5 bg-primary-green-500 text-white rounded-full flex items-center justify-center text-xs ml-2">
+                          <div className="w-4 h-4 md:w-5 md:h-5 bg-primary-green-500 text-white rounded-full flex items-center justify-center text-[11px] md:text-xs ml-2">
                             {unreadCounts[chatroom.chatroom_id]}
                           </div>
                         )}
