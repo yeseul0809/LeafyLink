@@ -1,8 +1,8 @@
-import Image from 'next/image';
 import Link from 'next/link';
 import { getProductCount, getProductDatas, getTotalPages } from './actions';
 import Searchform from './_components/Searchform';
 import SelectBox from './_components/SelectBox';
+import ProductCard from '../(home)/_components/ProductCard';
 
 interface Props {
   searchParams: {
@@ -22,12 +22,8 @@ export default async function SearchPage({ searchParams }: Props) {
   const searchDatas = await getProductDatas(keyword, currentPage, perPage, sortParam);
   const totalPages = await getTotalPages(keyword, perPage);
 
-  console.log('allProductsData::', allProductsData);
-
-  console.log('searchDatas::', searchDatas);
-
   return (
-    <div className="pt-[80px] pb-[180px] xs:pt-[24px] xs:pb-[120px] w-full">
+    <div className="pt-[80px] pb-[180px] xs:pt-[24px] xs:pb-[120px] w-full px-[20px]">
       <h1 className="text-[32px] font-semibold text-center xs:text-[20px]">검색 결과</h1>
       <Searchform defaultKeword={keyword} currentPage={currentPage} />
       <div className="border-t border-Line/Regular w-full mb-[48px] xs:mb-[20px]" />
@@ -46,17 +42,7 @@ export default async function SearchPage({ searchParams }: Props) {
         <div className="grid grid-cols-4 gap-[20px] xs:grid-cols-2 xs:gap-[7px]">
           {searchDatas.map((data) => (
             <div key={data.product_id}>
-              <Link href={`/products/${data.product_id}`}>
-                <Image
-                  src={data.thumbnail_url}
-                  alt="상품이미지"
-                  width={295}
-                  height={295}
-                  className="rounded-[20px]"
-                />
-                <p className="font-semibold mb-[12px] mt-[20px]">{data.title}</p>
-                <p className="text-[18px] font-semibold">{data.price.toLocaleString()}원</p>
-              </Link>
+              <ProductCard product={data} />
             </div>
           ))}
         </div>

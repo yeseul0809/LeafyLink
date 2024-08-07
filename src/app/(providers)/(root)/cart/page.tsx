@@ -12,25 +12,25 @@ import SelectDeleteButton from './_components/SelectDeleteButton';
 export default async function CartPage() {
   const userData = await getUserSession();
 
-  let cartData, allProductData, checkedTrueDatas;
+  let cartData, allProductData;
   if (userData) {
     cartData = await getCartData(userData.user.id);
     if (cartData) {
       allProductData = await getProductData(cartData, 'all');
-      checkedTrueDatas = await getProductData(cartData, 'checked');
+      // checkedTrueDatas = await getProductData(cartData, 'checked');
     }
   }
 
   const productIds = allProductData?.map((data) => data.product_id);
 
   return (
-    <div className="pt-[80px] pb-[180px] xs:pt-[24px] xs:pb-[43px]">
+    <div className="pt-[80px] pb-[180px] xs:pt-[24px] xs:pb-[43px] px-[20px]">
       <h1 className="text-[36px] text-center xs:mb-[30px]">장바구니</h1>
       {cartData && (
         <h2 className="text-[18px] font-semibold">{`장바구니 상품(${cartData?.length})`}</h2>
       )}
       <div className="border-t border-gray-300 mt-4" />
-      <div className="flex items-start my-4 xs:flex-col">
+      <div className="flex items-start my-4 xs:flex-col max_sm:flex-col">
         {allProductData && allProductData.length !== 0 ? (
           <section className="w-full rounded-md flex flex-col">
             <div className="flex items-center gap-4 xs:gap-[12px]">
@@ -45,7 +45,7 @@ export default async function CartPage() {
                   className="flex border-b-2 last:border-none last:mb-0 pb-[52px] last:pb-0 items-start justify-between relative pl-8 mt-[48px] w-full h-[145px] xs:h-[160px]"
                 >
                   <Checkbox productId={data.product_id} userId={userData?.user.id!} />
-                  <div className="flex items-start w-full mr-[32px]">
+                  <div className="flex items-start w-full mr-[32px] max_sm:justify-center">
                     <div className="relative w-[96px] h-[96px] xs:w-[80px] xs:h-[80px]">
                       <Image
                         src={data.thumbnail_url}
@@ -54,7 +54,7 @@ export default async function CartPage() {
                         className="rounded-[6px]"
                       />
                     </div>
-                    <div className="flex justify-between items-center w-full xs:flex-col xs:items-start">
+                    <div className="flex justify-between items-center w-full xs:flex-col xs:items-start max_md:flex-col max_md:items-start">
                       <div className="ml-[20px] xs:ml-[15px]">
                         <p className="text-[18px] font-semibold mb-2 xs:text-[14px]">
                           {data.title}
@@ -62,13 +62,13 @@ export default async function CartPage() {
                         <p className="text-[12px]">배송비 무료</p>
                       </div>
                       <div className="flex items-center">
-                        <div className="flex xs:flex-col xs:mt-[12px] xs:ml-[15px] items-center xs:items-start">
+                        <div className="flex xs:flex-col xs:mt-[12px] xs:ml-[15px] items-center xs:items-start max_md:flex-col max_md:items-start max_md:ml-[15px] max_md:mt-[12px]">
                           <QuantityButton
                             productId={data.product_id}
                             price={data.price}
                             userId={userData?.user.id!}
                           />
-                          <div className="text-[18px] font-semibold xs:text-[13px] xs:mt-[20px]">
+                          <div className="text-[18px] font-semibold xs:text-[13px] xs:mt-[20px] max_md:text-[15px] max_md:mt-[10px]">
                             {data.price.toLocaleString()}원
                           </div>
                         </div>
@@ -87,7 +87,7 @@ export default async function CartPage() {
         )}
 
         {allProductData && allProductData.length !== 0 && (
-          <div className="flex flex-col w-[370px] ml-[20px] bg-[#FEFEFA] mt-14 xs:w-[335px] xs:ml-0">
+          <div className="flex flex-col w-[370px] ml-[20px] bg-[#FEFEFA] mt-14 xs:w-full xs:ml-0 mx-auto max_sm:ml-0">
             <div className="ring-1 ring-[#D9D9D9] rounded-md w-full h-full flex flex-col items-end justify-center p-6">
               <div className="text-[14px] w-full text-center flex justify-between mb-3">
                 <span>총 상품금액</span>

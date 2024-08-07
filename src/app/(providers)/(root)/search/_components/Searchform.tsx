@@ -33,7 +33,7 @@ export default function Searchform({
           type="text"
           name="keyword"
           defaultValue={defaultKeword}
-          className="pr-[20px] py-[16px] pl-[46px] text-font/sub2 border border-Line/Regular rounded-[100px] w-[820px] text-[16px] xs:w-[337px]"
+          className="pr-[20px] py-[16px] pl-[46px] text-font/sub2 border border-Line/Regular rounded-[100px] w-[820px] text-[16px] max_md:w-[337px]"
         />
         <Image
           src="/icons/reading-glasses.png"

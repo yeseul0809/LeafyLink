@@ -21,7 +21,7 @@ export default async function RecodedVideoPage({ params }: { params: { id: strin
   const sessionId = sessionData.data.user?.id;
 
   return (
-    <div className="pt-[80px] pb-[180px] xs:pt-[24px] xs:pb-[188px]">
+    <div className="pt-[80px] pb-[180px] xs:pt-[24px] xs:pb-[188px] px-[20px]">
       <div className="flex items-center mb-[40px] gap-3 xs:mb-[12px]">
         <Image
           src={sellerData![0].avatar_url}
@@ -39,11 +39,11 @@ export default async function RecodedVideoPage({ params }: { params: { id: strin
         <iframe
           src={`https://${process.env.CLOUDFLARE_DOMAIN}/${videoId}/iframe`}
           allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
-          className="w-full h-[698px] xs:w-full xs:h-[188px] rounded-2xl"
+          className="w-full rounded-2xl lg:h-[698px] md:h-[480px] sm:h-[380px] xs:h-[188px]"
         ></iframe>
       </div>
-      <div className="flex justify-between mt-[32px] xs:mt-[20px] xs:flex-col w-full">
-        <div className="flex gap-[32px] justify-between items-start xs:mb-[16px]">
+      <div className="flex justify-between mt-[32px] xs:mt-[20px] xs:flex-col w-full items-start max_lg:flex-col">
+        <div className="flex gap-[32px] justify-between items-start xs:mb-[16px] w-[88%] xs:w-full">
           <div className="flex flex-col gap-[8px]">
             <div className="flex gap-[16px] items-center mb-[20px] xs:mb-[16px]">
               <div className="rounded-full bg-[#F9F3CF] px-[16px] py-[9px] text-[13px] h-[36px] text-center xs:py-[9px] xs:px-[8px] xs:w-[68px]">
@@ -53,13 +53,15 @@ export default async function RecodedVideoPage({ params }: { params: { id: strin
                 <p className="text-[20px] font-semibold xs:text-[16px]">{stream.stream_title}</p>
               </div>
             </div>
-            <TruncatedText description={stream.description} />
+            <TruncatedText description={stream.description} lines={'2'} />
           </div>
         </div>
-
-        <Link href={`/products/${stream.livestream_product_id}`} className="cursor-pointer">
-          <button className="bg-primary-green-500 text-white p-[16px] rounded-[6px] flex items-center gap-[4px] hover:bg-primary-green-700 transition-colors xs:w-full xs:justify-center">
-            <div className="flex gap-[4px]">
+        <Link
+          href={`/products/${stream.livestream_product_id}`}
+          className="cursor-pointer w-[12%] xs:w-full max_lg:w-full"
+        >
+          <button className="bg-primary-green-500 text-white p-[16px] rounded-[6px] flex items-center gap-[4px] hover:bg-primary-green-700 transition-colors xs:w-full">
+            <div className="flex gap-[4px] w-full justify-center">
               <p className="text-[16px] font-semibold ">구매하러 가기</p>
               <Image src="/icons/right-arrow.png" alt="rightarrow" width={20} height={20} />
             </div>

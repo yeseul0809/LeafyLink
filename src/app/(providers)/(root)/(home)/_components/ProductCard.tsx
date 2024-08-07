@@ -82,6 +82,7 @@ const ProductCard = ({ product }: { product: Product }) => {
           </div>
 
           <Link href={'/상세페이지'}>
+            {/* <Link href={`/products/${product.product_id}`}> */}
             <img
               src={product.thumbnail_url}
               // alt="product_image"
