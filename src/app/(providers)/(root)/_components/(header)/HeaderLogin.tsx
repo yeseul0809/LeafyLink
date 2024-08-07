@@ -4,10 +4,11 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { useAuthStore } from '@/stores/authStore';
 
 function HeaderLogin() {
   const router = useRouter();
-  const [isLogin, setIsLogin] = useState(false);
+  const { isLogin, setIsLogin } = useAuthStore();
   const [userName, setUserName] = useState('');
   const [userAvatar, setUserAvatar] = useState('');
   const [profileLink, setProfileLink] = useState('/');
