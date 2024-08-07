@@ -12,6 +12,7 @@ const useGetSeller = () => {
 
     if (userId) {
       try {
+        console.log('아이디가 없는데?');
         const { data, error } = await supabase
           .from('Seller')
           .select('*')
