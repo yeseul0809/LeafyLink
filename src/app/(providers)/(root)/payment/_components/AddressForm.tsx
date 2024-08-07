@@ -153,8 +153,8 @@ export default function UserEditForm({
 
   return (
     <div>
-      <div className="flex items-center xs:flex-col xs:items-start">
-        <label className="w-20 mr-12" htmlFor="receiver">
+      <div className="flex items-center xs:flex-col xs:items-start gap-[16px] xs:gap-0">
+        <label htmlFor="receiver" className="w-[120px]">
           받는 사람
         </label>
         <input
@@ -167,14 +167,14 @@ export default function UserEditForm({
         />
       </div>
 
-      <div className="flex justify-start items-start xs:flex-col xs:items-start">
-        <div className="w-20 mr-12 xs:mb-[8px] xs:mt-[12px]">주소</div>
+      <div className="flex xs:flex-col xs:items-start gap-[16px] xs:gap-0">
+        <div className="w-[120px] xs:mb-[8px] xs:mt-[12px]">주소</div>
         <div className="w-full">
           <input
             type="text"
             id="sample3_postcode"
             placeholder="우편번호"
-            className="border p-3 mb-3 rounded"
+            className="border p-3 mb-3 rounded w-[150px]"
             value={postcode}
             readOnly
           />

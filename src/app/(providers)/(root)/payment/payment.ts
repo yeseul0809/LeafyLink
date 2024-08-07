@@ -26,6 +26,7 @@ const paymentHandler = (productData: ProductInfo, userId: string) => {
     buyer_name: '구매자이름',
     buyer_tel: '010-1234-5678',
     m_redirect_url: `https://leafylink-hys-projects-073e5858.vercel.app/settlement/?data=${encodedProductData}`
+    // m_redirect_url: `http://localhost:3000/settlement/?data=${encodedProductData}`
   };
 
   IMP.request_pay(data, (rsp: RequestPayResponse) => callback(rsp, productData, userId));

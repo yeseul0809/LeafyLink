@@ -1,6 +1,8 @@
 'use client';
 import '@/app/globals.css';
 import { Accordion, AccordionItem } from '@szhsin/react-accordion';
+import Image from 'next/image';
+import { useState } from 'react';
 
 // Product 타입
 interface Product {
@@ -34,6 +36,7 @@ interface AccordionMenuProps {
 }
 
 export default function AccordionMenu({ orders }: AccordionMenuProps) {
+  const [isOpen, setIsOpen] = useState(false);
   function formatDate(dateString: string) {
     const date = new Date(dateString);
     const year = date.getFullYear();
@@ -64,6 +67,9 @@ export default function AccordionMenu({ orders }: AccordionMenuProps) {
       .replace('KRW', '')
       .trim();
   };
+  const handleClick = () => {
+    setIsOpen(!isOpen);
+  };
 
   return (
     <div className="max-w-screen-xl mx-auto mt-20 mb-20  ">
@@ -84,13 +90,24 @@ export default function AccordionMenu({ orders }: AccordionMenuProps) {
               <AccordionItem
                 key={order.order_id}
                 header={
-                  <div className="flex items-start py-[22px]">
-                    <span className="w-[178px] text-[16px] font-normal leading-[24px] tracking-[-0.4px] text-font/sub2 text-center px-4">
-                      {order.order_id}
-                    </span>
-                    <span className="flex-1 text-font/main text-[16px] font-normal leading-[24px] tracking-[-0.4px] px-4 overflow-hidden whitespace-nowrap text-ellipsis text-left">
-                      {order.Product?.title || '제품 없음'}
-                    </span>
+                  <div className="flex items-start" onClick={handleClick}>
+                    <div className="flex items-start py-[22px]">
+                      <span className="w-[178px] text-[16px] font-normal leading-[24px] tracking-[-0.4px] text-font/sub2 text-center px-4">
+                        {order.order_id}
+                      </span>
+                      <span className="flex-1 text-font/main text-[16px] font-normal leading-[24px] tracking-[-0.4px] px-4 overflow-hidden whitespace-nowrap text-ellipsis text-left">
+                        {order.Product?.title || '제품 없음'}
+                      </span>
+                    </div>
+                    <div className="flex items-center ml-auto py-[22px] px-[16px] cursor-pointer">
+                      <Image
+                        src={isOpen ? '/icons/down.png' : '/icons/up.png'}
+                        alt={isOpen ? '다운 이미지' : '업 이미지'}
+                        className="flex-shrink-0"
+                        width={20}
+                        height={20}
+                      />
+                    </div>
                   </div>
                 }
               >

@@ -222,24 +222,24 @@ export default function PaymentPage() {
             onFormCheckChange={handleFormCheckChange}
           />
           <div className="flex flex-col">
-            <div className="flex">
+            <div className="flex gap-[16px] xs:gap-0">
               <label
                 htmlFor="phone"
-                className="xs:mb-[8px] xs:mt-[16px] mr-[48px] w-[80px] xs:w-0 xs:mr-0"
+                className="xs:mb-[8px] xs:mt-[16px] w-[120px] xs:w-0 xs:mr-0"
               ></label>
               <input
                 type="text"
                 placeholder="나머지 상세주소"
-                className="border p-3 mb-3 rounded w-full xs:ml-0"
+                className="border p-3 mb-3 rounded w-full"
                 defaultValue={userData.address_detail}
                 onChange={(e) => setRestAddress(e.target.value)}
               />
             </div>
-            <div className="h-[64px] flex xs:flex-col xs:mb-[16px]">
-              <label htmlFor="phone" className="w-20 mr-[38px] xs:mb-[8px] xs:mt-[16px]">
+            <div className="h-[64px] flex xs:flex-col xs:mb-[16px] w-full gap-[16px] xs:gap-0">
+              <label htmlFor="phone" className="xs:mb-[8px] xs:mt-[16px] w-[120px]">
                 휴대폰번호
               </label>
-              <div>
+              <div className="w-full">
                 <input
                   className="border p-3 mb-3 rounded w-1/4"
                   type="text"
@@ -268,8 +268,8 @@ export default function PaymentPage() {
                 />
               </div>
             </div>
-            <div className="flex xs:flex-col xs:mt-[42px] xs:gap-[8px]">
-              <label htmlFor="email" className="mr-[44px] w-[80px]">
+            <div className="flex xs:flex-col xs:mt-[42px] xs:gap-0 gap-[16px]">
+              <label htmlFor="email" className="w-[120px] xs:mb-[8px]">
                 이메일
               </label>
               <input
@@ -347,7 +347,7 @@ export default function PaymentPage() {
         <section>
           <h2 className="text-[20px] font-semibold mb-4">결제수단</h2>
           <p className="mb-4">결제수단 선택</p>
-          <div className="border border-[#787878] w-[400px] h-[48px] rounded-md flex items-center gap-2 justify-center xs:w-full">
+          <div className="border border-[#787878] w-[400px] h-[48px] rounded-md flex items-center gap-2 justify-center max_sm:w-full xs:w-full">
             <Image
               src="/icons/kakaotalk.png"
               alt="kakaotalk"

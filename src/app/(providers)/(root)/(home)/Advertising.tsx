@@ -4,7 +4,7 @@ import React from 'react';
 function Advertising() {
   return (
     <section
-      className="w-full h-[180px] text-center bg-no-repeat bg-center bg-cover"
+      className="w-full h-[180px] text-center bg-no-repeat bg-center bg-cover "
       style={{ backgroundImage: "url('/bg-advertising.svg')" }}
     >
       <Link

@@ -12,12 +12,12 @@ import SelectDeleteButton from './_components/SelectDeleteButton';
 export default async function CartPage() {
   const userData = await getUserSession();
 
-  let cartData, allProductData, checkedTrueDatas;
+  let cartData, allProductData;
   if (userData) {
     cartData = await getCartData(userData.user.id);
     if (cartData) {
       allProductData = await getProductData(cartData, 'all');
-      checkedTrueDatas = await getProductData(cartData, 'checked');
+      // checkedTrueDatas = await getProductData(cartData, 'checked');
     }
   }
 
