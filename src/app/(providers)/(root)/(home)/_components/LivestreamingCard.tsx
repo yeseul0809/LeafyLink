@@ -18,7 +18,7 @@ type VideoData = {
 
 function LivestreamingCard({ videosData }: { videosData: VideoData }) {
   return (
-    <div className="lg:w-[505px] w-[280px]">
+    <div className="lg:w-[505px] w-[350px]">
       <div>
         <div>
           <Link
@@ -29,7 +29,7 @@ function LivestreamingCard({ videosData }: { videosData: VideoData }) {
               width={280}
               height={158}
               src={videosData.streamData[0].thumbnail_url}
-              className="w-full h-full bg-zinc-300 rounded-2xl cursor-pointer object-cover"
+              className="w-full h-[284px] bg-zinc-300 rounded-2xl cursor-pointer object-cover"
             ></Image>
           </Link>
         </div>
