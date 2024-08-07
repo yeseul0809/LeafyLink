@@ -6,6 +6,7 @@ import useUser from '@/hooks/useUser';
 import TopButtons from './TopButtons';
 import BottomTab from './BottomTab';
 import { createCartItem } from '../_actions/cartActions';
+import showSwal, { showSwalContinue } from '@/utils/swal';
 
 interface ButtonsWrapperProps {
   productId: string;
@@ -25,6 +26,12 @@ function ButtonsWrapper({
   const router = useRouter();
 
   const handleAddToCart = async () => {
+    if (!user) {
+      showSwal('로그인이 필요한 서비스입니다.<br>로그인 후 이용해주세요.');
+      router.push(`/login`);
+      return;
+    }
+
     const cartItemData = {
       cart_product_id: productId,
       count: count,
@@ -34,8 +41,7 @@ function ButtonsWrapper({
     const result = await createCartItem(cartItemData, user.id);
 
     if (result) {
-      alert('선택하신 상품이 장바구니에 추가되었습니다.');
-      router.push(`/cart`);
+      showSwalContinue('장바구니에 상품이 정상적으로 담겼습니다.', router);
     }
   };
 

@@ -56,22 +56,24 @@ const ProductReviewList = ({ productId, reviewsPerPage }: ProductReviewProps) =>
   };
 
   return (
-    <div className="w-full mx-auto">
+    <div className="w-[335px] md:w-[1240px] mx-auto">
       {isLoading ? (
         <p>리뷰를 불러오는 중입니다...</p>
       ) : error ? (
         <p>리뷰를 불러오는 중 에러가 발생했습니다: {error.message}</p>
+      ) : reviewData?.reviews.length === 0 ? (
+        <p className="flex justify-center text-[15px] pt-12 pb-[164px]">리뷰가 아직 없습니다.</p>
       ) : (
         <>
           <ul className="text-left">
             {reviewData?.reviews.map((review: Review) => (
-              <li key={review.review_id} className="pt-12 pb-10 border-b rounded">
+              <li key={review.review_id} className="pt-5 md:pt-12 pb-5 md:pb-10 border-b rounded">
                 <div className="mb-2">
-                  <p className="text-[13px]">작성자: {review.review_user_name}</p>
+                  <p className="text-[13px]">{review.review_user_name}</p>
                 </div>
-                <div className="flex items-center pb-6">
+                <div className="flex items-center pb-[17px] md:pb-6">
                   {Array.from({ length: review.rating || 0 }).map((_, index) => (
-                    <span key={index} className="text-primary-green-500">
+                    <span key={index} className="text-[16px] md:text-[24px] text-primary-green-500">
                       ★
                     </span>
                   ))}
@@ -80,7 +82,7 @@ const ProductReviewList = ({ productId, reviewsPerPage }: ProductReviewProps) =>
                       ★
                     </span>
                   ))}
-                  <span className="text-xl font-bold ml-2">{review.rating}.0</span>
+                  <span className="text-[13px] md:text-xl font-bold ml-2">{review.rating}.0</span>
                 </div>
                 <ReviewToggle description={review.description} />
                 <span className="text-gray-500 text-sm">
@@ -89,7 +91,7 @@ const ProductReviewList = ({ productId, reviewsPerPage }: ProductReviewProps) =>
               </li>
             ))}
           </ul>
-          <div className="flex items-center justify-center mt-20">
+          <div className="flex items-center justify-center mt-10 mb-[70px] md:mb-0 md:mt-20">
             {Array.from({ length: totalPages }).map((_, index) => (
               <button
                 key={index}

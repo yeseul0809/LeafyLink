@@ -17,8 +17,11 @@ function ProductDescription({ productDescription }: ProductDescriptionProps) {
   }, [productDescription]);
 
   return (
-    <section className="pt-[82px] px-[270px] pb-[110px] flex flex-col text-center items-center w-full">
-      <div className="ql-editor w-[700px]" dangerouslySetInnerHTML={{ __html: sanitizedProduct }} />
+    <section className="md:pt-[82px] md:px-[270px] md:pb-[110px] pt-4 flex flex-col text-center items-center md:w-full">
+      <div
+        className="ql-editor w-[335px] md:w-[700px]"
+        dangerouslySetInnerHTML={{ __html: sanitizedProduct }}
+      />
     </section>
   );
 }
