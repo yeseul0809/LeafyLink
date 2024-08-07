@@ -24,18 +24,18 @@ async function ProductDetailPage({ params }: ParamsProps) {
   const averageRating = reviewCount > 0 ? totalRating / reviewCount : 0;
 
   return (
-    <div className="container mx-auto max-w-screen-lg py-20">
-      <section className="flex flex-col md:flex-row gap-[80px]">
-        <div className="w-[485px] h-[485px] overflow-hidden md:w-1/2 flex-shrink-0 justify-center rounded-[28px] mb-4 md:mb-0">
+    <div className="container mx-auto xs:max-w-screen-lg py-0 md:py-20">
+      <section className="flex justify-center flex-col md:flex-row md:gap-[80px]">
+        <div className="w-full h-[375px] overflow-hidden md:w-[485px] md:h-[485px] flex-shrink-0 justify-center md:rounded-[28px]">
           <Image
             src={product.thumbnail_url}
             alt={product.title}
-            width={485}
-            height={485}
-            className="rounded-lg object-cover w-full h-full"
+            width={375}
+            height={375}
+            className="object-cover w-full h-full md:w-[485px] md:h-[485px] md:rounded-lg"
           />
         </div>
-        <div className="md:w-1/2 flex flex-col justify-center w-[505px] h-[437px]">
+        <div className="px-[20px] md:px-0 pt-[20px] md:pt-0 flex flex-col justify-center md:w-[505px]">
           <TopSection product={product} averageRating={averageRating} reviewCount={reviewCount} />
           <ButtonsWrapper
             productId={product.product_id}

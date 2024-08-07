@@ -11,7 +11,7 @@ const ProvidersLayout = ({ children }: PropsWithChildren) => {
   return (
     <QueryProvider>
       <Header />
-      <div className="max-w-[1280px] px-[20px] mx-auto">{children}</div>
+      <div className="max-w-[1280px] xs:px-[20px] mx-auto">{children}</div>
       <TopButton />
       <Footer />
     </QueryProvider>

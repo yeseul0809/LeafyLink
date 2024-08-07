@@ -46,18 +46,24 @@ function BottomTab({ productState }: BottomTabProps) {
         visible ? 'translate-y-0' : 'translate-y-full'
       }`}
     >
-      <div className="max-w-[375px] md:max-w-[1240px] mx-auto flex flex-col md:flex-row md:justify-between md:items-center p-[8px_20px_20px_20px] md:p-[0px]">
+      <div className="max-w-[375px] md:max-w-[1240px] xs:mx-auto flex flex-col md:flex-row md:justify-between md:items-center p-[8px_20px_20px_20px] md:p-[0px]">
         <div className="flex justify-center items-center ">
-          <button className="w-4 h-4 flex items-center justify-center md:hidden">
+          <button className="w-4 h-4 flex items-center justify-center md:hidden pb-3 md:pb-0">
             <Image src="/icons/bottomTab.svg" alt="hidden" width={16} height={16} />
           </button>
         </div>
-        <p className="flex text-[16px] md:flex-grow-0 md:text-left md:text-[24px]">
+        <p className="flex text-[16px] md:justify-start md:text-left md:text-[24px]">
           {product.title}
         </p>
         <section className="flex flex-col md:flex-row items-center justify-between w-full md:w-auto">
           <div className="flex items-center justify-between mt-[17px] pb-5 md:pb-0 md:mt-0 w-full">
-            <div className="h-[26px] flex justify-start items-center">
+            <div className="flex items-center justify-start md:ml-[20px]">
+              <p className="text-sm mr-2">총 상품금액</p>
+              <p className="text-[18px] md:text-xl md:mr-8 font-bold">
+                {(+product.price * count).toLocaleString('ko-KR')} 원
+              </p>
+            </div>
+            <div className="h-[26px] flex justify-end items-center">
               <button
                 className="w-6 h-6 md:w-9 md:h-9 border flex items-center justify-center"
                 onClick={() => {
@@ -89,13 +95,6 @@ function BottomTab({ productState }: BottomTabProps) {
                   className="md:w-4 md:h-4"
                 />
               </button>
-            </div>
-
-            <div className="flex items-center justify-end ml-4 md:ml-[20px]">
-              <p className="text-sm mr-2">총 상품금액</p>
-              <p className="text-[18px] md:text-xl md:mr-8 font-bold">
-                {(+product.price * count).toLocaleString('ko-KR')} 원
-              </p>
             </div>
           </div>
 
