@@ -32,6 +32,12 @@ const ProductCard = ({ product }: { product: Product }) => {
   };
 
   const handleAddToCart = async () => {
+    if (!user) {
+      showSwal('로그인이 필요한 서비스입니다.<br>로그인 후 이용해주세요.');
+      router.push(`/login`);
+      return;
+    }
+
     const cartItemData = {
       cart_product_id: product.product_id,
       count: count,
@@ -41,7 +47,7 @@ const ProductCard = ({ product }: { product: Product }) => {
     const result = await createCartItem(cartItemData, user.id);
 
     if (result) {
-      showSwal('선택하신 상품이 장바구니에 추가되었습니다.');
+      showSwal('장바구니에 상품이 정상적으로 담겼습니다.');
     }
   };
 
@@ -65,7 +71,7 @@ const ProductCard = ({ product }: { product: Product }) => {
         <div className="relative ">
           <div
             onClick={() => redirect(`/products/${product.product_id}`)}
-            className="hidden lg:block cursor-pointer opacity-0 lg:w-[295px] lg:h-[295px] w-[164px] h-[164px] z-1 lg:flex justify-center items-center absolute z-5 hover:backdrop-blur-sm hover:opacity-100"
+            className="cursor-pointer opacity-0 lg:w-[295px] lg:h-[295px] w-[164px] h-[164px] z-1 lg:flex justify-center items-center absolute z-5 hover:backdrop-blur-sm hover:opacity-100"
           >
             <button className="mr-10" onClick={handleAddCartClick}>
               <img src="/icons/icon-card-cart.svg" alt="cart" />

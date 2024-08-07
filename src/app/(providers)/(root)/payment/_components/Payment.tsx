@@ -204,7 +204,7 @@ export default function PaymentPage() {
 
   if (userData && productData) {
     return (
-      <div className="pt-[80px] pb-[180px] xs:pt-[62px] xs:pb-[45px]">
+      <div className="pt-[80px] pb-[180px] xs:pt-[62px] xs:pb-[45px] px-[20px]">
         <h1 className="text-[32px] font-semibold text-center">주문/결제</h1>
         <p className="mt-[32px] mb-[20px]">주문자</p>
         <form action="" className="flex items-center gap-[8px] xs:mt-[16px]">

@@ -21,6 +21,7 @@ const config: Config = {
         max_lg: { max: '1024px' },
         max_md: { max: '768px' },
         max_sm: { max: '640px' },
+        xs_max: { max: '440px' },
         sm: '640px',
         md: '768px',
         lg: '1024px'

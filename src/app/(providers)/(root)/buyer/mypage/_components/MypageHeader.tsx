@@ -12,13 +12,13 @@ const MyPageHeader = () => {
   }, [pathname]);
 
   const linkClassName =
-    ' text-font/main border-line-gray-50 border-b-2 text-18-n-26-45 xs:text-14-n-20-35 ';
+    ' text-font/main border-line-gray-50 border-b-2 text-14-n-20-35 font/sub2 md:text-18-n-26-45';
   const activeLinkClassName =
     ' text-18-sb-26-45 xs:text-14-sb-20-35 text-primary-green-500  border-primary-green-500 border-b-2 overflow-hidden text-center truncate  ';
 
   return (
-    <div className="max-w-screen-xl mx-auto mt-20 mb-20  xs:my-[16px] ">
-      <h1 className="text-32-sb-42-80 xs:text-20-sb-28-50 text-center text-font/main mb-[32px] xs:mb-[0px]">
+    <div className="max-w-screen-xl mx-auto md:mt-20 md:mb-20  mb-[24px] mt-[16px]">
+      <h1 className="text-32-sb-42-80 xs:text-20-sb-28-50 text-center text-font/main mb-[32px] xs:mb-[0px] xs:mt-[16px]">
         마이페이지
       </h1>
 
@@ -27,21 +27,21 @@ const MyPageHeader = () => {
           className={`w-1/3  p-4 text-center xs:p-[12px] ${linkClassName} ${activeLink === `/buyer/mypage/orders` ? activeLinkClassName : ''}`}
         >
           <Link href={`/buyer/mypage/orders`}>
-            <div className="">구매내역 조회</div>
+            <div className="webkit-box">구매내역 조회</div>
           </Link>
         </li>
         <li
           className={`w-1/3 p-4 text-center xs:p-[12px] ${linkClassName} ${activeLink === `/buyer/mypage/profile` ? activeLinkClassName : ''}`}
         >
           <Link href={`/buyer/mypage/profile`}>
-            <div>회원정보 변경</div>
+            <div className="webkit-box">회원정보 변경</div>
           </Link>
         </li>
         <li
           className={`w-1/3 p-4 text-center xs:p-[12px] ${linkClassName} ${activeLink === `/buyer/mypage/BusinessCheck` ? activeLinkClassName : ''}`}
         >
           <Link href={`/buyer/mypage/BusinessCheck`}>
-            <div>사업자 인증</div>
+            <div className="webkit-box">사업자 인증</div>
           </Link>
         </li>
       </ul>

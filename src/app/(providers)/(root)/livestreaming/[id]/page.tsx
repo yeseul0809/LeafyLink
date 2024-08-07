@@ -22,7 +22,7 @@ export default async function StreamingPage({ params }: { params: { id: string }
   const sessionId = sessionData.data.user?.id;
 
   return (
-    <div className="pt-[80px] pb-[180px] xs:pt-[12px] xs:pb-[188px]">
+    <div className="pt-[80px] pb-[180px] xs:pt-[12px] xs:pb-[188px] px-[20px]">
       <div className="flex items-center mb-[40px] gap-3 xs:mb-[12px]">
         <Image
           src={sellerData![0].avatar_url}

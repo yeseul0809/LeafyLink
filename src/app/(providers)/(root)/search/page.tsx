@@ -23,7 +23,7 @@ export default async function SearchPage({ searchParams }: Props) {
   const totalPages = await getTotalPages(keyword, perPage);
 
   return (
-    <div className="pt-[80px] pb-[180px] xs:pt-[24px] xs:pb-[120px] w-full">
+    <div className="pt-[80px] pb-[180px] xs:pt-[24px] xs:pb-[120px] w-full px-[20px]">
       <h1 className="text-[32px] font-semibold text-center xs:text-[20px]">검색 결과</h1>
       <Searchform defaultKeword={keyword} currentPage={currentPage} />
       <div className="border-t border-Line/Regular w-full mb-[48px] xs:mb-[20px]" />

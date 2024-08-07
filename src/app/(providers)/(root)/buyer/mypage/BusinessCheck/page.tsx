@@ -35,10 +35,8 @@ export default async function BusinessCheck() {
   }
 
   return (
-    <section className="">
-      <div className="">
-        <SellerCheck userData={data} />
-      </div>
+    <section>
+      <SellerCheck userData={data} />
     </section>
   );
 }

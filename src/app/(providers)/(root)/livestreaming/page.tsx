@@ -58,7 +58,7 @@ export default function StreamListPage() {
   ];
 
   return (
-    <div className="pt-[80px] pb-[180px] xs:pt-[16px] xs:pb-[70px]">
+    <div className="pt-[80px] pb-[180px] xs:pt-[16px] xs:pb-[70px] px-[20px]">
       <h1 className="text-[32px] font-semibold text-center mb-[32px] xs:mb-[16px] xs:text-[20px]">
         라이브 커머스
       </h1>

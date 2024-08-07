@@ -1,6 +1,5 @@
 'use client';
 import { createClient } from '@/supabase/supabaseClient';
-import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
 
 interface BusinessInfoResponse {
@@ -36,7 +35,6 @@ function SellerCheck({ userData }: SellerCheckProps) {
   const [businessName, setBusinessName] = useState('');
   const [result, setResult] = useState<BusinessInfoResponse | null>(null);
   const [hydrated, setHydrated] = useState(false);
-  const router = useRouter();
 
   useEffect(() => {
     setHydrated(true);
@@ -204,47 +202,39 @@ function SellerCheck({ userData }: SellerCheckProps) {
         }}
       >
         <div className="mb-4">
-          <label className="block text-[16px] font-normal leading-[24px] tracking-[-0.4px] text-font/main mb-3">
-            사업자 번호
-          </label>
+          <label className="block text-16-n-24-40 text-font/main mb-3">사업자 번호</label>
           <input
             type="text"
             value={businessNumber}
             onChange={(e) => setBusinessNumber(e.target.value.replace(/\D/g, ''))}
             maxLength={10}
             placeholder="사업자 번호 10자리를 입력해 주세요"
-            className="mb-6 block w-full p-4 border border-gray-300 shadow-sm focus:ring-primary-green-500 focus:border-primary-green-500 text-[16px] font-normal leading-[24px] tracking-[-0.4px] text-font/main"
+            className="mb-6 block w-full p-4 border border-gray-300 shadow-sm focus:ring-primary-green-500 focus:border-primary-green-500 text-16-n-24-40 text-font/main"
           />
         </div>
 
         <div className="mb-4">
-          <label className="block text-[16px] font-normal leading-[24px] tracking-[-0.4px] text-font/main mb-3">
-            대표자 성명
-          </label>
+          <label className="block text-16-n-24-40 text-font/main mb-3">대표자 성명</label>
           <input
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="대표자 성명을 입력해 주세요"
-            className="mb-6 block w-full p-4 border border-gray-300 shadow-sm focus:ring-primary-green-500 focus:border-primary-green-500 text-[16px] font-normal leading-[24px] tracking-[-0.4px] text-font/main"
+            className="mb-6 block w-full p-4 border border-gray-300 shadow-sm focus:ring-primary-green-500 focus:border-primary-green-500 text-16-n-24-40 text-font/main"
           />
         </div>
         <div className="mb-4">
-          <label className="block text-[16px] font-normal leading-[24px] tracking-[-0.4px] text-font/main mb-3">
-            상호명
-          </label>
+          <label className="block text-16-n-24-40 text-font/main mb-3">상호명</label>
           <input
             type="text"
             value={businessName}
             onChange={(e) => setBusinessName(e.target.value)}
             placeholder="상호명을 입력해 주세요"
-            className="mb-6 block w-full p-4 border border-gray-300 shadow-sm focus:ring-primary-green-500 focus:border-primary-green-500 text-[16px] font-normal leading-[24px] tracking-[-0.4px] text-font/main"
+            className="mb-6 block w-full p-4 border border-gray-300 shadow-sm focus:ring-primary-green-500 focus:border-primary-green-500 text-16-n-24-40 text-font/main"
           />
         </div>
         <div className="mb-4">
-          <label className="block text-[16px] font-normal leading-[24px] tracking-[-0.4px] text-font/main mb-3">
-            개업일자
-          </label>
+          <label className="block text-16-n-24-40 text-font/main mb-3">개업일자</label>
           <input
             type="text"
             value={startDate}
@@ -255,7 +245,7 @@ function SellerCheck({ userData }: SellerCheckProps) {
               }
             }}
             placeholder="YYYYMMDD"
-            className="mb-6 block w-full p-4 border border-gray-300 shadow-sm focus:ring-primary-green-500 focus:border-primary-green-500 text-[16px] font-normal leading-[24px] tracking-[-0.4px] text-font/main"
+            className="mb-6 block w-full p-4 border border-gray-300 shadow-sm focus:ring-primary-green-500 focus:border-primary-green-500 text-16-n-24-40 text-font/main"
           />
         </div>
         <div className="flex justify-center">

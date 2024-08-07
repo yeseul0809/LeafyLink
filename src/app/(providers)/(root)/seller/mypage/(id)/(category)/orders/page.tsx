@@ -106,7 +106,7 @@ export default async function SellerOrderListPage({ searchParams }: ProductPageP
 
   if (!orders || orders.length === 0) {
     return (
-      <div className="mt-[80px] mb-[421px] text-center text-[15px] font-normal leading-[22px] tracking-[-0.375px] text-font/main truncate">
+      <div className="mt-[80px] mb-[421px] text-center overflow-hidden text-ellipsis text-font/main text-15-n-22-375 mt-[16px] text-font/main truncate">
         주문내역이 아직 없습니다
       </div>
     );
