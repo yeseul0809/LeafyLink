@@ -44,12 +44,12 @@ function MessageList({ isMessagesLoaded, messages, userId, otherUserInfo }: Mess
             const isCurrentUser = msg.message_user_id === userId;
 
             return (
-              <div key={msg.message_id} className="my-4">
+              <div key={msg.message_id} className="mb-3 md:mb-4">
                 <div className="flex items-center">
                   {displayDate && (
                     <span
                       key={`date-${msg.message_id}`}
-                      className="w-[89px] h-[32px] text-[16px] leading-[24px] text-center mx-auto text-gray-500 mt-6 mb-5 py-1 px-3 rounded-[22px] bg-secondary-yellow-100 "
+                      className="w-[89px] h-[32px] text:[14px] md:text-[16px] leading-[24px] text-center mx-auto text-gray-500 mt-2 mb-2 md:mt-6 md:mb-5 py-1 px-3 rounded-[22px] bg-secondary-yellow-100 "
                     >
                       {formattedDate}
                     </span>
@@ -63,11 +63,11 @@ function MessageList({ isMessagesLoaded, messages, userId, otherUserInfo }: Mess
                         alt="Avatar"
                         width={40}
                         height={40}
-                        className="w-10 h-10 rounded-full mr-4"
+                        className="w-10 h-10 rounded-full mr-3 md:mr-4"
                       />
                     )}
                     {isCurrentUser && (
-                      <div className="text-xs text-gray-600 mr-2">
+                      <div className="text-[11px] md:text-xs text-gray-600 mr-2">
                         {addHoursDate.toLocaleTimeString('ko-KR', {
                           hour: '2-digit',
                           minute: '2-digit'
@@ -81,7 +81,7 @@ function MessageList({ isMessagesLoaded, messages, userId, otherUserInfo }: Mess
                           : 'bg-BG/Regular rounded-tl-[20px] rounded-tr-[20px] rounded-bl-[8px] rounded-br-[20px]'
                       }`}
                     >
-                      <div>{msg.payload}</div>
+                      <div className="text-[14px] md:text-[16px]">{msg.payload}</div>
                     </div>
                     {!isCurrentUser && (
                       <div className="text-xs text-font/sub2 ml-2">

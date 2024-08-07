@@ -136,16 +136,16 @@ function ChatListPage() {
                 <li
                   key={chatroom.chatroom_id}
                   onClick={() => handleChatroomClick(chatroom.chatroom_id)}
-                  className="bg-white border-b cursor-pointer h-[78px] w-full px-5 py-4 md:py-6 hover:bg-secondary-yellow-50 transition"
+                  className="bg-white border-b cursor-pointer xs:h-[78px]  md:h-[100px] w-full px-5 py-4 md:py-6 hover:bg-secondary-yellow-50 transition"
                 >
-                  <div className="flex items-start md:pb-8 w-full sm:p-0">
-                    <div className="w-12 h-12 flex-shrink-0 rounded-full overflow-hidden mr-4">
+                  <section className="flex items-start md:pb-8 w-full sm:p-0">
+                    <div className="w-10 h-10 md:w-[48px] md:h-[48px] flex-shrink-0 rounded-full overflow-hidden mr-4">
                       <Image
                         src={otherInfo?.avatar_url || '/default-avatar.png'}
                         alt="Avatar"
-                        width={48}
-                        height={48}
-                        className="object-cover"
+                        width={40}
+                        height={40}
+                        className="object-cover md:w-[48px] md:h-[48px]"
                       />
                     </div>
                     <div className="flex flex-col w-full">
@@ -162,7 +162,7 @@ function ChatListPage() {
                         )}
                       </div>
 
-                      <div className="flex justify-between items-center w-full mt-2">
+                      <div className="flex justify-between items-center w-full md:mt-2">
                         <p className="text-[12px] md:text-sm text-gray-500 flex-1">
                           {latestMessage ? latestMessage.payload : '이전 대화내역이 없습니다.'}
                         </p>
@@ -173,7 +173,7 @@ function ChatListPage() {
                         )}
                       </div>
                     </div>
-                  </div>
+                  </section>
                 </li>
               );
             })}
