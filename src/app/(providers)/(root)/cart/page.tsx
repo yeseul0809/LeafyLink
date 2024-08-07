@@ -30,7 +30,7 @@ export default async function CartPage() {
         <h2 className="text-[18px] font-semibold">{`장바구니 상품(${cartData?.length})`}</h2>
       )}
       <div className="border-t border-gray-300 mt-4" />
-      <div className="flex items-start my-4 xs:flex-col">
+      <div className="flex items-start my-4 xs:flex-col max_sm:flex-col">
         {allProductData && allProductData.length !== 0 ? (
           <section className="w-full rounded-md flex flex-col">
             <div className="flex items-center gap-4 xs:gap-[12px]">
@@ -45,7 +45,7 @@ export default async function CartPage() {
                   className="flex border-b-2 last:border-none last:mb-0 pb-[52px] last:pb-0 items-start justify-between relative pl-8 mt-[48px] w-full h-[145px] xs:h-[160px]"
                 >
                   <Checkbox productId={data.product_id} userId={userData?.user.id!} />
-                  <div className="flex items-start w-full mr-[32px]">
+                  <div className="flex items-start w-full mr-[32px] max_sm:justify-center">
                     <div className="relative w-[96px] h-[96px] xs:w-[80px] xs:h-[80px]">
                       <Image
                         src={data.thumbnail_url}

@@ -5,9 +5,10 @@ import React, { useState, useRef, useEffect } from 'react';
 
 type Props = {
   description: string;
+  lines: string;
 };
 
-const TruncatedText = ({ description }: Props) => {
+const TruncatedText = ({ description, lines }: Props) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [isTruncated, setIsTruncated] = useState(false);
   const textRef = useRef<HTMLParagraphElement>(null);
@@ -28,7 +29,7 @@ const TruncatedText = ({ description }: Props) => {
     <div>
       <p
         ref={textRef}
-        className={`text-[14px] ${!isExpanded && isTruncated ? 'truncate-2-lines' : ''}`}
+        className={`text-[14px] ${!isExpanded && isTruncated ? `truncate-${lines}-lines` : ''}`}
       >
         {description}
       </p>
