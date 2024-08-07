@@ -8,7 +8,7 @@ function HeaderMenuDropdown() {
   return (
     <div>
       <div
-        className="w-full h-[246px] mt-[1px] pt-8 flex absolute top-full leading-5 text-center bg-white text-sm"
+        className="w-full h-[246px] p-4 mt-[1px] pt-8 flex absolute top-full leading-5 text-center bg-white text-sm"
         ref={dropdownRef}
       >
         <ul className="flex">

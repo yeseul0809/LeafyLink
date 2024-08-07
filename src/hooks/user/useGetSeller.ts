@@ -12,7 +12,6 @@ const useGetSeller = () => {
 
     if (userId) {
       try {
-        console.log('아이디가 없는데?');
         const { data, error } = await supabase
           .from('Seller')
           .select('*')
@@ -27,6 +26,8 @@ const useGetSeller = () => {
         console.log('getSeller supabase Error catch:', error);
         throw error;
       }
+    } else {
+      throw error;
     }
   };
   // 탠스택 쿼리 자체가 쓸 때 useState를 안써용
@@ -39,7 +40,7 @@ const useGetSeller = () => {
     queryFn: getSeller
   });
   if (error) {
-    console.log('tanstack error : getUser =>', error);
+    console.log('tanstack error : seller =>', error);
   }
   // console.log('sellerData tanstack =>', sellerData);
 
