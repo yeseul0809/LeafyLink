@@ -1,5 +1,6 @@
 'use client';
 
+import { useBottomTabStore } from '@/stores/bottomTab';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 
@@ -20,6 +21,7 @@ interface BottomTabProps {
 function BottomTab({ productState }: BottomTabProps) {
   const { count, setCount, handleAddToCart, handleBuyNow, product } = productState;
   const [visible, setVisible] = useState(false);
+  const showBottomTab = useBottomTabStore((state) => state.showBottomTab);
 
   const handleScroll = () => {
     const scrollPosition = window.scrollY;
@@ -43,7 +45,7 @@ function BottomTab({ productState }: BottomTabProps) {
   return (
     <div
       className={`fixed bottom-0 left-0 right-0 z-1000 md:max-w-[1240px] mx-auto md:px-8 md:py-4 bg-white border border-Line/Regular transition-transform transform ${
-        visible ? 'translate-y-0' : 'translate-y-full'
+        visible && showBottomTab ? 'translate-y-0' : 'translate-y-full'
       }`}
     >
       <div className="max-w-[375px] md:max-w-[1240px] xs:mx-auto flex flex-col md:flex-row md:justify-between md:items-center p-[8px_20px_20px_20px] md:p-[0px]">
