@@ -65,7 +65,7 @@ const ProductCard = ({ product }: { product: Product }) => {
         <div className="relative ">
           <div
             onClick={() => redirect(`/products/${product.product_id}`)}
-            className="hidden lg:block cursor-pointer opacity-0 lg:w-[295px] lg:h-[295px] w-[164px] h-[164px] z-1 lg:flex justify-center items-center absolute z-5 hover:backdrop-blur-sm hover:opacity-100"
+            className="cursor-pointer opacity-0 lg:w-[295px] lg:h-[295px] w-[164px] h-[164px] z-1 lg:flex justify-center items-center absolute z-5 hover:backdrop-blur-sm hover:opacity-100"
           >
             <button className="mr-10" onClick={handleAddCartClick}>
               <img src="/icons/icon-card-cart.svg" alt="cart" />
