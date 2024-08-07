@@ -1,5 +1,10 @@
-import { deleteCart } from '@/app/(providers)/(root)/cart/actions';
+import {
+  allToggleCheckbox,
+  deleteCart,
+  deleteSelectCart
+} from '@/app/(providers)/(root)/cart/actions';
 import { createClient } from '@/supabase/supabaseClient';
+import { revalidatePath } from 'next/cache';
 import { create } from 'zustand';
 
 interface QuantityState {
@@ -22,7 +27,7 @@ interface CartState {
   cart: { [productId: string]: { isChecked: boolean; quantity: number } };
   selectAll: boolean;
   updateItem: (productId: string, isChecked: boolean, userId: string) => void;
-  toggleSelectAll: (userId: string, isChecked: boolean) => void;
+  toggleSelectAll: (userId: string, productIds: string[], isChecked: boolean) => void;
   removeSelectedItems: (userId: string) => void;
   updateQuantity: (productId: string, quantity: number) => void;
   removeItem: (productId: string) => void;
@@ -90,7 +95,8 @@ export const useCartStore = create<CartState>((set) => ({
       await supabase
         .from('Cart')
         .update({ is_checked: isChecked })
-        .eq('cart_product_id', productId);
+        .eq('cart_product_id', productId)
+        .eq('cart_user_id', userId);
 
       set((state) => ({
         cart: {
@@ -102,11 +108,9 @@ export const useCartStore = create<CartState>((set) => ({
       console.error('Failed to update item in cart', error);
     }
   },
-  toggleSelectAll: async (userId: string, isChecked: boolean) => {
+  toggleSelectAll: async (userId: string, productIds: string[], isChecked: boolean) => {
     try {
-      const supabase = createClient();
-      await supabase.from('Cart').update({ is_checked: isChecked }).eq('cart_user_id', userId);
-
+      await allToggleCheckbox(userId, productIds, isChecked);
       set((state) => ({
         cart: Object.keys(state.cart).reduce(
           (acc, productId) => {
@@ -123,15 +127,7 @@ export const useCartStore = create<CartState>((set) => ({
   },
   removeSelectedItems: async (userId: string) => {
     try {
-      const supabase = createClient();
-      const { error } = await supabase
-        .from('Cart')
-        .delete()
-        .eq('cart_user_id', userId)
-        .is('is_checked', true);
-
-      if (error) throw error;
-
+      await deleteSelectCart(userId);
       set((state) => ({
         cart: Object.fromEntries(Object.entries(state.cart).filter(([_, item]) => !item.isChecked))
       }));

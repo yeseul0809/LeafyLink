@@ -1,10 +1,10 @@
 'use client';
 
-import { useQuery } from '@tanstack/react-query';
 import React from 'react';
-import { getAllRecodeStramDB, getVideos } from '../actions';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useQuery } from '@tanstack/react-query';
+import { getVideos } from '../actions';
 
 export default function StreamSection({ category }: { category: string }) {
   const {
@@ -30,7 +30,7 @@ export default function StreamSection({ category }: { category: string }) {
         {recodedVideos.map((video) => {
           const hasStreamData = video.streamData && video.streamData.length > 0;
           return (
-            <div key={video.uid} className="w-full relative">
+            <div key={video.uid} className="w-full relative xs:mb-[32px]">
               {hasStreamData && (
                 <>
                   <div className="relative w-full h-[342px] xs:h-[183px]">

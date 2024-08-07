@@ -24,6 +24,7 @@ function LiveCommerce({ category }: { category: string }) {
   });
 
   const videosData = recodedVideos?.slice(0, 6);
+  console.log('videosData:::', videosData);
 
   return (
     <section className="w-full h-[604px] mx-auto mt-[140px] pb-[48px]">

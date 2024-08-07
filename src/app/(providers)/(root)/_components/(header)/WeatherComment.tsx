@@ -2,8 +2,6 @@ import Image from 'next/image';
 import React from 'react';
 
 const WeatherComment = ({ weather }: { weather: string }) => {
-  // 이럴땐 어떻게 하라고 했죠? 값이 제대로 오는지 확인! 그러려면??콘쏠~~~~~~~~👍 맑음
-  console.log('weather data ===>', weather);
   if (
     weather.includes('구름') ||
     weather.includes('흐림') ||
@@ -31,9 +29,7 @@ const WeatherComment = ({ weather }: { weather: string }) => {
       </div>
     );
   } else if (weather.includes('맑음') || weather.includes('해')) {
-    // 상품리스트 신상순으로
-    // 스크롤헤더~반응형~장바구니숫자~채팅n표시~상품리스트신상순정렬~품절시 안보이게~
-    // 상품리스트신상순정렬 이거는 금ㅂ
+    // 👀
     return (
       <div className="w-full h-full bg-[url('/bg-weather-sun.svg')] bg-cover text-sm tracking-wide flex justify-center">
         <span className="flex items-center justify-center">

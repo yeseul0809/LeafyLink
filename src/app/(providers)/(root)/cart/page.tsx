@@ -1,6 +1,6 @@
 import React from 'react';
-import { getCartData, getProductData, getUserSession } from './actions';
 import Image from 'next/image';
+import { getCartData, getProductData, getUserSession } from './actions';
 import QuantityButton from './_components/QuantityButton';
 import ProductPrice from './_components/ProductPrice';
 import DeleteButton from './_components/DeleteButton';
@@ -42,11 +42,11 @@ export default async function CartPage() {
               return (
                 <div
                   key={data.product_id}
-                  className="flex border-b-2 last:border-none last:mb-0 pb-[52px] last:pb-0 items-center justify-between relative pl-8 mt-[48px] w-full h-[145px] xs:h-[160px]"
+                  className="flex border-b-2 last:border-none last:mb-0 pb-[52px] last:pb-0 items-start justify-between relative pl-8 mt-[48px] w-full h-[145px] xs:h-[160px]"
                 >
                   <Checkbox productId={data.product_id} userId={userData?.user.id!} />
-                  <div className="flex items-center w-full mr-[32px]">
-                    <div className="relative w-[150px] h-[150px] xs:w-[72px] xs:h-[72px]">
+                  <div className="flex items-start w-full mr-[32px]">
+                    <div className="relative w-[96px] h-[96px] xs:w-[80px] xs:h-[80px]">
                       <Image
                         src={data.thumbnail_url}
                         alt={data.title}

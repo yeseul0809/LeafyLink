@@ -1,8 +1,8 @@
 'use client';
 
 import React from 'react';
-import { createClient } from '@/supabase/supabaseClient';
 import Image from 'next/image';
+import { createClient } from '@/supabase/supabaseClient';
 
 type OAuthProvider = 'google' | 'kakao';
 

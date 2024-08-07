@@ -1,4 +1,5 @@
 import type { Config } from 'tailwindcss';
+import type { PluginAPI } from 'tailwindcss/types/config';
 
 const config: Config = {
   content: [
@@ -38,7 +39,6 @@ const config: Config = {
         'secondary-yellow-400': '#e8d145',
         'secondary-yellow-500': '#dec21c',
         'secondary-yellow-600': '#b19b16',
-        'font-black-main': '#111111',
         'grayscale-gray-50': '#f7f7f7',
         'grayscale-gray-100': '#dedede',
         'grayscale-gray-200': '#c4c4c4',
@@ -60,10 +60,117 @@ const config: Config = {
       },
       fontFamily: {
         pretendard: ['var(--font-pretendard)']
+      },
+      fontSize: {
+        '32px': '32px',
+        '20px': '20px',
+        '18px': '18px',
+        '16px': '16px',
+        '15px': '15px',
+        '14px': '14px',
+        '13px': '13px'
+      },
+      lineHeight: {
+        '42px': '42px',
+        '28px': '28px',
+        '26px': '26px',
+        '24px': '24px',
+        '22px': '22px',
+        '20px': '20px',
+        '18px': '18px'
+      },
+      letterSpacing: {
+        '-0.8px': '-0.8px',
+        '-0.5px': '-0.5px',
+        '-0.4px': '-0.4px',
+        '-0.45px': '-0.45px',
+        '-0.375px': '-0.375px',
+        '-0.35px': '-0.35px',
+        '-0.325px': '-0.325px'
+      },
+      flex: {
+        '1-0-0': '1 0 0'
       }
     }
   },
-  plugins: [require('tailwind-scrollbar'), require('@tailwindcss/line-clamp')]
+  plugins: [
+    require('tailwind-scrollbar'),
+    require('@tailwindcss/line-clamp'),
+    function ({ addComponents }: { addComponents: PluginAPI['addComponents'] }) {
+      addComponents({
+        '.text-32-sb-42-80': {
+          fontSize: '32px',
+          fontWeight: '600',
+          fontStyle: 'normal',
+          lineHeight: '42px',
+          letterSpacing: '-0.8px'
+        },
+        '.text-20-sb-28-50': {
+          fontSize: '20px',
+          fontWeight: '600',
+          fontStyle: 'normal',
+          lineHeight: '28px',
+          letterSpacing: '-0.5px'
+        },
+        '.text-18-n-26-45': {
+          fontSize: '18px',
+          fontWeight: '400',
+          fontStyle: 'normal',
+          lineHeight: '26px',
+          letterSpacing: '-0.45px'
+        },
+        '.text-18-sb-26-45': {
+          fontSize: '18px',
+          fontWeight: '600',
+          fontStyle: 'normal',
+          lineHeight: '26px',
+          letterSpacing: '-0.45px'
+        },
+        '.text-16-n-24-40': {
+          fontSize: '16px',
+          fontWeight: '400',
+          fontStyle: 'normal',
+          lineHeight: '24px',
+          letterSpacing: '-0.4px'
+        },
+        '.text-15-n-22-375': {
+          fontSize: '15px',
+          fontWeight: '400',
+          fontStyle: 'normal',
+          lineHeight: '22px',
+          letterSpacing: '-0.375px'
+        },
+        '.text-14-n-20-35': {
+          fontSize: '14px',
+          fontWeight: '400',
+          fontStyle: 'normal',
+          lineHeight: '20px',
+          letterSpacing: '-0.35px'
+        },
+        '.text-14-sb-20-35': {
+          fontSize: '14px',
+          fontWeight: '600',
+          fontStyle: 'normal',
+          lineHeight: '20px',
+          letterSpacing: '-0.35px'
+        },
+        '.text-13-n-18-325': {
+          fontSize: '13px',
+          fontWeight: '400',
+          fontStyle: 'normal',
+          lineHeight: '18px',
+          letterSpacing: '-0.325px'
+        },
+        '.webkit-box': {
+          display: '-webkit-box',
+          '-webkit-box-orient': 'vertical',
+          '-webkit-line-clamp': '1',
+          overflow: 'hidden',
+          textOverflow: 'ellipsis'
+        }
+      });
+    }
+  ]
 };
 
 export default config;

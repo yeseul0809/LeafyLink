@@ -1,9 +1,9 @@
 'use server';
 
-import { createClient } from '@/supabase/supabaseServer';
-import { Video } from '@/types/livestream';
-import { redirect } from 'next/navigation';
 import { v4 as uuidv4 } from 'uuid';
+import { redirect } from 'next/navigation';
+import { Video } from '@/types/livestream';
+import { createClient } from '@/supabase/supabaseServer';
 
 const getLiveStreamData = async (videoUid: string) => {
   const supabaseServer = createClient();
@@ -93,7 +93,6 @@ export const startLiveStreaming = async (_: any, formData: FormData) => {
 
   const streamServerData = await response.json();
   const sellerSession = await supabaseServer.auth.getUser();
-
   const productId = InputDatas.product;
   let splitProductId;
   if (productId) {
@@ -144,7 +143,6 @@ export const startLiveStreaming = async (_: any, formData: FormData) => {
     .eq('stream_id', stream.stream_id);
 
   redirect(`/livestreaming/${stream.livestream_product_id}_${liveStreamDB![0].livestream_id}`);
-  // redirect(`/livestreaming/${stream.livestream_product_id}_${stream.stream_id}`);
 };
 
 interface Livestream {
@@ -155,7 +153,7 @@ interface Livestream {
   stream_key: string;
   stream_id: string;
   video_uid: string;
-  create_at: string; // ISO 8601 날짜 문자열
+  create_at: string;
   livestream_product_id: string;
   thumbnail_url: string;
   product_title: string;
@@ -171,7 +169,6 @@ export const getStream = async (id: string): Promise<Livestream | null> => {
     console.error('Error fetching stream:', error);
     return null;
   }
-
   if (!data || data.length === 0) {
     return null;
   }
@@ -198,7 +195,6 @@ export const getProductId = async (videoUid: string) => {
     .from('Livestream')
     .select('livestream_product_id')
     .eq('video_uid', videoUid);
-  // .single(); // 단일 행 반환
   if (error) {
     console.error('Error fetching product id:', error);
     return null;
@@ -225,7 +221,7 @@ interface LivestreamDB {
   stream_key: string;
   stream_id: string;
   video_uid: string;
-  create_at: string; // ISO 8601 날짜 문자열
+  create_at: string;
   livestream_product_id: string;
   thumbnail_url: string;
   product_title: string;
