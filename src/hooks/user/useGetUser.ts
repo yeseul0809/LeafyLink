@@ -38,11 +38,6 @@ const useGetUser = () => {
     if (error) {
       console.log('tanstack error : getUser =>', error);
     }
-    // queryClient.invalidateQueries({queryKey:["user"]})
-
-    // 탠스택 쿼리로 글 쓸 때 아래있는 invali어쩌구 쓰면 알아서 똑똑하게 다시 글목록 불러옴
-
-    // 로그아웃할 때  queryClient.invalidateQueries({queryKey:["user"]}) 이거 넣어주면 된다! 초기화~
 
     return { userData, isPending }; // 커스텀훅 return
     // 사용하는 곳에서 {userData} = useGetUser()

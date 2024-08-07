@@ -7,8 +7,13 @@ import { useRouter } from 'next/navigation';
 import { useAuthStore } from '@/stores/authStore';
 import useGetSeller from '@/hooks/user/useGetSeller';
 import useGetUser from '@/hooks/user/useGetUser';
-
 import { useQueryClient } from '@tanstack/react-query';
+import { User } from '@/types/user';
+
+type test = {
+  userData: User | null;
+  isPending: boolean;
+};
 
 function HeaderLogin() {
   const queryClient = useQueryClient();
@@ -16,17 +21,14 @@ function HeaderLogin() {
   const { isLogin, setIsLogin, setLogout } = useAuthStore();
   const [profileLink, setProfileLink] = useState('/');
 
-  const { userData, isPending } = useGetUser();
-
+  const { userData } = useGetUser()!;
   const { sellerData } = useGetSeller(); //todo 조건부 호출
-
-  // console.log('sellerData', sellerData);
+  console.log(userData);
 
   // 페이지 네비게이션
   const redirect = (e: string) => {
     router.push(`${e}`);
   };
-  console.log('isPending ==>', isPending);
 
   // 로그인 상태
   useEffect(() => {
@@ -75,7 +77,7 @@ function HeaderLogin() {
         {isLogin ? (
           <div className="로그인O flex items-center text-zinc-500">
             <Image
-              src={userData.avatar_url}
+              src={userData?.avatar_url || '/icons/default-avatar.png'}
               alt="user profile image"
               width={28}
               height={28}
@@ -83,7 +85,7 @@ function HeaderLogin() {
             />
             <Link href={profileLink}>
               <p className="ml-3 hover:text-zinc-950">
-                {sellerData?.business_name || userData.user_name}
+                {sellerData?.business_name || userData?.user_name}
               </p>
             </Link>
             <button
