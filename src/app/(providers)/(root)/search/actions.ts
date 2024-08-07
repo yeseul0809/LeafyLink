@@ -13,7 +13,7 @@ interface Product {
   stock: number;
   created_at: string;
   updated_at: string;
-  productseller_id: string;
+  product_seller_id: string;
 }
 
 export const getProductCount = async (keyword: string): Promise<number> => {
@@ -24,7 +24,6 @@ export const getProductCount = async (keyword: string): Promise<number> => {
     .select('product_id')
     .ilike('title', `%${keyword}%`)
     .neq('stock', 0);
-  console.log('data::', data);
 
   if (error) {
     console.error('Error fetching product count:', error);
@@ -47,7 +46,7 @@ export const getProductDatas = async (
 
   const { data: products, error: productError } = await supabaseServer
     .from('Product')
-    .select('product_id, title, price,thumbnail_url,created_at,stock')
+    .select('product_id, title, price,thumbnail_url,created_at,stock,product_seller_id')
     .ilike('title', `%${keyword}%`)
     .neq('stock', 0)
     .range((page - 1) * perPage, page * perPage - 1);
