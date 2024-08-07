@@ -182,7 +182,7 @@ export default function ProductTable({ sellerId }: ProductTableProps) {
                   {product.category}
                 </div>
 
-                <div className="flex p-[22px_16px] items-center gap-2.5 flex-1 text-[14px] font-normal leading-[20px] tracking-[-0.35px] text-font/main overflow-hidden whitespace-nowrap flex p-[22px_16px] items-center gap-2.5 flex-1 text-[14px] font-normal leading-[20px] tracking-[-0.35px] text-font/main truncate">
+                <div className="flex p-[22px_16px] items-center gap-2.5 flex-1 text-[14px] font-normal leading-[20px] tracking-[-0.35px] text-font/main overflow-hidden whitespace-nowrap flex p-[22px_16px] items-center gap-2.5 flex-1 text-[14px] font-normal leading-[20px] tracking-[-0.35px] text-font/main truncate webkit-box ">
                   {product.title}
                 </div>
 
@@ -214,7 +214,7 @@ export default function ProductTable({ sellerId }: ProductTableProps) {
             ))}
           </>
         ) : (
-          <div className=" overflow-hidden text-ellipsis text-font/main  text-[15px]] font-normal leading-[22px] tracking-[] text-center mt-[16px]">
+          <div className=" overflow-hidden text-ellipsis text-font/main text-15-n-22-375 mt-[16px] text-center">
             판매중인 제품이 없습니다.
           </div>
         )}
