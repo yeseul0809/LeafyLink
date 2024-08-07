@@ -1,8 +1,8 @@
 'use client';
 
-import { createClient } from '@/supabase/supabaseClient';
 import React, { useEffect, useState } from 'react';
 import { useQuantityStore, useCartStore } from '@/stores';
+import { createClient } from '@/supabase/supabaseClient';
 
 export default function QuantityButton({
   productId,

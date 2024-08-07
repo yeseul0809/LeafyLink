@@ -17,7 +17,7 @@ function ProductDescription({ productDescription }: ProductDescriptionProps) {
   }, [productDescription]);
 
   return (
-    <section className="md:pt-[82px] md:px-[270px] md:pb-[110px] flex flex-col text-center items-center md:w-full">
+    <section className="md:pt-[82px] md:px-[270px] md:pb-[110px] pt-4 flex flex-col text-center items-center md:w-full">
       <div
         className="ql-editor w-[335px] md:w-[700px]"
         dangerouslySetInnerHTML={{ __html: sanitizedProduct }}

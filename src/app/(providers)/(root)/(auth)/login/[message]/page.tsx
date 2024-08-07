@@ -1,8 +1,8 @@
 'use client';
 
 import React, { useEffect } from 'react';
+import showSwal from '@/utils/swal';
 import SocialLoginButtons from '../_components/SocialLoginButtons';
-import showSwal from '../../../../../../utils/swal';
 
 function LoginPage({ params }: { params: { message: string } }) {
   useEffect(() => {

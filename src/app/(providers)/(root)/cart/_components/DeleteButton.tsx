@@ -1,8 +1,8 @@
 'use client';
 
-import { useCartStore } from '@/stores';
-import Image from 'next/image';
 import React from 'react';
+import Image from 'next/image';
+import { useCartStore } from '@/stores';
 
 export default function DeleteButton({ productId }: { productId: string }) {
   const removeItem = useCartStore((state) => state.removeItem);

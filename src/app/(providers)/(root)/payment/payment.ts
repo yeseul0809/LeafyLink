@@ -27,6 +27,36 @@ const paymentHandler = (productData: ProductInfo, userId: string) => {
   IMP.request_pay(data, (rsp: RequestPayResponse) => callback(rsp, productData, userId));
 };
 
+interface ProductData {
+  combinedData: {
+    price: number;
+    quantity: number;
+    title: string;
+    thumbnail_url: string;
+    product_id: string;
+  }[];
+  totalCost: number;
+  cart: boolean;
+}
+
+export interface TransformedProduct {
+  price: number;
+  quantity: number;
+  title: string;
+  thumbnail_url: string;
+  product_id: string;
+}
+
+function transformProductData(productData: ProductData): TransformedProduct[] {
+  return productData.combinedData.map((product) => ({
+    price: product.price,
+    quantity: product.quantity,
+    title: product.title,
+    thumbnail_url: product.thumbnail_url,
+    product_id: product.product_id
+  }));
+}
+
 async function callback(rsp: any, productData: ProductInfo, userId: string) {
   const { success, error_msg, merchant_uid, imp_uid } = rsp;
   if (success) {
@@ -58,7 +88,9 @@ async function callback(rsp: any, productData: ProductInfo, userId: string) {
     }
     updateStock(productData);
     alert('결제성공');
-    window.location.href = '/';
+    const transformedData = transformProductData(productData);
+    const encodedProductData = encodeURIComponent(JSON.stringify(transformedData));
+    window.location.href = `/settlement/?data=${encodedProductData}`;
   } else {
     alert(`결제 실패: ${error_msg}`);
   }

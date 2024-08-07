@@ -1,13 +1,12 @@
 'use client';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { useRouter } from 'next/navigation';
-
-import 'swiper/css';
-import 'swiper/css/pagination';
-import 'swiper/css/navigation';
 import { useQuery } from '@tanstack/react-query';
 import { getVideos } from '../livestreaming/actions';
 import LivestreamingCard from './_components/LivestreamingCard';
+import 'swiper/css';
+import 'swiper/css/pagination';
+import 'swiper/css/navigation';
 
 function LiveCommerce({ category }: { category: string }) {
   const router = useRouter();
@@ -25,6 +24,7 @@ function LiveCommerce({ category }: { category: string }) {
   });
 
   const videosData = recodedVideos?.slice(0, 6);
+  console.log('videosData:::', videosData);
 
   return (
     <section className="w-full h-[604px] mx-auto mt-[140px] pb-[48px]">
@@ -51,7 +51,6 @@ function LiveCommerce({ category }: { category: string }) {
       </div>
     </section>
   );
-  // }
 }
 
 export default LiveCommerce;

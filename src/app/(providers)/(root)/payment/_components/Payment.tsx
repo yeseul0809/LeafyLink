@@ -2,12 +2,12 @@
 
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
-import { createClient } from '@/supabase/supabaseClient';
-import { useQuery } from '@tanstack/react-query';
-import { useSearchParams } from 'next/navigation';
-import { getUserDate } from '../actions';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { getUserDate, updateUserData } from '../actions';
 import UserEditForm from './AddressForm';
 import paymentHandler from '../payment';
+import { createClient } from '@/supabase/supabaseClient';
 
 interface Product {
   productId: string;
@@ -34,13 +34,22 @@ export interface ProductInfo {
   cart: boolean;
 }
 
+const getUserInfo = async () => {
+  const supabase = createClient();
+  const { data: userData } = await supabase.auth.getUser();
+  const userInfo = await getUserDate(userData.user?.id!);
+  return userInfo![0];
+};
+
 export default function PaymentPage() {
-  const getUserInfo = async () => {
-    const supabase = createClient();
-    const { data: userData } = await supabase.auth.getUser();
-    const userInfo = await getUserDate(userData.user?.id!);
-    return userInfo![0];
-  };
+  const [isOrderAble, setIsOrderAble] = useState(false);
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [phoneParts, setPhoneParts] = useState(['', '', '']);
+  const [restAddress, setRestAddress] = useState('');
+  const [isFormCheck, setIsFormCheck] = useState<boolean>(true);
+  const [isFormAlldone, setIsFormAlldone] = useState(false);
+  const [isAgreementChecked, setIsAgreementChecked] = useState(false);
+  const [formError, setFormError] = useState('');
 
   const {
     data: userData,
@@ -51,21 +60,12 @@ export default function PaymentPage() {
     queryFn: getUserInfo
   });
 
-  const [isOrderAble, setIsOrderAble] = useState(false);
-  const [phoneNumber, setPhoneNumber] = useState(userData && userData.phone);
-  const [phoneParts, setPhoneParts] = useState([
-    userData?.phone.slice(0, 3) || '',
-    userData?.phone.slice(3, 7) || '',
-    userData?.phone.slice(7) || ''
-  ]);
-
-  const [restAddress, setRestAddress] = useState(userData && userData.address_detail);
-
   let products: Product[] = [];
   const searchParams = useSearchParams();
   const dataString = searchParams.get('data');
   const productId = searchParams.get('productId');
   const quantity = searchParams.get('quantity');
+  const router = useRouter();
 
   useEffect(() => {
     if (userData) {
@@ -75,6 +75,7 @@ export default function PaymentPage() {
         userData.phone.slice(3, 7),
         userData.phone.slice(7)
       ]);
+      setRestAddress(userData.address_detail || '');
     }
   }, [userData]);
 
@@ -113,9 +114,13 @@ export default function PaymentPage() {
     setPhoneNumber(newPhoneParts.join(''));
   };
 
-  const handleOrderAble = () => {
-    setIsOrderAble((prev) => !prev);
-  };
+  useEffect(() => {
+    if (isFormCheck && restAddress && phoneNumber) {
+      setIsFormAlldone(true);
+    } else {
+      setIsFormAlldone(false);
+    }
+  }, [isFormCheck, restAddress, phoneNumber]);
 
   if (dataString) {
     try {
@@ -155,16 +160,43 @@ export default function PaymentPage() {
     return { combinedData, totalCost, cart: !!dataString };
   };
 
-  const saveRestUserData = async () => {};
+  const handleFormCheckChange = (isFormCheck: boolean) => {
+    setIsFormCheck(isFormCheck);
+  };
 
   const {
     data: productData,
     error: productError,
-    isFetched: productFeched
+    isFetched: productFetched
   } = useQuery({
     queryKey: ['getProductInfo'],
     queryFn: getProductInfo
   });
+
+  const handleAgreementChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setIsAgreementChecked(event.target.checked);
+  };
+
+  useEffect(() => {
+    setIsOrderAble(isFormAlldone && isAgreementChecked);
+  }, [isFormAlldone, isAgreementChecked]);
+
+  const queryClient = useQueryClient();
+
+  const updateCartCount = async (productData: any, userId: string) => {
+    const supabase = createClient();
+    for (const product of productData.combinedData) {
+      if (product.quantity > product.stock) {
+        const { error } = await supabase
+          .from('Cart')
+          .update({ count: product.stock })
+          .eq('cart_product_id', product.product_id)
+          .eq('cart_user_id', userData.user_id);
+      }
+    }
+    await new Promise((resolve) => setTimeout(resolve, 5000));
+    queryClient.invalidateQueries({ queryKey: ['getProductInfo'] });
+  };
 
   if (!userFetched) {
     return null;
@@ -187,6 +219,7 @@ export default function PaymentPage() {
             initialUserName={userData.user_name}
             initialPhone={userData.phone}
             userId={userData.user_id}
+            onFormCheckChange={handleFormCheckChange}
           />
           <div className="flex flex-col">
             <div className="flex">
@@ -247,7 +280,6 @@ export default function PaymentPage() {
               />
             </div>
             <div className="flex items-center gap-2">
-              <label htmlFor="saveData">기본 배송지 정보로 저장</label>
               <input
                 type="checkbox"
                 id="saveData"
@@ -255,6 +287,7 @@ export default function PaymentPage() {
                 defaultChecked={false}
                 onChange={saveRestData}
               />
+              <label htmlFor="saveData">기본 배송지로 저장</label>
             </div>
           </div>
           <div className="border-t w-full my-10" />
@@ -326,24 +359,46 @@ export default function PaymentPage() {
           </div>
         </section>
         <div className="border-b w-full my-10" />
-        <div className="mb-10 flex items-center gap-2">
-          <input
-            type="checkbox"
-            id="agreement"
-            className="green-checkbox"
-            onChange={handleOrderAble}
-          />
-          <label htmlFor="agreement" className="text-[15px]">
-            주문 내용을 확인하였으며 약관에 동의합니다.
-          </label>
-        </div>
-        <button
-          onClick={() => paymentHandler(productData as ProductInfo, userData.user_id)}
-          className={`w-full ${!isOrderAble === false ? 'bg-[#3BB873]' : 'bg-primary-green-100'}  rounded-md h-[48px] text-white`}
-          disabled={!isOrderAble}
-        >
-          {productData?.totalCost.toLocaleString()}원 결제하기
-        </button>
+        <section>
+          <div className="mb-10 flex items-center gap-2">
+            <input
+              type="checkbox"
+              id="agreement"
+              className="green-checkbox"
+              checked={isAgreementChecked}
+              onChange={handleAgreementChange}
+            />
+            <label htmlFor="agreement" className="text-[15px]">
+              주문 내용을 확인하였으며 약관에 동의합니다.
+            </label>
+          </div>
+          {formError && <p className="text-red-500">{formError}</p>}
+          <button
+            onClick={async () => {
+              const exceedsStock = productData.combinedData.some(
+                (product) => product.quantity > product.stock
+              );
+
+              if (!isOrderAble) {
+                setFormError('모든 필드를 올바르게 입력해 주세요.');
+                return;
+              } else if (exceedsStock) {
+                setFormError(
+                  `재고가 부족한 상품이 존재합니다. 구매 수량을 재고 수량으로 수정했습니다.`
+                );
+                await updateCartCount(productData, userData.user_id);
+                router.push('/cart');
+                return;
+              }
+              setFormError('');
+              await updateUserData(userData.user_id, restAddress, phoneNumber);
+              paymentHandler(productData as ProductInfo, userData.user_id);
+            }}
+            className={`w-full ${isOrderAble ? 'bg-[#3BB873]' : 'bg-primary-green-100'} rounded-md h-[48px] text-white`}
+          >
+            {productData?.totalCost.toLocaleString()}원 결제하기
+          </button>
+        </section>
       </div>
     );
   }
