@@ -10,6 +10,9 @@ const paymentHandler = (productData: ProductInfo, userId: string) => {
   const { IMP } = window;
   IMP.init('imp03766407');
 
+  const transformedData = transformProductData(productData);
+  const encodedProductData = encodeURIComponent(JSON.stringify(transformedData));
+
   const data: RequestPayParams = {
     // pg: 'html5_inicis.INIpayTest',
     // pg: 'kcp.AO09C',
@@ -21,7 +24,8 @@ const paymentHandler = (productData: ProductInfo, userId: string) => {
     name: `${productData.combinedData[0].title} 외 ${productData.combinedData.length - 1}건`,
     amount: productData.totalCost,
     buyer_name: '구매자이름',
-    buyer_tel: '010-1234-5678'
+    buyer_tel: '010-1234-5678',
+    m_redirect_url: `https://leafylink-hys-projects-073e5858.vercel.app/settlement/?data=${encodedProductData}`
   };
 
   IMP.request_pay(data, (rsp: RequestPayResponse) => callback(rsp, productData, userId));
