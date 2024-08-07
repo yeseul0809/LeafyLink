@@ -95,7 +95,7 @@ function TopButtons({ productState }: TopButtonsProps) {
         </div>
       </div>
 
-      <div className="flex justify-center items-center space-x-[6px]">
+      <div className="flex gap-[6px]">
         <button
           onClick={handleStartChat}
           className="flex items-center justify-center md:p-4 w-[52px] h-[48px] md:h-[56px] border border-gray-300 hover:bg-primary-green-50 rounded-md md:rounded-lg"

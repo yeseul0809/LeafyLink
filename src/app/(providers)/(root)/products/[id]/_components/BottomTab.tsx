@@ -47,8 +47,8 @@ function BottomTab({ productState }: BottomTabProps) {
       }`}
     >
       <div className="max-w-[375px] md:max-w-[1240px] xs:mx-auto flex flex-col md:flex-row md:justify-between md:items-center p-[8px_20px_20px_20px] md:p-[0px]">
-        <div className="flex justify-center items-center ">
-          <button className="w-4 h-4 flex items-center justify-center md:hidden pb-3 md:pb-0">
+        <div className="flex justify-center items-center md:hidden">
+          <button className="w-4 h-4 flex items-center justify-center pb-3 md:pb-0">
             <Image src="/icons/bottomTab.svg" alt="hidden" width={16} height={16} />
           </button>
         </div>

@@ -110,3 +110,7 @@
 .swal-continue-button:hover {
   background-color: #f7fdfa;
 }
+
+.ql-editor {
+  padding: 0 !important;
+}
