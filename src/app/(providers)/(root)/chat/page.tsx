@@ -118,13 +118,15 @@ function ChatListPage() {
   });
 
   return (
-    <div className="max-w-[650px] mx-auto mt-12 mb-[180px]">
-      <h1 className="text-[32px] font-bold border-b pb-8 flex justify-center">상담톡</h1>
+    <div className="max-w-[375px] md:max-w-[650px] mx-auto mt-4 md:mt-12 mb-[70px] md:mb-[180px]">
+      <h1 className="text-[20px] md:text-[32px] font-semibold md:font-bold border-b pb-4 md:pb-8 flex justify-center">
+        상담톡
+      </h1>
       <div className="flex justify-center w-full">
         {chatrooms.length === 0 ? (
-          <p className="mt-20 text-[15px]">채팅 상대가 아직 없습니다.</p>
+          <p className="mt-20 xs:text-[14px] md:text-[15px]">채팅 상대가 아직 없습니다.</p>
         ) : (
-          <ul className="flex w-[650px] flex-col items-center">
+          <ul className="flex w-full xs:w-[375px] md:w-[650px] flex-col items-center">
             {sortedChatrooms.map((chatroom) => {
               const isUser = user.id === chatroom.chatroom_user_id;
               const otherParty = isUser ? chatroom.chatroom_seller_id : chatroom.chatroom_user_id;
@@ -134,7 +136,7 @@ function ChatListPage() {
                 <li
                   key={chatroom.chatroom_id}
                   onClick={() => handleChatroomClick(chatroom.chatroom_id)}
-                  className="bg-white border-b cursor-pointer w-full px-5 py-6 hover:bg-secondary-yellow-50 transition"
+                  className="bg-white border-b cursor-pointer w-full px-5 py-4 md:py-6 hover:bg-secondary-yellow-50 transition"
                 >
                   <div className="flex items-start pb-8 w-full sm:p-0">
                     <div className="w-12 h-12 flex-shrink-0 rounded-full overflow-hidden mr-4">
