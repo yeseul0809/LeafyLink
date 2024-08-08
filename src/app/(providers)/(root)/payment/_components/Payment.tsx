@@ -26,6 +26,7 @@ export interface CombinedProductData {
   description: string;
   created_at: string;
   updated_at: string;
+  business_name: string;
 }
 
 export interface ProductInfo {
