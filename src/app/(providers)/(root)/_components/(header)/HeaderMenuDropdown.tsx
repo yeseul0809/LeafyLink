@@ -1,12 +1,14 @@
 'use client';
+import { useAuthStore } from '@/stores/authStore';
 import React, { useRef } from 'react';
 
 function HeaderMenuDropdown() {
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const { isLogin, setLogout } = useAuthStore();
   return (
     <div>
       <div
-        className="w-full h-[246px] mt-[1px] pt-8 flex absolute top-full leading-5 text-center bg-white text-sm"
+        className="w-full h-[246px] p-4 mt-[1px] pt-8 flex absolute top-full leading-5 text-center bg-white text-sm"
         ref={dropdownRef}
       >
         <ul className="flex">
@@ -44,12 +46,26 @@ function HeaderMenuDropdown() {
             </li>
           </ul>
           <ul>
-            <li className="pb-2">
-              <a href="">로그인</a>
-            </li>
-            <li className="pb-2">
-              <a href="">회원가입</a>
-            </li>
+            {isLogin ? (
+              <li className="pb-2">
+                <button
+                  onClick={() => {
+                    setLogout(isLogin);
+                  }}
+                >
+                  로그아웃
+                </button>
+              </li>
+            ) : (
+              <>
+                <li className="pb-2">
+                  <button>로그인</button>
+                </li>
+                <li className="pb-2">
+                  <button>회원가입</button>
+                </li>
+              </>
+            )}
           </ul>
         </div>
       </div>

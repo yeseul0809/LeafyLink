@@ -17,8 +17,10 @@ const config: Config = {
         '1000': '1000'
       },
       screens: {
+        max_lg: { max: '1024px' },
+        max_md: { max: '768px' },
+        max_sm: { max: '640px' },
         xs: { max: '375px' },
-        xs_max: { max: '440px' },
         sm: '640px',
         md: '768px',
         lg: '1024px'
