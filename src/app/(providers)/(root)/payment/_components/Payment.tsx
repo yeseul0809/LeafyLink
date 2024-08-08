@@ -346,13 +346,14 @@ export default function PaymentPage() {
                     key={product.product_id}
                     className="flex gap-6 items-center border-b w-full py-10"
                   >
-                    <Image
-                      src={product.thumbnail_url}
-                      alt={product.title}
-                      width={150}
-                      height={150}
-                      className="rounded-lg"
-                    />
+                    <div className="w-[150px] h-[150px] relative">
+                      <Image
+                        src={product.thumbnail_url}
+                        alt={product.title}
+                        fill
+                        className="rounded-lg"
+                      />
+                    </div>
                     <div>
                       <p>{product.title}</p>
                       <div className="flex mt-4">
