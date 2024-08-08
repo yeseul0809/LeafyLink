@@ -36,8 +36,8 @@ export default function AllCheckbox({
 
   const { data: cartStatus, isFetched: isCartFetched } = useQuery({
     queryKey: ['getCartStatus', userId],
-    queryFn: () => getCartStatus(userId!),
-    enabled: !!userId
+    queryFn: () => getCartStatus(userId!)
+    // enabled: !!userId
   });
 
   useEffect(() => {
