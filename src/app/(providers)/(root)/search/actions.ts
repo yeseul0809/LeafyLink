@@ -1,19 +1,21 @@
 'use server';
 
 import { createClient } from '@/supabase/supabaseClient';
-import { revalidatePath } from 'next/cache';
 
 interface Product {
   product_id: string;
-  category: string;
   title: string;
   price: number;
   thumbnail_url: string;
-  description: string;
-  stock: number;
   created_at: string;
-  updated_at: string;
+  stock: number;
   product_seller_id: string;
+}
+
+export interface ProductWithDetails extends Product {
+  totalQuantity: number;
+  reviewCount: number;
+  business_name: string;
 }
 
 export const getProductCount = async (keyword: string): Promise<number> => {
@@ -38,7 +40,7 @@ export const getProductDatas = async (
   page: number = 1,
   perPage: number = 20,
   sort: string = 'new'
-): Promise<Product[]> => {
+): Promise<ProductWithDetails[]> => {
   const supabaseServer = createClient();
 
   let orderByColumn = 'created_at';
@@ -57,6 +59,7 @@ export const getProductDatas = async (
   }
 
   const productIds = products.map((product) => product.product_id);
+  const sellerIds = products.map((product) => product.product_seller_id);
 
   const { data: orders, error: orderError } = await supabaseServer
     .from('Order')
@@ -90,10 +93,26 @@ export const getProductDatas = async (
     reviewCounts.set(review.review_product_id, currentCount + 1);
   });
 
+  const { data: sellers, error: sellerError } = await supabaseServer
+    .from('Seller')
+    .select('seller_id, business_name')
+    .in('seller_id', sellerIds);
+
+  if (sellerError) {
+    console.error('Error fetching sellers:', sellerError);
+    return [];
+  }
+
+  const sellerNames = new Map<string, string>();
+  sellers.forEach((seller) => {
+    sellerNames.set(seller.seller_id, seller.business_name);
+  });
+
   const productsWithDetails = products.map((product) => ({
     ...product,
     totalQuantity: productQuantities.get(product.product_id) || 0,
-    reviewCount: reviewCounts.get(product.product_id) || 0
+    reviewCount: reviewCounts.get(product.product_id) || 0,
+    business_name: sellerNames.get(product.product_seller_id) || ''
   }));
 
   switch (sort) {
@@ -118,10 +137,13 @@ export const getProductDatas = async (
       );
       break;
   }
-  revalidatePath('/search');
-  return productsWithDetails.map(
-    ({ totalQuantity, reviewCount, ...product }) => product
-  ) as Product[];
+
+  return productsWithDetails.map(({ totalQuantity, reviewCount, business_name, ...product }) => ({
+    ...product,
+    totalQuantity,
+    reviewCount,
+    business_name
+  }));
 };
 
 export const getTotalPages = async (keyword: string, perPage: number = 20): Promise<number> => {

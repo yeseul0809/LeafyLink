@@ -3,6 +3,8 @@ import { getProductCount, getProductDatas, getTotalPages } from './actions';
 import Searchform from './_components/Searchform';
 import SelectBox from './_components/SelectBox';
 import ProductCard from '../(home)/_components/ProductCard';
+import Image from 'next/image';
+import SearchProductCard from './_components/SearchProductCard';
 
 interface Props {
   searchParams: {
@@ -18,16 +20,18 @@ export default async function SearchPage({ searchParams }: Props) {
   const sortParam = searchParams.sort || 'new';
   const perPage = 20;
 
-  const allProductsData = await getProductCount(keyword);
-  const searchDatas = await getProductDatas(keyword, currentPage, perPage, sortParam);
-  const totalPages = await getTotalPages(keyword, perPage);
+  const [allProductsData, searchDatas, totalPages] = await Promise.all([
+    getProductCount(keyword),
+    getProductDatas(keyword, currentPage, perPage, sortParam),
+    getTotalPages(keyword, perPage)
+  ]);
 
   return (
     <div className="pt-[80px] pb-[180px] xs:pt-[24px] xs:pb-[120px] w-full px-[20px]">
       <h1 className="text-[32px] font-semibold text-center xs:text-[20px]">검색 결과</h1>
       <Searchform defaultKeword={keyword} currentPage={currentPage} />
-      <div className="border-t border-Line/Regular w-full mb-[48px] xs:mb-[20px]" />
-      <div className="flex justify-between mb-[31px] items-center xs:mb-[12px]">
+      <div className="border-t border-Line/Regular w-full mb-[48px] max_sm:mb-[20px]" />
+      <div className="flex justify-between mb-[31px] items-center max_sm:mb-[12px]">
         <p className="text-[15px] text-font/sub2">
           전체 <span className="text-black font-semibold">{allProductsData}</span> 개
         </p>
@@ -39,11 +43,9 @@ export default async function SearchPage({ searchParams }: Props) {
           <p className="text-[15px]">정확한 검색어인지 확인하고 다시 검색해주세요</p>
         </div>
       ) : (
-        <div className="grid grid-cols-4 gap-[20px] xs:grid-cols-2 xs:gap-[7px]">
+        <div className="grid grid-cols-4 gap-[20px] max_lg:grid-cols-3 xs_max:grid-cols-2 xs_max:gap-[7px]">
           {searchDatas.map((data) => (
-            <div key={data.product_id}>
-              <ProductCard product={data} />
-            </div>
+            <SearchProductCard product={data} key={data.product_id} />
           ))}
         </div>
       )}

@@ -21,7 +21,7 @@ async function Seed() {
         </div>
         <div>{/* <ProductsSortDropdown onCategoryChange={} /> */}</div>
       </div>
-      <div className="grid grid-cols-2 gap-x-[20px] gap-y-[24px] lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 justify-items-center">
+      <div className="grid grid-cols-4 gap-x-[20px] gap-y-[24px] m:grid-cols-3 s:grid-cols-2 justify-items-center">
         {seedData?.map((product) => <ProductCard product={product} key={product.product_id} />)}
       </div>
       <div></div>

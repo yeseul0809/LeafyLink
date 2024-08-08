@@ -15,6 +15,8 @@ export default function Searchform({
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    console.log('handleSubmit요청이 몇번 발생하는거지?!');
+
     const formData = new FormData(event.currentTarget);
     const keyword = formData.get('keyword') as string;
     if (keyword === '') {
