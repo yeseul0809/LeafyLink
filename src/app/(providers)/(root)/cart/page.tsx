@@ -18,7 +18,6 @@ export default async function CartPage() {
     cartData = await getCartData(userData.user.id);
     if (cartData) {
       allProductData = await getProductData(cartData, 'all');
-      // checkedTrueDatas = await getProductData(cartData, 'checked');
     }
   }
 
@@ -46,7 +45,7 @@ export default async function CartPage() {
                   className="flex border-b-2 last:border-none last:mb-0 pb-[52px] last:pb-0 items-start justify-between relative pl-8 mt-[48px] w-full h-[145px] xs:h-[160px]"
                 >
                   <Checkbox productId={data.product_id} userId={userData?.user.id!} />
-                  <div className="flex items-start w-full mr-[32px] max_sm:justify-center">
+                  <div className="flex items-start w-full mr-[32px] max_sm:justify-center max_sm:relative">
                     <div className="relative w-[96px] h-[96px] xs:w-[80px] xs:h-[80px]">
                       <Image
                         src={data.thumbnail_url}
@@ -57,15 +56,13 @@ export default async function CartPage() {
                     </div>
                     <div className="flex justify-between items-center w-full xs:flex-col xs:items-start max_md:flex-col max_md:items-start">
                       <div className="ml-[20px] xs:ml-[15px]">
+                        <p className="font-semibold">{data.business_name}</p>
                         <TruncatedText
                           description={data.title}
                           lines={'1'}
                           textSize={'14'}
-                          fontBold={true}
+                          fontBold={false}
                         />
-                        {/* <p className="text-[18px] font-semibold mb-2 xs:text-[14px]">
-                          {data.title}
-                        </p> */}
                         <p className="text-[12px]">배송비 무료</p>
                       </div>
                       <div className="flex items-center">
@@ -75,7 +72,7 @@ export default async function CartPage() {
                             price={data.price}
                             userId={userData?.user.id!}
                           />
-                          <div className="text-[18px] font-semibold xs:text-[13px] xs:mt-[20px] max_md:text-[15px] max_md:mt-[10px]">
+                          <div className="text-[18px] font-semibold xs:text-[13px] xs:mt-[20px] max_md:text-[15px] max_md:mt-[10px] w-[120px]">
                             {data.price.toLocaleString()}원
                           </div>
                         </div>

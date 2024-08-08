@@ -6,23 +6,6 @@ import { useCartStore } from '@/stores';
 import { createClient } from '@/supabase/supabaseClient';
 import { allToggleCheckbox } from '../actions';
 
-// const getCartStatus = async (userId: string) => {
-//   if (!userId) {
-//     return [];
-//   }
-
-//   const supabase = createClient();
-//   const { data, error } = await supabase
-//     .from('Cart')
-//     .select('is_checked')
-//     .eq('cart_user_id', userId);
-
-//   if (error) {
-//     console.error(error);
-//   }
-//   return data || [];
-// };
-
 export default function AllCheckbox({
   productIds,
   userId
@@ -35,17 +18,6 @@ export default function AllCheckbox({
     toggleSelectAll: state.toggleSelectAll
   }));
   const queryClient = useQueryClient();
-
-  // const { data: cartStatus, isFetched: isCartFetched } = useQuery({
-  //   queryKey: ['getCartStatus', userId],
-  //   queryFn: () => getCartStatus(userId!)
-  // });
-
-  // useEffect(() => {
-  //   if (isCartFetched && cartStatus) {
-  //     const allChecked = cartStatus.every((item: any) => item.is_checked);
-  //   }
-  // }, [cartStatus, isCartFetched]);
 
   const handleAllToggle = async () => {
     const newCheckedStatus = !selectAll;
