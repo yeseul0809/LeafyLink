@@ -5,15 +5,9 @@ import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuthStore } from '@/stores/authStore';
-import useGetSeller from '@/hooks/user/useGetSeller';
-import useGetUser from '@/hooks/user/useGetUser';
+import useSeller from '@/hooks/user/useSeller';
+import useUser from '@/hooks/user/useUser';
 import { useQueryClient } from '@tanstack/react-query';
-import { User } from '@/types/user';
-
-type test = {
-  userData: User | null;
-  isPending: boolean;
-};
 
 function HeaderLogin() {
   const queryClient = useQueryClient();
@@ -21,8 +15,8 @@ function HeaderLogin() {
   const { isLogin, setIsLogin, setLogout } = useAuthStore();
   const [profileLink, setProfileLink] = useState('/');
 
-  const { userData } = useGetUser()!;
-  const { sellerData } = useGetSeller(userData?.user_id!); //todo 조건부 호출
+  const { userData } = useUser()!;
+  const { sellerData } = useSeller(userData?.user_id!);
   console.log(userData);
 
   // 페이지 네비게이션
@@ -90,7 +84,7 @@ function HeaderLogin() {
               className="ml-10 hover:text-zinc-950"
               onClick={() => {
                 setLogout(isLogin);
-                queryClient.invalidateQueries({ queryKey: ['user'] });
+                queryClient.removeQueries({ queryKey: ['user'] }); // 로그아웃 시 user 박스 삭제
               }}
             >
               로그아웃

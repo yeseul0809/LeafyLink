@@ -6,9 +6,9 @@ const useGetUser = () => {
   const supabase = createClient();
 
   const getUser = async () => {
-    const data = await supabase.auth.getUser();
-    if (data) {
-      const userId = data.data.user?.id;
+    const { data } = await supabase.auth.getUser();
+    if (data.user) {
+      const userId = data.user?.id;
       try {
         const { data: userData, error } = await supabase
           .from('User')
@@ -22,6 +22,8 @@ const useGetUser = () => {
       } catch (error) {
         throw error;
       }
+    } else {
+      return null;
     }
   };
 
@@ -33,12 +35,11 @@ const useGetUser = () => {
     } = useQuery<User>({
       queryKey: ['user'],
       queryFn: getUser,
-      staleTime: 1000 * 60 // 1000은 1초 -> n분동안 다시 이걸 호출하면 갖고 있는거 줄게 (기본은 0) 근데 로그아웃 하면 날려야됨
+      staleTime: 1000 * 60 * 3 // 1000은 1초 -> n분동안 다시 이걸 호출하면 갖고 있는거 줄게 (기본은 0) 근데 로그아웃 하면 날려야됨
     });
     if (error) {
-      console.log('tanstack error : getUser =>', error);
+      console.log('useGetUser tanstack error:', error);
     }
-
     return { userData, isPending }; // 커스텀훅 return
     // 사용하는 곳에서 {userData} = useGetUser()
     // 이런식으로 사용하면 됩니다!
