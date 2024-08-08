@@ -24,7 +24,7 @@ export default async function CartPage() {
   const productIds = allProductData?.map((data) => data.product_id);
 
   return (
-    <div className="pt-[80px] pb-[180px] xs:pt-[24px] xs:pb-[43px] px-[20px]">
+    <div className="pt-[80px] pb-[180px] xs:pb-[43px] px-[20px]">
       <h1 className="text-[36px] text-center xs:mb-[30px]">장바구니</h1>
       {cartData && (
         <h2 className="text-[18px] font-semibold">{`장바구니 상품(${cartData?.length})`}</h2>
@@ -87,7 +87,7 @@ export default async function CartPage() {
         )}
 
         {allProductData && allProductData.length !== 0 && (
-          <div className="flex flex-col w-[370px] ml-[20px] bg-[#FEFEFA] mt-14 xs:w-full xs:ml-0 mx-auto max_sm:ml-0">
+          <div className="flex flex-col w-[370px] ml-[20px] bg-[#FEFEFA] mt-14 xs:w-full xs:ml-0 mx-auto max_sm:ml-0 max_sm:w-full">
             <div className="ring-1 ring-[#D9D9D9] rounded-md w-full h-full flex flex-col items-end justify-center p-6">
               <div className="text-[14px] w-full text-center flex justify-between mb-3">
                 <span>총 상품금액</span>

@@ -45,6 +45,7 @@ export default function PaymentPage() {
   const [isOrderAble, setIsOrderAble] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState('');
   const [phoneParts, setPhoneParts] = useState(['', '', '']);
+  const [phoneError, setPhoneError] = useState(['', '', '']);
   const [restAddress, setRestAddress] = useState('');
   const [isFormCheck, setIsFormCheck] = useState<boolean>(true);
   const [isFormAlldone, setIsFormAlldone] = useState(false);
@@ -95,16 +96,21 @@ export default function PaymentPage() {
   const handlePhoneNumber = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = event.target;
     let newPhoneParts = [...phoneParts];
+    let newPhoneError = [...phoneError];
 
     switch (id) {
       case 'phone1':
         newPhoneParts[0] = value.slice(0, 3);
+        newPhoneError[0] = value.length < 3 ? '최소 3글자를 입력하세요.' : '';
         break;
       case 'phone2':
         newPhoneParts[1] = value.slice(0, 4);
+        newPhoneError[1] = value.length < 4 ? '최소 4글자를 입력하세요.' : '';
+
         break;
       case 'phone3':
         newPhoneParts[2] = value.slice(0, 4);
+        newPhoneError[2] = value.length < 4 ? '최소 4글자를 입력하세요.' : '';
         break;
       default:
         break;
@@ -112,6 +118,28 @@ export default function PaymentPage() {
 
     setPhoneParts(newPhoneParts);
     setPhoneNumber(newPhoneParts.join(''));
+    setPhoneError(newPhoneError);
+  };
+
+  const handleBlur = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { id, value } = e.target;
+    let newPhoneError = [...phoneError];
+
+    switch (id) {
+      case 'phone1':
+        newPhoneError[0] = value.length < 3 ? '최소 3글자를 입력하세요.' : '';
+        break;
+      case 'phone2':
+        newPhoneError[1] = value.length < 4 ? '최소 4글자를 입력하세요.' : '';
+        break;
+      case 'phone3':
+        newPhoneError[2] = value.length < 4 ? '최소 4글자를 입력하세요.' : '';
+        break;
+      default:
+        break;
+    }
+
+    setPhoneError(newPhoneError);
   };
 
   useEffect(() => {
@@ -178,8 +206,10 @@ export default function PaymentPage() {
   };
 
   useEffect(() => {
-    setIsOrderAble(isFormAlldone && isAgreementChecked);
-  }, [isFormAlldone, isAgreementChecked]);
+    setIsOrderAble(
+      isFormAlldone && isAgreementChecked && phoneError.every((error) => error === '')
+    );
+  }, [isFormAlldone, isAgreementChecked, phoneError]);
 
   const queryClient = useQueryClient();
 
@@ -235,37 +265,49 @@ export default function PaymentPage() {
                 onChange={(e) => setRestAddress(e.target.value)}
               />
             </div>
-            <div className="h-[64px] flex xs:flex-col xs:mb-[16px] w-full gap-[16px] xs:gap-0">
+            <div className="h-[50px] flex xs:flex-col xs:mb-[16px] w-full gap-[16px] xs:gap-0 mb-[18px]">
               <label htmlFor="phone" className="xs:mb-[8px] xs:mt-[16px] w-[120px]">
                 휴대폰번호
               </label>
-              <div className="w-full">
-                <input
-                  className="border p-3 mb-3 rounded w-1/4"
-                  type="text"
-                  id="phone1"
-                  defaultValue={userData.phone.slice(0, 3)}
-                  maxLength={3}
-                  onChange={handlePhoneNumber}
-                />
-                <span className="mx-2">-</span>
-                <input
-                  className="border p-3 mb-3 rounded w-1/4"
-                  type="text"
-                  id="phone2"
-                  defaultValue={userData.phone.slice(3, 7)}
-                  maxLength={4}
-                  onChange={handlePhoneNumber}
-                />
-                <span className="mx-2">-</span>
-                <input
-                  className="border p-3 mb-3 rounded w-1/4"
-                  type="text"
-                  id="phone3"
-                  defaultValue={userData.phone.slice(7)}
-                  maxLength={4}
-                  onChange={handlePhoneNumber}
-                />
+              <div className="w-full flex items-start">
+                <div className="flex flex-col w-1/4">
+                  <input
+                    className="border p-3 rounded w-full"
+                    type="text"
+                    id="phone1"
+                    defaultValue={userData.phone.slice(0, 3)}
+                    maxLength={3}
+                    onChange={handlePhoneNumber}
+                    onBlur={handleBlur}
+                  />
+                  {phoneError[0] && <p className="text-red-500 text-[14px]">{phoneError[0]}</p>}
+                </div>
+                <span className="mx-2 self-center">-</span>
+                <div className="flex flex-col w-1/4">
+                  <input
+                    className="border p-3 rounded w-full"
+                    type="text"
+                    id="phone2"
+                    defaultValue={userData.phone.slice(3, 7)}
+                    maxLength={4}
+                    onChange={handlePhoneNumber}
+                    onBlur={handleBlur}
+                  />
+                  {phoneError[1] && <p className="text-red-500 text-[14px]">{phoneError[1]}</p>}
+                </div>
+                <span className="mx-2 self-center">-</span>
+                <div className="flex flex-col w-1/4">
+                  <input
+                    className="border p-3 rounded w-full"
+                    type="text"
+                    id="phone3"
+                    defaultValue={userData.phone.slice(7)}
+                    maxLength={4}
+                    onChange={handlePhoneNumber}
+                    onBlur={handleBlur}
+                  />
+                  {phoneError[2] && <p className="text-red-500 text-[14px]">{phoneError[2]}</p>}
+                </div>
               </div>
             </div>
             <div className="flex xs:flex-col xs:mt-[42px] xs:gap-0 gap-[16px]">

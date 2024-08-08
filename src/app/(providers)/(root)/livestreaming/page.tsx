@@ -63,7 +63,7 @@ export default function StreamListPage() {
         라이브 커머스
       </h1>
       <div className="flex justify-between xs:flex-col xs:gap-[8px] max_sm:flex-col max_sm:gap-[6px]">
-        <div className="hidden xs:block">
+        <div className="hidden max_sm:block">
           <Swiper spaceBetween={8} slidesPerView={'auto'}>
             {categories.map((category) => (
               <SwiperSlide key={category.value} style={{ width: 'auto' }}>
@@ -81,7 +81,7 @@ export default function StreamListPage() {
             ))}
           </Swiper>
         </div>
-        <div className="flex gap-[12px] xs:hidden">
+        <div className="flex gap-[12px] max_sm:hidden">
           {categories.map((category) => (
             <button
               key={category.value}
