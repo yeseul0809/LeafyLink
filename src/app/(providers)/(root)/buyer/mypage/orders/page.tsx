@@ -114,10 +114,10 @@ export default async function BuyerOrderListPage({ searchParams }: ProductPagePr
               상품명
             </label>
           </li>
-          <li className="flex w-[11%] h-[56px] p-[16px] justify-center items-center gap-[10px] ">
+          <li className="flex w-[12%] h-[56px] p-[16px] justify-center items-center gap-[10px] ">
             <label className="text-center text-font/main text-16-n-24-40">주문 날짜</label>
           </li>
-          <li className="flex w-[11%] h-[56px] p-[16px] justify-center items-center gap-[10px] ">
+          <li className="flex w-[12%] h-[56px] p-[16px] justify-center items-center gap-[10px] ">
             <label className="text-center text-font/main text-16-n-24-40">결제 금액</label>
           </li>
         </ul>
@@ -139,12 +139,12 @@ export default async function BuyerOrderListPage({ searchParams }: ProductPagePr
                     {order.Product?.title || '제품 없음'}
                   </label>
                 </li>
-                <li className="flex w-[11%] h-[64px] p-[22px_16px] justify-center items-center gap-[10px]">
+                <li className="flex w-[12%] h-[64px] p-[22px_16px] justify-center items-center gap-[10px]">
                   <label className="text-16-n-24-40 text-center text-font/sub2">
                     {formatDate(order.order_date)}
                   </label>
                 </li>
-                <li className="flex w-[11%] h-[64px] p-[22px_16px] justify-center items-center gap-[10px]">
+                <li className="flex w-[12%] h-[64px] p-[22px_16px] justify-center items-center gap-[10px]">
                   <label className="text-16-n-24-40 text-center text-font/sub2">
                     {formatCurrency(order.cost)}원
                   </label>
