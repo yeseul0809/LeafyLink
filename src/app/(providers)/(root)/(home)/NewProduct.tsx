@@ -1,6 +1,7 @@
 import { createPostponedAbortSignal } from 'next/dist/server/app-render/dynamic-rendering';
 import ProductCard from './_components/ProductCard';
 import { getProducts } from './actions';
+import { getAllProduct } from '@/apis/product/products';
 
 async function NewProduct() {
   const newProductsData = await getProducts();

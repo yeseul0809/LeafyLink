@@ -11,6 +11,7 @@ function HeaderMenu() {
   // 페이지 네비게이션
   const redirect = (e: string) => {
     router.push(`${e}`);
+    setIsOpenMenu(false);
   };
   // 메뉴 토글
   const toggleMenu = () => {

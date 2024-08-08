@@ -4,7 +4,7 @@ import type { PluginAPI } from 'tailwindcss/types/config';
 const config: Config = {
   content: [
     './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
-    './src/components/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/componentss/**/*.{js,ts,jsx,tsx,mdx}',
     './src/app/**/*.{js,ts,jsx,tsx,mdx}'
   ],
   theme: {
@@ -20,17 +20,19 @@ const config: Config = {
         max_lg: { max: '1024px' },
         max_md: { max: '768px' },
         max_sm: { max: '640px' },
-        xs_max: { max: '440px' },
-        xs: { max: '375px' },
+        max_xs: { max: '440px' },
+        xxs: '375px',
+        xs_: '440px',
         sm: '640px',
         md: '768px',
         lg: '1024px',
-        //
-        m: { max: '1240px' },
-        s: { max: '764px' }
+        xl: '1280px'
+        // m: { max: '1240px' },
+        // s: { max: '764px' },
       },
       maxWidth: {
         'container-l': '1280px',
+        'container-lv2': '1240px',
         'container-m': '744px',
         'container-s': '375px'
       },
