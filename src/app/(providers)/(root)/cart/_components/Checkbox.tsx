@@ -14,7 +14,6 @@ export default function Checkbox({ productId, userId }: { productId: string; use
     error,
     isFetched
   } = useQuery({
-    // queryKey: ['getCartIschecked'],
     queryKey: ['getCartIschecked', productId, userId],
     queryFn: () => getCartIsChecked(productId, userId)
   });
@@ -23,7 +22,6 @@ export default function Checkbox({ productId, userId }: { productId: string; use
     const newCheckedStatus = !isChecked?.is_checked;
     updateCartCheck(productId, newCheckedStatus, userId);
 
-    queryClient.invalidateQueries({ queryKey: ['getCartStatus', userId] });
     queryClient.invalidateQueries({ queryKey: ['getCartIschecked', productId, userId] });
   };
 
