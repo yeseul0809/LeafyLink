@@ -49,7 +49,7 @@ function MessageList({ isMessagesLoaded, messages, userId, otherUserInfo }: Mess
                   {displayDate && (
                     <span
                       key={`date-${msg.message_id}`}
-                      className="w-[89px] h-[32px] text:[14px] md:text-[16px] leading-[24px] text-center mx-auto text-gray-500 mt-2 mb-2 md:mt-6 md:mb-5 py-1 px-3 rounded-[22px] bg-secondary-yellow-100 "
+                      className="w-[81px] h-[28px] md:w-[89px] md:h-[32px] text:[14px] md:text-[16px] leading-[24px] text-center mx-auto text-gray-500 mt-3 mb-3 md:mt-6 md:mb-5 py-1 px-3 rounded-[22px] bg-secondary-yellow-100 "
                     >
                       {formattedDate}
                     </span>

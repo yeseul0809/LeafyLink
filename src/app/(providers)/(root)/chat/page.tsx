@@ -150,7 +150,7 @@ function ChatListPage() {
                     </div>
                     <div className="flex flex-col w-full">
                       <div className="flex justify-between items-center w-full">
-                        <p className="block text-[14px] font-semibold md:text-lg">
+                        <p className="block text-[14px] font-semibold md:text-[18px] leading-3">
                           {isUser
                             ? otherInfo?.business_name || 'Unknown'
                             : otherInfo?.user_name || 'Unknown'}

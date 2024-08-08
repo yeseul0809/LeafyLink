@@ -162,7 +162,7 @@ function ChatPage({ params }: ParamsProps) {
 
   return (
     <div className="flex flex-col items-center justify-center mx-auto w-[335px] md:w-[610px] pt-[30px] pb-3 md:pb-8">
-      <div className="flex items-center mb-7 w-full md:px-4">
+      <div className="flex items-center mb-7 w-full">
         <button onClick={router.back} className="mr-2 md:mr-8 md:w-9 md:h-9">
           <Image
             src={'/icons/back.svg'}
