@@ -8,6 +8,7 @@ import PurchaseButton from './_components/PurchaseButton';
 import Checkbox from './_components/Checkbox';
 import AllCheckbox from './_components/AllCheckbox';
 import SelectDeleteButton from './_components/SelectDeleteButton';
+import TruncatedText from '../livestreaming/_components/TruncatedText';
 
 export default async function CartPage() {
   const userData = await getUserSession();
@@ -56,9 +57,15 @@ export default async function CartPage() {
                     </div>
                     <div className="flex justify-between items-center w-full xs:flex-col xs:items-start max_md:flex-col max_md:items-start">
                       <div className="ml-[20px] xs:ml-[15px]">
-                        <p className="text-[18px] font-semibold mb-2 xs:text-[14px]">
+                        <TruncatedText
+                          description={data.title}
+                          lines={'1'}
+                          textSize={'14'}
+                          fontBold={true}
+                        />
+                        {/* <p className="text-[18px] font-semibold mb-2 xs:text-[14px]">
                           {data.title}
-                        </p>
+                        </p> */}
                         <p className="text-[12px]">배송비 무료</p>
                       </div>
                       <div className="flex items-center">

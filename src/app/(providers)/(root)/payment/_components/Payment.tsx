@@ -173,13 +173,40 @@ export default function PaymentPage() {
       return null;
     }
 
+    // Step 2: Extract seller IDs from product data
+    const sellerIds = productData.map((product) => product.product_seller_id);
+
+    // Step 3: Fetch seller data
+    const { data: sellerData, error: sellerError } = await supabase
+      .from('Seller')
+      .select('seller_id, business_name')
+      .in('seller_id', sellerIds);
+
+    if (sellerError) {
+      console.error('Error fetching seller data:', sellerError);
+      return null;
+    }
+
+    // Step 4: Combine product data with seller data
     const combinedData = productData.map((product) => {
       const matchingProduct = products.find((p) => p.productId === product.product_id);
+      const matchingSeller = sellerData.find(
+        (seller) => seller.seller_id === product.product_seller_id
+      );
       return {
         ...product,
-        quantity: matchingProduct ? matchingProduct.quantity : 0
+        quantity: matchingProduct ? matchingProduct.quantity : 0,
+        business_name: matchingSeller ? matchingSeller.business_name : 'Unknown'
       };
     });
+
+    // const combinedData = productData.map((product) => {
+    //   const matchingProduct = products.find((p) => p.productId === product.product_id);
+    //   return {
+    //     ...product,
+    //     quantity: matchingProduct ? matchingProduct.quantity : 0
+    //   };
+    // });
 
     const totalCost = combinedData.reduce((total, product) => {
       return total + product.price * product.quantity;
@@ -227,6 +254,8 @@ export default function PaymentPage() {
     await new Promise((resolve) => setTimeout(resolve, 5000));
     queryClient.invalidateQueries({ queryKey: ['getProductInfo'] });
   };
+
+  console.log('productData::', productData);
 
   if (!userFetched) {
     return null;
@@ -355,6 +384,7 @@ export default function PaymentPage() {
                       />
                     </div>
                     <div>
+                      <p className="mb-[8px] font-semibold">{product.business_name}</p>
                       <p>{product.title}</p>
                       <div className="flex mt-4">
                         <span className="text-[18px] font-semibold">
