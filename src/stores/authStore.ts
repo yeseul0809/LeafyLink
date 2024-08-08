@@ -19,12 +19,11 @@ export const useAuthStore = create<AuthState>((set) => ({
   setIsLogin: async (state: boolean) => {
     set({ isLogin: state });
   },
-  setLogout: async (state: boolean) => {
+  setLogout: async () => {
     try {
       const supabase = createClient();
       await supabase.auth.signOut();
       set({ isLogin: false });
-      // window.location.href = '/';
     } catch (error) {
       console.error('로그아웃 실패', error);
     }
