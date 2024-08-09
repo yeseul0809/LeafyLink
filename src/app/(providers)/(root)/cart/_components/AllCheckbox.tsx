@@ -1,10 +1,10 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
+import { getUserSession, allToggleCheckbox, Product } from '../actions';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { useCartStore } from '@/stores';
 import { createClient } from '@/supabase/supabaseClient';
-import { allToggleCheckbox } from '../actions';
+import { useCartStore } from '@/stores';
 
 const getCartStatus = async (userId: string) => {
   if (!userId) {
@@ -47,20 +47,21 @@ export default function AllCheckbox({
     }
   }, [cartStatus, isCartFetched]);
 
+  useEffect(() => {
+    updateCartCheck(userId, isChecked);
+  }, [userId, isChecked, updateCartCheck]);
+
   const handleAllToggle = async () => {
     const newCheckedStatus = !isChecked;
     setIsChecked(newCheckedStatus);
     if (userId) {
-      updateCartCheck(userId, productIds, newCheckedStatus);
+      await allToggleCheckbox(userId, newCheckedStatus);
 
-      productIds.forEach((productId) => {
-        queryClient.setQueryData(['getCartIschecked', productId, userId], (oldData: any) => {
-          return { ...oldData, is_checked: newCheckedStatus };
-        });
-      });
-
-      await allToggleCheckbox(userId, productIds, newCheckedStatus);
-      queryClient.invalidateQueries({ queryKey: ['getCartStatus', userId] });
+      await Promise.all(
+        productIds.map((productId) =>
+          queryClient.invalidateQueries({ queryKey: ['getCartIschecked', productId] })
+        )
+      );
     }
   };
 
