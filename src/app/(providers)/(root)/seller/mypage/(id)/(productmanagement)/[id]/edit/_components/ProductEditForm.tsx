@@ -60,7 +60,7 @@ function ProductEditForm({ product }: ProductEditFormProps) {
     <div className="flex flex-col pb-[180px]">
       <div className="flex justify-end">
         <button
-          className="w-[80px] h-[44px] text-[14px] px-3 py-3 mb-3 bg-primary-green-500 text-white rounded-md hover:bg-primary-green-700"
+          className="w-[66px] h-[30px] md:w-[80px] md:h-[44px] text-[14px] px-2 md:px-3 md:py-3 mb-3 bg-primary-green-500 text-white rounded-md hover:bg-primary-green-700"
           onClick={handleUpdateSubmit}
         >
           수정하기

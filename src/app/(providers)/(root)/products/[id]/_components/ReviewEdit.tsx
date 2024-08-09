@@ -57,7 +57,7 @@ function ReviewEdit({ reviewProductId, reviewCount }: ReviewEditProps) {
 
   return (
     <div className="grid px-5 xs:px-0 xs:flex">
-      <h2 className="text-[20px] md:text-[32px] mb-4 md:mb-8">리뷰</h2>
+      <h2 className="text-[20px] md:text-[32px] mt-6 mb-4 md:mt-0 md:mb-8">리뷰</h2>
       <p className="text-[14px] md:text-[18px] pb-2 md:pb-5 text-left">리뷰 {reviewCount}</p>
       <form
         onSubmit={handleReviewSubmit}
