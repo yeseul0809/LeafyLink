@@ -30,7 +30,7 @@ function Carousel() {
           prevEl: '.custom-swiper-button-prev'
         }}
         modules={[Autoplay, Pagination, Navigation]}
-        className="mySwiper w-full h-[461px] "
+        className="mySwiper w-full max-h-[461px] "
       >
         {images.map((src, index) => (
           <SwiperSlide key={index} className="flex items-center justify-center relative">

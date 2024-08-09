@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import HeaderMobileDropdown from './HeaderMobileDropDown';
+import HeaderMobileDropdown from './HeaderMobileDropdown';
 
 function HeaderMobile() {
   const [isOpenMobileMenu, setIsOpenMobileMenu] = useState(false);
@@ -9,14 +9,14 @@ function HeaderMobile() {
 
   // 페이지 네비게이션
   const redirect = (e: string) => {
-    router.push(`${e}`);
     setIsOpenMobileMenu(false);
+    console.log('이동해');
+    router.push(`${e}`);
   };
 
   // 메뉴 토글
   const toggleMobileMenu = () => {
     setIsOpenMobileMenu(!isOpenMobileMenu);
-    console.log(isOpenMobileMenu);
   };
 
   return (
@@ -49,7 +49,7 @@ function HeaderMobile() {
       >
         <Image src="/icons/icon-cart.svg" alt="cart" width={18} height={18} className=""></Image>
       </button>
-      {isOpenMobileMenu && <HeaderMobileDropdown />}
+      {isOpenMobileMenu && <HeaderMobileDropdown setIsOpenMobileMenu={setIsOpenMobileMenu} />}
     </section>
   );
 }
