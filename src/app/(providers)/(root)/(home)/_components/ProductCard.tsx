@@ -7,8 +7,12 @@ import showSwal from '@/utils/swal';
 import { createClient } from '@/supabase/supabaseClient';
 import Image from 'next/image';
 import { ProductWithBusinessName } from '../actions';
+import { useCartStore } from '@/stores';
 
 const ProductCard = ({ product }: { product: ProductWithBusinessName }) => {
+  const { initializeCart } = useCartStore((state) => ({
+    initializeCart: state.initializeCart
+  }));
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat('en-US').format(price);
   };
@@ -34,7 +38,7 @@ const ProductCard = ({ product }: { product: ProductWithBusinessName }) => {
       cart_user_id: user.id,
       is_checked: false
     };
-    const result = await createCartItem(cartItemData, user.id);
+    const result = await createCartItem(cartItemData, user.id, initializeCart);
 
     if (result) {
       showSwal('장바구니에 상품이 정상적으로 담겼습니다.');

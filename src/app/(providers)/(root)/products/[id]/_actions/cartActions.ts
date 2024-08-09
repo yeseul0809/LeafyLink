@@ -3,7 +3,11 @@ import { CartItemInput } from '@/types/cart';
 import { Database } from '@/types/supabase';
 import { SupabaseClient } from '@supabase/supabase-js';
 
-export async function createCartItem(cartItemData: CartItemInput, userId: string) {
+export async function createCartItem(
+  cartItemData: CartItemInput,
+  userId: string,
+  initializeCart?: (userId: string) => void
+) {
   const supabase: SupabaseClient<Database> = createClient();
 
   const { data: cartData, error: cartError } = await supabase
@@ -37,6 +41,9 @@ export async function createCartItem(cartItemData: CartItemInput, userId: string
     if (error) {
       console.error('장바구니 데이터 삽입 중 에러발생', error);
       return;
+    }
+    if (initializeCart) {
+      initializeCart(userId);
     }
     return data;
   }

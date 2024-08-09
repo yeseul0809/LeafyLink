@@ -3,7 +3,7 @@
 import React from 'react';
 import { useCartStore } from '@/stores';
 
-export default function Checkbox({ productId, userId }: { productId: string; userId: string }) {
+function Checkbox({ productId, userId }: { productId: string; userId: string }) {
   const { cart, updateItem } = useCartStore((state) => ({
     cart: state.cart,
     updateItem: state.updateItem
@@ -25,3 +25,5 @@ export default function Checkbox({ productId, userId }: { productId: string; use
     />
   );
 }
+
+export default React.memo(Checkbox);

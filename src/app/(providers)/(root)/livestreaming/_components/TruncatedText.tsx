@@ -27,8 +27,6 @@ const TruncatedText = ({ description, lines, fontBold, textSize }: Props) => {
     setIsExpanded(!isExpanded);
   };
 
-  console.log('textSize::', textSize);
-
   return (
     <div>
       <p
