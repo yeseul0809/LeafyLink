@@ -39,7 +39,7 @@ export default async function RecodedVideoPage({ params }: { params: { id: strin
         <iframe
           src={`https://${process.env.CLOUDFLARE_DOMAIN}/${videoId}/iframe`}
           allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
-          className="w-full rounded-2xl lg:h-[698px] md:h-[480px] sm:h-[380px] xs_min:h-[210px] xs_max:h-[188px]"
+          className="w-full rounded-2xl lg:h-[698px] md:h-[480px] sm:h-[380px] xs_max:h-[188px]"
         ></iframe>
       </div>
       <div className="flex justify-between mt-[32px] max_sm:mt-[20px] max_sm:flex-col w-full items-start max_lg:flex-col">

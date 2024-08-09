@@ -2,8 +2,6 @@ import Link from 'next/link';
 import { getProductCount, getProductDatas, getTotalPages } from './actions';
 import Searchform from './_components/Searchform';
 import SelectBox from './_components/SelectBox';
-import ProductCard from '../(home)/_components/ProductCard';
-import Image from 'next/image';
 import SearchProductCard from './_components/SearchProductCard';
 
 interface Props {

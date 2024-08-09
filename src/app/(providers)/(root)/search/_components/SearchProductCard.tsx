@@ -3,18 +3,25 @@ import React from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { createCartItem } from '../../products/[id]/_actions/cartActions';
-import useUser from '@/hooks/useUser';
 import showSwal from '@/utils/swal';
 import { ProductWithDetails } from '../actions';
+import { createClient } from '@/supabase/supabaseClient';
+import Image from 'next/image';
 
 const SearchProductCard = ({ product }: { product: ProductWithDetails }) => {
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat('en-US').format(price);
   };
-  const { user } = useUser();
   const router = useRouter();
 
+  const getUserData = async () => {
+    const supabase = createClient();
+    const { data, error } = await supabase.auth.getUser();
+    return data;
+  };
+
   const handleAddToCart = async () => {
+    const { user } = await getUserData();
     if (!user) {
       showSwal('로그인이 필요한 서비스입니다.<br>로그인 후 이용해주세요.');
       router.push(`/login`);
@@ -39,6 +46,15 @@ const SearchProductCard = ({ product }: { product: ProductWithDetails }) => {
     handleAddToCart();
   }
 
+  const handleBuyNow = () => {
+    router.push(`/payment?productId=${product.product_id}&quantity=1`);
+  };
+
+  function handleBuyNowClick(event: React.MouseEvent) {
+    event.stopPropagation();
+    handleBuyNow();
+  }
+
   return (
     <div className="flex flex-col items-center max_sm:mb-[20px]">
       <div className="lg:w-[295px]">
@@ -48,13 +64,11 @@ const SearchProductCard = ({ product }: { product: ProductWithDetails }) => {
             className="cursor-pointer opacity-0 lg:w-[295px] lg:h-[295px] w-[164px] h-[164px] z-1 absolute top-0 left-0 z-5 hover:backdrop-blur-sm hover:opacity-100"
           >
             <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex space-x-4 max_sm:space-x-1">
-              <button className="mr-10" onClick={handleAddCartClick}>
-                <img src="/icons/icon-card-cart.svg" alt="cart" />
+              <button className="size-[30px] mr-10 relative" onClick={handleAddCartClick}>
+                <Image src="/icons/icon-card-cart.svg" alt="cart" fill />
               </button>
-              <button
-                onClick={() => router.push(`/payment?productId=${product.product_id}&quantity=1`)}
-              >
-                <img src="/icons/icon-card.svg" alt="card" />
+              <button onClick={handleBuyNowClick} className="size-[30px] relative">
+                <Image src="/icons/icon-card.svg" alt="card" fill />
               </button>
             </div>
           </div>
