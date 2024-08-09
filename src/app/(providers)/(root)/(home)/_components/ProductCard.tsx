@@ -107,10 +107,10 @@ const ProductCard = ({ product }: { product: Product }) => {
         <p className="text-font/main text-12-sb-18-3 webkit-box md:text-14-sb-20-35">
           {businessName}
         </p>
-        <p className="text-font/sub1 text-13-n-18-325 webkit-box md:text-14-n-20-35">
+        <p className="text-font/sub1 text-13-n-18-325 webkit-box md:text-14-n-20-35 mb-[8px]">
           {product.title}
         </p>
-        <p className="text-font/main text-14-n-20-35 webkit-box md:text-18-sb-26-45">
+        <p className="text-font/main text-14-sb-20-35 webkit-box md:text-18-sb-26-45">
           {formatPrice(product.price ?? 0)}원
         </p>
       </div>

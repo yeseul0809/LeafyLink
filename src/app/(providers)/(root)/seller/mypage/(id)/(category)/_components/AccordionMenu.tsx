@@ -101,7 +101,7 @@ export default function AccordionMenu({ orders }: AccordionMenuProps) {
                   </div>
                   <div className="flex items-center ml-auto py-[22px] px-[16px]">
                     <Image
-                      src={openItems[order.order_id] ? '/icons/down.png' : '/icons/up.png'}
+                      src={openItems[order.order_id] ? '/icons/down.svg' : '/icons/up.svg'}
                       alt={openItems[order.order_id] ? '다운 이미지' : '업 이미지'}
                       className="flex-shrink-0"
                       width={20}

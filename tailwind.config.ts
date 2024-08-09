@@ -170,6 +170,13 @@ const config: Config = {
           lineHeight: '24px',
           letterSpacing: '-0.4px'
         },
+        '.text-16-sb-24-40': {
+          fontSize: '16px',
+          fontWeight: '600',
+          fontStyle: 'normal',
+          lineHeight: '24px',
+          letterSpacing: '-0.4px'
+        },
         '.text-15-n-22-375': {
           fontSize: '15px',
           fontWeight: '400',
