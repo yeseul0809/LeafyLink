@@ -30,7 +30,7 @@ const useGetSeller = (userId: string) => {
       throw error;
     }
   };
-  // 탠스택 쿼리 자체가 쓸 때 useState를 안써용
+
   const {
     data: sellerData,
     error,
@@ -43,9 +43,6 @@ const useGetSeller = (userId: string) => {
   if (error) {
     console.log('tanstack error : seller =>', error);
   }
-  // console.log('sellerData tanstack =>', sellerData);
-
-  // 해결 됐습니다! useGetSeller함수에 async가 붙어 있었어요🤦‍♂️
 
   return { sellerData, error, isPending };
 };

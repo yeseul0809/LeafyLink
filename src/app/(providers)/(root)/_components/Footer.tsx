@@ -4,8 +4,8 @@ import React from 'react';
 
 function Footer() {
   return (
-    <section>
-      <div className="w-full h-auto lg:flex justify-between px-[30px] sticky bottom-0 bg-white lg:px-[190px] py-[28px] border-y text-[14px] text-[#505050] text-center lg:text-left">
+    <section className="w-full h-auto bg-white sticky bottom-0 z-20 border-t">
+      <div className="max-w-container-l px-[20px] mx-auto block md:flex  justify-between py-[28px] text-[14px] text-[#505050] text-center lg:text-left">
         <div>
           <div className="flex justify-center lg:justify-start items-center mb-[16px] ">
             <Link href={'/'}>
@@ -14,11 +14,11 @@ function Footer() {
                 alt="logo"
                 width={100}
                 height={30}
-                className="lg:w-[152px] "
+                className="lg:w-[152px]"
               ></Image>
             </Link>
           </div>
-          <div className="flex justify-between mt-5 mb-[24px] lg:w-[386px] lg:mt-[32px]">
+          <div className="flex  justify-between mt-5 mb-[24px] w-[386px] mt-[32px] m:text-[13px] mx-auto">
             <a href="#" className="w-auto tracking-tighter leading-5 px-0">
               회사소개
             </a>
@@ -27,10 +27,7 @@ function Footer() {
               이용약관
             </a>
             <span>|</span>
-            <a
-              href="#"
-              className="lg:font-semibold lg:text-black w-auto tracking-tighter leading-5"
-            >
+            <a href="#" className="font-semibold text-black w-auto tracking-tighter leading-5">
               개인정보처리방침
             </a>
             <span>|</span>
@@ -39,7 +36,8 @@ function Footer() {
             </a>
           </div>
         </div>
-        <div className="leading-loose text-[13px]">
+
+        <div className="leading-loose text-[13px] m:text-[12px] md:text-end ">
           <p>
             대표이사 : 십시일반 | 서울특별시 내배캠 유튜브 99, 스파르타 사옥
             <br />

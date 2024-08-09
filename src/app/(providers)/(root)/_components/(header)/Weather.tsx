@@ -1,11 +1,5 @@
 'use client';
 import React, { useEffect, useState } from 'react';
-import { Pagination } from 'swiper/modules';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import Image from 'next/image';
-import 'swiper/css';
-import 'swiper/css/pagination';
-import 'swiper/css/navigation';
 import WeatherComment from './WeatherComment';
 
 interface Weather {
@@ -53,8 +47,10 @@ function Weather() {
   }, [latitude, longitude]);
 
   return (
-    <section className="w-full lg:h-[45px] md:h-[40px] flex items-center justify-center">
-      <WeatherComment weather={weather} />
+    <section className="w-full ">
+      <div className="w-full h-[45px] m:h-[40px] flex items-center justify-center">
+        <WeatherComment weather={weather} />
+      </div>
     </section>
   );
 }
