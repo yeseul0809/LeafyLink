@@ -19,8 +19,9 @@ function HeaderIconBar() {
   const [userAvatar, setUserAvatar] = useState('');
   const [profileLink, setProfileLink] = useState('/');
   const [businessName, setBusinessName] = useState('');
-  const { cart } = useCartStore((state) => ({
-    cart: state.cart
+  const { cart, initializeCart } = useCartStore((state) => ({
+    cart: state.cart,
+    initializeCart: state.initializeCart
   }));
 
   const supabase = createClient();
@@ -85,6 +86,12 @@ function HeaderIconBar() {
     updateUnreadCounts();
   }, [chatroomList, isLogin, user]);
 
+  useEffect(() => {
+    if (user) {
+      initializeCart(user.id);
+    }
+  }, [user, initializeCart]);
+
   const redirect = (e: string) => {
     router.push(`${e}`);
   };
@@ -128,7 +135,7 @@ function HeaderIconBar() {
         <button
           className="ml-[48px] relative"
           onClick={() => {
-            redirect('/cart');
+            router.push('/cart?refresh=' + Date.now());
           }}
         >
           <Image src="/icons/icon-cart.svg" alt="cart" width={32} height={32}></Image>

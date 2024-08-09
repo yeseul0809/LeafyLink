@@ -10,14 +10,18 @@ import AllCheckbox from './_components/AllCheckbox';
 import SelectDeleteButton from './_components/SelectDeleteButton';
 import TruncatedText from '../livestreaming/_components/TruncatedText';
 
+export const revalidate = 5;
+
 export default async function CartPage() {
   const userData = await getUserSession();
-
+  console.log('User Data:', userData);
   let cartData, allProductData;
   if (userData) {
     cartData = await getCartData(userData.user.id);
+    console.log('Cart Data:', cartData);
     if (cartData) {
       allProductData = await getProductData(cartData, 'all');
+      console.log('All Product Data:', allProductData);
     }
   }
 

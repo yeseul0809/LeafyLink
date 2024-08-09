@@ -10,6 +10,7 @@ export const getUserSession = async () => {
     console.error('Error fetching posts:', error);
     return;
   }
+  revalidatePath('/cart');
   return data;
 };
 
@@ -34,6 +35,7 @@ export const getCartData = async (userId: string) => {
   if (error) {
     console.error('Error fetching posts:', error);
   }
+  revalidatePath('/cart');
   return data;
 };
 
