@@ -44,3 +44,40 @@ export const findExistingChatroom = async (userId: string, sellerId: string, pro
 
   return data;
 };
+
+export const fetchUnreadCounts = async (
+  user: any,
+  chatrooms: any[],
+  setUnreadCounts: (counts: { [key: string]: number }) => void
+) => {
+  const counts: { [key: string]: number } = {};
+
+  for (const chatroom of chatrooms) {
+    let data, error;
+
+    if (user.id === chatroom.chatroom_user_id) {
+      // 구매자일 때
+      ({ data, error } = await supabase
+        .from('Message')
+        .select('is_read', { count: 'exact' })
+        .eq('message_chatroom_id', chatroom.chatroom_id)
+        .eq('is_read', false)
+        .neq('message_user_id', user.id));
+    } else {
+      // 판매자일 때
+      ({ data, error } = await supabase
+        .from('Message')
+        .select('is_read', { count: 'exact' })
+        .eq('message_chatroom_id', chatroom.chatroom_id)
+        .eq('is_read', false)
+        .neq('message_user_id', chatroom.chatroom_seller_id));
+    }
+
+    if (error) {
+      console.error('읽지 않은 메세지 수 가져오는 중 에러발생', error);
+    } else if (data) {
+      counts[chatroom.chatroom_id] = data.length;
+    }
+  }
+  setUnreadCounts(counts);
+};

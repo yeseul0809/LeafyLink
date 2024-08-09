@@ -1,6 +1,7 @@
 'use client';
 import { createClient } from '@/supabase/supabaseClient';
 import { create } from 'zustand';
+import { unreadCountStore } from './unreadCountStore';
 
 interface AuthState {
   isLogin: boolean;
@@ -24,6 +25,7 @@ export const useAuthStore = create<AuthState>((set) => ({
       const supabase = createClient();
       await supabase.auth.signOut();
       set({ isLogin: false });
+      unreadCountStore.getState().setUnreadCounts({});
     } catch (error) {
       console.error('로그아웃 실패', error);
     }

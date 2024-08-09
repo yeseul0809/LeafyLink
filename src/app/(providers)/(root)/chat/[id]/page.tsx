@@ -161,10 +161,16 @@ function ChatPage({ params }: ParamsProps) {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center mx-auto w-[610px] pt-[30px] pb-8">
-      <div className="flex items-center mb-7 w-full px-4">
-        <button onClick={router.back} className="mr-8">
-          <Image src={'/icons/back.svg'} alt="back" width={24} height={24} />
+    <div className="flex flex-col items-center justify-center mx-auto w-[335px] md:w-[610px] pt-[30px] pb-3 md:pb-8">
+      <div className="flex items-center mb-7 w-full">
+        <button onClick={router.back} className="mr-2 md:mr-8 md:w-9 md:h-9">
+          <Image
+            src={'/icons/back.svg'}
+            alt="back"
+            width={24}
+            height={24}
+            className="md:w-9 md:h-9"
+          />
         </button>
         {otherUserInfo && (
           <>
@@ -173,15 +179,15 @@ function ChatPage({ params }: ParamsProps) {
               alt="Avatar"
               width={40}
               height={40}
-              className="w-10 h-10 rounded-full mr-4"
+              className="w-10 h-10 rounded-full mr-3 md:mr-4"
             />
-            <span className="text-xl font-bold">
+            <span className="text-[15px] md:text-xl font-bold">
               {isSeller ? otherUserInfo.user_name : otherUserInfo.business_name}
             </span>
           </>
         )}
       </div>
-      <div className="w-[610px] border-t border-#E5E5EC"></div>
+      <div className="w-full border-t border-#E5E5EC"></div>
       <MessageList
         isMessagesLoaded={isMessagesLoaded}
         messages={messages}
