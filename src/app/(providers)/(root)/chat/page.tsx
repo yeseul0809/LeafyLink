@@ -8,17 +8,18 @@ import Image from 'next/image';
 import { createClient } from '@/supabase/supabaseClient';
 import useChatrooms from './_hooks/useChatrooms';
 import { timeForToday } from './_utils/timeUtils';
+import { unreadCountStore } from '@/stores/unreadCountStore';
 
 const supabase = createClient();
 
 function ChatListPage() {
-  const { user } = useUser();
   const router = useRouter();
+  const { user } = useUser();
   const { chatrooms } = useChatrooms(user ? user.id : '');
   const [avatars, setAvatars] = useState<{
     [key: string]: { avatar_url: string; user_name?: string; business_name?: string } | null;
   }>({});
-  const [unreadCounts, setUnreadCounts] = useState<{ [key: string]: number }>({});
+  const unreadCounts = unreadCountStore((state) => state.unreadCounts);
   const [latestMessages, setLatestMessages] = useState<{
     [key: string]: { payload: string; createdAt: string };
   }>({});
@@ -65,43 +66,6 @@ function ChatListPage() {
 
     fetchInfo();
   }, [chatrooms]);
-
-  useEffect(() => {
-    const fetchUnreadCounts = async () => {
-      const counts: { [key: string]: number } = {};
-
-      for (const chatroom of chatrooms) {
-        let data, error;
-
-        if (user.id === chatroom.chatroom_user_id) {
-          // 구매자일 때
-          ({ data, error } = await supabase
-            .from('Message')
-            .select('is_read', { count: 'exact' })
-            .eq('message_chatroom_id', chatroom.chatroom_id)
-            .eq('is_read', false)
-            .neq('message_user_id', user.id));
-        } else {
-          // 판매자일 때
-          ({ data, error } = await supabase
-            .from('Message')
-            .select('is_read', { count: 'exact' })
-            .eq('message_chatroom_id', chatroom.chatroom_id)
-            .eq('is_read', false)
-            .neq('message_user_id', chatroom.chatroom_seller_id));
-        }
-
-        if (error) {
-          console.error('읽지 않은 메세지 수 가져오는 중 에러발생', error);
-        } else if (data) {
-          counts[chatroom.chatroom_id] = data.length;
-        }
-      }
-      setUnreadCounts(counts);
-    };
-
-    fetchUnreadCounts();
-  }, [chatrooms, user]);
 
   const handleChatroomClick = (chatroomId: string) => {
     router.push(`/chat/${chatroomId}`);

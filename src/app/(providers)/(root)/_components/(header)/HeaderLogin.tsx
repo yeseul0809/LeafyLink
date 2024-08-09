@@ -17,7 +17,6 @@ function HeaderLogin() {
 
   const { userData } = useUser()!;
   const { sellerData } = useSeller(userData?.user_id!);
-  console.log(userData);
 
   // 페이지 네비게이션
   const redirect = (e: string) => {
