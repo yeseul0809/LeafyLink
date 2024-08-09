@@ -74,10 +74,14 @@ const SearchProductCard = ({ product }: { product: ProductWithDetails }) => {
           </div>
 
           <Link href={'/상세페이지'}>
-            <img
-              src={product.thumbnail_url}
-              className="lg:w-[295px] lg:h-[295px] w-[164px] h-[164px] bg-zinc-300 rounded-2xl hover:bg-white cursor-pointer object-cover"
-            ></img>
+            <div className="relative lg:w-[295px] lg:h-[295px] w-[158px] h-[158px]">
+              <Image
+                src={product.thumbnail_url}
+                className="bg-zinc-300 rounded-2xl hover:bg-white cursor-pointer object-cover"
+                fill
+                alt="썸네일이미지"
+              />
+            </div>
           </Link>
         </div>
       </div>

@@ -4,10 +4,11 @@ import { Accordion } from '@szhsin/react-accordion';
 import AccordionMenu from '../../seller/mypage/(id)/(category)/_components/AccordionMenu';
 import SelectDropdown from '../../livestreaming/_components/SelectDropdown';
 import ProductsSortDropdown from '../_components/ProductsSortDropdown';
-import { getGoodsData } from '../actions';
+import { getCategoryData, getGoodsData } from '../actions';
 
 async function Goods() {
-  const goodsData = await getGoodsData();
+  // const goodsData = await getGoodsData();
+  const goodsData = await getCategoryData('원예용품');
 
   const countProduct = goodsData?.length;
   // countProduct === 0 ? 상품이 없다는 표시 : 상품리스트 보여주기

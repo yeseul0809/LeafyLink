@@ -6,9 +6,9 @@ import { createCartItem } from '../../products/[id]/_actions/cartActions';
 import showSwal from '@/utils/swal';
 import { createClient } from '@/supabase/supabaseClient';
 import Image from 'next/image';
-import { ProductWithDetails } from '../../search/actions';
+import { ProductWithBusinessName } from '../actions';
 
-const SearchProductCard = ({ product }: { product: ProductWithDetails }) => {
+const ProductCard = ({ product }: { product: ProductWithBusinessName }) => {
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat('en-US').format(price);
   };
@@ -94,4 +94,4 @@ const SearchProductCard = ({ product }: { product: ProductWithDetails }) => {
   );
 };
 
-export default SearchProductCard;
+export default ProductCard;
