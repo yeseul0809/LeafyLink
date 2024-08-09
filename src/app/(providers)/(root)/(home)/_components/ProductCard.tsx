@@ -66,37 +66,54 @@ const ProductCard = ({ product }: { product: Product }) => {
   }
 
   return (
-    <div>
-      <div className="lg:w-[295px]">
-        <div className="relative ">
-          <div
-            onClick={() => redirect(`/products/${product.product_id}`)}
-            className="cursor-pointer opacity-0 lg:w-[295px] lg:h-[295px] w-[164px] h-[164px] z-1 lg:flex justify-center items-center absolute z-5 hover:backdrop-blur-sm hover:opacity-100"
-          >
-            <button className="mr-10" onClick={handleAddCartClick}>
+    <div className="flex flex-col w-full max-w-xs  rounded-lg overflow-hidden">
+      <div className="relative group cursor-pointer w-full max-w-xs">
+        <Link href={`/products/${product.product_id}`} className="block">
+          <div className="relative block w-full h-full">
+            <div className="relative overflow-hidden w-full  rounded-[20px] h-[165px] md:h-[172px] lg:h-[295px]">
+              <Image
+                src={product.thumbnail_url}
+                alt="상세상품"
+                layout="fill"
+                objectFit="cover"
+                className="rounded-[20px] max-w-full max-h-full"
+              />
+            </div>
+          </div>
+        </Link>
+        <div
+          className="absolute inset-0 flex justify-center items-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 hover:backdrop-blur-sm hover:opacity-100"
+          onClick={() => redirect(`/products/${product.product_id}`)}
+        >
+          <div className="flex gap-2">
+            <button
+              className="p-2 rounded-full shadow-lg"
+              onClick={handleAddCartClick}
+              type="button"
+            >
               <img src="/icons/icon-card-cart.svg" alt="cart" />
             </button>
-            <button onClick={handleBuyNowClick}>
+            <button
+              className="p-2 rounded-full shadow-lg"
+              onClick={handleBuyNowClick}
+              type="button"
+            >
               <img src="/icons/icon-card.svg" alt="card" />
             </button>
           </div>
-
-          <Link href={'/상세페이지'}>
-            {/* <Link href={`/products/${product.product_id}`}> */}
-            <img
-              src={product.thumbnail_url}
-              // alt="product_image"
-              // layout="fill"
-              className="lg:w-[295px] lg:h-[295px] w-[164px] h-[164px] bg-zinc-300 rounded-2xl hover:bg-white cursor-pointer object-cover"
-            ></img>
-          </Link>
         </div>
       </div>
-      <p className="lg:w-[295px] w-[164px] mt-[24px] text-sm font-semibold">{businessName}</p>
-      <p className="lg:w-[295px] w-[164px] lg:line-clamp-2 line-clamp-1 text-sm text-[#555555] text-ellipsis overflow-hidden">
-        {product.title}
-      </p>
-      <p className="mt-[10px] font-semibold text-lg">{formatPrice(product.price ?? 0)}원</p>
+      <div className="mt-[20px]">
+        <p className="text-font/main text-12-sb-18-3 webkit-box md:text-14-sb-20-35">
+          {businessName}
+        </p>
+        <p className="text-font/sub1 text-13-n-18-325 webkit-box md:text-14-n-20-35 mb-[8px]">
+          {product.title}
+        </p>
+        <p className="text-font/main text-14-sb-20-35 webkit-box md:text-18-sb-26-45">
+          {formatPrice(product.price ?? 0)}원
+        </p>
+      </div>
     </div>
   );
 };
