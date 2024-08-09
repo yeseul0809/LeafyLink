@@ -178,7 +178,7 @@ function HeaderMobileDropdown({ setIsOpenMobileMenu }) {
                     마이페이지
                   </button>
                 </li>
-                <li className="pb-5 pl-4 text-[##767676] text-sm">
+                <li className="pb-5 pl-4 text-[#767676] text-sm">
                   <button
                     onClick={() => {
                       redirect('/buyer/mypage/orders');
@@ -187,7 +187,7 @@ function HeaderMobileDropdown({ setIsOpenMobileMenu }) {
                     구매내역 조회
                   </button>
                 </li>
-                <li className="pb-5 pl-4 text-[##767676] text-sm">
+                <li className="pb-5 pl-4 text-[#767676] text-sm">
                   <button
                     onClick={() => {
                       redirect('/buyer/mypage/profile');
@@ -196,7 +196,7 @@ function HeaderMobileDropdown({ setIsOpenMobileMenu }) {
                     회원정보 변경
                   </button>
                 </li>
-                <li className="pb-5 pl-4 text-[##767676] text-sm">
+                <li className="pb-5 pl-4 text-[#767676] text-sm">
                   <button
                     onClick={() => {
                       redirect('/buyer/mypage/BusinessCheck');
