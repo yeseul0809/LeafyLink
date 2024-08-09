@@ -9,6 +9,10 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      spacing: {
+        'px-7': '7px',
+        'px-20': '20px'
+      },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))'
@@ -85,7 +89,8 @@ const config: Config = {
         '16px': '16px',
         '15px': '15px',
         '14px': '14px',
-        '13px': '13px'
+        '13px': '13px',
+        '12px': '12px'
       },
       lineHeight: {
         '42px': '42px',
@@ -103,7 +108,8 @@ const config: Config = {
         '-0.45px': '-0.45px',
         '-0.375px': '-0.375px',
         '-0.35px': '-0.35px',
-        '-0.325px': '-0.325px'
+        '-0.325px': '-0.325px',
+        '-0.3px': '-0.3px'
       },
       flex: {
         '1-0-0': '1 0 0'
@@ -121,6 +127,20 @@ const config: Config = {
           fontStyle: 'normal',
           lineHeight: '42px',
           letterSpacing: '-0.8px'
+        },
+        '.text-32-n-42-80': {
+          fontSize: '32px',
+          fontWeight: '400',
+          fontStyle: 'normal',
+          lineHeight: '42px',
+          letterSpacing: '-0.8px'
+        },
+        '.text-20-n-28-50': {
+          fontSize: '20px',
+          fontWeight: '400',
+          fontStyle: 'normal',
+          lineHeight: '28px',
+          letterSpacing: '-0.5px'
         },
         '.text-20-sb-28-50': {
           fontSize: '20px',
@@ -177,6 +197,13 @@ const config: Config = {
           fontStyle: 'normal',
           lineHeight: '18px',
           letterSpacing: '-0.325px'
+        },
+        '.text-12-sb-18-3': {
+          fontSize: '12px',
+          fontWeight: '600',
+          fontStyle: 'normal',
+          lineHeight: '18px',
+          letterSpacing: '-0.3px'
         },
         '.webkit-box': {
           display: '-webkit-box',

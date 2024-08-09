@@ -66,54 +66,11 @@ const ProductCard = ({ product }: { product: Product }) => {
   }
 
   return (
-    // <div className="flex flex-col w-full max-w-xs border rounded-lg overflow-hidden">
-    //   <div className="relative group cursor-pointer w-full max-w-xs aspect-w-1 aspect-h-1">
-    //     <Link href={`/products/${product.product_id}`} className="block">
-    //       <div className="relative block w-full h-full">
-    //         <div className="relative overflow-hidden w-full h-[295px] rounded-[20px]">
-    //           <Image
-    //             src={product.thumbnail_url}
-    //             alt="상세상품"
-    //             layout="fill"
-    //             objectFit="cover"
-    //             className="rounded-[20px] max-w-full max-h-full"
-    //           />
-    //         </div>
-    //       </div>
-    //     </Link>
-    //     <div
-    //       className="absolute inset-0 flex justify-center items-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 hover:backdrop-blur-sm hover:opacity-100"
-    //       onClick={() => redirect(`/products/${product.product_id}`)}
-    //     >
-    //       <div className="flex gap-2">
-    //         <button
-    //           className="p-2  rounded-full shadow-lg"
-    //           onClick={handleAddCartClick}
-    //           type="button"
-    //         >
-    //           <img src="/icons/icon-card-cart.svg" alt="cart" />
-    //         </button>
-    //         <button
-    //           className="p-2 rounded-full shadow-lg"
-    //           onClick={handleBuyNowClick}
-    //           type="button"
-    //         >
-    //           <img src="/icons/icon-card.svg" alt="card" />
-    //         </button>
-    //       </div>
-    //     </div>
-    //   </div>
-    //   <div className="mt-3">
-    //     <p className="text-[#111111] text-sm font-semibold">{businessName}</p>
-    //     <p className="text-[#555555] text-sm font-normal">{product.title}</p>
-    //     <p className="text-[#111111] text-lg font-semibold">{formatPrice(product.price ?? 0)}원</p>
-    //   </div>
-    // </div>
     <div className="flex flex-col w-full max-w-xs  rounded-lg overflow-hidden">
       <div className="relative group cursor-pointer w-full max-w-xs">
         <Link href={`/products/${product.product_id}`} className="block">
           <div className="relative block w-full h-full">
-            <div className="relative overflow-hidden w-full h-[200px] sm:h-[250px] md:h-[300px] rounded-[20px]">
+            <div className="relative overflow-hidden w-full  rounded-[20px] h-[165px] md:h-[172px] lg:h-[295px]">
               <Image
                 src={product.thumbnail_url}
                 alt="상세상품"
@@ -147,9 +104,15 @@ const ProductCard = ({ product }: { product: Product }) => {
         </div>
       </div>
       <div className="mt-[20px]">
-        <p className="text-[#111111] text-sm font-semibold">{businessName}</p>
-        <p className="text-[#555555] text-sm font-normal">{product.title}</p>
-        <p className="text-[#111111] text-lg font-semibold">{formatPrice(product.price ?? 0)}원</p>
+        <p className="text-font/main text-12-sb-18-3 webkit-box md:text-14-sb-20-35">
+          {businessName}
+        </p>
+        <p className="text-font/sub1 text-13-n-18-325 webkit-box md:text-14-n-20-35">
+          {product.title}
+        </p>
+        <p className="text-font/main text-14-n-20-35 webkit-box md:text-18-sb-26-45">
+          {formatPrice(product.price ?? 0)}원
+        </p>
       </div>
     </div>
   );
