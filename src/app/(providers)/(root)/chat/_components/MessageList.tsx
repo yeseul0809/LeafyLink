@@ -24,7 +24,7 @@ function MessageList({ isMessagesLoaded, messages, userId, otherUserInfo }: Mess
   }, [messages]);
 
   return (
-    <div className="w-full max-h-[484px] overflow-y-auto custom-scrollbar pr-[14px]">
+    <div className="w-full max-h-[484px] overflow-y-scroll md:overflow-y-auto custom-scrollbar md:pr-[14px]">
       {isMessagesLoaded && messages.length === 0 ? (
         <p className="flex justify-center pt-7">이전 대화내역이 없습니다.</p>
       ) : (
@@ -49,7 +49,7 @@ function MessageList({ isMessagesLoaded, messages, userId, otherUserInfo }: Mess
                   {displayDate && (
                     <span
                       key={`date-${msg.message_id}`}
-                      className="w-[81px] h-[28px] md:w-[89px] md:h-[32px] text:[14px] md:text-[16px] leading-[24px] text-center mx-auto text-gray-500 mt-3 mb-3 md:mt-6 md:mb-5 py-1 px-3 rounded-[22px] bg-secondary-yellow-100 "
+                      className="w-[81px] h-[28px] md:w-[89px] md:h-[32px] text:[14px] md:text-[16px] leading-[24px] text-center mx-auto text-gray-500 mt-3 mb-3 md:mt-6 md:mb-5 md:py-1 md:px-3 rounded-[22px] bg-secondary-yellow-100 "
                     >
                       {formattedDate}
                     </span>

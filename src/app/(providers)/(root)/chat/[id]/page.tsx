@@ -187,7 +187,7 @@ function ChatPage({ params }: ParamsProps) {
           </>
         )}
       </div>
-      <div className="w-[610px] border-t border-#E5E5EC"></div>
+      <div className="w-full border-t border-#E5E5EC"></div>
       <MessageList
         isMessagesLoaded={isMessagesLoaded}
         messages={messages}

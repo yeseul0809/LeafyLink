@@ -122,7 +122,7 @@ function ChatListPage() {
       <h1 className="text-[20px] md:text-[32px] font-semibold md:font-bold border-b pb-4 md:pb-8 flex justify-center">
         상담톡
       </h1>
-      <div className="flex justify-center w-full">
+      <div className="flex justify-center w-full md:h-[800px] overflow-y-auto custom-scrollbar">
         {chatrooms.length === 0 ? (
           <p className="mt-20 xs:text-[14px] md:text-[15px]">채팅 상대가 아직 없습니다.</p>
         ) : (
