@@ -4,7 +4,7 @@ import useUser from '@/hooks/useUser';
 import { useEffect, useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Review, ReviewInput } from '@/types/review';
-import { createReview, getUserPurchasedProducts } from '../_actions/productActions';
+import { createReview, getUserPurchasedProducts, updateReview } from '../_actions/productActions';
 import StarRating from './StarRating';
 import showSwal from '@/utils/swal';
 import { useRouter } from 'next/navigation';
@@ -13,13 +13,14 @@ import { useBottomTabStore } from '@/stores/bottomTab';
 interface ReviewEditProps {
   reviewProductId: string;
   reviewCount: number;
+  editingReview?: Review | null;
 }
 
-function ReviewEdit({ reviewProductId, reviewCount }: ReviewEditProps) {
+function ReviewEdit({ reviewProductId, reviewCount, editingReview }: ReviewEditProps) {
   const { user } = useUser();
   const queryClient = useQueryClient();
-  const [rating, setRating] = useState<number>(0);
-  const [review, setReview] = useState<string>('');
+  const [rating, setRating] = useState<number>(editingReview?.rating || 0);
+  const [review, setReview] = useState<string>(editingReview?.description || '');
   const [availableReview, setAvailableReview] = useState<boolean>(false);
   const setShowBottomTab = useBottomTabStore((state) => state.setShowBottomTab);
   const router = useRouter();
@@ -34,6 +35,7 @@ function ReviewEdit({ reviewProductId, reviewCount }: ReviewEditProps) {
     checkUserPurchase();
   }, [user, reviewProductId]);
 
+  // 리뷰작성
   const createMutation = useMutation<Review[], Error, ReviewInput>({
     mutationFn: createReview,
     onSuccess: () => {
@@ -43,6 +45,17 @@ function ReviewEdit({ reviewProductId, reviewCount }: ReviewEditProps) {
     },
     onError: (error: any) => {
       console.error('리뷰 등록 중 에러 발생:', error);
+    }
+  });
+
+  // 리뷰수정
+  const updateMutation = useMutation<Review[], Error, ReviewInput>({
+    mutationFn: (reviewData: ReviewInput) => updateReview(editingReview!.review_id, reviewData),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['reivews', reviewProductId] });
+    },
+    onError: (error: any) => {
+      console.error('리뷰 수정 중 에러 발생:', error);
     }
   });
 
@@ -68,18 +81,38 @@ function ReviewEdit({ reviewProductId, reviewCount }: ReviewEditProps) {
       review_user_name: user.user_metadata.name
     };
 
-    createMutation.mutate(reviewData);
+    if (editingReview) {
+      updateMutation.mutate(reviewData);
+    } else {
+      createMutation.mutate(reviewData);
+    }
   };
+
+  useEffect(() => {
+    if (editingReview) {
+      setRating(editingReview.rating || 0);
+      setReview(editingReview.description);
+    }
+  }, [editingReview]);
 
   return (
     <div className="grid px-5 xs:px-0 xs:flex">
-      <h2 className="text-[20px] md:text-[32px] mt-6 mb-4 md:mt-0 md:mb-8">리뷰</h2>
-      <p className="text-[14px] md:text-[18px] pb-2 md:pb-5 text-left">리뷰 {reviewCount}</p>
+      {!editingReview && (
+        <>
+          <h2 className="text-[20px] md:text-[32px] mt-6 mb-4 md:mt-0 md:mb-8">리뷰</h2>
+          <p className="text-[14px] md:text-[18px] pb-2 md:pb-5 text-left">리뷰 {reviewCount}</p>
+        </>
+      )}
       <form
         onSubmit={handleReviewSubmit}
-        className="w-full mx-auto pt-5 md:pt-12 md:pb-10 border-Line/Regular border-t border-b rounded"
+        className={`w-full mx-auto pt-5 md:pt-12 md:pb-10 border-t border-b rounded 
+          ${editingReview ? 'border-primary-green-500 border-l border-r px-[12px] md:pt-[12px]' : 'border-Line/Regular'}`}
       >
-        <StarRating rating={rating} setRating={setRating} />
+        <StarRating
+          rating={rating}
+          setRating={setRating}
+          uniqueId={`edit-${editingReview?.review_id}`}
+        />
         <div className="mb-4 md:mb-5">
           <textarea
             value={review}
@@ -103,7 +136,7 @@ function ReviewEdit({ reviewProductId, reviewCount }: ReviewEditProps) {
             type="submit"
             className="w-[163px] md:w-[82px] bg-primary-green-500 mt-3 mb-5 md:mt-0 md:mb-0 text-[13px] text-white px-3 py-[9px] rounded-[4px] hover:bg-primary-green-700"
           >
-            리뷰남기기
+            {editingReview ? '수정하기' : '리뷰남기기'}
           </button>
         </div>
       </form>

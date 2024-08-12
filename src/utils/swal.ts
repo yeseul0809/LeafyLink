@@ -51,7 +51,8 @@ export const showSwalDeleteReview = async () => {
     buttonsStyling: false,
     showCancelButton: true,
     confirmButtonText: '삭제',
-    cancelButtonText: '취소'
+    cancelButtonText: '취소',
+    reverseButtons: true
   });
 
   return result.isConfirmed;

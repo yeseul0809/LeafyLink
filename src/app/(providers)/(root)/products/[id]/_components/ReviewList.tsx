@@ -8,6 +8,7 @@ import ReviewToggle from './ReviewToggle';
 import { formatDateTime } from '../utils/formatDateTime';
 import showSwal, { showSwalDeleteReview } from '@/utils/swal';
 import useUser from '@/hooks/useUser';
+import ReviewEdit from './ReviewEdit';
 
 interface ProductReviewProps {
   productId: string;
@@ -20,7 +21,8 @@ const fetchReviews = async (productId: string, reviewsPerPage: number, currentPa
 };
 
 const ProductReviewList = ({ productId, reviewsPerPage }: ProductReviewProps) => {
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [editingReview, setEditingReview] = useState<Review | null>(null);
   const { user } = useUser();
   const queryClient = useQueryClient();
 
@@ -58,6 +60,11 @@ const ProductReviewList = ({ productId, reviewsPerPage }: ProductReviewProps) =>
     }
   };
 
+  // 리뷰수정
+  const handleEditReview = (review: Review) => {
+    setEditingReview(review);
+  };
+
   const totalPages = reviewData ? Math.ceil((reviewData.totalCount ?? 0) / reviewsPerPage) : 1;
 
   return (
@@ -73,36 +80,60 @@ const ProductReviewList = ({ productId, reviewsPerPage }: ProductReviewProps) =>
           <ul className="text-left">
             {reviewData?.reviews.map((review: Review) => (
               <li key={review.review_id} className="pt-5 md:pt-12 pb-5 md:pb-10 border-b rounded">
-                <div className="mb-2">
-                  <p className="text-[13px]">{review.review_user_name}</p>
-                </div>
-                <div className="flex items-center pb-[17px] md:pb-6">
-                  {Array.from({ length: review.rating || 0 }).map((_, index) => (
-                    <span key={index} className="text-[16px] md:text-[24px] text-primary-green-500">
-                      ★
-                    </span>
-                  ))}
-                  {Array.from({ length: 5 - (review.rating || 0) }).map((_, index) => (
-                    <span key={index} className="text-gray-300">
-                      ★
-                    </span>
-                  ))}
-                  <span className="text-[13px] md:text-xl font-bold ml-2">{review.rating}.0</span>
-                </div>
-                <ReviewToggle description={review.description} />
-                <div className="flex justify-between">
-                  <span className="text-gray-500 text-sm">
-                    {review.created_at ? formatDateTime(review.created_at) : '날짜 정보 없음'}
-                  </span>
-                  {user?.id === review.review_user_id && (
-                    <button
-                      onClick={() => handleDeleteReview(review.review_id)}
-                      className="text-font/sub1 hover:text-red-500 font-semibold text-[13px]"
-                    >
-                      삭제
-                    </button>
-                  )}
-                </div>
+                {editingReview?.review_id === review.review_id ? (
+                  <ReviewEdit
+                    reviewProductId={productId}
+                    reviewCount={reviewData?.totalCount ?? 0}
+                    editingReview={editingReview} // 수정할 리뷰 데이터
+                  />
+                ) : (
+                  <>
+                    <div className="mb-2">
+                      <p className="text-[13px]">{review.review_user_name}</p>
+                    </div>
+                    <div className="flex items-center pb-[17px] md:pb-6">
+                      {Array.from({ length: review.rating || 0 }).map((_, index) => (
+                        <span
+                          key={index}
+                          className="text-[16px] md:text-[24px] text-primary-green-500"
+                        >
+                          ★
+                        </span>
+                      ))}
+                      {Array.from({ length: 5 - (review.rating || 0) }).map((_, index) => (
+                        <span key={index} className="text-[16px] md:text-[24px] text-gray-300">
+                          ★
+                        </span>
+                      ))}
+                      <span className="text-[13px] md:text-[16px] font-bold ml-2">
+                        {review.rating}.0
+                      </span>
+                    </div>
+                    <ReviewToggle description={review.description} />
+                    <div className="flex justify-between">
+                      <span className="text-gray-500 text-sm">
+                        {review.created_at ? formatDateTime(review.created_at) : '날짜 정보 없음'}
+                      </span>
+                      {user?.id === review.review_user_id && (
+                        <div className="space-x-5">
+                          <button
+                            onClick={() => handleEditReview(review)}
+                            className="text-font/sub1 hover:bg-BG/Regular font-semibold text-[13px]"
+                          >
+                            수정
+                          </button>
+
+                          <button
+                            onClick={() => handleDeleteReview(review.review_id)}
+                            className="text-System/Danger/50_Base hover:bg-System/Danger/5_Surface font-semibold text-[13px]"
+                          >
+                            삭제
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                  </>
+                )}
               </li>
             ))}
           </ul>
