@@ -9,6 +9,7 @@ import Checkbox from './_components/Checkbox';
 import AllCheckbox from './_components/AllCheckbox';
 import SelectDeleteButton from './_components/SelectDeleteButton';
 import TruncatedText from '../livestreaming/_components/TruncatedText';
+import IndividualPrice from './_components/IndividualPrice';
 
 export const revalidate = 5;
 
@@ -76,8 +77,9 @@ export default async function CartPage() {
                             price={data.price}
                             userId={userData?.user.id!}
                           />
-                          <div className="text-[18px] font-semibold xs:text-[13px] xs:mt-[20px] max_md:text-[15px] max_md:mt-[10px] w-[120px]">
-                            {data.price.toLocaleString()}원
+                          <div className="text-[16px] font-semibold xs:text-[13px] xs:mt-[20px] max_md:text-[15px] max_md:mt-[10px] w-[120px]">
+                            {/* {data.price.toLocaleString()}원 */}
+                            <IndividualPrice productId={data.product_id} />
                           </div>
                         </div>
                         <DeleteButton productId={data.product_id} />
