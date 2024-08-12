@@ -49,15 +49,20 @@ export async function getProductRequest(id: string) {
 
   return product;
 }
-// export const getProduct = cache(getProductRequest);
 
-// export async function getUser(){
-//   const {data:userData, error} = await supabaseSever.auth.getUser();
+// 제품을 구매했는지 order 테이블에서 확인
+export async function getUserPurchasedProducts(userId: string, productId: string) {
+  const supabseServer: SupabaseClient<Database> = createClient();
+  const { data, error } = await supabseServer
+    .from('Order')
+    .select('order_product_id')
+    .eq('order_user_id', userId)
+    .eq('order_product_id', productId);
 
-//     if (error) {
-//       console.error('로그인한 유저 정보 가져오는 중 에러 발생', error);
-//       return;
-//     }
+  if (error) {
+    console.error('구매 내역 조회 중 에러 발생:', error);
+    return null;
+  }
 
-//   return userData;
-// }
+  return data;
+}

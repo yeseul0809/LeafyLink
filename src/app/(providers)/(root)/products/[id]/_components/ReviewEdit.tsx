@@ -1,10 +1,10 @@
 'use client';
 
 import useUser from '@/hooks/useUser';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Review, ReviewInput } from '@/types/review';
-import { createReview, getReviews } from '../_actions/productActions';
+import { createReview, getReviews, getUserPurchasedProducts } from '../_actions/productActions';
 import StarRating from './StarRating';
 import showSwal from '@/utils/swal';
 import { useRouter } from 'next/navigation';
@@ -20,8 +20,19 @@ function ReviewEdit({ reviewProductId, reviewCount }: ReviewEditProps) {
   const queryClient = useQueryClient();
   const [rating, setRating] = useState<number>(0);
   const [review, setReview] = useState<string>('');
+  const [availableReview, setAvailableReview] = useState<boolean>(false);
   const setShowBottomTab = useBottomTabStore((state) => state.setShowBottomTab);
   const router = useRouter();
+
+  useEffect(() => {
+    const checkUserPurchase = async () => {
+      if (user) {
+        const purchaseData = await getUserPurchasedProducts(user.id, reviewProductId);
+        setAvailableReview(!!(purchaseData && purchaseData.length > 0));
+      }
+    };
+    checkUserPurchase();
+  }, [user, reviewProductId]);
 
   const mutation = useMutation<Review[], Error, ReviewInput>({
     mutationFn: createReview,
@@ -41,6 +52,11 @@ function ReviewEdit({ reviewProductId, reviewCount }: ReviewEditProps) {
     if (!user) {
       showSwal('로그인이 필요한 서비스입니다.<br>로그인 후 이용해주세요.');
       router.push('/login');
+      return;
+    }
+
+    if (!availableReview) {
+      showSwal('해당 상품에 대한 구매 내역이 없어<br> 리뷰를 작성할 수 없습니다.');
       return;
     }
 
