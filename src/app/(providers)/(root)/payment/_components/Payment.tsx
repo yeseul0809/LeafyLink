@@ -256,19 +256,18 @@ export default function PaymentPage() {
     queryClient.invalidateQueries({ queryKey: ['getProductInfo'] });
   };
 
-  console.log('productData::', productData);
-
   if (!userFetched) {
     return null;
   }
 
   if (userData && productData) {
     return (
-      <div className="pt-[80px] pb-[180px] xs:pt-[62px] xs:pb-[45px] px-[20px]">
+      <div className="pt-[80px] pb-[180px] max_xs:pt-[16px] max_xs:pb-[70px] px-[20px]">
         <h1 className="text-[32px] font-semibold text-center">주문/결제</h1>
         <p className="mt-[32px] mb-[20px]">주문자</p>
         <form action="" className="flex items-center gap-[8px] xs:mt-[16px]">
-          <input type="radio" id="sameaddress" defaultChecked className="w-[20px] h-[20px]" />
+          <input type="radio" id="sameaddress" name="address" className="hidden" defaultChecked />
+          <span className="custom-radio"></span>
           <label htmlFor="sameaddress">회원 정보와 동일</label>
         </form>
         <section className="mt-[16px]">
@@ -432,9 +431,9 @@ export default function PaymentPage() {
             <p>카카오 페이</p>
           </div>
         </section>
-        <div className="border-b w-full my-10" />
+        <div className="border-b w-full max_xs:mt-[24px] mt-[48px]" />
         <section>
-          <div className="mb-10 flex items-center gap-2">
+          <div className="mb-[48px] flex items-center gap-[8px] max_xs:mb-[48px] max_xs:mt-[24px] mt-[48px]">
             <input
               type="checkbox"
               id="agreement"
