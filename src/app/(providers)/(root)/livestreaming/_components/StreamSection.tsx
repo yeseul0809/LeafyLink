@@ -8,7 +8,7 @@ import { getVideos } from '../actions';
 
 export default function StreamSection({ category }: { category: string }) {
   const {
-    data: recodedVideos,
+    data: streamVideos,
     error,
     isFetched
   } = useQuery({
@@ -24,10 +24,12 @@ export default function StreamSection({ category }: { category: string }) {
     );
   }
 
-  if (recodedVideos && isFetched) {
+  console.log('streamVideos::', streamVideos);
+
+  if (streamVideos && streamVideos.length > 0 && isFetched) {
     return (
       <div className="grid grid-cols-2 w-full gap-[20px] max_sm:grid-cols-1">
-        {recodedVideos.map((video) => {
+        {streamVideos.map((video) => {
           const hasStreamData = video.streamData && video.streamData.length > 0;
           return (
             <div key={video.uid} className="w-full relative xs:mb-[32px]">
@@ -85,5 +87,7 @@ export default function StreamSection({ category }: { category: string }) {
         })}
       </div>
     );
+  } else if (isFetched && streamVideos?.length === 0) {
+    return <p className="flex justify-center items-center text-[15px]">방송이 없습니다.</p>;
   }
 }
