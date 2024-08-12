@@ -1,48 +1,82 @@
 'use server';
 
 import { createClient } from '@/supabase/supabaseServer';
+import { GoodsDataResponse } from '@/types/product';
 
-export const getSeedData = async () => {
+export const getSeedData = async (limit: number, offset: number): Promise<GoodsDataResponse> => {
   const supabase = createClient();
-  const { data: Product, error } = await supabase
+  const {
+    data: Product,
+    error,
+    count
+  } = await supabase
     .from('Product')
-    .select('*')
-    .eq('category', '씨앗');
-  return Product;
+    .select('*', { count: 'exact' })
+    .eq('category', '씨앗')
+    .range(offset, offset + limit - 1);
+
+  return { Product, totalCount: count };
 };
 
-export const getSeedlingData = async () => {
+export const getSeedlingData = async (
+  limit: number,
+  offset: number
+): Promise<GoodsDataResponse> => {
   const supabase = createClient();
-  const { data: Product, error } = await supabase
+  const {
+    data: Product,
+    error,
+    count
+  } = await supabase
     .from('Product')
-    .select('*')
-    .eq('category', '모종');
-  return Product;
+    .select('*', { count: 'exact' })
+    .eq('category', '모종')
+    .range(offset, offset + limit - 1);
+
+  return { Product, totalCount: count };
 };
 
-export const getKitData = async () => {
+export const getKitData = async (limit: number, offset: number): Promise<GoodsDataResponse> => {
   const supabase = createClient();
-  const { data: Product, error } = await supabase
+  const {
+    data: Product,
+    error,
+    count
+  } = await supabase
     .from('Product')
-    .select('*')
-    .eq('category', '재배키트');
-  return Product;
+    .select('*', { count: 'exact' })
+    .eq('category', '재배키트')
+    .range(offset, offset + limit - 1);
+
+  return { Product, totalCount: count };
 };
 
-export const getSoilData = async () => {
+export const getSoilData = async (limit: number, offset: number): Promise<GoodsDataResponse> => {
   const supabase = createClient();
-  const { data: Product, error } = await supabase
+  const {
+    data: Product,
+    error,
+    count
+  } = await supabase
     .from('Product')
-    .select('*')
-    .eq('category', '흙,비료');
-  return Product;
+    .select('*', { count: 'exact' })
+    .eq('category', '흙,비료')
+    .range(offset, offset + limit - 1);
+
+  return { Product, totalCount: count };
 };
 
-export const getGoodsData = async () => {
+export const getGoodsData = async (limit: number, offset: number): Promise<GoodsDataResponse> => {
   const supabase = createClient();
-  const { data: Product, error } = await supabase
+  const {
+    data: Product,
+    error,
+    count
+  } = await supabase
     .from('Product')
-    .select('*')
-    .eq('category', '원예용품');
-  return Product;
+    .select('*', { count: 'exact' })
+    .eq('category', '원예용품')
+    .range(offset, offset + limit - 1);
+
+  return { Product, totalCount: count };
 };

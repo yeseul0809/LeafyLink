@@ -51,9 +51,9 @@ const ProductReviewList = ({ productId, reviewsPerPage }: ProductReviewProps) =>
 
   const totalPages = reviewData ? Math.ceil((reviewData.totalCount ?? 0) / reviewsPerPage) : 1;
 
-  const handlePageChange = (page: number) => {
-    setCurrentPage(page);
-  };
+  // const handlePageChange = (page: number) => {
+  //   setCurrentPage(page);
+  // };
 
   return (
     <div className="w-[335px] md:w-[1240px] mx-auto">
@@ -95,7 +95,7 @@ const ProductReviewList = ({ productId, reviewsPerPage }: ProductReviewProps) =>
             {Array.from({ length: totalPages }).map((_, index) => (
               <button
                 key={index}
-                onClick={() => handlePageChange(index + 1)}
+                onClick={() => setCurrentPage(index + 1)}
                 className={`w-8 h-8 mx-[6px] px-3 py-1 rounded-full ${currentPage === index + 1 ? 'border border-Line/Strong' : 'bg-white'}`}
               >
                 {index + 1}
