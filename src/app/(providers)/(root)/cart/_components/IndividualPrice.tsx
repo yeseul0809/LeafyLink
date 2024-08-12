@@ -1,7 +1,7 @@
 'use client';
 
-import { useQuantityStore } from '@/stores';
 import React from 'react';
+import { useQuantityStore } from '@/stores';
 
 function IndividualPrice({ productId }: { productId: string }) {
   const individualPrice = useQuantityStore((state) => state.quantities);

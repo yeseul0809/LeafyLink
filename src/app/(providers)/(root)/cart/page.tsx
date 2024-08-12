@@ -10,6 +10,7 @@ import AllCheckbox from './_components/AllCheckbox';
 import SelectDeleteButton from './_components/SelectDeleteButton';
 import TruncatedText from '../livestreaming/_components/TruncatedText';
 import IndividualPrice from './_components/IndividualPrice';
+import Link from 'next/link';
 
 export const revalidate = 5;
 
@@ -51,14 +52,16 @@ export default async function CartPage() {
                 >
                   <Checkbox productId={data.product_id} userId={userData?.user.id!} />
                   <div className="flex items-start w-full mr-[32px] max_sm:justify-center max_sm:relative">
-                    <div className="relative w-[96px] h-[96px] xs:w-[80px] xs:h-[80px]">
-                      <Image
-                        src={data.thumbnail_url}
-                        alt={data.title}
-                        fill
-                        className="rounded-[6px]"
-                      />
-                    </div>
+                    <Link href={`/products/${data.product_id}`}>
+                      <div className="relative w-[96px] h-[96px] xs:w-[80px] xs:h-[80px]">
+                        <Image
+                          src={data.thumbnail_url}
+                          alt={data.title}
+                          fill
+                          className="rounded-[6px]"
+                        />
+                      </div>
+                    </Link>
                     <div className="flex justify-between items-center w-full xs:flex-col xs:items-start max_md:flex-col max_md:items-start">
                       <div className="ml-[20px] xs:ml-[15px]">
                         <p className="font-semibold">{data.business_name}</p>
@@ -78,7 +81,6 @@ export default async function CartPage() {
                             userId={userData?.user.id!}
                           />
                           <div className="text-[16px] font-semibold xs:text-[13px] xs:mt-[20px] max_md:text-[15px] max_md:mt-[10px] w-[120px]">
-                            {/* {data.price.toLocaleString()}원 */}
                             <IndividualPrice productId={data.product_id} />
                           </div>
                         </div>
