@@ -24,8 +24,6 @@ export default function StreamSection({ category }: { category: string }) {
     );
   }
 
-  console.log('streamVideos::', streamVideos);
-
   if (streamVideos && streamVideos.length > 0 && isFetched) {
     return (
       <div className="grid grid-cols-2 w-full gap-[20px] max_sm:grid-cols-1">
