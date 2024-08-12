@@ -8,12 +8,38 @@ import { createClient } from '@/supabase/supabaseServer';
 import { cache } from 'react';
 
 export async function createReview(reviewData: ReviewInput): Promise<Review[]> {
-  const supabseServer: SupabaseClient<Database> = createClient();
-  const { data, error } = await supabseServer.from('Review').insert(reviewData).select('*');
+  const supabaseServer: SupabaseClient<Database> = createClient();
+  const { data, error } = await supabaseServer.from('Review').insert(reviewData).select('*');
 
   if (error) throw error;
 
   revalidatePath(`/products/${reviewData.review_product_id}`);
+  return data;
+}
+
+export async function updateReview(reviewId: string, reviewData: ReviewInput) {
+  const supabaseServer: SupabaseClient<Database> = createClient();
+  const { data, error } = await supabaseServer
+    .from('Review')
+    .update(reviewData)
+    .eq('review_id', reviewId)
+    .select('*');
+
+  if (error) throw error;
+  revalidatePath(`/products/${reviewData.review_product_id}`);
+  return data;
+}
+
+export async function deleteReview(reviewId: string, reviewProductId: string) {
+  const supabaseServer: SupabaseClient<Database> = createClient();
+  const { data, error } = await supabaseServer
+    .from('Review')
+    .delete()
+    .eq('review_id', reviewId)
+    .select('*');
+
+  if (error) throw error;
+  revalidatePath(`/products/${reviewProductId}`);
   return data;
 }
 
@@ -35,8 +61,8 @@ export async function getReviews(reviewProductId: string, limit: number, offset:
 }
 
 export async function getProductRequest(id: string) {
-  const supabseServer: SupabaseClient<Database> = createClient();
-  const { data: product, error } = await supabseServer
+  const supabaseServer: SupabaseClient<Database> = createClient();
+  const { data: product, error } = await supabaseServer
     .from('Product')
     .select('*')
     .eq('product_id', id)
@@ -52,8 +78,8 @@ export async function getProductRequest(id: string) {
 
 // 제품을 구매했는지 order 테이블에서 확인
 export async function getUserPurchasedProducts(userId: string, productId: string) {
-  const supabseServer: SupabaseClient<Database> = createClient();
-  const { data, error } = await supabseServer
+  const supabaseServer: SupabaseClient<Database> = createClient();
+  const { data, error } = await supabaseServer
     .from('Order')
     .select('order_product_id')
     .eq('order_user_id', userId)

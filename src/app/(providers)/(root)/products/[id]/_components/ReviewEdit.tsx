@@ -4,7 +4,7 @@ import useUser from '@/hooks/useUser';
 import { useEffect, useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Review, ReviewInput } from '@/types/review';
-import { createReview, getReviews, getUserPurchasedProducts } from '../_actions/productActions';
+import { createReview, getUserPurchasedProducts } from '../_actions/productActions';
 import StarRating from './StarRating';
 import showSwal from '@/utils/swal';
 import { useRouter } from 'next/navigation';
@@ -34,7 +34,7 @@ function ReviewEdit({ reviewProductId, reviewCount }: ReviewEditProps) {
     checkUserPurchase();
   }, [user, reviewProductId]);
 
-  const mutation = useMutation<Review[], Error, ReviewInput>({
+  const createMutation = useMutation<Review[], Error, ReviewInput>({
     mutationFn: createReview,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['reviews', reviewProductId] });
@@ -68,7 +68,7 @@ function ReviewEdit({ reviewProductId, reviewCount }: ReviewEditProps) {
       review_user_name: user.user_metadata.name
     };
 
-    mutation.mutate(reviewData);
+    createMutation.mutate(reviewData);
   };
 
   return (

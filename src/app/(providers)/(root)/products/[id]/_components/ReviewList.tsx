@@ -2,9 +2,12 @@
 
 import { Review } from '@/types/review';
 import { useState, useEffect } from 'react';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { getReviews } from '../_actions/productActions';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { deleteReview, getReviews } from '../_actions/productActions';
 import ReviewToggle from './ReviewToggle';
+import { formatDateTime } from '../utils/formatDateTime';
+import showSwal, { showSwalDeleteReview } from '@/utils/swal';
+import useUser from '@/hooks/useUser';
 
 interface ProductReviewProps {
   productId: string;
@@ -16,24 +19,10 @@ const fetchReviews = async (productId: string, reviewsPerPage: number, currentPa
   return getReviews(productId, reviewsPerPage, offset);
 };
 
-const formatDateTime = (dateString: string) => {
-  const date = new Date(dateString);
-  const formattedDate = date.toLocaleDateString('ko-KR', {
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit'
-  });
-  const formattedTime = date.toLocaleTimeString('ko-KR', {
-    hour: '2-digit',
-    minute: '2-digit',
-    hour12: true
-  });
-
-  return `${formattedDate} ${formattedTime}`;
-};
-
 const ProductReviewList = ({ productId, reviewsPerPage }: ProductReviewProps) => {
   const [currentPage, setCurrentPage] = useState(1);
+  const { user } = useUser();
+  const queryClient = useQueryClient();
 
   const {
     data: reviewData,
@@ -49,11 +38,27 @@ const ProductReviewList = ({ productId, reviewsPerPage }: ProductReviewProps) =>
     refetch();
   }, [currentPage, refetch]);
 
-  const totalPages = reviewData ? Math.ceil((reviewData.totalCount ?? 0) / reviewsPerPage) : 1;
+  // 리뷰삭제
+  const deleteMutation = useMutation({
+    mutationFn: (reviewId: string) => deleteReview(reviewId, productId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['reviews', productId] });
+      showSwal('리뷰가 삭제되었습니다.');
+    },
+    onError: (error: any) => {
+      console.error('리뷰 삭제 중 에러 발생:', error);
+      showSwal('리뷰 삭제를 실패했습니다.');
+    }
+  });
 
-  // const handlePageChange = (page: number) => {
-  //   setCurrentPage(page);
-  // };
+  const handleDeleteReview = async (reviewId: string) => {
+    const isConfirmed = await showSwalDeleteReview();
+    if (isConfirmed) {
+      deleteMutation.mutate(reviewId);
+    }
+  };
+
+  const totalPages = reviewData ? Math.ceil((reviewData.totalCount ?? 0) / reviewsPerPage) : 1;
 
   return (
     <div className="w-[335px] md:w-[1240px] mx-auto">
@@ -85,9 +90,19 @@ const ProductReviewList = ({ productId, reviewsPerPage }: ProductReviewProps) =>
                   <span className="text-[13px] md:text-xl font-bold ml-2">{review.rating}.0</span>
                 </div>
                 <ReviewToggle description={review.description} />
-                <span className="text-gray-500 text-sm">
-                  {review.created_at ? formatDateTime(review.created_at) : '날짜 정보 없음'}
-                </span>
+                <div className="flex justify-between">
+                  <span className="text-gray-500 text-sm">
+                    {review.created_at ? formatDateTime(review.created_at) : '날짜 정보 없음'}
+                  </span>
+                  {user?.id === review.review_user_id && (
+                    <button
+                      onClick={() => handleDeleteReview(review.review_id)}
+                      className="text-font/sub1 hover:text-red-500 font-semibold text-[13px]"
+                    >
+                      삭제
+                    </button>
+                  )}
+                </div>
               </li>
             ))}
           </ul>
