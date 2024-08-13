@@ -1,4 +1,4 @@
-import ProductForm from './_components/ProductForm';
+import ProductForm from '../_components/ProductForm';
 
 async function ProductEditPage() {
   return (

@@ -4,18 +4,21 @@ import React, { useEffect, useState } from 'react';
 import { useParams, usePathname, useRouter } from 'next/navigation';
 import { Product } from '@/types/product';
 import { createClient } from '@/supabase/supabaseClient';
-import InputField from '../../register/_components/InputField';
-import QuillEditor from '../../register/_components/QuillEditor';
+import InputField from './InputField';
+import QuillEditor from './QuillEditor';
 import { getProductRequest } from '@/app/(providers)/(root)/products/[id]/_actions/productActions';
-import { INITIAL_STATE } from '../../register/_utils/constants';
-import handleSubmit from '../../register/_utils/handleSubmit';
-import useUser from '@/hooks/useUser';
+import { INITIAL_STATE } from '../_utils/constants';
+import handleSubmit from '../_utils/handleSubmit';
+import { handleValidateForm } from '../_utils/handleValidateForm';
+import Image from 'next/image';
 
 const supabase = createClient();
 
 function ProductForm() {
   const [state, setState] = useState<Product | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [isFormValid, setIsFormValid] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const router = useRouter();
   const params = useParams();
   const pathname = usePathname();
@@ -29,13 +32,15 @@ function ProductForm() {
     const fetchProduct = async () => {
       if (isEditMode && productId) {
         // 수정 모드: 기존 데이터를 불러옴
+        const id = Array.isArray(productId) ? productId[0] : productId;
+
         try {
-          const product = await getProductRequest(productId);
+          const product = await getProductRequest(id);
           if (product) {
             setState(product);
             setImagePreview(product.thumbnail_url);
           } else {
-            setState(null); // 상품을 찾을 수 없는 경우 null로 설정
+            setState(null);
           }
         } catch (error) {
           console.error('해당 상품을 찾을 수 없습니다.', error);
@@ -49,6 +54,11 @@ function ProductForm() {
 
     fetchProduct();
   }, [isEditMode, productId]);
+
+  // 유효성 검사
+  useEffect(() => {
+    setIsFormValid(handleValidateForm(state, imagePreview));
+  }, [state, imagePreview]);
 
   if (!state) {
     return isEditMode ? <p>해당 상품이 없습니다.</p> : null;
@@ -74,6 +84,7 @@ function ProductForm() {
 
   const handleInputSubmit = async () => {
     if (!state) return;
+    setIsLoading(true);
 
     if (isEditMode && productId) {
       // 수정 모드
@@ -85,19 +96,29 @@ function ProductForm() {
       }
     } else {
       // 등록 모드
-      await handleSubmit({ state, sellerId });
+      const id = Array.isArray(sellerId) ? sellerId[0] : sellerId;
+      await handleSubmit({ state, id });
       setState(INITIAL_STATE);
       setImagePreview(null);
       router.push('/seller/mypage/products');
     }
+    setIsLoading(false);
   };
 
   return (
     <div className="flex flex-col pb-[180px]">
+      {isLoading && (
+        <div className="fixed inset-0 flex justify-center items-center z-50 bg-white">
+          <Image src="/loading.gif" alt="로딩이미지" width={463} height={124} />
+        </div>
+      )}
+
       <div className="flex justify-end">
         <button
-          className="w-[66px] h-[30px] md:w-[80px] md:h-[44px] text-[14px] px-2 md:px-3 md:py-3 mb-3 bg-primary-green-500 text-white rounded-md hover:bg-primary-green-700"
+          className={`w-[66px] h-[30px] md:w-[80px] md:h-[44px] text-[14px] px-2 md:px-3 md:py-3 mb-3 rounded-md text-white 
+      ${isFormValid ? 'bg-primary-green-500 hover:bg-primary-green-700' : 'bg-grayscale-gray-200 cursor-not-allowed'}`}
           onClick={handleInputSubmit}
+          disabled={!isFormValid}
         >
           {isEditMode ? '수정하기' : '등록하기'}
         </button>
@@ -146,6 +167,7 @@ function ProductForm() {
             onChange={handleChange}
             placeholder="원"
             labelText="정가 (소비자가)"
+            min={0}
           />
 
           <div className="mb-6 px-3">
@@ -164,8 +186,8 @@ function ProductForm() {
               )}
               {!imagePreview && (
                 <>
-                  <p>가로 900px 이상,</p>
-                  <p>확대 기능 사용시 2000px 이상</p>
+                  <p>썸네일을 등록해주세요.</p>
+                  <p>권장 비율 1:1 (정사각형)</p>
                 </>
               )}
             </div>
@@ -179,6 +201,7 @@ function ProductForm() {
             onChange={handleChange}
             placeholder="개"
             labelText="수량"
+            min={0}
           />
         </section>
 

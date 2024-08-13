@@ -1,4 +1,4 @@
-import ProductForm from '../edit/_components/ProductForm';
+import ProductForm from '../_components/ProductForm';
 
 async function ProductRegisterPage() {
   return (
