@@ -36,7 +36,7 @@ const ProductCard = ({ product }: { product: ProductWithBusinessName }) => {
       cart_product_id: product.product_id,
       count: 1,
       cart_user_id: user.id,
-      is_checked: false
+      is_checked: true
     };
     const result = await createCartItem(cartItemData, user.id, initializeCart);
 

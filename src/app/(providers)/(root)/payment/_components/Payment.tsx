@@ -428,7 +428,7 @@ export default function PaymentPage() {
               height={20}
               quality={100}
             />
-            <p>카카오 페이</p>
+            <p>카카오페이</p>
           </div>
         </section>
         <div className="border-b w-full max_xs:mt-[24px] mt-[48px]" />

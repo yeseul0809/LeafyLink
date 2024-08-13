@@ -24,7 +24,7 @@ export async function createCartItem(
         cart_product_id: cartItemData.cart_product_id,
         count: newCount,
         cart_user_id: userId,
-        is_checked: false
+        is_checked: true
       })
       .eq('cart_user_id', userId)
       .eq('cart_product_id', cartItemData.cart_product_id);
