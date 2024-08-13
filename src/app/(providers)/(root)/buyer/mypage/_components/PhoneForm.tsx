@@ -29,7 +29,7 @@ const PhoneForm = ({ onChange, initialPhone = '' }: PhoneFormProps) => {
   }, [phoneParts, onChange]);
 
   return (
-    <section className="flex items-center gap-2 w-full max-w-screen-sm mb-20 mt-3">
+    <section className="flex items-center gap-2 w-full max-w-screen-sm mb-20 mt-3 s:mb-[48px]">
       <input
         type="text"
         placeholder="010"

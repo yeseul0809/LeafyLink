@@ -17,12 +17,12 @@ const MyPageHeader = () => {
     ' text-18-sb-26-45 xs:text-14-sb-20-35 text-primary-green-500  border-primary-green-500 border-b-2 overflow-hidden text-center truncate  ';
 
   return (
-    <div className="max-w-screen-xl mx-auto md:mt-20 md:mb-20  mb-[24px] mt-[16px]">
+    <div className="max-w-screen-xl mx-auto md:mt-20 md:mb-20  mb-[24px] mt-[16px] ">
       <h1 className="text-32-sb-42-80 xs:text-20-sb-28-50 text-center text-font/main mb-[32px] xs:mb-[0px] xs:mt-[16px]">
         마이페이지
       </h1>
 
-      <ul className="flex items-start  ">
+      <ul className="flex items-start s:px-[20px]  ">
         <li
           className={`w-1/3  p-4 text-center xs:p-[12px] ${linkClassName} ${activeLink === `/buyer/mypage/orders` ? activeLinkClassName : ''}`}
         >

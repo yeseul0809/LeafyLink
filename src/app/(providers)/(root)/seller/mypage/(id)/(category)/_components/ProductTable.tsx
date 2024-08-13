@@ -106,13 +106,6 @@ export default function ProductTable({ sellerId }: ProductTableProps) {
     }
   }, [searchParams, sellerId, itemsPerPage, categoryFilter, isSellerValid]);
 
-  // const handleCategoryChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-  //   const selectedCategory = event.target.value;
-  //   setCategoryFilter(selectedCategory);
-  //   setCurrentPage(1);
-  //   router.push(`?page=1`);
-  // };
-
   const handleMoveEditPage = (id: string) => {
     router.push(`/seller/mypage/${id}/edit`);
   };
@@ -143,7 +136,7 @@ export default function ProductTable({ sellerId }: ProductTableProps) {
 
   return (
     <>
-      <section className="max-w-[1280px]  mx-auto mb-20 hidden md:block">
+      <section className="max-w-[1280px]  mx-auto mb-20 hidden md:block ">
         <div className="flex justify-end mt-[28px] ">
           <Link
             href={`/seller/mypage/${sellerId}/register`}
@@ -232,7 +225,7 @@ export default function ProductTable({ sellerId }: ProductTableProps) {
       </section>
       {/* 모바일 환경 */}
 
-      <div className="block md:hidden">
+      <div className="block md:hidden  px-[20px]">
         {products.map((product) => (
           <ProductTableMobli
             key={product.product_id}

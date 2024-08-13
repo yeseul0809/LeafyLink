@@ -1,7 +1,7 @@
 'use client';
 import React from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { redirect, useRouter } from 'next/navigation';
 import { createCartItem } from '../../products/[id]/_actions/cartActions';
 import showSwal from '@/utils/swal';
 import { createClient } from '@/supabase/supabaseClient';

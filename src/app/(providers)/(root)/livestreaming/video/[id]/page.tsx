@@ -68,7 +68,6 @@ export default async function RecodedVideoPage({ params }: { params: { id: strin
           <button className="bg-primary-green-500 text-white p-[16px] rounded-[6px] flex items-center gap-[4px] hover:bg-primary-green-700 transition-colors xs_max:w-full">
             <div className="flex gap-[4px] w-full justify-center">
               <p className="text-[16px] font-semibold ">구매하러 가기</p>
-              <Image src="/icons/right-arrow.png" alt="rightarrow" width={14} height={14} />
             </div>
           </button>
         </Link>
