@@ -1,31 +1,62 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useParams, usePathname, useRouter } from 'next/navigation';
 import { Product } from '@/types/product';
 import { createClient } from '@/supabase/supabaseClient';
 import InputField from '../../register/_components/InputField';
 import QuillEditor from '../../register/_components/QuillEditor';
+import { getProductRequest } from '@/app/(providers)/(root)/products/[id]/_actions/productActions';
+import { INITIAL_STATE } from '../../register/_utils/constants';
+import handleSubmit from '../../register/_utils/handleSubmit';
+import useUser from '@/hooks/useUser';
 
 const supabase = createClient();
 
-interface ProductEditFormProps {
-  product: Product;
-}
-
-function ProductEditForm({ product }: ProductEditFormProps) {
-  const [state, setState] = useState<Product>(product);
-  const [imagePreview, setImagePreview] = useState<string | null>(product.thumbnail_url);
+function ProductForm() {
+  const [state, setState] = useState<Product | null>(null);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
   const router = useRouter();
+  const params = useParams();
+  const pathname = usePathname();
+
+  const isRegisterMode = pathname.includes('register');
+  const sellerId = isRegisterMode ? params.id : '';
+  const productId = isRegisterMode ? null : params.id;
+  const isEditMode = Boolean(productId);
 
   useEffect(() => {
-    setState(product);
-    setImagePreview(product.thumbnail_url);
-  }, [product]);
+    const fetchProduct = async () => {
+      if (isEditMode && productId) {
+        // 수정 모드: 기존 데이터를 불러옴
+        try {
+          const product = await getProductRequest(productId);
+          if (product) {
+            setState(product);
+            setImagePreview(product.thumbnail_url);
+          } else {
+            setState(null); // 상품을 찾을 수 없는 경우 null로 설정
+          }
+        } catch (error) {
+          console.error('해당 상품을 찾을 수 없습니다.', error);
+          setState(null);
+        }
+      } else {
+        // 등록 모드: 초기 상태로 설정
+        setState(INITIAL_STATE);
+      }
+    };
+
+    fetchProduct();
+  }, [isEditMode, productId]);
+
+  if (!state) {
+    return isEditMode ? <p>해당 상품이 없습니다.</p> : null;
+  }
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>) => {
     const { name, value } = e.target;
-    setState((prev) => ({ ...prev, [name]: value }));
+    setState((prev) => prev && { ...prev, [name]: value });
   };
 
   const handleThumbnailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -33,26 +64,31 @@ function ProductEditForm({ product }: ProductEditFormProps) {
     if (file) {
       const url = URL.createObjectURL(file);
       setImagePreview(url);
-      setState((prev) => ({ ...prev, thumbnail: file }));
+      setState((prev) => prev && { ...prev, thumbnail: file });
     }
   };
 
   const handleDescriptionChange = (content: string) => {
-    setState((prev) => ({ ...prev, description: content }));
+    setState((prev) => prev && { ...prev, description: content });
   };
 
-  const handleUpdateSubmit = async () => {
-    const updatedProduct = { ...state };
-    const { error } = await supabase
-      .from('Product')
-      .update(updatedProduct)
-      .eq('product_id', product.product_id);
+  const handleInputSubmit = async () => {
+    if (!state) return;
 
-    if (error) {
-      console.error('등록된 상품 데이터 수정중 에러발생', error);
+    if (isEditMode && productId) {
+      // 수정 모드
+      const { error } = await supabase.from('Product').update(state).eq('product_id', productId);
+      if (error) {
+        console.error('상품 데이터 수정 중 에러 발생:', error);
+      } else {
+        router.push(`/products/${productId}`);
+      }
     } else {
-      // 수정 후, 상품 상세페이지로 이동
-      router.push(`/products/${product.product_id}`);
+      // 등록 모드
+      await handleSubmit({ state, sellerId });
+      setState(INITIAL_STATE);
+      setImagePreview(null);
+      router.push('/seller/mypage/products');
     }
   };
 
@@ -61,9 +97,9 @@ function ProductEditForm({ product }: ProductEditFormProps) {
       <div className="flex justify-end">
         <button
           className="w-[66px] h-[30px] md:w-[80px] md:h-[44px] text-[14px] px-2 md:px-3 md:py-3 mb-3 bg-primary-green-500 text-white rounded-md hover:bg-primary-green-700"
-          onClick={handleUpdateSubmit}
+          onClick={handleInputSubmit}
         >
-          수정하기
+          {isEditMode ? '수정하기' : '등록하기'}
         </button>
       </div>
 
@@ -77,7 +113,7 @@ function ProductEditForm({ product }: ProductEditFormProps) {
             </label>
             <select
               name="category"
-              value={state.category}
+              value={state?.category || ''}
               onChange={handleChange}
               className="w-[271px] h-[44px] px-3 border text-font/sub2 text-right"
             >
@@ -96,7 +132,7 @@ function ProductEditForm({ product }: ProductEditFormProps) {
             type="text"
             id="title"
             name="title"
-            value={state.title}
+            value={state?.title || ''}
             onChange={handleChange}
             placeholder="상품명을 입력해주세요"
             labelText="상품명"
@@ -106,7 +142,7 @@ function ProductEditForm({ product }: ProductEditFormProps) {
             type="number"
             id="price"
             name="price"
-            value={state.price}
+            value={state?.price || ''}
             onChange={handleChange}
             placeholder="원"
             labelText="정가 (소비자가)"
@@ -139,7 +175,7 @@ function ProductEditForm({ product }: ProductEditFormProps) {
             type="number"
             id="stock"
             name="stock"
-            value={state.stock}
+            value={state?.stock || ''}
             onChange={handleChange}
             placeholder="개"
             labelText="수량"
@@ -148,11 +184,11 @@ function ProductEditForm({ product }: ProductEditFormProps) {
 
         <section className="flex-1 h-[716px] border">
           <h2 className="text-sm text-center border-b font-semibold py-4 mb-4">상세 설명</h2>
-          <QuillEditor value={state.description} onChange={handleDescriptionChange} />
+          <QuillEditor value={state?.description || ''} onChange={handleDescriptionChange} />
         </section>
       </div>
     </div>
   );
 }
 
-export default ProductEditForm;
+export default ProductForm;

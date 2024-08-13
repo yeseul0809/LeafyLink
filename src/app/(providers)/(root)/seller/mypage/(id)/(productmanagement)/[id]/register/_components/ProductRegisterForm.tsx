@@ -8,7 +8,6 @@ import InputField from './InputField';
 import QuillEditor from './QuillEditor';
 import { useRouter } from 'next/navigation';
 import useUser from '@/hooks/useUser';
-import { createClient } from '@/supabase/supabaseClient';
 
 export default function ProductRegisterForm() {
   const [state, setState] = useState<Product>(INITIAL_STATE);
