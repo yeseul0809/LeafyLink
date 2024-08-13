@@ -76,10 +76,14 @@ export default function AccordionMenu({ orders }: AccordionMenuProps) {
   };
 
   return (
-    <div className="max-w-screen-xl mx-auto mt-20 mb-20">
+    <div className="max-w-screen-xl mx-auto mt-20 mb-20 s:px-[20px]">
       <div className="flex items-star bg-secondary-yellow-100 text-center">
-        <span className="w-[178px] text-font/main text-16-n-24-40 p-4 text-center">주문 번호</span>
-        <span className="flex-1 text-font/main text-16-n-24-40 p-4 text-center">상품명</span>
+        <span className="w-[178px] text-font/main text-16-n-24-40 p-4 text-center s:w-[86px] s:text-14-n-24-35 s:p-[12px] flex justify-center items-center ">
+          주문 번호
+        </span>
+        <span className="flex-1 text-font/main text-16-n-24-40 p-4 text-center items-center">
+          상품명
+        </span>
       </div>
       <div>
         <Accordion>
@@ -91,18 +95,23 @@ export default function AccordionMenu({ orders }: AccordionMenuProps) {
                   className="flex items-start cursor-pointer"
                   onClick={() => handleClick(order.order_id)}
                 >
-                  <div className="flex items-start py-[22px]">
-                    <span className="w-[178px] text-16-n-24-40 text-font/sub2 text-center px-4">
+                  <div className="flex items-start py-[22px] s:py-0 flex-1">
+                    {/* Order ID */}
+                    <span className="w-[178px] text-16-n-24-40 text-font/sub2 text-center px-4 s:w-[86px] s:text-14-n-24-35 s:p-[16px_12px] flex justify-center items-center">
                       {order.order_id}
                     </span>
-                    <span className="flex-1 text-font/main text-16-n-24-40 px-4 overflow-hidden whitespace-nowrap text-ellipsis text-left">
-                      {order.Product?.title || '제품 없음'}
-                    </span>
+
+                    <div className="flex-1 webkit-box s:p-[16px_12px_16px_4px]">
+                      <span className="text-font/main text-16-n-24-40 text-left webkit-box">
+                        {order.Product?.title || '제품 없음'}
+                      </span>
+                    </div>
                   </div>
-                  <div className="flex items-center ml-auto py-[22px] px-[16px]">
+
+                  <div className="flex items-center justify-center py-[22px] px-[16px] s:p-[17px_12px_17px_0]">
                     <Image
-                      src={openItems[order.order_id] ? '/icons/down.svg' : '/icons/up.svg'}
-                      alt={openItems[order.order_id] ? '다운 이미지' : '업 이미지'}
+                      src={openItems[order.order_id] ? '/icons/up.svg' : '/icons/down.svg'}
+                      alt={openItems[order.order_id] ? '업 이미지' : '다운 이미지'}
                       className="flex-shrink-0"
                       width={20}
                       height={20}
@@ -111,9 +120,11 @@ export default function AccordionMenu({ orders }: AccordionMenuProps) {
                 </div>
               }
             >
-              <div className="flex flex-col sm:flex-row justify-between gap-x-6 px-4 sm:px-8 pt-4 sm:pt-8 pb-8 my-2">
+              <div className="flex flex-col sm:flex-row justify-between gap-x-6 p-[32px_32px_40px_32px] my-2 border-b border-Line/Light s:p-[16px_12px] s:gap-y-px-24">
                 <div className="w-full sm:w-1/2 ">
-                  <div className="pb-6 text-font/sub1 text-14-n-20-35">[상품 정보]</div>
+                  <div className="pb-[24px] text-font/sub1 text-14-n-20-35 s:pb-[8px]">
+                    [상품 정보]
+                  </div>
                   <div className="flex flex-col">
                     <div className="flex">
                       <div className="flex w-[101px] p-[16px_0_16px_16px] items-start self-stretch bg-BG/Light border-t border-Line/Light text-14-n-20-35 text-font/main">
@@ -143,7 +154,7 @@ export default function AccordionMenu({ orders }: AccordionMenuProps) {
                     </div>
 
                     <div className="flex">
-                      <div className="flex w-[101px] p-[16px_0_16px_16px] items-start self-stretch bg-BG/Light border-t border-Line/Light text-14-n-20-35 text-font/main">
+                      <div className="flex w-[101px] p-[16px_0_16px_16px] items-start self-stretch bg-BG/Light border-t border-Line/Light text-14-n-20-35 text-font/main s:pb-[8px]">
                         주문자
                       </div>
                       <div className="flex-1 p-4 justify-center items-center border-b border-t border-Line/Light text-14-n-20-35 text-font/main truncate">
@@ -154,7 +165,7 @@ export default function AccordionMenu({ orders }: AccordionMenuProps) {
                 </div>
 
                 <div className="w-full sm:w-1/2">
-                  <div className="pb-6 text-font/sub1 text-14-n-20-35">[주문자 정보]</div>
+                  <div className="pb-[24px] text-font/sub1 text-14-n-20-35">[주문자 정보]</div>
                   <div className="flex flex-col">
                     <div className="flex">
                       <div className="flex w-[101px] p-[16px_0_16px_16px] items-start self-stretch bg-BG/Light border-t border-Line/Light text-14-n-20-35 text-font/main">

@@ -173,7 +173,7 @@ const UserEditForm = ({ initialData, userId }: UserEditFormProps) => {
         />
       </div>
       {/* 이름 입력 필드 */}
-      <label className="text-16-n-24-40 text-font/main ">이름</label>
+      <label className="text-16-n-24-40 text-font/main s:text-14-n-20-35 ">이름</label>
       <input
         type="text"
         className="border border-Line/Regular  bg-white w-full p-4  mb-6 mt-3 text-16-n-24-40 text-font/main  "
@@ -181,7 +181,7 @@ const UserEditForm = ({ initialData, userId }: UserEditFormProps) => {
         onChange={(e) => setUserName(e.target.value)}
       />
       {/* 우편번호 입력 필드 */}
-      <label className="text-16-n-24-40 text-font/main ">주소</label>
+      <label className="text-16-n-24-40 text-font/main s:text-14-n-20-35 ">주소</label>
       <div className="  ">
         <input
           type="text"
@@ -237,7 +237,7 @@ const UserEditForm = ({ initialData, userId }: UserEditFormProps) => {
         onChange={(e) => setDetailAddress(e.target.value)}
       />
       {/* Phone Form 추가 */}
-      <label className="text-16-n-24-40 text-font/main mb-3 ">휴대폰 번호</label>
+      <label className="text-16-n-24-40 text-font/main mb-3 s:text-14-n-20-35 ">휴대폰 번호</label>
       <PhoneForm initialPhone={phone} onChange={handlePhoneChange} />
 
       <div className="flex gap-4 ">

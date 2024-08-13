@@ -38,8 +38,8 @@ export default async function BuyerMyPage() {
   };
 
   return (
-    <section className="max-w-sm mx-auto">
-      <div className="mb-[180px]">
+    <section className="max-w-sm mx-auto s:px-[20px]">
+      <div className="mb-[180px] s:mb-[70px]">
         <UserEditForm initialData={initialData} userId={userId} />
       </div>
     </section>
