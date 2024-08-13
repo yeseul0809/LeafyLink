@@ -11,7 +11,8 @@ const config: Config = {
     extend: {
       spacing: {
         'px-7': '7px',
-        'px-20': '20px'
+        'px-20': '20px',
+        'px-24': '24px'
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
@@ -32,9 +33,9 @@ const config: Config = {
         sm: '640px',
         md: '768px',
         lg: '1024px',
-        xl: '1280px'
+        xl: '1280px',
         // m: { max: '1240px' },
-        // s: { max: '764px' },
+        s: { max: '764px' }
       },
       maxWidth: {
         'container-l': '1280px',
@@ -201,6 +202,13 @@ const config: Config = {
         '.text-13-n-18-325': {
           fontSize: '13px',
           fontWeight: '400',
+          fontStyle: 'normal',
+          lineHeight: '18px',
+          letterSpacing: '-0.325px'
+        },
+        '.text-13-sb-18-325': {
+          fontSize: '13px',
+          fontWeight: '600',
           fontStyle: 'normal',
           lineHeight: '18px',
           letterSpacing: '-0.325px'

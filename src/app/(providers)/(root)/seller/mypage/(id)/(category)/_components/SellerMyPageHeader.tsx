@@ -24,7 +24,7 @@ const SellerMyPageHeader = () => {
       </h1>
 
       {/* Links */}
-      <ul className="flex items-start  ">
+      <ul className="flex items-start ">
         <li
           className={`w-1/3  p-4 text-center xs:p-[12px] ${linkClassName} ${activeLink === `/seller/mypage/orders` ? activeLinkClassName : ''}`}
         >
