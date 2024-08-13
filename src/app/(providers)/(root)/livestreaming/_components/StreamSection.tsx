@@ -26,7 +26,7 @@ export default function StreamSection({ category }: { category: string }) {
 
   if (recodedVideos && isFetched) {
     return (
-      <div className="grid grid-cols-2 w-full gap-[20px] xs:grid-cols-1">
+      <div className="grid grid-cols-2 w-full gap-[20px] max_sm:grid-cols-1">
         {recodedVideos.map((video) => {
           const hasStreamData = video.streamData && video.streamData.length > 0;
           return (

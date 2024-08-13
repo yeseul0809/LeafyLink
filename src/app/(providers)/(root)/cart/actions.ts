@@ -10,6 +10,7 @@ export const getUserSession = async () => {
     console.error('Error fetching posts:', error);
     return;
   }
+  revalidatePath('/cart');
   return data;
 };
 
@@ -25,6 +26,7 @@ export interface Product {
   updated_at: string;
   product_seller_id: string;
   count: number;
+  business_name: string;
 }
 
 export const getCartData = async (userId: string) => {
@@ -33,6 +35,7 @@ export const getCartData = async (userId: string) => {
   if (error) {
     console.error('Error fetching posts:', error);
   }
+  revalidatePath('/cart');
   return data;
 };
 
@@ -46,59 +49,45 @@ interface CartProps {
 
 export const getProductData = async (carts: CartProps[], type: string): Promise<Product[]> => {
   const supabaseSever = createClient();
-  let response;
-  if (type === 'all') {
-    let productIds: string[] = carts.map((cart) => cart.cart_product_id);
-    let productCounts: number[] = carts.map((cart) => cart.count);
 
-    const { data, error } = await supabaseSever
-      .from('Product')
-      .select()
-      .in('product_id', productIds);
+  const filteredCarts = type === 'all' ? carts : carts.filter((cart) => cart.is_checked);
+  const productIds: string[] = filteredCarts.map((cart) => cart.cart_product_id);
+  const productCounts: number[] = filteredCarts.map((cart) => cart.count);
 
-    if (error) {
-      console.error('Error fetching posts:', error);
-      return [];
+  try {
+    const [productData, sellerData] = await Promise.all([
+      supabaseSever
+        .from('Product')
+        .select('product_id, product_seller_id, price,thumbnail_url,title')
+        .in('product_id', productIds),
+      supabaseSever.from('Seller').select('seller_id, business_name')
+    ]);
+
+    if (productData.error || sellerData.error) {
+      throw new Error('Error fetching data from database');
     }
 
-    const result = data.map((product) => {
+    const sellerMap = new Map(
+      sellerData.data.map((seller) => [seller.seller_id, seller.business_name])
+    );
+
+    const result = productData.data.map((product) => {
       const index = productIds.indexOf(product.product_id);
       const count = productCounts[index];
+      const business_name = sellerMap.get(product.product_seller_id) || 'Unknown';
+
       return {
         ...product,
-        count: count
+        count,
+        business_name
       };
     });
 
-    response = result;
-  } else if (type === 'checked') {
-    let filteredCarts = carts.filter((cart) => cart.is_checked);
-    let productIds: string[] = filteredCarts.map((cart) => cart.cart_product_id);
-    let productCounts: number[] = filteredCarts.map((cart) => cart.count);
-
-    const { data, error } = await supabaseSever
-      .from('Product')
-      .select()
-      .in('product_id', productIds);
-
-    if (error) {
-      console.error('Error fetching posts:', error);
-      return [];
-    }
-
-    const result = data.map((product) => {
-      const index = productIds.indexOf(product.product_id);
-      const count = productCounts[index];
-      return {
-        ...product,
-        count: count
-      };
-    });
-
-    response = result;
+    return result as Product[];
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    return [];
   }
-
-  return response as Product[];
 };
 
 export const deleteCart = async (productId: string) => {

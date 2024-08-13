@@ -4,7 +4,6 @@ import {
   deleteSelectCart
 } from '@/app/(providers)/(root)/cart/actions';
 import { createClient } from '@/supabase/supabaseClient';
-import { revalidatePath } from 'next/cache';
 import { create } from 'zustand';
 
 interface QuantityState {
@@ -98,19 +97,24 @@ export const useCartStore = create<CartState>((set) => ({
         .eq('cart_product_id', productId)
         .eq('cart_user_id', userId);
 
-      set((state) => ({
-        cart: {
+      set((state) => {
+        const updatedCart = {
           ...state.cart,
           [productId]: { ...state.cart[productId], isChecked }
-        }
-      }));
+        };
+        const allChecked = Object.values(updatedCart).every((item) => item.isChecked);
+
+        return {
+          cart: updatedCart,
+          selectAll: allChecked
+        };
+      });
     } catch (error) {
       console.error('Failed to update item in cart', error);
     }
   },
   toggleSelectAll: async (userId: string, productIds: string[], isChecked: boolean) => {
     try {
-      await allToggleCheckbox(userId, productIds, isChecked);
       set((state) => ({
         cart: Object.keys(state.cart).reduce(
           (acc, productId) => {
@@ -121,6 +125,7 @@ export const useCartStore = create<CartState>((set) => ({
         ),
         selectAll: isChecked
       }));
+      await allToggleCheckbox(userId, productIds, isChecked);
     } catch (error) {
       console.error('Failed to toggle select all', error);
     }

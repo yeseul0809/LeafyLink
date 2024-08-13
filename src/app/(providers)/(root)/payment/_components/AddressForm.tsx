@@ -174,7 +174,7 @@ export default function UserEditForm({
             type="text"
             id="sample3_postcode"
             placeholder="우편번호"
-            className="border p-3 mb-3 rounded w-[150px]"
+            className="border p-3 mb-3 rounded w-[140px]"
             value={postcode}
             readOnly
           />

@@ -17,7 +17,6 @@ async function Recommend() {
   const recommendProduct = myPrd as Product[]; // type 임시방편
 
   const recommendedData = setRecommendPlant(recommendProduct);
-  // console.log('recommendedData::', recommendedData);
 
   const { business_name } = await getSellerName(recommendedData?.product_seller_id!);
 
