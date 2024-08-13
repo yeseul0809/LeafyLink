@@ -14,8 +14,8 @@ function AuthCallback() {
         // 구매자
         user_id: user.id,
         user_name: user.user_metadata.full_name,
-        avatar_url: user.user_metadata.avatar_url,
-        email: user.email,
+        avatar_url: user.user_metadata.avatar_url || '',
+        email: user.email || '',
         phone: '',
         address: '',
         created_at: user.created_at

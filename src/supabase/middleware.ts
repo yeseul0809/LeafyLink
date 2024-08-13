@@ -32,31 +32,31 @@ export async function updateSession(request: NextRequest) {
     }
   );
 
-  const {
-    data: { user }
-  } = await supabase.auth.getUser();
+  // const {
+  //   data: { user }
+  // } = await supabase.auth.getUser();
 
-  const exactMatchUrls: Routes = {
-    '/': true,
-    '/login': true,
-    '/auth/callback': true,
-    '/login/needlogin': true
-  };
+  // const exactMatchUrls: Routes = {
+  //   '/': true,
+  //   '/login': true,
+  //   '/auth/callback': true,
+  //   '/login/needlogin': true
+  // };
 
-  const prefixMatchUrls: Routes = {
-    '/products': true,
-    '/search': true,
-    '/livestreaming': true
-  };
+  // const prefixMatchUrls: Routes = {
+  //   '/products': true,
+  //   '/search': true,
+  //   '/livestreaming': true
+  // };
 
-  const isExactMatchPage = exactMatchUrls[request.nextUrl.pathname] || false;
-  const isPrefixMatchPage = Object.keys(prefixMatchUrls).some((path) =>
-    request.nextUrl.pathname.startsWith(path)
-  );
+  // const isExactMatchPage = exactMatchUrls[request.nextUrl.pathname] || false;
+  // const isPrefixMatchPage = Object.keys(prefixMatchUrls).some((path) =>
+  //   request.nextUrl.pathname.startsWith(path)
+  // );
 
-  if (!user && !(isExactMatchPage || isPrefixMatchPage)) {
-    return NextResponse.redirect(new URL('/login/needlogin', request.url));
-  }
+  // if (!user && !(isExactMatchPage || isPrefixMatchPage)) {
+  //   return NextResponse.redirect(new URL('/login/needlogin', request.url));
+  // }
 
   return supabaseResponse;
 }

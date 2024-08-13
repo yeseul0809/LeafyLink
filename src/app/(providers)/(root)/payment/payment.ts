@@ -39,6 +39,7 @@ interface ProductData {
     title: string;
     thumbnail_url: string;
     product_id: string;
+    business_name: string;
   }[];
   totalCost: number;
   cart: boolean;
@@ -50,6 +51,7 @@ export interface TransformedProduct {
   title: string;
   thumbnail_url: string;
   product_id: string;
+  business_name: string;
 }
 
 function transformProductData(productData: ProductData): TransformedProduct[] {
@@ -58,7 +60,8 @@ function transformProductData(productData: ProductData): TransformedProduct[] {
     quantity: product.quantity,
     title: product.title,
     thumbnail_url: product.thumbnail_url,
-    product_id: product.product_id
+    product_id: product.product_id,
+    business_name: product.business_name
   }));
 }
 

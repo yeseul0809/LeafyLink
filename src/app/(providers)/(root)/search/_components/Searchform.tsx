@@ -15,6 +15,7 @@ export default function Searchform({
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
     const formData = new FormData(event.currentTarget);
     const keyword = formData.get('keyword') as string;
     if (keyword === '') {
