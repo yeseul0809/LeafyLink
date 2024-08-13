@@ -1,6 +1,7 @@
 import { createClient } from '@/supabase/supabaseServer';
 import Pagination from '../_components/Pagination';
 import { redirect } from 'next/navigation';
+import BuyerOrderListMobile from '../_components/BuyerOrderListMobil';
 
 interface Product {
   title: string;
@@ -103,10 +104,10 @@ export default async function BuyerOrderListPage({ searchParams }: ProductPagePr
   };
 
   return (
-    <>
-      <section className="max-w-screen-xl mx-auto my-20">
-        <ul className="flex items-start bg-secondary-yellow-100 border-b border-Line/Light text-font/main xs:hidden">
-          <li className="flex w-[15%] h-[56px] p-[16px] justify-center items-center gap-[10px]  ">
+    <section className="max-w-screen-xl mx-auto">
+      <div className="hidden md:block my-20">
+        <ul className="flex items-start bg-secondary-yellow-100 border-b border-Line/Light text-font/main">
+          <li className="flex w-[15%] h-[56px] p-[16px] justify-center items-center gap-[10px]">
             <label className="text-center text-font/main text-16-n-24-40">주문 번호</label>
           </li>
           <li className="flex p-[16px] justify-center items-center gap-[10px] flex-1">
@@ -114,15 +115,15 @@ export default async function BuyerOrderListPage({ searchParams }: ProductPagePr
               상품명
             </label>
           </li>
-          <li className="flex w-[11%] h-[56px] p-[16px] justify-center items-center gap-[10px] ">
+          <li className="flex w-[11%] h-[56px] p-[16px] justify-center items-center gap-[10px]">
             <label className="text-center text-font/main text-16-n-24-40">주문 날짜</label>
           </li>
-          <li className="flex w-[11%] h-[56px] p-[16px] justify-center items-center gap-[10px] ">
+          <li className="flex w-[11%] h-[56px] p-[16px] justify-center items-center gap-[10px]">
             <label className="text-center text-font/main text-16-n-24-40">결제 금액</label>
           </li>
         </ul>
 
-        <div>
+        <div className="">
           {Array.isArray(ordersWithProducts) && ordersWithProducts.length > 0 ? (
             ordersWithProducts.map((order) => (
               <ul
@@ -134,7 +135,7 @@ export default async function BuyerOrderListPage({ searchParams }: ProductPagePr
                     {order.order_id}
                   </label>
                 </li>
-                <li className="flex p-[22px_16px] items-center gap-[10px] flex-1 overflow-hidden whitespace-nowrap text-ellipsis text text-center">
+                <li className="flex p-[22px_16px] items-center gap-[10px] flex-1 overflow-hidden whitespace-nowrap text-ellipsis text-center">
                   <label className="flex-1 overflow-hidden whitespace-nowrap text-ellipsis text-16-n-24-40 text-left">
                     {order.Product?.title || '제품 없음'}
                   </label>
@@ -164,7 +165,22 @@ export default async function BuyerOrderListPage({ searchParams }: ProductPagePr
           pageCount={10}
           itemCountPerPage={itemsPerPage}
         />
-      </section>
-    </>
+      </div>
+
+      {/* 모바일 환경에서만 보이는 콘텐츠 */}
+      <div className="block md:hidden">
+        <BuyerOrderListMobile
+          orders={ordersWithProducts}
+          formatDate={formatDate}
+          formatCurrency={formatCurrency}
+        />
+        <Pagination
+          totalItems={totalOrders || 0}
+          currentPage={currentPage}
+          pageCount={5}
+          itemCountPerPage={itemsPerPage}
+        />
+      </div>
+    </section>
   );
 }

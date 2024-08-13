@@ -13,3 +13,9 @@ export type Product = {
 export interface ProductProps extends Product {
   thumbnail?: File | null;
 }
+
+export interface ProductWithDetails extends Product {
+  totalQuantity: number;
+  reviewCount: number;
+  business_name: string;
+}

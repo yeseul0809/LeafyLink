@@ -40,7 +40,6 @@ function HeaderMenuDropdown() {
             <a href="/productsList/goods">원예용품</a>
           </li>
         </ul>
-        {/* xl:ml-[343px] lg:ml-[300px]  md:ml-[150px] sm:ml-[100px] */}
         <div className="w-[273px] flex justify-between text-left">
           <div className="h-[110px] border-l"></div>
           <ul className="w-[112px]">
