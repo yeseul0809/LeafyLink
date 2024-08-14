@@ -13,13 +13,16 @@ const ProductCard = ({ product }: { product: ProductWithBusinessName }) => {
   const { initializeCart } = useCartStore((state) => ({
     initializeCart: state.initializeCart
   }));
+
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat('en-US').format(price);
   };
+
   const router = useRouter();
+
   const getUserData = async () => {
     const supabase = createClient();
-    const { data, error } = await supabase.auth.getUser();
+    const { data } = await supabase.auth.getUser();
     return data;
   };
 
@@ -37,8 +40,8 @@ const ProductCard = ({ product }: { product: ProductWithBusinessName }) => {
       cart_user_id: user.id,
       is_checked: false
     };
-    const result = await createCartItem(cartItemData, user.id, initializeCart);
 
+    const result = await createCartItem(cartItemData, user.id, initializeCart);
     if (result) {
       showSwal('장바구니에 상품이 정상적으로 담겼습니다.');
     }
@@ -52,17 +55,18 @@ const ProductCard = ({ product }: { product: ProductWithBusinessName }) => {
   const handleBuyNow = () => {
     router.push(`/payment?productId=${product.product_id}&quantity=1`);
   };
+
   function handleBuyNowClick(event: React.MouseEvent) {
     event.stopPropagation();
     handleBuyNow();
   }
 
   return (
-    <div className="flex flex-col w-full max-w-xs  rounded-lg overflow-hidden">
-      <div className="relative group cursor-pointer w-full max-w-xs">
+    <div className="flex flex-col w-full max-w-xs rounded-lg overflow-hidden">
+      <div className="relative group cursor-pointer w-full">
         <Link href={`/products/${product.product_id}`} className="block">
           <div className="relative block w-full h-full">
-            <div className="relative overflow-hidden w-full  rounded-[20px] h-[165px] md:h-[172px] lg:h-[295px]">
+            <div className="relative overflow-hidden w-full rounded-[20px] h-[165px] md:h-[172px] lg:h-[295px]">
               <Image
                 src={product.thumbnail_url}
                 alt="상세상품"
@@ -74,8 +78,8 @@ const ProductCard = ({ product }: { product: ProductWithBusinessName }) => {
           </div>
         </Link>
         <div
-          className="absolute inset-0 flex justify-center items-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 hover:backdrop-blur-sm hover:opacity-100"
-          onClick={() => redirect(`/products/${product.product_id}`)}
+          className="absolute inset-0 flex justify-center items-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 hover:backdrop-blur-sm"
+          onClick={() => router.push(`/products/${product.product_id}`)}
         >
           <div className="flex gap-2">
             <button
