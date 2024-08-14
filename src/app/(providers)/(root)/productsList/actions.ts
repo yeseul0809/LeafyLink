@@ -1,50 +1,23 @@
 'use server';
 
 import { createClient } from '@/supabase/supabaseServer';
+import { GoodsDataResponse } from '@/types/product';
+import { ProductWithBusinessName } from '../(home)/actions';
 
-export const getSeedData = async () => {
-  const supabase = createClient();
-  const { data: Product, error } = await supabase
-    .from('Product')
-    .select('*')
-    .eq('category', '씨앗');
-  return Product;
-};
+export const getDataByCategory = async (
+  category: string,
+  limit: number,
+  offset: number
+): Promise<GoodsDataResponse & { Product: ProductWithBusinessName[] }> => {
+  const productData = await getCategoryData(category);
+  const totalCount = productData.length;
 
-export const getSeedlingData = async () => {
-  const supabase = createClient();
-  const { data: Product, error } = await supabase
-    .from('Product')
-    .select('*')
-    .eq('category', '모종');
-  return Product;
-};
+  const paginatedData = productData.slice(offset, offset + limit);
 
-export const getKitData = async () => {
-  const supabase = createClient();
-  const { data: Product, error } = await supabase
-    .from('Product')
-    .select('*')
-    .eq('category', '재배키트');
-  return Product;
-};
-
-export const getSoilData = async () => {
-  const supabase = createClient();
-  const { data: Product, error } = await supabase
-    .from('Product')
-    .select('*')
-    .eq('category', '흙,비료');
-  return Product;
-};
-
-export const getGoodsData = async () => {
-  const supabase = createClient();
-  const { data: Product, error } = await supabase
-    .from('Product')
-    .select('*')
-    .eq('category', '원예용품');
-  return Product;
+  return {
+    Product: paginatedData,
+    totalCount: totalCount
+  };
 };
 
 export const getCategoryData = async (category: string) => {

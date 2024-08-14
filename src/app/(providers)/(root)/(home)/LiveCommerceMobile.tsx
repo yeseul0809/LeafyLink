@@ -46,7 +46,7 @@ function LiveCommerceMobile({ category }: { category: string }) {
           spaceBetween={270}
           slidesPerView={1}
           autoplay={{
-            delay: 3000,
+            delay: 2000,
             disableOnInteraction: false
           }}
           virtual

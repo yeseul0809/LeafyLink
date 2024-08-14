@@ -19,3 +19,7 @@ export interface ProductWithDetails extends Product {
   reviewCount: number;
   business_name: string;
 }
+export interface GoodsDataResponse {
+  Product: Product[] | null;
+  totalCount: number | null;
+}

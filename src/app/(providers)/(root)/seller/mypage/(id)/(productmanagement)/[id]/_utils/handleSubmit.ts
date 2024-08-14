@@ -5,11 +5,11 @@ import useUser from '@/hooks/useUser';
 
 interface handleSubmitProps {
   state: ProductProps;
-  sellerId: string;
+  id: string;
 }
 const supabase = createClient();
 
-async function handleSubmit({ state, sellerId }: handleSubmitProps) {
+async function handleSubmit({ state, id }: handleSubmitProps) {
   let thumbnail_url = '';
 
   if (state.thumbnail) {
@@ -28,7 +28,7 @@ async function handleSubmit({ state, sellerId }: handleSubmitProps) {
 
   const { error } = await supabase.from('Product').insert([
     {
-      product_seller_id: sellerId,
+      product_seller_id: id,
       product_id: uuidv4(),
       category: state.category,
       title: state.title,

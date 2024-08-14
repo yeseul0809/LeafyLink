@@ -8,7 +8,11 @@ import Image from 'next/image';
 import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 
-function HeaderMobileDropdown({ setIsOpenMobileMenu }) {
+function HeaderMobileDropdown({
+  setIsOpenMobileMenu
+}: {
+  setIsOpenMobileMenu: (value: boolean) => void;
+}) {
   const queryClient = useQueryClient();
   const dropdownRef = useRef<HTMLDivElement>(null);
   const { isLogin, setLogout } = useAuthStore();
@@ -83,7 +87,7 @@ function HeaderMobileDropdown({ setIsOpenMobileMenu }) {
           <li className="pb-5 bold">
             <button
               onClick={() => {
-                redirect('/productsList/seed');
+                redirect('/productsList/씨앗');
               }}
             >
               씨앗
@@ -92,7 +96,7 @@ function HeaderMobileDropdown({ setIsOpenMobileMenu }) {
           <li className="pb-5 bold">
             <button
               onClick={() => {
-                redirect('/productsList/seedling');
+                redirect('/productsList/모종');
               }}
             >
               모종
@@ -101,7 +105,7 @@ function HeaderMobileDropdown({ setIsOpenMobileMenu }) {
           <li className="pb-5 bold">
             <button
               onClick={() => {
-                redirect('/productsList/kit');
+                redirect('/productsList/재배키트');
               }}
             >
               재배키트
@@ -110,7 +114,7 @@ function HeaderMobileDropdown({ setIsOpenMobileMenu }) {
           <li className="pb-5 bold">
             <button
               onClick={() => {
-                redirect('/productsList/soil');
+                redirect('/productsList/흙,비료');
               }}
             >
               흙/비료
@@ -119,7 +123,7 @@ function HeaderMobileDropdown({ setIsOpenMobileMenu }) {
           <li>
             <button
               onClick={() => {
-                redirect('/productsList/goods');
+                redirect('/productsList/원예용품');
               }}
             >
               원예용품

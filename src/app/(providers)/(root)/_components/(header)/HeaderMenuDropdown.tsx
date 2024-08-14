@@ -25,19 +25,49 @@ function HeaderMenuDropdown() {
       >
         <ul className="flex w-[624px] justify-between">
           <li className="">
-            <a href="/productsList/seed">씨앗</a>
+            <button
+              onClick={() => {
+                redirect('/productsList/씨앗');
+              }}
+            >
+              씨앗
+            </button>
           </li>
           <li>
-            <a href="/productsList/seedling">모종</a>
+            <button
+              onClick={() => {
+                redirect('/productsList/모종');
+              }}
+            >
+              모종
+            </button>
           </li>
           <li>
-            <a href="/productsList/kit">재배키트</a>
+            <button
+              onClick={() => {
+                redirect('/productsList/재배키트');
+              }}
+            >
+              재배키트
+            </button>
           </li>
           <li>
-            <a href="/productsList/soil">흙/비료</a>
+            <button
+              onClick={() => {
+                redirect('/productsList/흙,비료');
+              }}
+            >
+              흙/비료
+            </button>
           </li>
           <li>
-            <a href="/productsList/goods">원예용품</a>
+            <button
+              onClick={() => {
+                redirect('/productsList/원예용품');
+              }}
+            >
+              원예용품
+            </button>
           </li>
         </ul>
         <div className="w-[273px] flex justify-between text-left">

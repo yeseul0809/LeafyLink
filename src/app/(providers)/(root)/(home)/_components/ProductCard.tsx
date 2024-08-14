@@ -8,10 +8,11 @@ import { createClient } from '@/supabase/supabaseClient';
 import Image from 'next/image';
 import { ProductWithBusinessName } from '../actions';
 import { useCartStore } from '@/stores';
+
 const ProductCard = ({ product }: { product: ProductWithBusinessName }) => {
   const { initializeCart } = useCartStore((state) => ({
     initializeCart: state.initializeCart
-  }));
+  })); // 여기
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat('en-US').format(price);
   };
@@ -48,7 +49,7 @@ const ProductCard = ({ product }: { product: ProductWithBusinessName }) => {
   };
   const handleProductDetail = () => {
     router.push(`/products/${product.product_id}`);
-  };
+  }; // 여기
   function handleBuyNowClick(event: React.MouseEvent) {
     event.stopPropagation();
     handleBuyNow();
