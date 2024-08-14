@@ -1,18 +1,19 @@
-import { getSeedlingData } from '../actions';
 import ProductsList from '../_components/ProductsList';
+import { getDataByCategory } from '../actions';
 
-async function Seedling() {
+async function GoodsPage() {
   const itemsPerPage = 3;
-  const { Product, totalCount } = await getSeedlingData(itemsPerPage, 0);
+  const category = '모종';
+  const { Product, totalCount } = await getDataByCategory(category, itemsPerPage, 0);
 
   return (
     <ProductsList
       initialData={Product || []}
       totalItems={totalCount || 0}
       itemsPerPage={itemsPerPage}
-      category="모종"
+      category={category}
     />
   );
 }
 
-export default Seedling;
+export default GoodsPage;

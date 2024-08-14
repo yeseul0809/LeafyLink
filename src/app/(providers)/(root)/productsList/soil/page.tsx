@@ -1,18 +1,19 @@
 import ProductsList from '../_components/ProductsList';
-import { getSoilData } from '../actions';
+import { getDataByCategory } from '../actions';
 
-async function Soil() {
+async function GoodsPage() {
   const itemsPerPage = 3;
-  const { Product, totalCount } = await getSoilData(itemsPerPage, 0);
+  const category = '흙,비료';
+  const { Product, totalCount } = await getDataByCategory(category, itemsPerPage, 0);
 
   return (
     <ProductsList
       initialData={Product || []}
       totalItems={totalCount || 0}
       itemsPerPage={itemsPerPage}
-      category="흙,비료"
+      category={category}
     />
   );
 }
 
-export default Soil;
+export default GoodsPage;

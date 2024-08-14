@@ -1,18 +1,19 @@
-import { getSeedData } from '../actions';
 import ProductsList from '../_components/ProductsList';
+import { getDataByCategory } from '../actions';
 
-async function Seed() {
+async function GoodsPage() {
   const itemsPerPage = 3;
-  const { Product, totalCount } = await getSeedData(itemsPerPage, 0);
+  const category = '씨앗';
+  const { Product, totalCount } = await getDataByCategory(category, itemsPerPage, 0);
 
   return (
     <ProductsList
       initialData={Product || []}
       totalItems={totalCount || 0}
       itemsPerPage={itemsPerPage}
-      category="씨앗"
+      category={category}
     />
   );
 }
 
-export default Seed;
+export default GoodsPage;

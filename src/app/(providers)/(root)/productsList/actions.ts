@@ -79,6 +79,22 @@ export const getGoodsData = async (
   };
 };
 
+export const getDataByCategory = async (
+  category: string,
+  limit: number,
+  offset: number
+): Promise<GoodsDataResponse & { Product: ProductWithBusinessName[] }> => {
+  const productData = await getCategoryData(category);
+  const totalCount = productData.length;
+
+  const paginatedData = productData.slice(offset, offset + limit);
+
+  return {
+    Product: paginatedData,
+    totalCount: totalCount
+  };
+};
+
 export const getCategoryData = async (category: string) => {
   const supabase = createClient();
   const { data: productData, error: productError } = await supabase
