@@ -45,7 +45,7 @@ export default function RecommendMobile({ recommendProps }: RecommendMobileProps
           <Image
             className="rounded-[20px] object-cover"
             src={thumbnail_url}
-            layout="fill" // Fill 레이아웃으로 변경
+            layout="fill"
             alt="추천식물"
           />
         </div>

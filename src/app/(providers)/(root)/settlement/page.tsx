@@ -3,6 +3,7 @@ import Image from 'next/image';
 import { TransformedProduct } from '../payment/payment';
 import { getUserData } from './actions';
 import RedirectButton from './_components/RedirectButton';
+import RedirectOrderButton from './_components/RedirectOrderButton';
 
 export default async function SettlementPage({ searchParams }: { searchParams: any }) {
   const productDatas: TransformedProduct[] = JSON.parse(
@@ -11,12 +12,14 @@ export default async function SettlementPage({ searchParams }: { searchParams: a
   const totalCost = productDatas.reduce((acc, item) => acc + item.price * item.quantity, 0);
   const userData = await getUserData();
 
+  // console.log('productDatas::', productDatas);
+
   return (
-    <div className="pt-[80px] pb-[180px] max-w-[610px] mx-auto xs:pt-[16px] xs:pb-[70px]">
+    <div className="pt-[80px] pb-[180px] max-w-[610px] mx-auto xs:pt-[16px] xs:pb-[70px] px-[20px]">
       <h1 className="text-[32px] font-semibold text-center mb-[32px] xs:mb-[24px]">주문 완료</h1>
       <div className="mb-[32px] xs:mb-[24px]">
         <p className="text-[20px] font-semibold mb-[12px] xs:mb-[8px]">{userData![0].user_name}</p>
-        <div className="flex items-center gap-[4px]">
+        <div className="flex items-center gap-[4px] xs_max:flex-col xs_max:items-start">
           <p className="text-[15px]">{userData![0].address}</p>
           <p className="text-[15px]">{userData![0].address_detail}</p>
         </div>
@@ -44,7 +47,8 @@ export default async function SettlementPage({ searchParams }: { searchParams: a
                   />
                 </div>
                 <div>
-                  <h1 className="text-[14px] font-semibold mb-[8px]">{data.title}</h1>
+                  <h1 className="text-[14px] font-semibold">{data.business_name}</h1>
+                  <h2 className="text-[14px] mb-[8px]">{data.title}</h2>
                   <p className="text-font/sub2 text-[14px]">{data.quantity}개</p>
                 </div>
               </div>
@@ -75,6 +79,9 @@ export default async function SettlementPage({ searchParams }: { searchParams: a
           </div>
         </div>
       </div>
+
+      <RedirectOrderButton />
+
       <RedirectButton />
     </div>
   );

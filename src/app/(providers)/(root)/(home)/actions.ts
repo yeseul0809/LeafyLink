@@ -38,23 +38,29 @@ export const getUserData = async () => {
 };
 export const getProducts = async (): Promise<ProductWithBusinessName[]> => {
   const supabase = createClient();
+
   const { data: productData, error: productError } = await supabase
     .from('Product')
     .select()
     .neq('stock', 0);
+
   if (productError) {
     console.error(productError);
     return [];
   }
+
   const sellerIds = Array.from(new Set(productData.map((product) => product.product_seller_id)));
+
   const { data: sellerData, error: sellerError } = await supabase
     .from('Seller')
     .select('seller_id, business_name')
     .in('seller_id', sellerIds);
+
   if (sellerError) {
     console.error(sellerError);
     return [];
   }
+
   const sellerMap = sellerData.reduce(
     (acc, seller) => {
       acc[seller.seller_id] = seller.business_name;
@@ -62,12 +68,15 @@ export const getProducts = async (): Promise<ProductWithBusinessName[]> => {
     },
     {} as Record<string, string>
   );
+
   const productsWithBusinessName = productData.map((product) => ({
     ...product,
     business_name: sellerMap[product.product_seller_id] || 'Unknown'
   }));
+
   return productsWithBusinessName;
 };
+
 export const getSellerName = async (sellerId: string) => {
   const supabase = createClient();
   const { data: seller, error } = await supabase
@@ -98,35 +107,44 @@ export const getRecommendPlant = async () => {
   if (productError) throw productError;
   return products;
 };
+
 // export const getGoodsproducts = async () => {
 //   const supabase = createClient();
 //   const { data: goodsProducts, error: productError } = await supabase
 //     .from('Product')
 //     .select('*')
 //     .eq('category', '원예용품');
+
 //   if (productError) throw productError;
 //   return goodsProducts;
 // };
+
 export const getGoodsproducts = async (): Promise<ProductWithBusinessName[]> => {
   const supabase = createClient();
+
   const { data: productData, error: productError } = await supabase
     .from('Product')
     .select()
     .neq('stock', 0)
     .eq('category', '원예용품');
+
   if (productError) {
     console.error(productError);
     return [];
   }
+
   const sellerIds = Array.from(new Set(productData.map((product) => product.product_seller_id)));
+
   const { data: sellerData, error: sellerError } = await supabase
     .from('Seller')
     .select('seller_id, business_name')
     .in('seller_id', sellerIds);
+
   if (sellerError) {
     console.error(sellerError);
     return [];
   }
+
   const sellerMap = sellerData.reduce(
     (acc, seller) => {
       acc[seller.seller_id] = seller.business_name;
@@ -134,12 +152,15 @@ export const getGoodsproducts = async (): Promise<ProductWithBusinessName[]> => 
     },
     {} as Record<string, string>
   );
+
   const productsWithBusinessName = productData.map((product) => ({
     ...product,
     business_name: sellerMap[product.product_seller_id] || 'Unknown'
   }));
+
   return productsWithBusinessName;
 };
+
 export const getBestSellerProducts = async (orderData: Order[]) => {
   const supabase = createClient();
   const { data: products, error: productsError } = await supabase
@@ -149,15 +170,19 @@ export const getBestSellerProducts = async (orderData: Order[]) => {
       `product_id.eq.${orderData[0].order_product_id}, product_id.eq.${orderData[1].order_product_id}, product_id.eq.${orderData[2].order_product_id}, product_id.eq.${orderData[3].order_product_id}`
     );
   if (productsError) throw productsError;
+
   const sellerIds = Array.from(new Set(products.map((product) => product.product_seller_id)));
+
   const { data: sellerData, error: sellerError } = await supabase
     .from('Seller')
     .select('seller_id, business_name')
     .in('seller_id', sellerIds);
+
   if (sellerError) {
     console.error(sellerError);
     return [];
   }
+
   const sellerMap = sellerData.reduce(
     (acc, seller) => {
       acc[seller.seller_id] = seller.business_name;
@@ -165,9 +190,11 @@ export const getBestSellerProducts = async (orderData: Order[]) => {
     },
     {} as Record<string, string>
   );
+
   const productsWithBusinessName = products.map((product) => ({
     ...product,
     business_name: sellerMap[product.product_seller_id] || 'Unknown'
   }));
+
   return productsWithBusinessName;
 };

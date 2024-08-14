@@ -1,37 +1,30 @@
 'use client';
-import React, { useEffect, useState } from 'react';
-import { Product } from '@/types/product';
+import React from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { redirect, useRouter } from 'next/navigation';
 import { createCartItem } from '../../products/[id]/_actions/cartActions';
-import useUser from '@/hooks/useUser';
-import { getSellerName } from '../actions';
 import showSwal from '@/utils/swal';
+import { createClient } from '@/supabase/supabaseClient';
 import Image from 'next/image';
+import { ProductWithBusinessName } from '../actions';
+import { useCartStore } from '@/stores';
 
-const ProductCard = ({ product }: { product: Product }) => {
+const ProductCard = ({ product }: { product: ProductWithBusinessName }) => {
+  const { initializeCart } = useCartStore((state) => ({
+    initializeCart: state.initializeCart
+  }));
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat('en-US').format(price);
   };
-
-  const [count, setCount] = useState(1);
-  const { user } = useUser();
   const router = useRouter();
-  const [businessName, setbusinessName] = useState('');
-
-  useEffect(() => {
-    const sellerName = async () => {
-      const business_name = await getSellerName(product.product_seller_id!);
-      setbusinessName(business_name.business_name);
-    };
-    sellerName();
-  }, []);
-
-  const redirect = (e: string) => {
-    router.push(`${e}`);
+  const getUserData = async () => {
+    const supabase = createClient();
+    const { data, error } = await supabase.auth.getUser();
+    return data;
   };
 
   const handleAddToCart = async () => {
+    const { user } = await getUserData();
     if (!user) {
       showSwal('로그인이 필요한 서비스입니다.<br>로그인 후 이용해주세요.');
       router.push(`/login`);
@@ -40,29 +33,28 @@ const ProductCard = ({ product }: { product: Product }) => {
 
     const cartItemData = {
       cart_product_id: product.product_id,
-      count: count,
+      count: 1,
       cart_user_id: user.id,
       is_checked: false
     };
-    const result = await createCartItem(cartItemData, user.id);
+    const result = await createCartItem(cartItemData, user.id, initializeCart);
 
     if (result) {
       showSwal('장바구니에 상품이 정상적으로 담겼습니다.');
     }
   };
 
-  const handleBuyNow = () => {
-    router.push(`/payment?productId=${product.product_id}&quantity=1`);
-  };
-
-  function handleBuyNowClick(event: React.MouseEvent) {
-    event.stopPropagation();
-    handleBuyNow();
-  }
-
   function handleAddCartClick(event: React.MouseEvent) {
     event.stopPropagation();
     handleAddToCart();
+  }
+
+  const handleBuyNow = () => {
+    router.push(`/payment?productId=${product.product_id}&quantity=1`);
+  };
+  function handleBuyNowClick(event: React.MouseEvent) {
+    event.stopPropagation();
+    handleBuyNow();
   }
 
   return (
@@ -98,7 +90,7 @@ const ProductCard = ({ product }: { product: Product }) => {
       </div>
       <div className="mt-[20px]">
         <p className="text-font/main text-12-sb-18-3 webkit-box md:text-14-sb-20-35">
-          {businessName}
+          {product.business_name}
         </p>
         <p className="text-font/sub1 text-13-n-18-325 webkit-box md:text-14-n-20-35 mb-[8px]">
           {product.title}

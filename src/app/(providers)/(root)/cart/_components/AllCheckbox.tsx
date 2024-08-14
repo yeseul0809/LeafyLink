@@ -6,23 +6,6 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { createClient } from '@/supabase/supabaseClient';
 import { useCartStore } from '@/stores';
 
-const getCartStatus = async (userId: string) => {
-  if (!userId) {
-    return [];
-  }
-
-  const supabase = createClient();
-  const { data, error } = await supabase
-    .from('Cart')
-    .select('is_checked')
-    .eq('cart_user_id', userId);
-
-  if (error) {
-    console.error(error);
-  }
-  return data || [];
-};
-
 export default function AllCheckbox({
   productIds,
   userId
@@ -30,10 +13,13 @@ export default function AllCheckbox({
   productIds: string[];
   userId: string;
 }) {
-  const [isChecked, setIsChecked] = useState(false);
-  const updateCartCheck = useCartStore((state) => state.toggleSelectAll);
+  const { selectAll, toggleSelectAll } = useCartStore((state) => ({
+    selectAll: state.selectAll,
+    toggleSelectAll: state.toggleSelectAll
+  }));
   const queryClient = useQueryClient();
 
+<<<<<<< HEAD
   const { data: cartStatus, isFetched: isCartFetched } = useQuery({
     queryKey: ['getCartStatus', userId],
     queryFn: () => getCartStatus(userId!),
@@ -51,10 +37,12 @@ export default function AllCheckbox({
     updateCartCheck(userId, isChecked);
   }, [userId, isChecked, updateCartCheck]);
 
+=======
+>>>>>>> e06f7b391bb0fa01d41271606c44b2a32ebac892
   const handleAllToggle = async () => {
-    const newCheckedStatus = !isChecked;
-    setIsChecked(newCheckedStatus);
+    const newCheckedStatus = !selectAll;
     if (userId) {
+<<<<<<< HEAD
       await allToggleCheckbox(userId, newCheckedStatus);
 
       await Promise.all(
@@ -62,6 +50,17 @@ export default function AllCheckbox({
           queryClient.invalidateQueries({ queryKey: ['getCartIschecked', productId] })
         )
       );
+=======
+      toggleSelectAll(userId, productIds, newCheckedStatus);
+
+      productIds.forEach((productId) => {
+        queryClient.setQueryData(['getCartIschecked', productId, userId], (oldData: any) => {
+          return { ...oldData, is_checked: newCheckedStatus };
+        });
+      });
+
+      queryClient.invalidateQueries({ queryKey: ['getCartStatus', userId] });
+>>>>>>> e06f7b391bb0fa01d41271606c44b2a32ebac892
     }
   };
 
@@ -71,7 +70,7 @@ export default function AllCheckbox({
         type="checkbox"
         id="allcheck"
         onChange={handleAllToggle}
-        checked={isChecked}
+        checked={selectAll}
         className="w-[18px] h-[18px] mr-2 green-checkbox"
       />
       <label htmlFor="allcheck" className="xs:text-[14px] xs:w-[20px] xs:h-[20px]">
