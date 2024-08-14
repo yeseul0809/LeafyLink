@@ -9,6 +9,7 @@ import { createClient } from '@/supabase/supabaseClient';
 import useChatrooms from './_hooks/useChatrooms';
 import { timeForToday } from './_utils/timeUtils';
 import { unreadCountStore } from '@/stores/unreadCountStore';
+import Skeleton from './_components/Skeleton';
 
 const supabase = createClient();
 
@@ -23,9 +24,11 @@ function ChatListPage() {
   const [latestMessages, setLatestMessages] = useState<{
     [key: string]: { payload: string; createdAt: string };
   }>({});
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchInfo = async () => {
+      setLoading(true);
       for (const chatroom of chatrooms) {
         const userInfo = await fetchUserInfo(chatroom.chatroom_user_id);
         const sellerInfo = await fetchSellerInfo(chatroom.chatroom_seller_id);
@@ -62,6 +65,7 @@ function ChatListPage() {
           }));
         }
       }
+      setLoading(false);
     };
 
     fetchInfo();
@@ -87,8 +91,18 @@ function ChatListPage() {
         상담톡
       </h1>
       <div className="flex justify-center w-full md:h-[800px] overflow-y-auto custom-scrollbar">
-        {chatrooms.length === 0 ? (
-          <p className="mt-20 xs:text-[14px] md:text-[15px]">채팅 상대가 아직 없습니다.</p>
+        {/* 스켈레톤 */}
+        {loading ? (
+          <ul className="flex w-full xs:w-[375px] md:w-[650px] flex-col items-center">
+            {[...Array(5)].map((_, index) => (
+              <li
+                key={index}
+                className="bg-white border-b cursor-pointer xs:h-[78px] md:h-[100px] w-full px-5 py-4 md:py-6"
+              >
+                <Skeleton />
+              </li>
+            ))}
+          </ul>
         ) : (
           <ul className="flex w-full xs:w-[375px] md:w-[650px] flex-col items-center">
             {sortedChatrooms.map((chatroom) => {
