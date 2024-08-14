@@ -14,6 +14,11 @@ export interface ProductProps extends Product {
   thumbnail?: File | null;
 }
 
+export interface ProductWithDetails extends Product {
+  totalQuantity: number;
+  reviewCount: number;
+  business_name: string;
+}
 export interface GoodsDataResponse {
   Product: Product[] | null;
   totalCount: number | null;

@@ -35,8 +35,10 @@ export default function ProductsList({
 
   return (
     <section className="mx-auto lg:mt-[80px] lg:mb-[180px]">
-      <h2 className="text-[32px] text-center lg:mb-[48px]">상품 목록</h2>
-      <div className="flex justify-between lg:mb-[24px]">
+      <h2 className="text-[32px] text-center lg:mb-[48px] max_md:text-[20px] max_md:mt-6 max_md:mb-4 font-semibold">
+        {category}
+      </h2>
+      <div className="flex justify-between lg:mb-[24px] max_md:mb-[22px]">
         <div>
           <p>전체 {totalItems}개</p>
         </div>
@@ -44,7 +46,7 @@ export default function ProductsList({
       <div className="grid grid-cols-4 gap-x-[20px] gap-y-[24px] m:grid-cols-3 s:grid-cols-2 justify-items-center">
         {productsData?.map((product) => <ProductCard product={product} key={product.product_id} />)}
       </div>
-      <div className="flex justify-center mt-10">
+      <div className="flex justify-center mt-10 max_md:mb-[70px]">
         {Array.from({ length: totalPages }).map((_, index) => (
           <button
             key={index}

@@ -8,11 +8,13 @@ export default async function CategoryPage({ params }: { params: { category: str
   const { Product, totalCount } = await getDataByCategory(category, itemsPerPage, 0);
 
   return (
-    <ProductsList
-      initialData={Product || []}
-      totalItems={totalCount || 0}
-      itemsPerPage={itemsPerPage}
-      category={category}
-    />
+    <section className="max_md:px-5">
+      <ProductsList
+        initialData={Product || []}
+        totalItems={totalCount || 0}
+        itemsPerPage={itemsPerPage}
+        category={category}
+      />
+    </section>
   );
 }
