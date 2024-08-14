@@ -5,7 +5,6 @@ import { getAllProduct } from '@/apis/product/products';
 
 async function NewProduct() {
   const newProductsData = await getProducts();
-
   const sortedProducts = newProductsData.sort(
     (a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
   );

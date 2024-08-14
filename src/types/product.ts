@@ -13,3 +13,8 @@ export type Product = {
 export interface ProductProps extends Product {
   thumbnail?: File | null;
 }
+
+export interface GoodsDataResponse {
+  Product: Product[] | null;
+  totalCount: number | null;
+}

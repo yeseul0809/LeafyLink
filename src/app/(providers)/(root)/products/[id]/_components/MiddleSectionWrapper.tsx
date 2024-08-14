@@ -5,6 +5,7 @@ import React, { useRef, useState } from 'react';
 import ProductDescription from './Description';
 import ActiveTab from './ActiveTab';
 import ReviewEdit from './ReviewEdit';
+import { Review } from '@/types/review';
 
 interface MiddleSectionWrapperProps {
   productDescription: string;
