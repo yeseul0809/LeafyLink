@@ -33,7 +33,7 @@ export const showSwalContinue = (title: string, router: AppRouterInstance) => {
     reverseButtons: true
   }).then((result) => {
     if (result.isConfirmed) {
-      router.push(`/cart`);
+      router.push('/cart?refresh=' + Date.now());
     }
   });
 };

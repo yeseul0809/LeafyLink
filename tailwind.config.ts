@@ -9,6 +9,11 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      spacing: {
+        'px-7': '7px',
+        'px-20': '20px',
+        'px-24': '24px'
+      },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))'
@@ -20,15 +25,18 @@ const config: Config = {
         max_lg: { max: '1024px' },
         max_md: { max: '768px' },
         max_sm: { max: '640px' },
+        xs_max: { max: '440px' },
+        xs_min: '375px',
+        xs: { max: '375px' },
         max_xs: { max: '440px' },
         xxs: '375px',
         xs_: '440px',
         sm: '640px',
         md: '768px',
         lg: '1024px',
-        xl: '1280px'
+        xl: '1280px',
         // m: { max: '1240px' },
-        // s: { max: '764px' },
+        s: { max: '764px' }
       },
       maxWidth: {
         'container-l': '1280px',
@@ -36,6 +44,7 @@ const config: Config = {
         'container-m': '744px',
         'container-s': '375px'
       },
+
       colors: {
         'primary-green-50': '#f7fdfa',
         'primary-green-100': '#d1f0df',
@@ -84,7 +93,8 @@ const config: Config = {
         '16px': '16px',
         '15px': '15px',
         '14px': '14px',
-        '13px': '13px'
+        '13px': '13px',
+        '12px': '12px'
       },
       lineHeight: {
         '42px': '42px',
@@ -102,7 +112,8 @@ const config: Config = {
         '-0.45px': '-0.45px',
         '-0.375px': '-0.375px',
         '-0.35px': '-0.35px',
-        '-0.325px': '-0.325px'
+        '-0.325px': '-0.325px',
+        '-0.3px': '-0.3px'
       },
       flex: {
         '1-0-0': '1 0 0'
@@ -120,6 +131,20 @@ const config: Config = {
           fontStyle: 'normal',
           lineHeight: '42px',
           letterSpacing: '-0.8px'
+        },
+        '.text-32-n-42-80': {
+          fontSize: '32px',
+          fontWeight: '400',
+          fontStyle: 'normal',
+          lineHeight: '42px',
+          letterSpacing: '-0.8px'
+        },
+        '.text-20-n-28-50': {
+          fontSize: '20px',
+          fontWeight: '400',
+          fontStyle: 'normal',
+          lineHeight: '28px',
+          letterSpacing: '-0.5px'
         },
         '.text-20-sb-28-50': {
           fontSize: '20px',
@@ -145,6 +170,13 @@ const config: Config = {
         '.text-16-n-24-40': {
           fontSize: '16px',
           fontWeight: '400',
+          fontStyle: 'normal',
+          lineHeight: '24px',
+          letterSpacing: '-0.4px'
+        },
+        '.text-16-sb-24-40': {
+          fontSize: '16px',
+          fontWeight: '600',
           fontStyle: 'normal',
           lineHeight: '24px',
           letterSpacing: '-0.4px'
@@ -176,6 +208,20 @@ const config: Config = {
           fontStyle: 'normal',
           lineHeight: '18px',
           letterSpacing: '-0.325px'
+        },
+        '.text-13-sb-18-325': {
+          fontSize: '13px',
+          fontWeight: '600',
+          fontStyle: 'normal',
+          lineHeight: '18px',
+          letterSpacing: '-0.325px'
+        },
+        '.text-12-sb-18-3': {
+          fontSize: '12px',
+          fontWeight: '600',
+          fontStyle: 'normal',
+          lineHeight: '18px',
+          letterSpacing: '-0.3px'
         },
         '.webkit-box': {
           display: '-webkit-box',

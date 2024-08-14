@@ -15,6 +15,7 @@ export default function Searchform({
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
     const formData = new FormData(event.currentTarget);
     const keyword = formData.get('keyword') as string;
     if (keyword === '') {
@@ -35,13 +36,15 @@ export default function Searchform({
           defaultValue={defaultKeword}
           className="pr-[20px] py-[16px] pl-[46px] text-font/sub2 border border-Line/Regular rounded-[100px] w-[820px] text-[16px] max_md:w-[337px]"
         />
-        <Image
-          src="/icons/reading-glasses.png"
-          alt="돋보기"
-          width={20}
-          height={20}
-          className="absolute top-5 left-[20px]"
-        />
+        <button>
+          <Image
+            src="/icons/reading-glasses.png"
+            alt="돋보기"
+            width={20}
+            height={20}
+            className="absolute top-5 left-[20px]"
+          />
+        </button>
       </div>
     </form>
   );

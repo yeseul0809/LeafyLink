@@ -10,16 +10,14 @@ const ProvidersLayout = ({ children }: PropsWithChildren) => {
   return (
     <QueryProvider>
       <div className="w-full mx-auto">
-        <Weather />
+        {/* <Weather /> */}
         <Header />
         <div className="max-w-[1280px] w-full lg:px-[20px] :px-0 mx-auto">{children}</div>
-        <TopButton />
+        {/* <TopButton /> */}
         <div className="max_xs:hidden max_sm:block max_md:block max_lg:block mx-auto">
-          <Footer />
+          {/* <Footer /> */}
         </div>
-        <div className=" block xs_:hidden">
-          <FooterMobile />
-        </div>
+        <div className=" block xs_:hidden">{/* <FooterMobile /> */}</div>
       </div>
     </QueryProvider>
   );

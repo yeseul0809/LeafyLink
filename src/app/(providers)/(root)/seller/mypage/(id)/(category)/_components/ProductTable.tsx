@@ -5,6 +5,8 @@ import { createClient } from '@/supabase/supabaseClient';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useState, useEffect } from 'react';
+import ProductTableMobli from './ProductTableMobli';
+import { David_Libre } from 'next/font/google';
 
 type Product = {
   category: string;
@@ -104,13 +106,6 @@ export default function ProductTable({ sellerId }: ProductTableProps) {
     }
   }, [searchParams, sellerId, itemsPerPage, categoryFilter, isSellerValid]);
 
-  // const handleCategoryChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-  //   const selectedCategory = event.target.value;
-  //   setCategoryFilter(selectedCategory);
-  //   setCurrentPage(1);
-  //   router.push(`?page=1`);
-  // };
-
   const handleMoveEditPage = (id: string) => {
     router.push(`/seller/mypage/${id}/edit`);
   };
@@ -140,91 +135,111 @@ export default function ProductTable({ sellerId }: ProductTableProps) {
   }
 
   return (
-    <section className="max-w-[1280px] mx-auto mb-20">
-      <div className="flex justify-end mt-[28px] ">
-        <Link
-          href={`/seller/mypage/${sellerId}/register`}
-          className="px-[12px] py-[9px] bg-primary-green-500 rounded text-white text-[13px] font-normal leading-[18px] tracking-[-0.325px] transition-colors duration-300 hover:bg-primary-green-700 hover:text-white"
-        >
-          상품 등록
-        </Link>
-      </div>
-      <div className="mt-[16px]">
-        {products.length > 0 ? (
-          <>
-            <div className="flex items-start bg-secondary-yellow-100">
-              <div className="w-[178px] h-[56px] p-[16px] flex justify-center items-center">
-                카테고리
+    <>
+      <section className="max-w-[1280px]  mx-auto mb-20 hidden md:block ">
+        <div className="flex justify-end mt-[28px] ">
+          <Link
+            href={`/seller/mypage/${sellerId}/register`}
+            className="px-[12px] py-[9px] bg-primary-green-500 rounded text-white text-[13px] font-normal leading-[18px] tracking-[-0.325px] transition-colors duration-300 hover:bg-primary-green-700 hover:text-white"
+          >
+            상품 등록
+          </Link>
+        </div>
+        <div className="mt-[16px]">
+          {products.length > 0 ? (
+            <>
+              <div className="flex items-start bg-secondary-yellow-100">
+                <div className="w-[178px] h-[56px] p-[16px] flex justify-center items-center">
+                  카테고리
+                </div>
+                <div className="flex-1 px-[20px] py-[16px] flex justify-center items-center truncate ">
+                  상품명
+                </div>
+                <div className="w-[130px] h-[56px] p-[16px] flex justify-center items-center ">
+                  가격
+                </div>
+                <div className="w-[130px] h-[56px] p-[16px] flex justify-center items-center ">
+                  수량
+                </div>
+                <div className="w-[130px] h-[56px] p-[16px] flex justify-center items-center ">
+                  상태
+                </div>
+                <div className="w-[130px] h-[56px] p-[16px] flex justify-center items-center ">
+                  수정
+                </div>
               </div>
-              <div className="flex-1 px-[20px] py-[16px] flex justify-center items-center truncate ">
-                상품명
-              </div>
-              <div className="w-[130px] h-[56px] p-[16px] flex justify-center items-center ">
-                가격
-              </div>
-              <div className="w-[130px] h-[56px] p-[16px] flex justify-center items-center ">
-                수량
-              </div>
-              <div className="w-[130px] h-[56px] p-[16px] flex justify-center items-center ">
-                상태
-              </div>
-              <div className="w-[130px] h-[56px] p-[16px] flex justify-center items-center ">
-                수정
-              </div>
-            </div>
 
-            {products.map((product) => (
-              <div
-                key={product.product_id}
-                className="flex items-start self-stretch border-b border-Line/Light"
-              >
-                <div className="flex w-[178px] h-[64px] p-[22px_16px] justify-center items-center gap-2.5 text-[14px] font-normal leading-[20px] tracking-[-0.35px] text-font/sub2">
-                  {product.category}
-                </div>
+              {products.map((product) => (
+                <div
+                  key={product.product_id}
+                  className="flex items-start self-stretch border-b border-Line/Light"
+                >
+                  <div className="flex w-[178px] h-[64px] p-[22px_16px] justify-center items-center gap-2.5 text-[14px] font-normal leading-[20px] tracking-[-0.35px] text-font/sub2">
+                    {product.category}
+                  </div>
 
-                <div className="flex p-[22px_16px] items-center gap-2.5 flex-1 text-[14px] font-normal leading-[20px] tracking-[-0.35px] text-font/main overflow-hidden whitespace-nowrap flex p-[22px_16px] items-center gap-2.5 flex-1 text-[14px] font-normal leading-[20px] tracking-[-0.35px] text-font/main truncate webkit-box ">
-                  {product.title}
-                </div>
+                  <div className="flex p-[22px_16px] items-center gap-2.5 flex-1 text-[14px] font-normal leading-[20px] tracking-[-0.35px] text-font/main overflow-hidden whitespace-nowrap flex p-[22px_16px] items-center gap-2.5 flex-1 text-[14px] font-normal leading-[20px] tracking-[-0.35px] text-font/main truncate webkit-box ">
+                    {product.title}
+                  </div>
 
-                <div className="flex w-[130px] h-[64px] p-[22px_16px] justify-center items-center gap-2.5 text-[14px] font-normal leading-[20px] tracking-[-0.35px] text-font/sub2 overflow-hidden whitespace-nowrap text-ellipsis">
-                  {formatCurrency(product.price ?? 0)}원
-                </div>
-                <div className="flex w-[130px] h-[64px] p-[22px_16px] justify-center items-center gap-2.5 text-[14px] font-normal leading-[20px] tracking-[-0.35px] text-font/sub2">
-                  {product.stock ?? 0}
-                </div>
-                <div className="flex w-[130px] h-[64px] p-[22px_16px] justify-center items-center gap-2.5 text-[14px] font-normal leading-[20px] tracking-[-0.35px]">
-                  <span
-                    className={
-                      product.stock === 0 ? 'text-font/Disabled' : 'text-primary-green-500'
-                    }
-                  >
-                    {product.stock === 0 ? '품절' : '판매중'}
-                  </span>
-                </div>
-                <div className="flex w-[130px] h-[64px] p-[22px_16px] justify-center items-center gap-2.5">
-                  <button
-                    onClick={() => handleMoveEditPage(product.product_id)}
-                    className="px-[12px] py-[9px] border border-primary-green-500 bg-white rounded text-primary-green-500 text-[13px] font-normal leading-[18px] tracking-[-0.325px]
+                  <div className="flex w-[130px] h-[64px] p-[22px_16px] justify-center items-center gap-2.5 text-[14px] font-normal leading-[20px] tracking-[-0.35px] text-font/sub2 overflow-hidden whitespace-nowrap text-ellipsis">
+                    {formatCurrency(product.price ?? 0)}원
+                  </div>
+                  <div className="flex w-[130px] h-[64px] p-[22px_16px] justify-center items-center gap-2.5 text-[14px] font-normal leading-[20px] tracking-[-0.35px] text-font/sub2">
+                    {product.stock ?? 0}
+                  </div>
+                  <div className="flex w-[130px] h-[64px] p-[22px_16px] justify-center items-center gap-2.5 text-[14px] font-normal leading-[20px] tracking-[-0.35px]">
+                    <span
+                      className={
+                        product.stock === 0 ? 'text-font/Disabled' : 'text-primary-green-500'
+                      }
+                    >
+                      {product.stock === 0 ? '품절' : '판매중'}
+                    </span>
+                  </div>
+                  <div className="flex w-[130px] h-[64px] p-[22px_16px] justify-center items-center gap-2.5">
+                    <button
+                      onClick={() => handleMoveEditPage(product.product_id)}
+                      className="px-[12px] py-[9px] border border-primary-green-500 bg-white rounded text-primary-green-500 text-[13px] font-normal leading-[18px] tracking-[-0.325px]
                     transition-colors duration-300 hover:bg-primary-green-50 hover:text-primary-green-500"
-                  >
-                    상품 수정
-                  </button>
+                    >
+                      상품 수정
+                    </button>
+                  </div>
                 </div>
-              </div>
-            ))}
-          </>
-        ) : (
-          <div className=" overflow-hidden text-ellipsis text-font/main text-15-n-22-375 mt-[16px] text-center">
-            판매중인 제품이 없습니다.
-          </div>
-        )}
+              ))}
+            </>
+          ) : (
+            <div className=" overflow-hidden text-ellipsis text-font/main text-15-n-22-375 mt-[16px] text-center">
+              판매중인 제품이 없습니다.
+            </div>
+          )}
+        </div>
+
+        <Pagination
+          totalItems={totalProducts}
+          currentPage={currentPage}
+          pageCount={10}
+          itemCountPerPage={itemsPerPage}
+        />
+      </section>
+      {/* 모바일 환경 */}
+
+      <div className="block md:hidden  px-[20px]">
+        {products.map((product) => (
+          <ProductTableMobli
+            key={product.product_id}
+            product={product}
+            formatCurrency={formatCurrency}
+          />
+        ))}
+        <Pagination
+          totalItems={totalProducts}
+          currentPage={currentPage}
+          pageCount={5}
+          itemCountPerPage={itemsPerPage}
+        />
       </div>
-      <Pagination
-        totalItems={totalProducts}
-        currentPage={currentPage}
-        pageCount={10}
-        itemCountPerPage={itemsPerPage}
-      />
-    </section>
+    </>
   );
 }

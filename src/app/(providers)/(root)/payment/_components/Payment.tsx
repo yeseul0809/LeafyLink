@@ -26,6 +26,7 @@ export interface CombinedProductData {
   description: string;
   created_at: string;
   updated_at: string;
+  business_name: string;
 }
 
 export interface ProductInfo {
@@ -45,6 +46,7 @@ export default function PaymentPage() {
   const [isOrderAble, setIsOrderAble] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState('');
   const [phoneParts, setPhoneParts] = useState(['', '', '']);
+  const [phoneError, setPhoneError] = useState(['', '', '']);
   const [restAddress, setRestAddress] = useState('');
   const [isFormCheck, setIsFormCheck] = useState<boolean>(true);
   const [isFormAlldone, setIsFormAlldone] = useState(false);
@@ -95,16 +97,21 @@ export default function PaymentPage() {
   const handlePhoneNumber = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = event.target;
     let newPhoneParts = [...phoneParts];
+    let newPhoneError = [...phoneError];
 
     switch (id) {
       case 'phone1':
         newPhoneParts[0] = value.slice(0, 3);
+        newPhoneError[0] = value.length < 3 ? '최소 3글자를 입력하세요.' : '';
         break;
       case 'phone2':
         newPhoneParts[1] = value.slice(0, 4);
+        newPhoneError[1] = value.length < 4 ? '최소 4글자를 입력하세요.' : '';
+
         break;
       case 'phone3':
         newPhoneParts[2] = value.slice(0, 4);
+        newPhoneError[2] = value.length < 4 ? '최소 4글자를 입력하세요.' : '';
         break;
       default:
         break;
@@ -112,6 +119,28 @@ export default function PaymentPage() {
 
     setPhoneParts(newPhoneParts);
     setPhoneNumber(newPhoneParts.join(''));
+    setPhoneError(newPhoneError);
+  };
+
+  const handleBlur = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { id, value } = e.target;
+    let newPhoneError = [...phoneError];
+
+    switch (id) {
+      case 'phone1':
+        newPhoneError[0] = value.length < 3 ? '최소 3글자를 입력하세요.' : '';
+        break;
+      case 'phone2':
+        newPhoneError[1] = value.length < 4 ? '최소 4글자를 입력하세요.' : '';
+        break;
+      case 'phone3':
+        newPhoneError[2] = value.length < 4 ? '최소 4글자를 입력하세요.' : '';
+        break;
+      default:
+        break;
+    }
+
+    setPhoneError(newPhoneError);
   };
 
   useEffect(() => {
@@ -145,13 +174,40 @@ export default function PaymentPage() {
       return null;
     }
 
+    // Step 2: Extract seller IDs from product data
+    const sellerIds = productData.map((product) => product.product_seller_id);
+
+    // Step 3: Fetch seller data
+    const { data: sellerData, error: sellerError } = await supabase
+      .from('Seller')
+      .select('seller_id, business_name')
+      .in('seller_id', sellerIds);
+
+    if (sellerError) {
+      console.error('Error fetching seller data:', sellerError);
+      return null;
+    }
+
+    // Step 4: Combine product data with seller data
     const combinedData = productData.map((product) => {
       const matchingProduct = products.find((p) => p.productId === product.product_id);
+      const matchingSeller = sellerData.find(
+        (seller) => seller.seller_id === product.product_seller_id
+      );
       return {
         ...product,
-        quantity: matchingProduct ? matchingProduct.quantity : 0
+        quantity: matchingProduct ? matchingProduct.quantity : 0,
+        business_name: matchingSeller ? matchingSeller.business_name : 'Unknown'
       };
     });
+
+    // const combinedData = productData.map((product) => {
+    //   const matchingProduct = products.find((p) => p.productId === product.product_id);
+    //   return {
+    //     ...product,
+    //     quantity: matchingProduct ? matchingProduct.quantity : 0
+    //   };
+    // });
 
     const totalCost = combinedData.reduce((total, product) => {
       return total + product.price * product.quantity;
@@ -178,8 +234,10 @@ export default function PaymentPage() {
   };
 
   useEffect(() => {
-    setIsOrderAble(isFormAlldone && isAgreementChecked);
-  }, [isFormAlldone, isAgreementChecked]);
+    setIsOrderAble(
+      isFormAlldone && isAgreementChecked && phoneError.every((error) => error === '')
+    );
+  }, [isFormAlldone, isAgreementChecked, phoneError]);
 
   const queryClient = useQueryClient();
 
@@ -204,11 +262,12 @@ export default function PaymentPage() {
 
   if (userData && productData) {
     return (
-      <div className="pt-[80px] pb-[180px] xs:pt-[62px] xs:pb-[45px] px-[20px]">
+      <div className="pt-[80px] pb-[180px] max_xs:pt-[16px] max_xs:pb-[70px] px-[20px]">
         <h1 className="text-[32px] font-semibold text-center">주문/결제</h1>
         <p className="mt-[32px] mb-[20px]">주문자</p>
         <form action="" className="flex items-center gap-[8px] xs:mt-[16px]">
-          <input type="radio" id="sameaddress" defaultChecked className="w-[20px] h-[20px]" />
+          <input type="radio" id="sameaddress" name="address" className="hidden" defaultChecked />
+          <span className="custom-radio"></span>
           <label htmlFor="sameaddress">회원 정보와 동일</label>
         </form>
         <section className="mt-[16px]">
@@ -235,37 +294,49 @@ export default function PaymentPage() {
                 onChange={(e) => setRestAddress(e.target.value)}
               />
             </div>
-            <div className="h-[64px] flex xs:flex-col xs:mb-[16px] w-full gap-[16px] xs:gap-0">
+            <div className="h-[50px] flex xs:flex-col xs:mb-[16px] w-full gap-[16px] xs:gap-0 mb-[18px]">
               <label htmlFor="phone" className="xs:mb-[8px] xs:mt-[16px] w-[120px]">
                 휴대폰번호
               </label>
-              <div className="w-full">
-                <input
-                  className="border p-3 mb-3 rounded w-1/4"
-                  type="text"
-                  id="phone1"
-                  defaultValue={userData.phone.slice(0, 3)}
-                  maxLength={3}
-                  onChange={handlePhoneNumber}
-                />
-                <span className="mx-2">-</span>
-                <input
-                  className="border p-3 mb-3 rounded w-1/4"
-                  type="text"
-                  id="phone2"
-                  defaultValue={userData.phone.slice(3, 7)}
-                  maxLength={4}
-                  onChange={handlePhoneNumber}
-                />
-                <span className="mx-2">-</span>
-                <input
-                  className="border p-3 mb-3 rounded w-1/4"
-                  type="text"
-                  id="phone3"
-                  defaultValue={userData.phone.slice(7)}
-                  maxLength={4}
-                  onChange={handlePhoneNumber}
-                />
+              <div className="w-full flex items-start">
+                <div className="flex flex-col w-1/4">
+                  <input
+                    className="border p-3 rounded w-full"
+                    type="text"
+                    id="phone1"
+                    defaultValue={userData.phone.slice(0, 3)}
+                    maxLength={3}
+                    onChange={handlePhoneNumber}
+                    onBlur={handleBlur}
+                  />
+                  {phoneError[0] && <p className="text-red-500 text-[14px]">{phoneError[0]}</p>}
+                </div>
+                <span className="mx-2 self-center">-</span>
+                <div className="flex flex-col w-1/4">
+                  <input
+                    className="border p-3 rounded w-full"
+                    type="text"
+                    id="phone2"
+                    defaultValue={userData.phone.slice(3, 7)}
+                    maxLength={4}
+                    onChange={handlePhoneNumber}
+                    onBlur={handleBlur}
+                  />
+                  {phoneError[1] && <p className="text-red-500 text-[14px]">{phoneError[1]}</p>}
+                </div>
+                <span className="mx-2 self-center">-</span>
+                <div className="flex flex-col w-1/4">
+                  <input
+                    className="border p-3 rounded w-full"
+                    type="text"
+                    id="phone3"
+                    defaultValue={userData.phone.slice(7)}
+                    maxLength={4}
+                    onChange={handlePhoneNumber}
+                    onBlur={handleBlur}
+                  />
+                  {phoneError[2] && <p className="text-red-500 text-[14px]">{phoneError[2]}</p>}
+                </div>
               </div>
             </div>
             <div className="flex xs:flex-col xs:mt-[42px] xs:gap-0 gap-[16px]">
@@ -304,14 +375,16 @@ export default function PaymentPage() {
                     key={product.product_id}
                     className="flex gap-6 items-center border-b w-full py-10"
                   >
-                    <Image
-                      src={product.thumbnail_url}
-                      alt={product.title}
-                      width={150}
-                      height={150}
-                      className="rounded-lg"
-                    />
+                    <div className="w-[150px] h-[150px] relative">
+                      <Image
+                        src={product.thumbnail_url}
+                        alt={product.title}
+                        fill
+                        className="rounded-lg"
+                      />
+                    </div>
                     <div>
+                      <p className="mb-[8px] font-semibold">{product.business_name}</p>
                       <p>{product.title}</p>
                       <div className="flex mt-4">
                         <span className="text-[18px] font-semibold">
@@ -355,12 +428,12 @@ export default function PaymentPage() {
               height={20}
               quality={100}
             />
-            <p>카카오 페이</p>
+            <p>카카오페이</p>
           </div>
         </section>
-        <div className="border-b w-full my-10" />
+        <div className="border-b w-full max_xs:mt-[24px] mt-[48px]" />
         <section>
-          <div className="mb-10 flex items-center gap-2">
+          <div className="mb-[48px] flex items-center gap-[8px] max_xs:mb-[48px] max_xs:mt-[24px] mt-[48px]">
             <input
               type="checkbox"
               id="agreement"

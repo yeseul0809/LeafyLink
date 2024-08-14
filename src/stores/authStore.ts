@@ -2,6 +2,7 @@
 import { createClient } from '@/supabase/supabaseClient';
 import { create } from 'zustand';
 import { unreadCountStore } from './unreadCountStore';
+import { useCartStore } from '.';
 
 interface AuthState {
   isLogin: boolean;
@@ -26,6 +27,7 @@ export const useAuthStore = create<AuthState>((set) => ({
       await supabase.auth.signOut();
       set({ isLogin: false });
       unreadCountStore.getState().setUnreadCounts({});
+      useCartStore.setState({ cart: {} });
     } catch (error) {
       console.error('로그아웃 실패', error);
     }

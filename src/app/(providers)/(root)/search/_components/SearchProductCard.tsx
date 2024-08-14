@@ -1,18 +1,14 @@
 'use client';
 import React from 'react';
 import Link from 'next/link';
-import { redirect, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { createCartItem } from '../../products/[id]/_actions/cartActions';
 import showSwal from '@/utils/swal';
+import { ProductWithDetails } from '../actions';
 import { createClient } from '@/supabase/supabaseClient';
 import Image from 'next/image';
-import { ProductWithBusinessName } from '../actions';
-import { useCartStore } from '@/stores';
 
-const ProductCard = ({ product }: { product: ProductWithBusinessName }) => {
-  const { initializeCart } = useCartStore((state) => ({
-    initializeCart: state.initializeCart
-  }));
+const SearchProductCard = ({ product }: { product: ProductWithDetails }) => {
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat('en-US').format(price);
   };
@@ -36,9 +32,9 @@ const ProductCard = ({ product }: { product: ProductWithBusinessName }) => {
       cart_product_id: product.product_id,
       count: 1,
       cart_user_id: user.id,
-      is_checked: true
+      is_checked: false
     };
-    const result = await createCartItem(cartItemData, user.id, initializeCart);
+    const result = await createCartItem(cartItemData, user.id);
 
     if (result) {
       showSwal('장바구니에 상품이 정상적으로 담겼습니다.');
@@ -78,10 +74,14 @@ const ProductCard = ({ product }: { product: ProductWithBusinessName }) => {
           </div>
 
           <Link href={'/상세페이지'}>
-            <img
-              src={product.thumbnail_url}
-              className="lg:w-[295px] lg:h-[295px] w-[164px] h-[164px] bg-zinc-300 rounded-2xl hover:bg-white cursor-pointer object-cover"
-            ></img>
+            <div className="relative lg:w-[295px] lg:h-[295px] w-[158px] h-[158px]">
+              <Image
+                src={product.thumbnail_url}
+                className="bg-zinc-300 rounded-2xl hover:bg-white cursor-pointer object-cover"
+                fill
+                alt="썸네일이미지"
+              />
+            </div>
           </Link>
         </div>
       </div>
@@ -98,4 +98,4 @@ const ProductCard = ({ product }: { product: ProductWithBusinessName }) => {
   );
 };
 
-export default ProductCard;
+export default SearchProductCard;
