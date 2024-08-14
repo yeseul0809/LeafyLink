@@ -37,8 +37,9 @@ function Carousel({ images }: ImagesType) {
             <SwiperSlide key={index} className="flex items-center justify-center relative ">
               <Image
                 src={src}
-                width={1920}
+                width={1240}
                 height={500}
+                sizes="(max-width: 1024px) 100vw, 1240px"
                 className="object-cover w-full lg:h-[461px] sm:h-[200px] h-[200px]"
                 alt={`slide-${index}`}
               />

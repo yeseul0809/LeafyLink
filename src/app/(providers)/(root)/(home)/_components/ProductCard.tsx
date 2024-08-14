@@ -74,8 +74,9 @@ const ProductCard = ({ product }: { product: Product }) => {
               <Image
                 src={product.thumbnail_url}
                 alt="상세상품"
-                layout="fill"
-                objectFit="cover"
+                fill
+                sizes="(max-width: 1024px) 100vw, 295px"
+                style={{ objectFit: 'cover' }}
                 className="rounded-[20px] max-w-full max-h-full"
               />
             </div>
@@ -86,18 +87,10 @@ const ProductCard = ({ product }: { product: Product }) => {
           onClick={() => redirect(`/products/${product.product_id}`)}
         >
           <div className="flex gap-2">
-            <button
-              className="p-2 rounded-full shadow-lg"
-              onClick={handleAddCartClick}
-              type="button"
-            >
+            <button className="p-4" onClick={handleAddCartClick} type="button">
               <img src="/icons/icon-card-cart.svg" alt="cart" />
             </button>
-            <button
-              className="p-2 rounded-full shadow-lg"
-              onClick={handleBuyNowClick}
-              type="button"
-            >
+            <button className="p-4" onClick={handleBuyNowClick} type="button">
               <img src="/icons/icon-card.svg" alt="card" />
             </button>
           </div>

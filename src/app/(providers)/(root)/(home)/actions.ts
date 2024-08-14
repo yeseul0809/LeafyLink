@@ -19,6 +19,23 @@ interface Product {
 export interface ProductWithBusinessName extends Product {
   business_name: string;
 }
+export const getUserData = async () => {
+  const supabase = createClient();
+  const { data } = await supabase.auth.getUser();
+  if (data.user) {
+    const userId = data.user.id;
+    const { data: userData, error } = await supabase
+      .from('User')
+      .select('*')
+      .eq('user_id', userId)
+      .single();
+    if (error) {
+      throw error;
+    }
+    return userData;
+  }
+  return null;
+};
 export const getProducts = async (): Promise<ProductWithBusinessName[]> => {
   const supabase = createClient();
   const { data: productData, error: productError } = await supabase
