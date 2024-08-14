@@ -30,7 +30,7 @@ function Categories() {
     {
       imgUrl: '/icons/icon-soil.svg',
       alt: '흙, 비료',
-      url: '/productsList/흙, 비료'
+      url: '/productsList/흙,비료'
     },
     {
       imgUrl: '/icons/icon-goods.svg',
