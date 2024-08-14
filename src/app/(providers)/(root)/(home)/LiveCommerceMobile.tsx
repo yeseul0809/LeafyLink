@@ -7,8 +7,9 @@ import LivestreamingCard from './_components/LivestreamingCard';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
+import { Autoplay, Virtual } from 'swiper/modules';
 
-function LiveCommerce({ category }: { category: string }) {
+function LiveCommerceMobile({ category }: { category: string }) {
   const router = useRouter();
   const redirect = (e: string) => {
     router.push(`${e}`);
@@ -26,12 +27,12 @@ function LiveCommerce({ category }: { category: string }) {
   const videosData = recodedVideos?.slice(0, 6);
 
   return (
-    <section className="w-full h-[604px] mx-auto mt-[140px] pb-[48px]">
-      <div className="flex justify-around items-end text-center lg:pt-[85px] pt-[16px] mb-8">
+    <section className="w-full h-[400px] mx-auto mt-[70px] pb-[40px]">
+      <div className="flex justify-between items-end text-center pt-[16px] mb-8">
         <div className="px-3 py-2 text-[13px] my-auto text-white">더보기 &gt;</div>
-        <h2 className="text-center text-[32px] lg:mb-[38px] font-semibold ">라이브커머스</h2>
+        <h2 className="text-center text-[20px] font-semibold ">라이브커머스</h2>
         <button
-          className=" border-[1px] px-3 py-2 text-[13px] my-auto"
+          className="border-[1px] px-3 py-2 text-[13px] my-auto"
           onClick={() => {
             redirect('/livestreaming');
           }}
@@ -39,10 +40,21 @@ function LiveCommerce({ category }: { category: string }) {
           더보기 &gt;
         </button>
       </div>
-      <div className="flex w-[1240px] m-auto overflow-hidden">
-        <Swiper slidesPerView={2.5} spaceBetween={80} className="mySwiper">
-          {videosData?.map((video) => (
-            <SwiperSlide key={video.streamData[0].livestream_id}>
+      <div className="모바일 라이브캐러셀 flex w-auto m-auto ">
+        <Swiper
+          modules={[Virtual, Autoplay]}
+          spaceBetween={270}
+          slidesPerView={1}
+          autoplay={{
+            delay: 3000,
+            disableOnInteraction: false
+          }}
+          virtual
+          loop={true}
+          className="mySwiper"
+        >
+          {videosData?.map((video, index) => (
+            <SwiperSlide key={video.streamData[0].livestream_id} virtualIndex={index}>
               <LivestreamingCard videosData={video} />
             </SwiperSlide>
           ))}
@@ -52,4 +64,4 @@ function LiveCommerce({ category }: { category: string }) {
   );
 }
 
-export default LiveCommerce;
+export default LiveCommerceMobile;

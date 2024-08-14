@@ -7,9 +7,9 @@ import Goods from './Goods';
 import Recommend from './Recommend';
 import BestSeller from './BestSeller';
 import Advertising from './Advertising';
+import LiveCommerceMobile from './LiveCommerceMobile';
 
 const images = ['/carousel(1).svg', '/carousel(2).svg', '/carousel(3).svg'];
-
 const mobileImages = [
   '/mobile-carousel(1).svg',
   '/mobile-carousel(2).svg',
@@ -28,11 +28,16 @@ function Home() {
         </div>
         <Categories />
         <NewProduct />
-        <LiveCommerce category="all" />
+        <div className="max_xs:hidden max_sm:hidden max_md:block max_lg:block block">
+          <LiveCommerce category="all" />
+        </div>
+        <div className="max_xs:block max_sm:block max_md:hidden max_lg:hidden hidden">
+          <LiveCommerceMobile category="all" />
+        </div>
         <Goods />
         <Recommend />
         <BestSeller />
-        <div className="relative 광고광고">
+        <div className="relative">
           <Advertising />
         </div>
       </div>
