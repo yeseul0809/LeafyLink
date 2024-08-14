@@ -1,18 +1,18 @@
-// import { getGoodsData } from '../actions';
-// import ProductsList from '../_components/ProductsList';
+import ProductsList from '../_components/ProductsList';
+import { getDataByCategory } from '../actions';
 
-// async function CategoryPage() {
-//   const itemsPerPage = 3;
-//   const { Product, totalCount } = await getGoodsData(itemsPerPage, 0);
+export default async function CategoryPage({ params }: { params: { category: string } }) {
+  const itemsPerPage = 3;
+  const category = decodeURIComponent(params.category);
 
-//   return (
-//     <ProductsList
-//       initialData={Product || []}
-//       totalItems={totalCount || 0}
-//       itemsPerPage={itemsPerPage}
-//       fetchMoreData={getGoodsData}
-//     />
-//   );
-// }
+  const { Product, totalCount } = await getDataByCategory(category, itemsPerPage, 0);
 
-// export default CategoryPage;
+  return (
+    <ProductsList
+      initialData={Product || []}
+      totalItems={totalCount || 0}
+      itemsPerPage={itemsPerPage}
+      category={category}
+    />
+  );
+}
