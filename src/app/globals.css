@@ -72,6 +72,15 @@
   transition: background-color 0.2s ease;
 }
 
+@media (max-width: 440px) {
+  .swal-confirm-button {
+    width: 280px;
+    margin-left: 0;
+    margin-right: 0;
+    padding: 12px 16px;
+  }
+}
+
 .swal-confirm-button:hover {
   background-color: #236c44;
 }
@@ -121,4 +130,35 @@
 
 .ql-editor {
   padding: 0 !important;
+}
+
+.custom-radio {
+  position: relative;
+  width: 18px;
+  height: 18px;
+  background-color: white;
+  border-radius: 100%;
+  border: 1px solid #3bb873;
+  cursor: pointer;
+}
+
+.custom-radio::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 9px;
+  height: 9px;
+  background-color: #3bb873;
+  border-radius: 100%;
+  display: none;
+}
+
+input[type='radio']:checked + .custom-radio::after {
+  display: block;
+}
+
+input[type='radio'] {
+  display: none;
 }

@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { getProductCount, getProductDatas, getTotalPages } from './actions';
 import Searchform from './_components/Searchform';
 import SelectBox from './_components/SelectBox';
-import SearchProductCard from './_components/SearchProductCard';
+import ProductCard from '../(home)/_components/ProductCard';
 
 interface Props {
   searchParams: {
@@ -43,7 +43,7 @@ export default async function SearchPage({ searchParams }: Props) {
       ) : (
         <div className="grid grid-cols-4 gap-[20px] max_lg:grid-cols-3 xs_max:grid-cols-2 xs_max:gap-[7px]">
           {searchDatas.map((data) => (
-            <SearchProductCard product={data} key={data.product_id} />
+            <ProductCard product={data} key={data.product_id} />
           ))}
         </div>
       )}
