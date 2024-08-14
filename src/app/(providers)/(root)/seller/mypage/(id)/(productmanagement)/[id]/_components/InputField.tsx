@@ -21,6 +21,11 @@ function InputField({
   type,
   min
 }: InputFieldProps) {
+  const handleWheel = (e: React.WheelEvent<HTMLInputElement>) => {
+    if (type === 'number') {
+      e.currentTarget.blur();
+    }
+  };
   return (
     <div className="mb-6 px-3">
       <label className="text-[14px] block mb-3" htmlFor={id}>
@@ -34,6 +39,7 @@ function InputField({
         onChange={onChange}
         placeholder={placeholder}
         min={min}
+        onWheel={handleWheel}
         className="w-[271px] h-[44px] px-3 py-3 border text-[14px] text-right text-font/sub2 placeholder-font/sub2"
       />
     </div>
