@@ -1,9 +1,3 @@
-import React from 'react';
-import ProductCard from '../../(home)/_components/ProductCard';
-import { Accordion } from '@szhsin/react-accordion';
-import AccordionMenu from '../../seller/mypage/(id)/(category)/_components/AccordionMenu';
-import SelectDropdown from '../../livestreaming/_components/SelectDropdown';
-import ProductsSortDropdown from '../_components/ProductsSortDropdown';
 import { getGoodsData } from '../actions';
 import ProductsList from '../_components/ProductsList';
 
@@ -16,7 +10,7 @@ async function GoodsPage() {
       initialData={Product || []}
       totalItems={totalCount || 0}
       itemsPerPage={itemsPerPage}
-      fetchMoreData={getGoodsData}
+      category="원예용품"
     />
   );
 }

@@ -10,7 +10,7 @@ async function Kit() {
       initialData={Product || []}
       totalItems={totalCount || 0}
       itemsPerPage={itemsPerPage}
-      fetchMoreData={getKitData}
+      category="재배키트"
     />
   );
 }

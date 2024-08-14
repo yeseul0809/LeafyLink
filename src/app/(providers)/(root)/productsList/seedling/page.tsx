@@ -10,7 +10,7 @@ async function Seedling() {
       initialData={Product || []}
       totalItems={totalCount || 0}
       itemsPerPage={itemsPerPage}
-      fetchMoreData={getSeedlingData}
+      category="모종"
     />
   );
 }

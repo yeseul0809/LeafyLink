@@ -2,33 +2,34 @@
 
 import React, { useEffect, useState } from 'react';
 import ProductCard from '../../(home)/_components/ProductCard';
-import { GoodsDataResponse, Product } from '@/types/product';
+import { getCategoryData } from '../actions';
+import { ProductWithBusinessName } from '../../(home)/actions';
 
 interface ProductsListProps {
-  initialData: Product[];
+  initialData: ProductWithBusinessName[];
   totalItems: number;
   itemsPerPage: number;
-  fetchMoreData: (limit: number, offset: number) => Promise<GoodsDataResponse>;
+  category: string;
 }
 
 export default function ProductsList({
   initialData,
   totalItems,
   itemsPerPage,
-  fetchMoreData
+  category
 }: ProductsListProps) {
   const [currentPage, setCurrentPage] = useState(1);
-  const [goodsData, setGoodsData] = useState<Product[]>(initialData);
+  const [productsData, setProductsData] = useState<ProductWithBusinessName[]>(initialData);
 
   useEffect(() => {
-    const fetchGoodsData = async () => {
+    const fetchProductData = async () => {
       const offset = (currentPage - 1) * itemsPerPage;
-      const { Product } = await fetchMoreData(itemsPerPage, offset);
-      setGoodsData(Product || []);
+      const products = await getCategoryData(category); // category를 기준으로 데이터 가져오기
+      setProductsData(products.slice(offset, offset + itemsPerPage)); // 페이지네이션 적용
     };
 
-    fetchGoodsData();
-  }, [currentPage]);
+    fetchProductData();
+  }, [currentPage, category]);
 
   const totalPages = Math.ceil(totalItems / itemsPerPage);
 
@@ -39,10 +40,9 @@ export default function ProductsList({
         <div>
           <p>전체 {totalItems}개</p>
         </div>
-        <div>{/* <ProductsSortDropdown onCategoryChange={} /> */}</div>
       </div>
       <div className="grid grid-cols-4 gap-x-[20px] gap-y-[24px] m:grid-cols-3 s:grid-cols-2 justify-items-center">
-        {goodsData?.map((product) => <ProductCard product={product} key={product.product_id} />)}
+        {productsData?.map((product) => <ProductCard product={product} key={product.product_id} />)}
       </div>
       <div className="flex justify-center mt-10">
         {Array.from({ length: totalPages }).map((_, index) => (

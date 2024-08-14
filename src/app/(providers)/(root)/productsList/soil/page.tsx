@@ -10,7 +10,7 @@ async function Soil() {
       initialData={Product || []}
       totalItems={totalCount || 0}
       itemsPerPage={itemsPerPage}
-      fetchMoreData={getSoilData}
+      category="흙,비료"
     />
   );
 }

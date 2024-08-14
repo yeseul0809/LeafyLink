@@ -2,83 +2,81 @@
 
 import { createClient } from '@/supabase/supabaseServer';
 import { GoodsDataResponse } from '@/types/product';
+import { ProductWithBusinessName } from '../(home)/actions';
 
-export const getSeedData = async (limit: number, offset: number): Promise<GoodsDataResponse> => {
-  const supabase = createClient();
-  const {
-    data: Product,
-    error,
-    count
-  } = await supabase
-    .from('Product')
-    .select('*', { count: 'exact' })
-    .eq('category', '씨앗')
-    .range(offset, offset + limit - 1);
+export const getSeedData = async (
+  limit: number,
+  offset: number
+): Promise<GoodsDataResponse & { Product: ProductWithBusinessName[] }> => {
+  const productData = await getCategoryData('씨앗');
+  const totalCount = productData.length;
 
-  return { Product, totalCount: count };
+  const paginatedData = productData.slice(offset, offset + limit);
+
+  return {
+    Product: paginatedData,
+    totalCount: totalCount
+  };
 };
 
 export const getSeedlingData = async (
   limit: number,
   offset: number
-): Promise<GoodsDataResponse> => {
-  const supabase = createClient();
-  const {
-    data: Product,
-    error,
-    count
-  } = await supabase
-    .from('Product')
-    .select('*', { count: 'exact' })
-    .eq('category', '모종')
-    .range(offset, offset + limit - 1);
+): Promise<GoodsDataResponse & { Product: ProductWithBusinessName[] }> => {
+  const productData = await getCategoryData('모종');
+  const totalCount = productData.length;
 
-  return { Product, totalCount: count };
+  const paginatedData = productData.slice(offset, offset + limit);
+
+  return {
+    Product: paginatedData,
+    totalCount: totalCount
+  };
 };
 
-export const getKitData = async (limit: number, offset: number): Promise<GoodsDataResponse> => {
-  const supabase = createClient();
-  const {
-    data: Product,
-    error,
-    count
-  } = await supabase
-    .from('Product')
-    .select('*', { count: 'exact' })
-    .eq('category', '재배키트')
-    .range(offset, offset + limit - 1);
+export const getKitData = async (
+  limit: number,
+  offset: number
+): Promise<GoodsDataResponse & { Product: ProductWithBusinessName[] }> => {
+  const productData = await getCategoryData('재배키트');
+  const totalCount = productData.length;
 
-  return { Product, totalCount: count };
+  const paginatedData = productData.slice(offset, offset + limit);
+
+  return {
+    Product: paginatedData,
+    totalCount: totalCount
+  };
 };
 
-export const getSoilData = async (limit: number, offset: number): Promise<GoodsDataResponse> => {
-  const supabase = createClient();
-  const {
-    data: Product,
-    error,
-    count
-  } = await supabase
-    .from('Product')
-    .select('*', { count: 'exact' })
-    .eq('category', '흙,비료')
-    .range(offset, offset + limit - 1);
+export const getSoilData = async (
+  limit: number,
+  offset: number
+): Promise<GoodsDataResponse & { Product: ProductWithBusinessName[] }> => {
+  const productData = await getCategoryData('흙,비료');
+  const totalCount = productData.length;
 
-  return { Product, totalCount: count };
+  const paginatedData = productData.slice(offset, offset + limit);
+
+  return {
+    Product: paginatedData,
+    totalCount: totalCount
+  };
 };
 
-export const getGoodsData = async (limit: number, offset: number): Promise<GoodsDataResponse> => {
-  const supabase = createClient();
-  const {
-    data: Product,
-    error,
-    count
-  } = await supabase
-    .from('Product')
-    .select('*', { count: 'exact' })
-    .eq('category', '원예용품')
-    .range(offset, offset + limit - 1);
+export const getGoodsData = async (
+  limit: number,
+  offset: number
+): Promise<GoodsDataResponse & { Product: ProductWithBusinessName[] }> => {
+  const productData = await getCategoryData('원예용품');
+  const totalCount = productData.length;
 
-  return { Product, totalCount: count };
+  const paginatedData = productData.slice(offset, offset + limit);
+
+  return {
+    Product: paginatedData,
+    totalCount: totalCount
+  };
 };
 
 export const getCategoryData = async (category: string) => {

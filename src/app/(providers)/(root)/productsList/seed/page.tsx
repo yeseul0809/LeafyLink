@@ -10,7 +10,7 @@ async function Seed() {
       initialData={Product || []}
       totalItems={totalCount || 0}
       itemsPerPage={itemsPerPage}
-      fetchMoreData={getSeedData}
+      category="씨앗"
     />
   );
 }
