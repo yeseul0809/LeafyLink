@@ -1,8 +1,7 @@
 'use client';
 
-import useUser from '@/hooks/useUser';
 import { useEffect, useState } from 'react';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Review, ReviewInput } from '@/types/review';
 import { createReview, getUserPurchasedProducts, updateReview } from '../_actions/productActions';
 import StarRating from './StarRating';
@@ -15,7 +14,7 @@ interface ReviewEditProps {
   reviewProductId: string;
   reviewCount: number;
   editingReview?: ReviewInput | null;
-  handleEditReview: (review: ReviewInput) => void;
+  handleEditReview?: (review: ReviewInput) => void;
 }
 
 function ReviewEdit({
@@ -40,7 +39,7 @@ function ReviewEdit({
       }
     };
     checkUserPurchase();
-  }, [userData, reviewProductId]);
+  }, []);
 
   // 리뷰작성
   const createMutation = useMutation<Review[], Error, ReviewInput>({
@@ -90,7 +89,7 @@ function ReviewEdit({
 
     if (editingReview) {
       updateMutation.mutate(reviewData);
-      handleEditReview(reviewData);
+      handleEditReview && handleEditReview(reviewData);
     } else {
       createMutation.mutate(reviewData);
     }
