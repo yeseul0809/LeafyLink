@@ -9,15 +9,22 @@ import StarRating from './StarRating';
 import showSwal from '@/utils/swal';
 import { useRouter } from 'next/navigation';
 import { useBottomTabStore } from '@/stores/bottomTab';
+import useGetUser from '@/hooks/user/useUser';
 
 interface ReviewEditProps {
   reviewProductId: string;
   reviewCount: number;
-  editingReview?: Review | null;
+  editingReview?: ReviewInput | null;
+  handleEditReview: (review: ReviewInput) => void;
 }
 
-function ReviewEdit({ reviewProductId, reviewCount, editingReview }: ReviewEditProps) {
-  const { user } = useUser();
+function ReviewEdit({
+  reviewProductId,
+  reviewCount,
+  editingReview,
+  handleEditReview
+}: ReviewEditProps) {
+  const { userData } = useGetUser();
   const queryClient = useQueryClient();
   const [rating, setRating] = useState<number>(editingReview?.rating || 0);
   const [review, setReview] = useState<string>(editingReview?.description || '');
@@ -27,13 +34,13 @@ function ReviewEdit({ reviewProductId, reviewCount, editingReview }: ReviewEditP
 
   useEffect(() => {
     const checkUserPurchase = async () => {
-      if (user) {
-        const purchaseData = await getUserPurchasedProducts(user.id, reviewProductId);
+      if (userData) {
+        const purchaseData = await getUserPurchasedProducts(userData.user_id, reviewProductId);
         setAvailableReview(!!(purchaseData && purchaseData.length > 0));
       }
     };
     checkUserPurchase();
-  }, [user, reviewProductId]);
+  }, [userData, reviewProductId]);
 
   // 리뷰작성
   const createMutation = useMutation<Review[], Error, ReviewInput>({
@@ -50,9 +57,9 @@ function ReviewEdit({ reviewProductId, reviewCount, editingReview }: ReviewEditP
 
   // 리뷰수정
   const updateMutation = useMutation<Review[], Error, ReviewInput>({
-    mutationFn: (reviewData: ReviewInput) => updateReview(editingReview!.review_id, reviewData),
+    mutationFn: (reviewData: ReviewInput) => updateReview(reviewData, editingReview?.review_id),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['reivews', reviewProductId] });
+      queryClient.invalidateQueries({ queryKey: ['reviews', reviewProductId] });
     },
     onError: (error: any) => {
       console.error('리뷰 수정 중 에러 발생:', error);
@@ -62,7 +69,7 @@ function ReviewEdit({ reviewProductId, reviewCount, editingReview }: ReviewEditP
   const handleReviewSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (!user) {
+    if (!userData) {
       showSwal('로그인이 필요한 서비스입니다.<br>로그인 후 이용해주세요.');
       router.push('/login');
       return;
@@ -77,12 +84,13 @@ function ReviewEdit({ reviewProductId, reviewCount, editingReview }: ReviewEditP
       description: review,
       rating: rating,
       review_product_id: reviewProductId,
-      review_user_id: user.id,
-      review_user_name: user.user_metadata.name
+      review_user_id: userData.user_id,
+      review_user_name: userData.user_name
     };
 
     if (editingReview) {
       updateMutation.mutate(reviewData);
+      handleEditReview(reviewData);
     } else {
       createMutation.mutate(reviewData);
     }

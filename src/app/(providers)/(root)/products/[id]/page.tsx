@@ -32,6 +32,7 @@ async function ProductDetailPage({ params }: ParamsProps) {
             alt={product.title}
             width={375}
             height={375}
+            priority
             className="object-cover w-full h-full md:w-[485px] md:h-[485px] md:rounded-lg"
           />
         </div>

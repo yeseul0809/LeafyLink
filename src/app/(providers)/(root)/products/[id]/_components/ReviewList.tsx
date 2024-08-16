@@ -1,6 +1,6 @@
 'use client';
 
-import { Review } from '@/types/review';
+import { Review, ReviewInput } from '@/types/review';
 import { useState, useEffect } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { deleteReview, getReviews } from '../_actions/productActions';
@@ -9,6 +9,7 @@ import { formatDateTime } from '../utils/formatDateTime';
 import showSwal, { showSwalDeleteReview } from '@/utils/swal';
 import useUser from '@/hooks/useUser';
 import ReviewEdit from './ReviewEdit';
+import useGetUser from '@/hooks/user/useUser';
 
 interface ProductReviewProps {
   productId: string;
@@ -22,8 +23,8 @@ const fetchReviews = async (productId: string, reviewsPerPage: number, currentPa
 
 const ProductReviewList = ({ productId, reviewsPerPage }: ProductReviewProps) => {
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const [editingReview, setEditingReview] = useState<Review | null>(null);
-  const { user } = useUser();
+  const [editingReview, setEditingReview] = useState<ReviewInput | null>(null);
+  const { userData } = useGetUser();
   const queryClient = useQueryClient();
 
   const {
@@ -61,7 +62,7 @@ const ProductReviewList = ({ productId, reviewsPerPage }: ProductReviewProps) =>
   };
 
   // 리뷰수정
-  const handleEditReview = (review: Review) => {
+  const handleEditReview = (review: ReviewInput) => {
     setEditingReview(review);
   };
 
@@ -85,6 +86,7 @@ const ProductReviewList = ({ productId, reviewsPerPage }: ProductReviewProps) =>
                     reviewProductId={productId}
                     reviewCount={reviewData?.totalCount ?? 0}
                     editingReview={editingReview} // 수정할 리뷰 데이터
+                    handleEditReview={handleEditReview}
                   />
                 ) : (
                   <>
@@ -114,7 +116,7 @@ const ProductReviewList = ({ productId, reviewsPerPage }: ProductReviewProps) =>
                       <span className="text-gray-500 text-sm">
                         {review.created_at ? formatDateTime(review.created_at) : '날짜 정보 없음'}
                       </span>
-                      {user?.id === review.review_user_id && (
+                      {userData?.user_id === review.review_user_id && (
                         <div className="space-x-5">
                           <button
                             onClick={() => handleEditReview(review)}

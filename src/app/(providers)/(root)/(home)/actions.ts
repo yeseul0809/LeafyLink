@@ -87,6 +87,7 @@ export const getSellerName = async (sellerId: string) => {
   if (error) throw error;
   return seller;
 };
+
 export const getOrderInfo = async (): Promise<Order[]> => {
   const supabase = createClient();
   const { data: orderProduct, error } = await supabase
@@ -98,6 +99,7 @@ export const getOrderInfo = async (): Promise<Order[]> => {
   if (error) throw error;
   return orderProduct;
 };
+
 export const getRecommendPlant = async () => {
   const supabase = createClient();
   const { data: products, error: productError } = await supabase
