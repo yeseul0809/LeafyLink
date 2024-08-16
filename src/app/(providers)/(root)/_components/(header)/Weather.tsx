@@ -47,7 +47,7 @@ function Weather() {
   }, [latitude, longitude]);
 
   return (
-    <section className="w-full ">
+    <section className="w-full">
       <div className="w-full h-[45px] m:h-[40px] flex items-center justify-center">
         <WeatherComment weather={weather} />
       </div>

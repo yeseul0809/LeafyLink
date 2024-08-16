@@ -1,6 +1,6 @@
 'use client';
 import Image from 'next/image';
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import HeaderMenuDropdown from './HeaderMenuDropdown';
 
@@ -20,14 +20,14 @@ function HeaderMenu() {
 
   return (
     <section>
-      <div className="flex items-center justify-between">
-        <div className="flex">
+      <div className="w-[339px]">
+        <div className="flex items-center justify-between">
           <button onClick={toggleMenu}>
             <Image src="/icons/icon-menu.svg" alt="menu" width={24} height={24}></Image>
           </button>
 
           <button
-            className="ml-2 lg:ml-7 flex text-[#3BB873] font-semibold"
+            className="flex text-[#3BB873] font-semibold"
             onClick={() => {
               redirect('/livestreaming');
             }}
@@ -42,7 +42,7 @@ function HeaderMenu() {
             ></Image>
           </button>
           <button
-            className="ml-2 lg:ml-7 "
+            className=""
             onClick={() => {
               redirect('/#bestSeller');
             }}
@@ -50,7 +50,7 @@ function HeaderMenu() {
             베스트셀러
           </button>
           <button
-            className="ml-2 lg:ml-7 "
+            className=""
             onClick={() => {
               redirect('/#goods');
             }}
@@ -59,7 +59,7 @@ function HeaderMenu() {
           </button>
         </div>
       </div>
-      {isOpenMenu && <HeaderMenuDropdown />}
+      <div>{isOpenMenu && <HeaderMenuDropdown />}</div>
     </section>
   );
 }

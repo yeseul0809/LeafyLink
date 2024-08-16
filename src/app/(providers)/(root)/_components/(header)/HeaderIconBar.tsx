@@ -94,6 +94,7 @@ function HeaderIconBar() {
 
   const redirect = (e: string) => {
     router.push(`${e}`);
+    setIsOpenSearch(false);
   };
 
   // 검색창 토글
@@ -152,15 +153,15 @@ function HeaderIconBar() {
         </button>
 
         {isOpenSearch && (
-          <div className="absolute w-full h-auto flex justify-between py-[30px] px-[190px] border-b bg-white top-12 right-0 text-center">
+          <div className="w-full absolute h-auto flex justify-between py-[30px] px-[20px] bg-white top-full right-0 text-center mt-[1px]">
             <p className="bold text-2xl font-semibold">SEARCH</p>
             <form
               action={formAction}
-              className="flex justify-center items-center w-[540px] h-10 border rounded-full px-4"
+              className="flex justify-center items-center max-w-[820px] w-full h-10 border rounded-full px-4"
             >
               <input
                 type="text"
-                className="w-11/12 h-8"
+                className="max-w-[820px] w-full h-8 "
                 placeholder="어떤 식물을 찾으시나요?"
                 name="keyword"
               />

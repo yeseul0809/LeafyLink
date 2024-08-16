@@ -11,7 +11,7 @@ function MessageInput({ newMessage, setNewMessage, sendMessage }: MessageInputPr
     <div className="flex w-[375px] md:w-full border-t md:border-t-0 ">
       <form
         onSubmit={sendMessage}
-        className="flex border rounded-full w-full items-center justify-between mx-5 md:mx-0 mt-2 md:mt-5 focus-within:ring-2 focus-within:ring-primary-green-500 bg-secondary-yellow-50"
+        className="group flex border rounded-full w-full items-center justify-between mx-5 md:mx-0 mt-2 md:mt-5 focus-within:ring-1 focus-within:ring-primary-green-500 bg-secondary-yellow-50"
       >
         <input
           type="text"
@@ -23,13 +23,7 @@ function MessageInput({ newMessage, setNewMessage, sendMessage }: MessageInputPr
         />
         <button
           type="submit"
-          className="p-3 rounded-full bg-no-repeat bg-center focus:outline-none"
-          style={{
-            backgroundImage: `url('/icons/send.svg')`,
-            backgroundSize: '20px',
-            width: '40px',
-            height: '40px'
-          }}
+          className="p-3 rounded-full bg-no-repeat bg-center focus:outline-none bg-[url('/icons/send.svg')] group-focus-within:bg-[url('/icons/sendcolor.svg')] bg-[length:20px] w-[40px] h-[40px]"
         ></button>
       </form>
     </div>

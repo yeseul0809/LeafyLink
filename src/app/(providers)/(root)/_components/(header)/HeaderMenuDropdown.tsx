@@ -4,12 +4,18 @@ import Link from 'next/link';
 import React, { useRef, useState } from 'react';
 import useUser from '@/hooks/user/useUser';
 import useSeller from '@/hooks/user/useSeller';
+import { useRouter } from 'next/navigation';
 
 function HeaderMenuDropdown() {
   const dropdownRef = useRef<HTMLDivElement>(null);
   const { isLogin, setLogout } = useAuthStore();
   const { userData } = useUser()!;
   const { sellerData } = useSeller(userData?.user_id!);
+  const router = useRouter();
+
+  const redirect = (e: string) => {
+    router.push(`${e}`);
+  };
 
   return (
     <div className="max-w-[1240px] ">
@@ -19,50 +25,79 @@ function HeaderMenuDropdown() {
       >
         <ul className="flex w-[624px] justify-between">
           <li className="">
-            <a href="/productsList/seed">씨앗</a>
+            <button
+              onClick={() => {
+                redirect('/productsList/씨앗');
+              }}
+            >
+              씨앗
+            </button>
           </li>
           <li>
-            <a href="/productsList/seedling">모종</a>
+            <button
+              onClick={() => {
+                redirect('/productsList/모종');
+              }}
+            >
+              모종
+            </button>
           </li>
           <li>
-            <a href="/productsList/kit">재배키트</a>
+            <button
+              onClick={() => {
+                redirect('/productsList/재배키트');
+              }}
+            >
+              재배키트
+            </button>
           </li>
           <li>
-            <a href="/productsList/soil">흙/비료</a>
+            <button
+              onClick={() => {
+                redirect('/productsList/흙,비료');
+              }}
+            >
+              흙/비료
+            </button>
           </li>
           <li>
-            <a href="/productsList/goods">원예용품</a>
+            <button
+              onClick={() => {
+                redirect('/productsList/원예용품');
+              }}
+            >
+              원예용품
+            </button>
           </li>
         </ul>
-        {/* xl:ml-[343px] lg:ml-[300px]  md:ml-[150px] sm:ml-[100px] */}
         <div className="w-[273px] flex justify-between text-left">
           <div className="h-[110px] border-l"></div>
           <ul className="w-[112px]">
             {sellerData ? (
               <>
                 <li className="pb-2">
-                  <Link href="/seller/mypage/orders">주문 내역</Link>
+                  <Link href={'/seller/mypage/orders'}>주문 내역</Link>
                 </li>
                 <li className="pb-2">
-                  <Link href="/seller/mypage/products">판매중인 상품</Link>
+                  <Link href={'/seller/mypage/products'}>판매중인 상품</Link>
                 </li>
                 <li className="pb-2">
-                  <Link href="/seller/mypage/profile">회원정보 변경</Link>
+                  <Link href={'/seller/mypage/profile'}>회원정보 변경</Link>
                 </li>
               </>
             ) : (
               <>
                 <li className="pb-2">
-                  <Link href="/buyer/mypage/profile">마이페이지</Link>
+                  <Link href={'/buyer/mypage/profile'}>마이페이지</Link>
                 </li>
                 <li className="pb-2 text-[##767676]">
-                  <Link href="/buyer/mypage/orders">구매내역 조회</Link>
+                  <Link href={'/buyer/mypage/orders'}>구매내역 조회</Link>
                 </li>
                 <li className="pb-2 text-[##767676]">
-                  <Link href="/buyer/mypage/profile">회원정보 변경</Link>
+                  <Link href={'/buyer/mypage/profile'}>회원정보 변경</Link>
                 </li>
                 <li className="pb-2 text-[##767676]">
-                  <Link href="/buyer/mypage/BusinessCheck">사업자 인증</Link>
+                  <Link href={'/buyer/mypage/BusinessCheck'}>사업자 인증</Link>
                 </li>
               </>
             )}
@@ -81,10 +116,22 @@ function HeaderMenuDropdown() {
             ) : (
               <>
                 <li className="pb-2">
-                  <button>로그인</button>
+                  <button
+                    onClick={() => {
+                      redirect('/login');
+                    }}
+                  >
+                    로그인
+                  </button>
                 </li>
                 <li className="pb-2">
-                  <button>회원가입</button>
+                  <button
+                    onClick={() => {
+                      redirect('/login');
+                    }}
+                  >
+                    회원가입
+                  </button>
                 </li>
               </>
             )}

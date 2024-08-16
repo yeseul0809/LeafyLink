@@ -15,27 +15,27 @@ function Categories() {
     {
       imgUrl: '/icons/icon-seed.svg',
       alt: '씨앗',
-      url: '/productsList/seed'
+      url: '/productsList/씨앗'
     },
     {
       imgUrl: '/icons/icon-seedling.svg',
       alt: '모종',
-      url: '/productsList/seedling'
+      url: '/productsList/모종'
     },
     {
       imgUrl: '/icons/icon-kit.svg',
       alt: '재배키트',
-      url: '/productsList/kit'
+      url: '/productsList/재배키트'
     },
     {
       imgUrl: '/icons/icon-soil.svg',
       alt: '흙, 비료',
-      url: '/productsList/soil'
+      url: '/productsList/흙,비료'
     },
     {
       imgUrl: '/icons/icon-goods.svg',
       alt: '원예용품',
-      url: '/productsList/goods'
+      url: '/productsList/원예용품'
     }
   ]);
 

@@ -34,7 +34,7 @@ async function Recommend() {
   return (
     <>
       <section className="w-full max-w-[1240px] mx-auto mt-[140px] hidden md:block px-[20px]">
-        <h2 className="text-32-n-42-80 text-center mb-[32px]">이 달의 추천 식물</h2>
+        <h2 className="text-32-n-42-80 text-center mb-[32px] font-semibold">이 달의 추천 식물</h2>
         <div className="flex bg-primary-green-50 rounded-2xl overflow-hidden h-[342px]">
           <div className="relative w-[50%] h-full">
             {' '}

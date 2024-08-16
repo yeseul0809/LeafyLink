@@ -1,7 +1,6 @@
 import { Product } from '@/types/product';
 import { createClient } from '@/supabase/supabaseServer';
 import { NextResponse } from 'next/server';
-
 export async function GET() {
   console.log('진입2');
   const supabase = createClient();
@@ -21,5 +20,4 @@ export async function GET() {
     }
   }
 }
-
 export async function POST() {}
