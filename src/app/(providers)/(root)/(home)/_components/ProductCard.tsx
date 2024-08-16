@@ -56,6 +56,10 @@ const ProductCard = ({ product }: { product: ProductWithBusinessName }) => {
     router.push(`/payment?productId=${product.product_id}&quantity=1`);
   };
 
+  const handleProductDetail = () => {
+    router.push(`/products/${product.product_id}`);
+  };
+
   function handleBuyNowClick(event: React.MouseEvent) {
     event.stopPropagation();
     handleBuyNow();
@@ -79,7 +83,7 @@ const ProductCard = ({ product }: { product: ProductWithBusinessName }) => {
         </Link>
         <div
           className="absolute inset-0 flex justify-center items-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 hover:backdrop-blur-sm"
-          onClick={() => router.push(`/products/${product.product_id}`)}
+          onClick={handleProductDetail}
         >
           <div className="flex gap-2">
             <button
@@ -87,14 +91,14 @@ const ProductCard = ({ product }: { product: ProductWithBusinessName }) => {
               onClick={handleAddCartClick}
               type="button"
             >
-              <img src="/icons/icon-card-cart.svg" alt="cart" />
+              <Image src="/icons/icon-card-cart.svg" alt="cart" width={24} height={24} />
             </button>
             <button
               className="p-2 rounded-full shadow-lg"
               onClick={handleBuyNowClick}
               type="button"
             >
-              <img src="/icons/icon-card.svg" alt="card" />
+              <Image src="/icons/icon-card.svg" alt="card" width={24} height={24} />
             </button>
           </div>
         </div>
