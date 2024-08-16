@@ -4,6 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 
 type VideoData = {
+  uid: string;
   streamData: [
     {
       thumbnail_url: string;
@@ -11,7 +12,7 @@ type VideoData = {
       description: string;
       livestream_id: string;
       livestream_product_id: string;
-      uid: string;
+      video_uid: string;
     }
   ];
 };
@@ -22,7 +23,7 @@ function LivestreamingCard({ videosData }: { videosData: VideoData }) {
       <div>
         <div>
           <Link
-            href={`/livestreaming/video/${videosData.streamData[0].livestream_product_id}_${videosData.streamData[0].livestream_id}_${videosData.streamData[0].uid}`}
+            href={`/livestreaming/video/${videosData.streamData[0].livestream_product_id}_${videosData.streamData[0].livestream_id}_${videosData.uid}`}
           >
             <Image
               alt="streaming image"
@@ -43,8 +44,11 @@ function LivestreamingCard({ videosData }: { videosData: VideoData }) {
             {videosData.streamData[0].description}
           </p>
         </div>
-        <Link
+        {/* <Link
           href={`/livestreaming/${videosData.streamData[0].livestream_product_id}_${videosData.streamData[0].livestream_id}_${videosData.streamData[0].uid}`}
+        > */}
+        <Link
+          href={`/livestreaming/video/${videosData.streamData[0].livestream_product_id}_${videosData.streamData[0].livestream_id}_${videosData.uid}`}
         >
           <button className="lg:w-[123px] lg:h-[44px] bg-[#3BB873] text-white px-6 py-3 rounded-lg text-sm">
             방송보러가기

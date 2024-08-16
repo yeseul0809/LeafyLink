@@ -25,7 +25,8 @@ const paymentHandler = (productData: ProductInfo, userId: string) => {
     amount: productData.totalCost,
     buyer_name: '구매자이름',
     buyer_tel: '010-1234-5678',
-    m_redirect_url: `https://leafylink-hys-projects-073e5858.vercel.app/settlement/?data=${encodedProductData}`
+    m_redirect_url: `https://www.leafylink.co.kr/?data=${encodedProductData}`
+    // m_redirect_url: `https://leafylink-hys-projects-073e5858.vercel.app/settlement/?data=${encodedProductData}`
     // m_redirect_url: `http://localhost:3000/settlement/?data=${encodedProductData}`
   };
 
