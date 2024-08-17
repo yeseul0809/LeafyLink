@@ -40,12 +40,28 @@ function LiveCommerce({ category }: { category: string }) {
         </button>
       </div>
       <div className="flex w-[1240px] m-auto overflow-hidden">
-        <Swiper slidesPerView={2.5} spaceBetween={80} className="mySwiper">
+        <Swiper
+          slidesPerView={2.5}
+          spaceBetween={80}
+          navigation={{
+            nextEl: '.custom-swiper-button-next',
+            prevEl: '.custom-swiper-button-prev'
+          }}
+          className="mySwiper"
+        >
           {videosData?.map((video) => (
             <SwiperSlide key={video.streamData[0].livestream_id}>
               <LivestreamingCard videosData={video} />
             </SwiperSlide>
           ))}
+          <div className="w-full flex justify-between items-center z-10 absolute lg:top-1/3 md:top-1/3 sm:top-1/3 xs:top-3/5 ">
+            <div className="custom-swiper-button custom-swiper-button-prev cursor-pointer ">
+              <img src="/icons/button-left.svg" alt="left button" className="w-[56px] h-[80px]" />
+            </div>
+            <div className="custom-swiper-button custom-swiper-button-next cursor-pointer ">
+              <img src="/icons/button-right.svg" alt="right button" className="w-[56px] h-[80px]" />
+            </div>
+          </div>
         </Swiper>
       </div>
     </section>

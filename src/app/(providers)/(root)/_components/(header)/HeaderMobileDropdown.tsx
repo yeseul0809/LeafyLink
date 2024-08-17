@@ -62,7 +62,7 @@ function HeaderMobileDropdown({
             </>
           ) : (
             <>
-              <li className="pb-2 bold">
+              <li className="pb-2 font-semibold">
                 <button
                   onClick={() => {
                     redirect('/login');
@@ -71,7 +71,7 @@ function HeaderMobileDropdown({
                   로그인
                 </button>
               </li>
-              <li className="pb-2 bold">
+              <li className="pb-2 font-semibold">
                 <button
                   onClick={() => {
                     redirect('/login');
@@ -84,7 +84,7 @@ function HeaderMobileDropdown({
           )}
         </ul>
         <ul className="text-start pl-5 pt-5 pb-5">
-          <li className="pb-5 bold">
+          <li className="pb-5 font-semibold">
             <button
               onClick={() => {
                 redirect('/productsList/씨앗');
@@ -93,7 +93,7 @@ function HeaderMobileDropdown({
               씨앗
             </button>
           </li>
-          <li className="pb-5 bold">
+          <li className="pb-5 font-semibold">
             <button
               onClick={() => {
                 redirect('/productsList/모종');
@@ -102,7 +102,7 @@ function HeaderMobileDropdown({
               모종
             </button>
           </li>
-          <li className="pb-5 bold">
+          <li className="pb-5 font-semibold">
             <button
               onClick={() => {
                 redirect('/productsList/재배키트');
@@ -111,7 +111,7 @@ function HeaderMobileDropdown({
               재배키트
             </button>
           </li>
-          <li className="pb-5 bold">
+          <li className="pb-5 font-semibold">
             <button
               onClick={() => {
                 redirect('/productsList/흙,비료');
@@ -120,7 +120,7 @@ function HeaderMobileDropdown({
               흙/비료
             </button>
           </li>
-          <li>
+          <li className="font-semibold">
             <button
               onClick={() => {
                 redirect('/productsList/원예용품');
@@ -132,9 +132,18 @@ function HeaderMobileDropdown({
         </ul>
         <div className="">
           <ul className="border-t pl-4 pb-5 pt-5">
+            <li className="pb-5 font-semibold">
+              <button
+                onClick={() => {
+                  redirect('/chat');
+                }}
+              >
+                상담톡
+              </button>
+            </li>
             {sellerData ? (
               <>
-                <li className="pb-5 bold">
+                <li className="pb-5 font-semibold">
                   <button
                     onClick={() => {
                       redirect('/buyer/mypage/profile');

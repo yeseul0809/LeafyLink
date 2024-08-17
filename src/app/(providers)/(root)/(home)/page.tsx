@@ -9,11 +9,11 @@ import BestSeller from './BestSeller';
 import Advertising from './Advertising';
 import LiveCommerceMobile from './LiveCommerceMobile';
 
-const images = ['/carousel(1).svg', '/carousel(2).svg', '/carousel(3).svg'];
+const images = ['/carousel-1.webp', '/carousel-2.webp', '/carousel-3.webp'];
 const mobileImages = [
-  '/mobile-carousel(1).svg',
-  '/mobile-carousel(2).svg',
-  '/mobile-carousel(3).svg'
+  '/mobile-carousel-1.webp',
+  '/mobile-carousel-2.webp',
+  '/mobile-carousel-3.webp'
 ];
 
 function Home() {

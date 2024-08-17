@@ -6,7 +6,7 @@ function Advertising() {
     <section>
       <div
         className="w-full h-[180px] mt-[180px] text-center bg-no-repeat bg-center bg-cover max_xs:hidden max_sm:hidden max_md:block max_lg:block mx-auto"
-        style={{ backgroundImage: "url('/bg-advertising.svg')" }}
+        style={{ backgroundImage: "url('/bg-advertising.webp')" }}
       >
         <Link
           href={'/livestreaming'}

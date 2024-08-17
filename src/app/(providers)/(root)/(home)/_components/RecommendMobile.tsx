@@ -22,7 +22,7 @@ export default function RecommendMobile({ recommendProps }: RecommendMobileProps
         이 달의 추천 식물
       </h2>
       <div className="w-full h-[366px] relative px-[20px]">
-        <div className="w-full h-[202px] px-[36px] pt-12 pb-4 left-0 top-[164px] absolute bg-primary-green-50 rounded-[20px] flex flex-col justify-center items-end gap-4 z-0 ">
+        <div className="w-[335px] h-auto px-[36px] pt-12 pb-4 top-[158px] absolute bg-primary-green-50 rounded-[20px] flex flex-col justify-center items-end gap-4 z-0 ">
           <div className="self-stretch h-[86px] flex-col justify-start items-end gap-3 flex">
             <div className="self-stretch flex-col justify-start items-start gap-0.5 flex">
               <div className="self-stretch text-right text-[#111111] text-14-n-20-35">
