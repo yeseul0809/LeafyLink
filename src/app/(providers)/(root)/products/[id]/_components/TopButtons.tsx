@@ -60,8 +60,8 @@ function TopButtons({ productState }: TopButtonsProps) {
 
   return (
     <>
-      <div className="mb-5 flex-col w-[335px] md:w-full">
-        <div className="w-[335px] md:w-full md:mt-6 md:mb-5 mt-4 mb-3 flex justify-end">
+      <div className="mb-5 flex-col w-full">
+        <div className="w-full md:mt-6 md:mb-5 mt-4 mb-3 flex justify-end">
           <button
             className="items-center justify-center flex w-6 h-6 md:w-9 md:h-9 border"
             onClick={() => {

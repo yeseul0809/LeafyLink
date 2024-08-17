@@ -75,12 +75,14 @@ const ProductReviewList = ({ productId, reviewsPerPage }: ProductReviewProps) =>
       ) : error ? (
         <p>리뷰를 불러오는 중 에러가 발생했습니다: {error.message}</p>
       ) : reviewData?.reviews.length === 0 ? (
-        <p className="flex justify-center text-[15px] pt-12 pb-[164px]">리뷰가 아직 없습니다.</p>
+        <p className="flex justify-center text-[15px] pt-[60px] pb-[70px] md:pt-12 md:pb-[164px]">
+          리뷰가 아직 없습니다.
+        </p>
       ) : (
         <>
           <ul className="text-left">
             {reviewData?.reviews.map((review: Review) => (
-              <li key={review.review_id} className="pt-5 md:pt-12 pb-5 md:pb-10 border-b rounded">
+              <li key={review.review_id} className="pt-5 pb-5 md:pb-10 md:pt-12 border-b rounded">
                 {editingReview?.review_id === review.review_id ? (
                   <ReviewEdit
                     reviewProductId={productId}
