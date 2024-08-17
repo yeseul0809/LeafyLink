@@ -115,7 +115,7 @@ const ProductCard2 = ({ product }: { product: Product }) => {
             <img
               src={product.thumbnail_url}
               // alt="product_image"
-              // layout="fill"
+              // fill
               className="lg:w-[295px] lg:h-[295px] w-[164px] h-[164px] bg-zinc-300 rounded-2xl hover:bg-white cursor-pointer object-cover"
             ></img>
           </Link>

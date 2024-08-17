@@ -41,7 +41,7 @@ async function Recommend() {
             <Image
               className="rounded-[20px] object-cover"
               src={recommendedData?.thumbnail_url!}
-              layout="fill"
+              fill
               alt="추천식물"
             />
           </div>
