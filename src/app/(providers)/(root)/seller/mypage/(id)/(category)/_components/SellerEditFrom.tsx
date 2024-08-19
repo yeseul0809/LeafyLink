@@ -125,11 +125,7 @@ const SellerEditForm = ({ sellerData }: SellerEditFormProps) => {
     newAddressCode: string,
     extraAddress: string
   ) => {
-    const { error: cacheError } = await supabase.from('Seller').select('*');
-
-    if (cacheError) {
-      console.error('Error refreshing schema cache:', cacheError);
-    }
+    const {} = await supabase.from('Seller').select('*');
 
     const fullAddress = `${newAddress}${extraAddress}`;
     const payload = {
@@ -146,7 +142,6 @@ const SellerEditForm = ({ sellerData }: SellerEditFormProps) => {
       .eq('seller_id', sellerData.seller_id);
 
     if (error) {
-      console.error('Error updating seller info:', error);
       alert('정보 업데이트 중 오류가 발생했습니다.');
     } else {
       alert('판매자 정보가 성공적으로 업데이트되었습니다.');

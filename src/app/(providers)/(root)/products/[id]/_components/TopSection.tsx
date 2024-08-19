@@ -31,7 +31,7 @@ function TopSection({ product, averageRating, reviewCount }: TopSectionProps) {
   const filledStars = Math.floor(averageRating);
 
   return (
-    <div className="flex w-[335px] md:w-full flex-col md:items-start md:text-left">
+    <div className="flex w-full flex-col md:items-start md:text-left">
       <p className="text-[12px] leading-[18px] font-semibold md:text-sm">{businessName}</p>
       <h1 className="text-[16px] md:text-2xl md:mb-4">{product.title}</h1>
       <div className="flex justify-between w-full">

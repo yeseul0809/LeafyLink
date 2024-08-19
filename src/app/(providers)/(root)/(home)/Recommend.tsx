@@ -16,7 +16,6 @@ async function Recommend() {
   const myPrd = products as unknown; // type 임시방편
   const recommendProduct = myPrd as Product[]; // type 임시방편
   const recommendedData = setRecommendPlant(recommendProduct);
-  console.log('recommendedData===> ', recommendedData);
   const { business_name: business_name1 } = await getSellerName(
     recommendedData[0]?.product_seller_id!
   );
@@ -67,7 +66,7 @@ async function Recommend() {
             </h3>
             <div className="flex justify-end">
               <Link href={`products/${recommendedData[0]?.product_id}`}>
-                <button className="w-[271px] h-[56px] rounded-md bg-primary-green-500 ">
+                <button className="w-[271px] h-[56px] rounded-md bg-primary-green-500 hover:bg-[#236C44]">
                   <label className="text-16-sb-24-40 text-white">바로가기</label>
                 </button>
               </Link>
@@ -86,7 +85,7 @@ async function Recommend() {
             </h3>
             <div className="flex justify-start">
               <Link href={`products/${recommendedData[1]?.product_id}`}>
-                <button className="w-[271px] h-[56px] rounded-md bg-primary-green-500 ">
+                <button className="w-[271px] h-[56px] rounded-md bg-primary-green-500 hover:bg-[#236C44]">
                   <label className="text-16-sb-24-40 text-white">바로가기</label>
                 </button>
               </Link>

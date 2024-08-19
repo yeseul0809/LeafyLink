@@ -59,7 +59,7 @@ export default function RecommendMobile({
           </div>
           <Link
             href={`products/${product_id1}`}
-            className="w-[104px] px-[12px] py-[9px] bg-primary-green-500 rounded justify-center items-center gap-2.5 flex"
+            className="w-[104px] px-[12px] py-[9px] bg-primary-green-500 hover:bg-[#236C44] rounded justify-center items-center gap-2.5 flex"
           >
             <div className="text-center text-white text-13-n-18-325 ">바로가기</div>
           </Link>
@@ -88,7 +88,7 @@ export default function RecommendMobile({
           </div>
           <Link
             href={`products/${product_id2}`}
-            className="w-[104px] px-[12px] py-[9px] bg-primary-green-500 rounded justify-center items-center gap-2.5 flex"
+            className="w-[104px] px-[12px] py-[9px] bg-primary-green-500 hover:bg-[#236C44] rounded justify-center items-center gap-2.5 flex"
           >
             <div className="text-center text-white text-13-n-18-325 ">바로가기</div>
           </Link>

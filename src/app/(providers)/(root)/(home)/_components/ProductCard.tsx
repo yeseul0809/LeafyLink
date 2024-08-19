@@ -14,6 +14,7 @@ const ProductCard = ({ product }: { product: ProductWithBusinessName }) => {
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat('en-US').format(price);
   };
+
   const router = useRouter();
 
   const handleAddToCart = async () => {
@@ -44,6 +45,7 @@ const ProductCard = ({ product }: { product: ProductWithBusinessName }) => {
     event.stopPropagation();
     handleBuyNow();
   }
+
   return (
     <div className="flex flex-col w-full max-w-xs rounded-lg overflow-hidden">
       <div className="relative group cursor-pointer w-full">
@@ -54,8 +56,8 @@ const ProductCard = ({ product }: { product: ProductWithBusinessName }) => {
                 src={product.thumbnail_url}
                 alt="상세상품"
                 fill
-                objectFit="cover"
-                className="rounded-[20px] max-w-full max-h-full"
+                sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                className="rounded-[20px] max-w-full max-h-full object-cover"
               />
             </div>
           </div>
@@ -65,11 +67,19 @@ const ProductCard = ({ product }: { product: ProductWithBusinessName }) => {
           onClick={() => router.push(`/products/${product.product_id}`)}
         >
           <div className="flex gap-2">
-            <button className="p-4 rounded-full" onClick={handleAddCartClick} type="button">
-              <img src="/icons/icon-card-cart.svg" alt="cart" />
+            <button
+              className="p-2 rounded-full shadow-lg"
+              onClick={handleAddCartClick}
+              type="button"
+            >
+              <Image src="/icons/icon-card-cart.svg" alt="cart" width={24} height={24} />
             </button>
-            <button className="p-4 rounded-full" onClick={handleBuyNowClick} type="button">
-              <img src="/icons/icon-card.svg" alt="card" />
+            <button
+              className="p-2 rounded-full shadow-lg"
+              onClick={handleBuyNowClick}
+              type="button"
+            >
+              <Image src="/icons/icon-card.svg" alt="card" width={24} height={24} />
             </button>
           </div>
         </div>
