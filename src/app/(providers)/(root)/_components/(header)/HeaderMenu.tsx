@@ -4,8 +4,7 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import HeaderMenuDropdown from './HeaderMenuDropdown';
 
-function HeaderMenu() {
-  const [isOpenMenu, setIsOpenMenu] = useState(false);
+function HeaderMenu({ setIsOpenMenu, isOpenMenu, setIsOpenSearch }) {
   const router = useRouter();
 
   // 페이지 네비게이션
@@ -16,6 +15,7 @@ function HeaderMenu() {
   // 메뉴 토글
   const toggleMenu = () => {
     setIsOpenMenu(!isOpenMenu);
+    setIsOpenSearch(false);
   };
 
   return (

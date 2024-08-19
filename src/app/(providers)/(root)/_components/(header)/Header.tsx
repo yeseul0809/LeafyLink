@@ -7,6 +7,8 @@ import { useCallback, useEffect, useState } from 'react';
 
 function Header() {
   const [visible, setVisible] = useState(true);
+  const [isOpenMenu, setIsOpenMenu] = useState(false);
+  const [isOpenSearch, setIsOpenSearch] = useState(false);
 
   const handleScroll = useCallback(() => {
     const currentPosition = window.pageYOffset;
@@ -32,9 +34,17 @@ function Header() {
       <div className="w-full mx-auto relative max-w-container-l px-[20px] block max_sm:hidden">
         {visible ? <HeaderLogin /> : null}
         <div className="w-full h-[62px]  flex justify-between items-center block max_sm:hidden">
-          <HeaderMenu />
+          <HeaderMenu
+            isOpenMenu={isOpenMenu}
+            setIsOpenMenu={setIsOpenMenu}
+            setIsOpenSearch={setIsOpenSearch}
+          />
           <div className="block max_md:hidden block max_sm:hidden">
-            <HeaderIconBar />
+            <HeaderIconBar
+              setIsOpenMenu={setIsOpenMenu}
+              setIsOpenSearch={setIsOpenSearch}
+              isOpenSearch={isOpenSearch}
+            />
           </div>
         </div>
       </div>
