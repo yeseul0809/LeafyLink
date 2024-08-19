@@ -84,6 +84,23 @@ function HeaderMobileDropdown({
           )}
         </ul>
         <ul className="text-start pl-5 pt-5 pb-5">
+          <li className="pb-5 font-semibold text-[#3BB873]">
+            <button
+              onClick={() => {
+                redirect('/livestreaming');
+              }}
+              className="flex"
+            >
+              라이브커머스
+              <Image
+                src="/icons/icon-live.svg"
+                alt="live"
+                width={18}
+                height={15}
+                className="ml-1 mt-[0.5px]"
+              ></Image>
+            </button>
+          </li>
           <li className="pb-5 font-semibold">
             <button
               onClick={() => {
