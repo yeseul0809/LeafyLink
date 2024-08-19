@@ -59,7 +59,7 @@ function HeaderMenu() {
           </button>
         </div>
       </div>
-      {isOpenMenu && <HeaderMenuDropdown />}
+      {isOpenMenu && <HeaderMenuDropdown setIsOpenMenu={setIsOpenMenu} />}
     </section>
   );
 }

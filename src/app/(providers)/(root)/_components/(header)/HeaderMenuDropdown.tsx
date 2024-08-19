@@ -6,7 +6,7 @@ import useUser from '@/hooks/user/useUser';
 import useSeller from '@/hooks/user/useSeller';
 import { useRouter } from 'next/navigation';
 
-function HeaderMenuDropdown() {
+function HeaderMenuDropdown({ setIsOpenMenu }) {
   const dropdownRef = useRef<HTMLDivElement>(null);
   const { isLogin, setLogout } = useAuthStore();
   const { userData } = useUser()!;
@@ -15,6 +15,7 @@ function HeaderMenuDropdown() {
 
   const redirect = (e: string) => {
     router.push(`${e}`);
+    setIsOpenMenu(false);
   };
 
   return (
