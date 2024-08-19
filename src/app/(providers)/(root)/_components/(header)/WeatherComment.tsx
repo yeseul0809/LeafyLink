@@ -9,7 +9,7 @@ const WeatherComment = ({ weather }: { weather: string }) => {
     weather.includes('안개')
   ) {
     return (
-      <div className="w-full h-full bg-[url('/bg-weather-cloud.svg')] bg-cover text-sm tracking-wide flex justify-center">
+      <div className="w-full h-full bg-[url('/bg-weather-cloud.webp')] bg-cover text-sm tracking-wide flex justify-center">
         <span className="flex items-center justify-center">
           내 위치는 오늘 흐림
           <Image
@@ -31,7 +31,7 @@ const WeatherComment = ({ weather }: { weather: string }) => {
   } else if (weather.includes('맑음') || weather.includes('해')) {
     // 👀
     return (
-      <div className="w-full h-full bg-[url('/bg-weather-sun.svg')] bg-cover text-sm tracking-wide flex justify-center">
+      <div className="w-full h-full bg-[url('/bg-weather-sun.webp')] bg-cover text-sm tracking-wide flex justify-center">
         <span className="flex items-center justify-center">
           내 위치는 오늘 맑음
           <Image
@@ -52,7 +52,7 @@ const WeatherComment = ({ weather }: { weather: string }) => {
     );
   } else if (weather.includes('비')) {
     return (
-      <div className="w-full h-full bg-[url('/bg-weather-rain.svg')] bg-cover text-sm tracking-wide flex justify-center">
+      <div className="w-full h-full bg-[url('/bg-weather-rain.webp')] bg-cover text-sm tracking-wide flex justify-center">
         <span className="flex items-center justify-center">
           내 위치는 오늘 비
           <Image
@@ -74,7 +74,7 @@ const WeatherComment = ({ weather }: { weather: string }) => {
     );
   } else if (weather.includes('눈')) {
     return (
-      <div className="w-full h-full bg-[url('/bg-weather-cold.svg')] bg-cover text-sm tracking-wide flex justify-center">
+      <div className="w-full h-full bg-[url('/bg-weather-cold.webp')] bg-cover text-sm tracking-wide flex justify-center">
         <span className="flex items-center justify-center">
           내 위치는 오늘 눈
           <Image
