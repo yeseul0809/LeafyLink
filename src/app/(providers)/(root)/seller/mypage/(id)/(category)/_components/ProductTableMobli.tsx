@@ -48,7 +48,9 @@ export default function ProductTableMobli({ product, formatCurrency }: ProductTa
           </div>
         </div>
         <div className="text-right text-primary-green-500 text-sm font-semibold leading-tight">
-          {product.stock === 0 ? '품절' : '판매중'}
+          <span className={product.stock === 0 ? 'text-font/Disabled' : 'text-primary-green-500'}>
+            {product.stock === 0 ? '품절' : '판매중'}
+          </span>
         </div>
       </div>
       <div className="self-stretch h-[0px] border border-[#d9d9d9]"></div>

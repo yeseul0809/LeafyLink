@@ -36,13 +36,10 @@ interface AccordionMenuProps {
 }
 
 export default function AccordionMenu({ orders }: AccordionMenuProps) {
-  const [openItems, setOpenItems] = useState<Record<number, boolean>>({});
+  const [openItemId, setOpenItemId] = useState<number | null>(null);
 
   const handleClick = (orderId: number) => {
-    setOpenItems((prev) => ({
-      ...prev,
-      [orderId]: !prev[orderId]
-    }));
+    setOpenItemId((prev) => (prev === orderId ? null : orderId));
   };
 
   function formatDate(dateString: string) {
@@ -96,7 +93,6 @@ export default function AccordionMenu({ orders }: AccordionMenuProps) {
                   onClick={() => handleClick(order.order_id)}
                 >
                   <div className="flex items-start py-[22px] s:py-0 flex-1">
-                    {/* Order ID */}
                     <span className="w-[178px] text-16-n-24-40 text-font/sub2 text-center px-4 s:w-[86px] s:text-14-n-24-35 s:p-[16px_12px] flex justify-center items-center">
                       {order.order_id}
                     </span>
@@ -110,8 +106,8 @@ export default function AccordionMenu({ orders }: AccordionMenuProps) {
 
                   <div className="flex items-center justify-center py-[22px] px-[16px] s:p-[17px_12px_17px_0]">
                     <Image
-                      src={openItems[order.order_id] ? '/icons/up.svg' : '/icons/down.svg'}
-                      alt={openItems[order.order_id] ? '업 이미지' : '다운 이미지'}
+                      src={openItemId === order.order_id ? '/icons/up.svg' : '/icons/down.svg'}
+                      alt={openItemId === order.order_id ? '업 이미지' : '다운 이미지'}
                       className="flex-shrink-0"
                       width={20}
                       height={20}
