@@ -12,7 +12,10 @@ const pretendard = localFont({
 
 export const metadata: Metadata = {
   title: 'LeafyLink',
-  description: 'LeafyLink'
+  description: 'LeafyLink',
+  icons: {
+    icon: '/favicon_green.ico'
+  }
 };
 
 function RootLayout({

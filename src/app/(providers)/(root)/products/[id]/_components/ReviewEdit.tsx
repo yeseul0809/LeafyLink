@@ -131,7 +131,7 @@ function ReviewEdit({
             className="w-full h-20 md:h-40 p-[12px] md:p-5 border-2 rounded overflow-y-auto custom-scrollbar placeholder:text-[12px] md:placeholder:text-base"
           />
         </div>
-        <div className="flex-col md:flex-row md:flex justify-between gap-4">
+        <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-4">
           <div className="flex flex-col text-[11px] md:text-[14px] text-left">
             <span>
               • 상품과 관련없는 내용 또는 이미지, 욕설/비방, 개인정보유출, 광고/홍보글 등 적절하지
@@ -139,12 +139,14 @@ function ReviewEdit({
             </span>
             <span>• 작성된 게시물은 운영 및 마케팅에 활용될 수 있습니다.</span>
           </div>
-          <button
-            type="submit"
-            className="w-[163px] md:w-[82px] bg-primary-green-500 mt-3 mb-5 md:mt-0 md:mb-0 text-[13px] text-white px-3 py-[9px] rounded-[4px] hover:bg-primary-green-700"
-          >
-            {editingReview ? '수정하기' : '리뷰남기기'}
-          </button>
+          <div className="flex justify-center md:justify-end">
+            <button
+              type="submit"
+              className="w-[163px] md:w-[82px] bg-primary-green-500 mt-3 mb-5 md:mt-0 md:mb-0 text-[13px] text-white px-3 py-[9px] rounded-[4px] hover:bg-primary-green-700"
+            >
+              {editingReview ? '수정하기' : '리뷰남기기'}
+            </button>
+          </div>
         </div>
       </form>
     </div>

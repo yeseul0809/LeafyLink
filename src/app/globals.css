@@ -60,6 +60,7 @@
 
 .swal-confirm-button {
   background-color: #3bb873;
+  outline: none;
   color: #ffffff;
   font-size: 13px;
   font-weight: 400;
