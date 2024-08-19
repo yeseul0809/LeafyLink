@@ -73,6 +73,9 @@ const nextConfig = {
       },
       {
         hostname: 'image.guud.com'
+      },
+      {
+        hostname: 'res.cloudinary.com'
       }
     ],
     disableStaticImages: true

@@ -17,7 +17,9 @@ export async function createReview(reviewData: ReviewInput): Promise<Review[]> {
   return data;
 }
 
-export async function updateReview(reviewId: string, reviewData: ReviewInput) {
+export async function updateReview(reviewData: ReviewInput, reviewId?: string | null) {
+  if (!reviewId) throw new Error();
+
   const supabaseServer: SupabaseClient<Database> = createClient();
   const { data, error } = await supabaseServer
     .from('Review')

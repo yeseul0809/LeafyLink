@@ -1,4 +1,4 @@
-import { Tables } from "./supabase";
+import { Tables, TablesInsert } from './supabase';
 
-export type Review = Tables<"Review">
-export type ReviewInput = Omit<Review, 'created_at' | 'review_id'>;
+export type Review = Tables<'Review'>;
+export type ReviewInput = TablesInsert<'Review'>;

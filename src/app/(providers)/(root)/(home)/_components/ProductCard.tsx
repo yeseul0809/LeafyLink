@@ -59,6 +59,7 @@ const ProductCard = ({ product }: { product: ProductWithBusinessName }) => {
     event.stopPropagation();
     handleBuyNow();
   }
+
   return (
     <div className="flex flex-col w-full max-w-xs rounded-lg overflow-hidden">
       <div className="relative group cursor-pointer w-full">
@@ -68,9 +69,9 @@ const ProductCard = ({ product }: { product: ProductWithBusinessName }) => {
               <Image
                 src={product.thumbnail_url}
                 alt="상세상품"
-                layout="fill"
-                objectFit="cover"
-                className="rounded-[20px] max-w-full max-h-full"
+                fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                className="rounded-[20px] max-w-full max-h-full object-cover"
               />
             </div>
           </div>
