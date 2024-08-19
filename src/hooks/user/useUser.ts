@@ -22,7 +22,7 @@ const useGetUser = () => {
     // 사용하는 곳에서 {userData} = useGetUser()
     // 이런식으로 사용하면 됩니다!
   } catch (e) {
-    return null;
+    return { userData: null };
   }
 };
 

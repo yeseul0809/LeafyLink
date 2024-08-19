@@ -7,6 +7,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { createChatroom, findExistingChatroom } from '../../../chat/_utils/chatroomUtils';
 import Image from 'next/image';
 import showSwal from '@/utils/swal';
+import useGetUser from '@/hooks/user/useUser';
 
 interface TopButtonsProps {
   productState: {
@@ -26,10 +27,10 @@ interface TopButtonsProps {
 function TopButtons({ productState }: TopButtonsProps) {
   const { count, setCount, handleAddToCart, handleBuyNow, product } = productState;
   const router = useRouter();
-  const { user } = useUser();
+  const { userData } = useGetUser();
 
   const handleStartChat = async () => {
-    if (!user) {
+    if (!userData) {
       showSwal('로그인이 필요한 서비스입니다.<br>로그인 후 이용해주세요.');
       router.push(`/login`);
       return;
@@ -37,7 +38,7 @@ function TopButtons({ productState }: TopButtonsProps) {
 
     // 기존채팅방 확인
     const existingChatrooms = await findExistingChatroom(
-      user.id,
+      userData.user_id,
       product.product_seller_id,
       product.product_id
     );
@@ -49,7 +50,7 @@ function TopButtons({ productState }: TopButtonsProps) {
       const chatroomId = uuidv4();
       const newChatroom = await createChatroom(
         chatroomId,
-        user.id,
+        userData.user_id,
         product.product_seller_id,
         product.product_id
       );
@@ -59,8 +60,8 @@ function TopButtons({ productState }: TopButtonsProps) {
 
   return (
     <>
-      <div className="mb-5 flex-col w-[335px] md:w-full">
-        <div className="w-[335px] md:w-full md:mt-6 md:mb-5 mt-4 mb-3 flex justify-end">
+      <div className="mb-5 flex-col w-full">
+        <div className="w-full md:mt-6 md:mb-5 mt-4 mb-3 flex justify-end">
           <button
             className="items-center justify-center flex w-6 h-6 md:w-9 md:h-9 border"
             onClick={() => {

@@ -61,8 +61,13 @@
 .swal-confirm-button {
   background-color: #3bb873;
   color: #ffffff;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 18px;
   border-radius: 4px;
+  text-align: center;
   width: 356px;
+  height: 36px;
   padding: 9px 12px;
   margin-bottom: 32px;
   margin-left: 32px;
@@ -74,10 +79,53 @@
 
 @media (max-width: 440px) {
   .swal-confirm-button {
-    width: 280px;
+    width: 311px;
+    height: 48px;
     margin-left: 0;
     margin-right: 0;
-    padding: 12px 16px;
+    border-radius: 0;
+    padding: 0;
+    margin: 0;
+  }
+  .swal-popup {
+    width: 311px;
+    height: 164px;
+    max-width: 100%;
+    border-radius: 0;
+    background-color: #ffffff;
+    padding: 0;
+    box-shadow: 16px 16px 30px 0px rgba(0, 0, 0, 0.06);
+  }
+  .swal-title {
+    font-size: 14px;
+    color: #111111;
+    font-weight: 600;
+    text-align: center;
+    line-height: 20px;
+    padding: 48px 16px;
+  }
+  .swal-actions {
+    display: flex !important;
+    justify-content: center !important;
+    width: 311px !important;
+    gap: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+  .swal2-actions {
+    margin: 0 !important;
+  }
+  .swal-cart-button,
+  .swal-continue-button {
+    background-color: #ffffff;
+    color: #3bb873;
+    font-size: 14px !important;
+    width: 155.5px !important;
+    height: 48px !important;
+    border-radius: 0 !important;
+    border: 1px solid var(--primary-500-main, #3bb873);
+    cursor: pointer;
+    transition: background-color 0.2s ease;
   }
 }
 
@@ -130,6 +178,10 @@
 
 .ql-editor {
   padding: 0 !important;
+}
+
+.ql-editor img {
+  display: inline;
 }
 
 .custom-radio {

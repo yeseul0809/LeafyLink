@@ -1,5 +1,3 @@
-import React from 'react';
-
 interface StarRatingProps {
   rating: number;
   setRating: (value: number) => void;
@@ -23,7 +21,7 @@ function StarRating({ rating, setRating, uniqueId }: StarRatingProps) {
           >
             <input
               type="radio"
-              id={`rating-${uniqueId}-${star}`} // id를 고유하게 설정
+              id={`rating-${uniqueId}-${star}`}
               name={`rating-${uniqueId}`}
               value={star}
               onChange={() => setRating(star)}

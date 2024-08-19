@@ -23,15 +23,18 @@ async function ProductDetailPage({ params }: ParamsProps) {
   const totalRating = reviewData.reviews.reduce((acc, review) => acc + (review.rating || 0), 0);
   const averageRating = reviewCount > 0 ? totalRating / reviewCount : 0;
 
+  const cloudinaryUrl = `https://res.cloudinary.com/drquzurim/image/fetch/f_webp/${product.thumbnail_url}`;
+
   return (
     <div className="container mx-auto xs:max-w-screen-lg py-0 md:py-20">
       <section className="flex justify-center flex-col md:flex-row md:gap-[80px]">
         <div className="w-full h-[375px] overflow-hidden md:w-[485px] md:h-[485px] flex-shrink-0 justify-center md:rounded-[28px]">
           <Image
-            src={product.thumbnail_url}
+            src={cloudinaryUrl}
             alt={product.title}
             width={375}
             height={375}
+            priority
             className="object-cover w-full h-full md:w-[485px] md:h-[485px] md:rounded-lg"
           />
         </div>

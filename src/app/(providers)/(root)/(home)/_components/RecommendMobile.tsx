@@ -42,12 +42,7 @@ export default function RecommendMobile({ recommendProps }: RecommendMobileProps
           </Link>
         </div>
         <div className="w-full h-[188px] relative">
-          <Image
-            className="rounded-[20px] object-cover"
-            src={thumbnail_url}
-            layout="fill"
-            alt="추천식물"
-          />
+          <Image className="rounded-[20px] object-cover" src={thumbnail_url} fill alt="추천식물" />
         </div>
       </div>
     </>
