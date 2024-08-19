@@ -3,7 +3,7 @@ import { createClient } from '@/supabase/supabaseClient';
 import Image from 'next/image';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useAuthStore } from '@/stores/authStore';
 import useSeller from '@/hooks/user/useSeller';
 import useUser from '@/hooks/user/useUser';
@@ -14,6 +14,7 @@ function HeaderLogin() {
   const router = useRouter();
   const { isLogin, setIsLogin, setLogout } = useAuthStore();
   const [profileLink, setProfileLink] = useState('/');
+  const pathname = usePathname();
 
   const { userData } = useUser()!;
   const { sellerData } = useSeller(userData?.user_id!);
@@ -83,7 +84,10 @@ function HeaderLogin() {
               className="ml-10 hover:text-zinc-950"
               onClick={() => {
                 setLogout(isLogin);
-                queryClient.removeQueries({ queryKey: ['user'] }); // 로그아웃 시 user 박스 삭제
+                queryClient.removeQueries({ queryKey: ['user'] });
+                if (pathname.startsWith('/cart')) {
+                  router.push('/');
+                }
               }}
             >
               로그아웃

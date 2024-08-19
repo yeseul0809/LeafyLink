@@ -2,9 +2,13 @@
 
 import { Review } from '@/types/review';
 import { useState, useEffect } from 'react';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { getReviews } from '../_actions/productActions';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { deleteReview, getReviews } from '../_actions/productActions';
 import ReviewToggle from './ReviewToggle';
+import { formatDateTime } from '../utils/formatDateTime';
+import showSwal, { showSwalDeleteReview } from '@/utils/swal';
+import useUser from '@/hooks/useUser';
+import ReviewEdit from './ReviewEdit';
 
 interface ProductReviewProps {
   productId: string;
@@ -16,24 +20,11 @@ const fetchReviews = async (productId: string, reviewsPerPage: number, currentPa
   return getReviews(productId, reviewsPerPage, offset);
 };
 
-const formatDateTime = (dateString: string) => {
-  const date = new Date(dateString);
-  const formattedDate = date.toLocaleDateString('ko-KR', {
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit'
-  });
-  const formattedTime = date.toLocaleTimeString('ko-KR', {
-    hour: '2-digit',
-    minute: '2-digit',
-    hour12: true
-  });
-
-  return `${formattedDate} ${formattedTime}`;
-};
-
 const ProductReviewList = ({ productId, reviewsPerPage }: ProductReviewProps) => {
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [editingReview, setEditingReview] = useState<Review | null>(null);
+  const { user } = useUser();
+  const queryClient = useQueryClient();
 
   const {
     data: reviewData,
@@ -49,11 +40,32 @@ const ProductReviewList = ({ productId, reviewsPerPage }: ProductReviewProps) =>
     refetch();
   }, [currentPage, refetch]);
 
-  const totalPages = reviewData ? Math.ceil((reviewData.totalCount ?? 0) / reviewsPerPage) : 1;
+  // 리뷰삭제
+  const deleteMutation = useMutation({
+    mutationFn: (reviewId: string) => deleteReview(reviewId, productId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['reviews', productId] });
+      showSwal('리뷰가 삭제되었습니다.');
+    },
+    onError: (error: any) => {
+      console.error('리뷰 삭제 중 에러 발생:', error);
+      showSwal('리뷰 삭제를 실패했습니다.');
+    }
+  });
 
-  const handlePageChange = (page: number) => {
-    setCurrentPage(page);
+  const handleDeleteReview = async (reviewId: string) => {
+    const isConfirmed = await showSwalDeleteReview();
+    if (isConfirmed) {
+      deleteMutation.mutate(reviewId);
+    }
   };
+
+  // 리뷰수정
+  const handleEditReview = (review: Review) => {
+    setEditingReview(review);
+  };
+
+  const totalPages = reviewData ? Math.ceil((reviewData.totalCount ?? 0) / reviewsPerPage) : 1;
 
   return (
     <div className="w-[335px] md:w-[1240px] mx-auto">
@@ -68,26 +80,60 @@ const ProductReviewList = ({ productId, reviewsPerPage }: ProductReviewProps) =>
           <ul className="text-left">
             {reviewData?.reviews.map((review: Review) => (
               <li key={review.review_id} className="pt-5 md:pt-12 pb-5 md:pb-10 border-b rounded">
-                <div className="mb-2">
-                  <p className="text-[13px]">{review.review_user_name}</p>
-                </div>
-                <div className="flex items-center pb-[17px] md:pb-6">
-                  {Array.from({ length: review.rating || 0 }).map((_, index) => (
-                    <span key={index} className="text-[16px] md:text-[24px] text-primary-green-500">
-                      ★
-                    </span>
-                  ))}
-                  {Array.from({ length: 5 - (review.rating || 0) }).map((_, index) => (
-                    <span key={index} className="text-gray-300">
-                      ★
-                    </span>
-                  ))}
-                  <span className="text-[13px] md:text-xl font-bold ml-2">{review.rating}.0</span>
-                </div>
-                <ReviewToggle description={review.description} />
-                <span className="text-gray-500 text-sm">
-                  {review.created_at ? formatDateTime(review.created_at) : '날짜 정보 없음'}
-                </span>
+                {editingReview?.review_id === review.review_id ? (
+                  <ReviewEdit
+                    reviewProductId={productId}
+                    reviewCount={reviewData?.totalCount ?? 0}
+                    editingReview={editingReview} // 수정할 리뷰 데이터
+                  />
+                ) : (
+                  <>
+                    <div className="mb-2">
+                      <p className="text-[13px]">{review.review_user_name}</p>
+                    </div>
+                    <div className="flex items-center pb-[17px] md:pb-6">
+                      {Array.from({ length: review.rating || 0 }).map((_, index) => (
+                        <span
+                          key={index}
+                          className="text-[16px] md:text-[24px] text-primary-green-500"
+                        >
+                          ★
+                        </span>
+                      ))}
+                      {Array.from({ length: 5 - (review.rating || 0) }).map((_, index) => (
+                        <span key={index} className="text-[16px] md:text-[24px] text-gray-300">
+                          ★
+                        </span>
+                      ))}
+                      <span className="text-[13px] md:text-[16px] font-bold ml-2">
+                        {review.rating}.0
+                      </span>
+                    </div>
+                    <ReviewToggle description={review.description} />
+                    <div className="flex justify-between">
+                      <span className="text-gray-500 text-sm">
+                        {review.created_at ? formatDateTime(review.created_at) : '날짜 정보 없음'}
+                      </span>
+                      {user?.id === review.review_user_id && (
+                        <div className="space-x-5">
+                          <button
+                            onClick={() => handleEditReview(review)}
+                            className="text-font/sub1 hover:bg-BG/Regular font-semibold text-[13px]"
+                          >
+                            수정
+                          </button>
+
+                          <button
+                            onClick={() => handleDeleteReview(review.review_id)}
+                            className="text-System/Danger/50_Base hover:bg-System/Danger/5_Surface font-semibold text-[13px]"
+                          >
+                            삭제
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                  </>
+                )}
               </li>
             ))}
           </ul>
@@ -95,7 +141,7 @@ const ProductReviewList = ({ productId, reviewsPerPage }: ProductReviewProps) =>
             {Array.from({ length: totalPages }).map((_, index) => (
               <button
                 key={index}
-                onClick={() => handlePageChange(index + 1)}
+                onClick={() => setCurrentPage(index + 1)}
                 className={`w-8 h-8 mx-[6px] px-3 py-1 rounded-full ${currentPage === index + 1 ? 'border border-Line/Strong' : 'bg-white'}`}
               >
                 {index + 1}

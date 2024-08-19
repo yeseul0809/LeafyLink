@@ -8,7 +8,7 @@ function RedirectOrderButton() {
   return (
     <button
       onClick={() => router.push('/buyer/mypage/orders?page=1')}
-      className="w-full p-[16px] text-primary-green-400 bg-primary-green-50 rounded-[8px] max_sm:w-1/2 sm:hidden"
+      className="w-1/2 p-[16px] text-primary-green-400 bg-primary-green-50 rounded-[8px] max_sm:w-1/2"
     >
       구매내역 조회
     </button>

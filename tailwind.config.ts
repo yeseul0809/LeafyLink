@@ -79,7 +79,9 @@ const config: Config = {
         'Line/Strong': '#111111',
         'Line/Disabled': '#cacad7',
         'BG/Light': '#F7F7FB',
-        'BG/Regular': '#F1F1F5'
+        'BG/Regular': '#F1F1F5',
+        'System/Danger/5_Surface': '#FEECF0',
+        'System/Danger/50_Base': '#EB003B'
       },
       fontFamily: {
         pretendard: ['var(--font-pretendard)']

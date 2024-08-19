@@ -56,16 +56,16 @@ export default function QuantityButton({
 
   return (
     <>
-      <div className="ring-1 ring-[#E5E5EC] w-[122px] h-[24px] grid grid-cols-3 mr-[20px]">
+      <div className="ring-1 ring-[#E5E5EC] w-[98px] h-[24px] flex justify-center mr-[20px]">
         <button
-          className="border-r border-[#E5E5EC] h-[24px] flex items-center justify-center"
+          className="border-r border-[#E5E5EC] h-[24px] w-[24px] flex items-center justify-center"
           onClick={handleDecrease}
         >
           -
         </button>
         <input
           type="number"
-          className="text-center h-[24px]"
+          className="text-center h-[24px] w-[40px]"
           value={value}
           onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
             setValue(Number(event.target.value))
@@ -73,7 +73,7 @@ export default function QuantityButton({
           min="1"
         />
         <button
-          className="flex border-l border-[#E5E5EC] h-[24px] justify-center items-center"
+          className="flex border-l border-[#E5E5EC] h-[24px] w-[24px] justify-center items-center"
           onClick={handleIncrease}
         >
           +

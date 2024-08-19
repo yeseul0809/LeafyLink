@@ -4,7 +4,7 @@ import { CategoryIconType } from '../Categories';
 
 function CategoryIcon({ category }: { category: CategoryIconType }) {
   return (
-    <Link href="/">
+    <Link href={'/'}>
       <img
         src={category.imgUrl}
         alt={category.alt}

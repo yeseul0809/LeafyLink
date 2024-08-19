@@ -12,8 +12,7 @@ import { useCartStore } from '@/stores';
 const ProductCard = ({ product }: { product: ProductWithBusinessName }) => {
   const { initializeCart } = useCartStore((state) => ({
     initializeCart: state.initializeCart
-  }));
-
+  })); // 여기
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat('en-US').format(price);
   };
@@ -25,7 +24,6 @@ const ProductCard = ({ product }: { product: ProductWithBusinessName }) => {
     const { data } = await supabase.auth.getUser();
     return data;
   };
-
   const handleAddToCart = async () => {
     const { user } = await getUserData();
     if (!user) {
@@ -33,7 +31,6 @@ const ProductCard = ({ product }: { product: ProductWithBusinessName }) => {
       router.push(`/login`);
       return;
     }
-
     const cartItemData = {
       cart_product_id: product.product_id,
       count: 1,
@@ -46,25 +43,22 @@ const ProductCard = ({ product }: { product: ProductWithBusinessName }) => {
       showSwal('장바구니에 상품이 정상적으로 담겼습니다.');
     }
   };
-
   function handleAddCartClick(event: React.MouseEvent) {
     event.stopPropagation();
     handleAddToCart();
   }
-
   const handleBuyNow = () => {
     router.push(`/payment?productId=${product.product_id}&quantity=1`);
   };
 
   const handleProductDetail = () => {
     router.push(`/products/${product.product_id}`);
-  };
+  }; // 여기
 
   function handleBuyNowClick(event: React.MouseEvent) {
     event.stopPropagation();
     handleBuyNow();
   }
-
   return (
     <div className="flex flex-col w-full max-w-xs rounded-lg overflow-hidden">
       <div className="relative group cursor-pointer w-full">
@@ -117,5 +111,4 @@ const ProductCard = ({ product }: { product: ProductWithBusinessName }) => {
     </div>
   );
 };
-
 export default ProductCard;

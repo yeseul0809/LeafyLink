@@ -18,7 +18,7 @@ export default function RecommendMobile({ recommendProps }: RecommendMobileProps
   };
   return (
     <>
-      <h2 className="text-20-n-28-50 text-center text-font/main mt-[70px] mb-[20px]">
+      <h2 className="text-20-n-28-50 max_md:text-[20px] font-semibold text-center text-font/main mt-[70px] mb-[20px]">
         이 달의 추천 식물
       </h2>
       <div className="w-full h-[366px] relative px-[20px]">
