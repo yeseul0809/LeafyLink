@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   title: 'LeafyLink',
   description: 'LeafyLink',
   icons: {
-    icon: '/favicon_green.ico'
+    icon: '/favicon.ico'
   }
 };
 
