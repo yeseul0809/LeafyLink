@@ -1,5 +1,4 @@
 'use client';
-import Weather from './Weather';
 import HeaderLogin from './HeaderLogin';
 import HeaderMenu from './HeaderMenu';
 import HeaderIconBar from './HeaderIconBar';
@@ -7,11 +6,9 @@ import HeaderMobile from './HeaderMobile';
 import { useCallback, useEffect, useState } from 'react';
 
 function Header() {
-  const [position, setPosition] = useState(0);
   const [visible, setVisible] = useState(true);
 
-  const handelScroll = useCallback(() => {
-    // 끗. 복습해보세용
+  const handleScroll = useCallback(() => {
     const currentPosition = window.pageYOffset;
     if (currentPosition <= 0) {
       setVisible(true);
@@ -19,10 +16,11 @@ function Header() {
       setVisible(false);
     }
   }, []);
+
   useEffect(() => {
-    window.addEventListener('scroll', handelScroll);
+    window.addEventListener('scroll', handleScroll);
     return () => {
-      window.removeEventListener('scroll', handelScroll);
+      window.removeEventListener('scroll', handleScroll);
     };
   }, []);
 

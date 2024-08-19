@@ -29,6 +29,8 @@ export const updateUserData = async (
     throw new Error(error.message);
   }
 };
+
+//숫자 단위표시
 export const formatCurrency = (value: number) => {
   return new Intl.NumberFormat('ko-KR', {
     style: 'currency',
@@ -40,6 +42,8 @@ export const formatCurrency = (value: number) => {
     .replace('KRW', '')
     .trim();
 };
+
+//날짜YYYYMMDD
 export const formatDate = (dateString: string) => {
   const date = new Date(dateString);
   const year = String(date.getFullYear()).slice(2);
@@ -71,6 +75,7 @@ export const buyerOrders = async (userId: string, currentPage: number, itemsPerP
       cost,
       is_payed,
       order_product_id
+
     `
     )
     .eq('order_user_id', userId)

@@ -13,7 +13,7 @@ interface ImagesType {
 }
 function Carousel({ images }: ImagesType) {
   return (
-    <div className="w-full lg:h-[461px] sm:h-[200px] h-[200px]">
+    <div className="w-full lg:h-[461px] sm:h-[200px] md:h-[300px] h-[200px]">
       <Swiper
         slidesPerView={1}
         spaceBetween={30}
@@ -40,7 +40,7 @@ function Carousel({ images }: ImagesType) {
                 width={1240}
                 height={500}
                 sizes="(max-width: 1024px) 100vw, 1240px"
-                className="object-cover w-full lg:h-[461px] sm:h-[200px] h-[200px]"
+                className="object-cover w-full lg:h-[461px] sm:h-[200px] md:h-[300px] h-[200px]"
                 alt={`slide-${index}`}
               />
             </SwiperSlide>

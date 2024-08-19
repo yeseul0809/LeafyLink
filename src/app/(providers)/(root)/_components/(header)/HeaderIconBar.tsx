@@ -8,7 +8,8 @@ import { createClient } from '@/supabase/supabaseClient';
 import { unreadCountStore } from '@/stores/unreadCountStore';
 import { fetchUnreadCounts } from '../../chat/_utils/chatroomUtils';
 import useChatrooms from '../../chat/_hooks/useChatrooms';
-import useUser from '@/hooks/useUser';
+import useUser from '@/hooks/user/useUser';
+import useSeller from '@/hooks/user/useSeller';
 import { useCartStore } from '@/stores';
 
 function HeaderIconBar() {
@@ -25,8 +26,9 @@ function HeaderIconBar() {
   }));
 
   const supabase = createClient();
-  const { user } = useUser();
-  const { chatrooms: chatroomList } = useChatrooms(user ? user.id : '');
+  const { userData } = useUser()!;
+  const { sellerData } = useSeller(userData?.user_id!);
+  const { chatrooms: chatroomList } = useChatrooms(userData ? userData.user_id : '');
 
   const unreadMessageCount = unreadCountStore((state) =>
     Object.values(state.unreadCounts).reduce((sum, count) => sum + count, 0)
@@ -36,61 +38,41 @@ function HeaderIconBar() {
 
   // 로그인 상태
   useEffect(() => {
-    supabase.auth.getUser().then(async (res) => {
-      if (res.data.user) {
-        setIsLogin(true);
-        const userId = res.data.user.id;
-        setUserName(res.data.user.identities![0].identity_data?.full_name);
-        setUserAvatar(res.data.user.identities![0].identity_data?.avatar_url);
+    if (userData) {
+      console.log('userData ====>', userData);
+      setIsLogin(true);
+      setUserName(userData.user_name);
+      setUserAvatar(userData.avatar_url);
 
-        const fetchSellerData = async (userId: string) => {
-          try {
-            const { data, error } = await supabase
-              .from('Seller')
-              .select('seller_id, business_name')
-              .eq('seller_id', userId)
-              .maybeSingle();
-
-            if (error) {
-              return null;
-            }
-
-            return data;
-          } catch (error) {
-            return null;
-          }
-        };
-
-        const sellerData = await fetchSellerData(userId);
-        if (sellerData) {
-          setBusinessName(sellerData.business_name);
-          setProfileLink('/seller/mypage/profile');
-        } else {
-          setProfileLink('/buyer/mypage/profile');
-        }
+      console.log('sellerData', sellerData);
+      if (sellerData) {
+        setBusinessName(sellerData.business_name);
+        setProfileLink('/seller/mypage/profile');
       } else {
-        setIsLogin(false);
+        setProfileLink('/buyer/mypage/profile');
       }
-    });
-  }, []);
+    } else {
+      setIsLogin(false);
+    }
+  }, [userData, sellerData]);
 
   // chatroomList가 업데이트되면 안 읽은 메시지 수를 계산
   useEffect(() => {
     const updateUnreadCounts = async () => {
       if (isLogin && chatroomList.length > 0) {
         const setUnreadCounts = unreadCountStore.getState().setUnreadCounts;
-        await fetchUnreadCounts(user, chatroomList, setUnreadCounts);
+        await fetchUnreadCounts(userData, chatroomList, setUnreadCounts);
       }
     };
 
     updateUnreadCounts();
-  }, [chatroomList, isLogin, user]);
+  }, [chatroomList, isLogin, userData]);
 
   useEffect(() => {
-    if (user) {
-      initializeCart(user.id);
+    if (userData) {
+      initializeCart(userData.user_id);
     }
-  }, [user, initializeCart]);
+  }, [userData, initializeCart]);
 
   const redirect = (e: string) => {
     router.push(`${e}`);
