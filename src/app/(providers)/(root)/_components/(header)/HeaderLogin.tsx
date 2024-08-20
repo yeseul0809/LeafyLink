@@ -1,5 +1,5 @@
 'use client';
-import { createClient } from '@/supabase/supabaseClient';
+
 import Image from 'next/image';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
@@ -18,7 +18,7 @@ function HeaderLogin() {
 
   const { userData } = useUser()!;
   const { sellerData } = useSeller(userData?.user_id!);
-
+  // console.log('여기는 헤더 로그인', userData);
   // 페이지 네비게이션
   const redirect = (e: string) => {
     router.push(`${e}`);
@@ -44,10 +44,10 @@ function HeaderLogin() {
         <Link href={'/'}>
           <Image src="/icons/logo.svg" alt="logo" width={152} height={41} />
         </Link>
-        {isLogin ? (
+        {userData ? (
           <div className="로그인O flex items-center text-zinc-500">
             <Image
-              src={userData?.avatar_url || '/default-avatar.png'}
+              src={userData?.avatar_url || '/icons/default-avatar.png'}
               alt="user profile image"
               width={28}
               height={28}
@@ -61,11 +61,12 @@ function HeaderLogin() {
             <button
               className="ml-10 hover:text-zinc-950"
               onClick={() => {
-                setLogout(false);
+                setLogout();
                 queryClient.removeQueries({ queryKey: ['user'] });
                 if (pathname.startsWith('/cart')) {
                   router.push('/');
                 }
+                redirect('/');
               }}
             >
               로그아웃

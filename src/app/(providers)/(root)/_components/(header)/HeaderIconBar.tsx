@@ -44,7 +44,6 @@ function HeaderIconBar({ setIsOpenMenu, setIsOpenSearch, isOpenSearch }: HeaderM
   // 로그인 상태
   useEffect(() => {
     if (userData) {
-      console.log('userData ====>', userData);
       setIsLogin(true);
       setUserName(userData.user_name);
       setUserAvatar(userData.avatar_url);

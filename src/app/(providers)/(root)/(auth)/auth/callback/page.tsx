@@ -5,8 +5,13 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@/supabase/supabaseClient';
 import { useAuthStore } from '@/stores/authStore';
+import { useQueryClient } from '@tanstack/react-query';
+import { getUserData } from '@/app/(providers)/(root)/(home)/actions';
+
 function AuthCallback() {
   const router = useRouter();
+  const queryClient = useQueryClient();
+
   const { isLogin, setIsLogin } = useAuthStore();
 
   useEffect(() => {
@@ -64,6 +69,12 @@ function AuthCallback() {
           await saveUserToDatabase(session.user);
         }
         setIsLogin(true);
+
+        await queryClient.fetchQuery({
+          queryKey: ['user'],
+          queryFn: () => getUserData()
+        });
+        console.log('로그인 true로 변경 zustand');
         router.push('/');
       }
     };

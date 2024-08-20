@@ -115,7 +115,7 @@ function HeaderMenuDropdown({ setIsOpenMenu }: HeaderMenuProps) {
               <li className="pb-2 font-semibold">
                 <button
                   onClick={() => {
-                    setLogout(isLogin);
+                    setLogout();
                   }}
                 >
                   로그아웃
