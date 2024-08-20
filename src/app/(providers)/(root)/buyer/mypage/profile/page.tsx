@@ -34,7 +34,7 @@ export default async function BuyerMyPage() {
     addressCode: data.address_code || '',
     phone: data.phone || '',
     userName: data.user_name || '사용자 이름',
-    avatarUrl: data.avatar_url || '/path/to/default-avatar.png'
+    avatarUrl: data.avatar_url || '/default-useravatar.png'
   };
 
   return (
