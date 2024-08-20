@@ -103,21 +103,23 @@ const ProductCard2 = ({ product }: { product: Product }) => {
             className="cursor-pointer opacity-0 lg:w-[295px] lg:h-[295px] w-[164px] h-[164px] z-1 lg:flex justify-center items-center absolute z-5 hover:backdrop-blur-sm hover:opacity-100"
           >
             <button className="mr-10" onClick={handleAddCartClick}>
-              <img src="/icons/icon-card-cart.svg" alt="cart" />
+              <Image src="/icons/icon-card-cart.svg" alt="cart" />
             </button>
             <button onClick={handleBuyNowClick}>
-              <img src="/icons/icon-card.svg" alt="card" />
+              <Image src="/icons/icon-card.svg" alt="card" />
             </button>
           </div>
 
           <Link href={'/상세페이지'}>
             {/* <Link href={`/products/${product.product_id}`}> */}
-            <img
+            <Image
               src={product.thumbnail_url}
-              // alt="product_image"
+              alt="product_image"
               // fill
+              width={164}
+              height={164}
               className="lg:w-[295px] lg:h-[295px] w-[164px] h-[164px] bg-zinc-300 rounded-2xl hover:bg-white cursor-pointer object-cover"
-            ></img>
+            ></Image>
           </Link>
         </div>
       </div>
