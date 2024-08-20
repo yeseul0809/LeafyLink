@@ -5,6 +5,12 @@ import HeaderIconBar from './HeaderIconBar';
 import HeaderMobile from './HeaderMobile';
 import { useCallback, useEffect, useState } from 'react';
 
+type HeaderMenuProps = {
+  setIsOpenMenu: (isOpenMenu: boolean) => void;
+  isOpenMenu: boolean;
+  setIsOpenSearch: (isOpenSearch: boolean) => void;
+};
+
 function Header() {
   const [visible, setVisible] = useState(true);
   const [isOpenMenu, setIsOpenMenu] = useState(false);

@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import HeaderMenuDropdown from './HeaderMenuDropdown';
 
+// 얘네 타입 설정해
 function HeaderMenu({ setIsOpenMenu, isOpenMenu, setIsOpenSearch }) {
   const router = useRouter();
 
