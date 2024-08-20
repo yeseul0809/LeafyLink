@@ -55,23 +55,13 @@ export const fetchUnreadCounts = async (
   for (const chatroom of chatrooms) {
     let data, error;
 
-    if (user.id === chatroom.chatroom_user_id) {
-      // 구매자일 때
-      ({ data, error } = await supabase
-        .from('Message')
-        .select('is_read', { count: 'exact' })
-        .eq('message_chatroom_id', chatroom.chatroom_id)
-        .eq('is_read', false)
-        .neq('message_user_id', chatroom.chatroom_seller_id));
-    } else {
-      // 판매자일 때
-      ({ data, error } = await supabase
-        .from('Message')
-        .select('is_read', { count: 'exact' })
-        .eq('message_chatroom_id', chatroom.chatroom_id)
-        .eq('is_read', false)
-        .neq('message_user_id', user.id));
-    }
+    // 내가 읽지 않은 메시지를 가져옴
+    ({ data, error } = await supabase
+      .from('Message')
+      .select('is_read', { count: 'exact' })
+      .eq('message_chatroom_id', chatroom.chatroom_id)
+      .eq('is_read', false) // 읽지 않은 메시지 필터
+      .neq('message_user_id', user.user_id)); // 상대방이 보낸 메시지 필터
 
     if (error) {
       console.error('읽지 않은 메세지 수 가져오는 중 에러발생', error);

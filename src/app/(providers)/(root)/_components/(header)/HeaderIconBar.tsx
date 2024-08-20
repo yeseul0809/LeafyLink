@@ -31,7 +31,7 @@ function HeaderIconBar({ setIsOpenMenu, setIsOpenSearch, isOpenSearch }: HeaderM
   }));
 
   const supabase = createClient();
-  const { userData } = useUser()!;
+  const { userData } = useUser();
   const { sellerData } = useSeller(userData?.user_id!);
   const { chatrooms: chatroomList } = useChatrooms(userData ? userData.user_id : '');
 
@@ -58,6 +58,7 @@ function HeaderIconBar({ setIsOpenMenu, setIsOpenSearch, isOpenSearch }: HeaderM
     }
   }, [userData, sellerData]);
 
+  const unreadCounts = unreadCountStore.getState().unreadCounts;
   // chatroomList가 업데이트되면 안 읽은 메시지 수를 계산
   useEffect(() => {
     const updateUnreadCounts = async () => {
@@ -68,7 +69,7 @@ function HeaderIconBar({ setIsOpenMenu, setIsOpenSearch, isOpenSearch }: HeaderM
     };
 
     updateUnreadCounts();
-  }, [chatroomList, isLogin, userData]);
+  }, [chatroomList, isLogin, userData, unreadCounts]);
 
   useEffect(() => {
     if (userData) {
@@ -98,7 +99,7 @@ function HeaderIconBar({ setIsOpenMenu, setIsOpenSearch, isOpenSearch }: HeaderM
   };
 
   const [state, formAction] = useFormState(searchKeyword, null);
-
+  console.log({ chatroomList, isLogin, userData });
   return (
     <section>
       <div className="flex">
