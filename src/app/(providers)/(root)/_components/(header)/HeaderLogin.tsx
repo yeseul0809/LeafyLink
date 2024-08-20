@@ -38,28 +38,6 @@ function HeaderLogin() {
     }
   }, [userData]);
 
-  // if (isPending) {
-  //   // 로딩중일 때
-  //   return (
-  //     <div className="w-full h-20 flex items-center justify-between">
-  //       <div></div>
-  //       <div className="로그인X">
-  //         <button className="mr-10 text-zinc-500 hover:text-zinc-950 bg-red-800 w-100 h-30">
-  //           Loading..
-  //         </button>
-  //         <button
-  //           className="text-zinc-500 hover:text-zinc-950 bg-red-800 w-100 h-30"
-  //           onClick={() => {
-  //             redirect('/login');
-  //           }}
-  //         >
-  //           Loading..
-  //         </button>
-  //       </div>
-  //     </div>
-  //   );
-  // }
-
   return (
     <section>
       <div className="w-full h-20 flex items-center justify-between">
@@ -83,7 +61,7 @@ function HeaderLogin() {
             <button
               className="ml-10 hover:text-zinc-950"
               onClick={() => {
-                setLogout(isLogin);
+                setLogout(false);
                 queryClient.removeQueries({ queryKey: ['user'] });
                 if (pathname.startsWith('/cart')) {
                   router.push('/');

@@ -21,11 +21,14 @@ function HeaderMenuDropdown({ setIsOpenMenu }: HeaderMenuProps) {
     router.push(`${e}`);
     setIsOpenMenu(false);
   };
-
   return (
-    <div className="max-w-[1240px] z-10">
+    <div className="max-w-[1240px] z-10 overflow-x-hidden">
       <div
-        className="h-[246px] w-full flex justify-between max-w-container-lv2 p-4 mt-[1px] pt-8 flex absolute top-full leading-5 text-center bg-white text-sm"
+        style={{
+          //서영 Shadow
+          boxShadow: '0px 2500px 0px 2500px rgb(0 0 0 / 0.6)'
+        }}
+        className="h-[246px] w-full flex border-b border-[#E5E5EC] justify-between max-w-container-lv2 px-7 pt-8 flex absolute top-full leading-5 text-center bg-white text-sm"
         ref={dropdownRef}
       >
         <ul className="flex w-[624px] justify-between font-semibold">
