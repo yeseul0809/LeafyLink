@@ -172,7 +172,7 @@ const SellerEditForm = ({ sellerData }: SellerEditFormProps) => {
       {/* 이미지 컨테이너 */}
       <div className=" flex justify-center mb-8 ">
         <Image
-          src={sellerData.avatar_url}
+          src={sellerData.avatar_url || '/default-useravatar.png'}
           width={300}
           height={300}
           alt="Profile Image"
