@@ -22,7 +22,7 @@ function BottomTab({ productState }: BottomTabProps) {
   const { count, setCount, handleAddToCart, handleBuyNow, product } = productState;
   const [visible, setVisible] = useState(false);
   const [isHidden, setIsHidden] = useState(false);
-  const showBottomTab = useBottomTabStore((state) => state.showBottomTab); // 텍스트 입력시 탭 안보이게 하는부분
+  const showBottomTab = useBottomTabStore((state) => state.showBottomTab);
 
   const handleScroll = () => {
     const scrollPosition = window.scrollY;
@@ -85,47 +85,49 @@ function BottomTab({ productState }: BottomTabProps) {
         )}
 
         <div className="flex flex-col md:flex-row items-center w-full md:w-auto justify-between">
-          <section className="flex items-center justify-between mt-[17px] pb-5 md:pb-0 md:mt-0 w-full">
-            <div className="flex items-center justify-start md:ml-[20px]">
-              <p className="text-sm mr-2">총 상품금액</p>
-              <p className="text-[18px] md:text-xl md:mr-5 font-bold">
-                {(+product.price * count).toLocaleString('ko-KR')} 원
-              </p>
-            </div>
-            <div className="h-[26px] flex justify-end items-center">
-              <button
-                className="w-6 h-6 md:w-9 md:h-9 border flex items-center justify-center"
-                onClick={() => {
-                  if (count > 1) {
-                    setCount(count - 1);
-                  }
-                }}
-              >
-                <Image
-                  src="/icons/minus.svg"
-                  alt="-"
-                  width={12}
-                  height={12}
-                  className="md:w-4 md:h-4"
-                />
-              </button>
-              <div className="w-10 h-6 md:w-[52px] md:h-9 border flex items-center justify-center">
-                {count}
+          {!isHidden && (
+            <section className="flex items-center justify-between mt-[17px] pb-5 md:pb-0 md:mt-0 w-full">
+              <div className="flex items-center justify-start md:ml-[20px]">
+                <p className="text-sm mr-2">총 상품금액</p>
+                <p className="text-[18px] md:text-xl md:mr-5 font-bold">
+                  {(+product.price * count).toLocaleString('ko-KR')} 원
+                </p>
               </div>
-              <button
-                className="w-6 h-6 md:w-9 md:h-9 border flex items-center justify-center"
-                onClick={() => setCount(count + 1)}
-              >
-                <Image
-                  src="/icons/plus.svg"
-                  alt="+"
-                  width={12}
-                  height={12}
-                  className="md:w-4 md:h-4"
-                />
-              </button>
-            </div>
-          </section>
+              <div className="h-[26px] flex justify-end items-center">
+                <button
+                  className="w-6 h-6 md:w-9 md:h-9 border flex items-center justify-center"
+                  onClick={() => {
+                    if (count > 1) {
+                      setCount(count - 1);
+                    }
+                  }}
+                >
+                  <Image
+                    src="/icons/minus.svg"
+                    alt="-"
+                    width={12}
+                    height={12}
+                    className="md:w-4 md:h-4"
+                  />
+                </button>
+                <div className="w-10 h-6 md:w-[52px] md:h-9 border flex items-center justify-center">
+                  {count}
+                </div>
+                <button
+                  className="w-6 h-6 md:w-9 md:h-9 border flex items-center justify-center"
+                  onClick={() => setCount(count + 1)}
+                >
+                  <Image
+                    src="/icons/plus.svg"
+                    alt="+"
+                    width={12}
+                    height={12}
+                    className="md:w-4 md:h-4"
+                  />
+                </button>
+              </div>
+            </section>
+          )}
 
           <div className="flex mt-3 mb-3 ml-5 mr-5 md:ml-10 md:mr-0 md:mb-0 md:mt-0 justify-end">
             <button
