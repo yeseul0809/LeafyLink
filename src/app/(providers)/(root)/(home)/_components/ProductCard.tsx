@@ -7,17 +7,24 @@ import showSwal from '@/utils/swal';
 import { createClient } from '@/supabase/supabaseClient';
 import Image from 'next/image';
 import { ProductWithBusinessName } from '../actions';
-import useUser from '@/hooks/useUser';
-
+import useUser from '@/hooks/useUser'; // 불필요
+import { useCartStore } from '@/stores';
 const ProductCard = ({ product }: { product: ProductWithBusinessName }) => {
-  const { user } = useUser();
+  const { initializeCart } = useCartStore((state) => ({
+    initializeCart: state.initializeCart
+  }));
+  const getUserData = async () => {
+    const supabase = createClient();
+    const { data } = await supabase.auth.getUser();
+    return data;
+  }; //handleAddToCart 함수 내부에서 호출하기 위한 함수 선언 (훅X)
+  // const { user } = useUser(); // 맨바닥에 사용하시면 메인페이지에서 상품마다 호출돼요
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat('en-US').format(price);
   };
-
   const router = useRouter();
-
   const handleAddToCart = async () => {
+    const { user } = await getUserData(); // 커스텀훅은 함수내부에서 호출될수없으므로 유저정보만을 가져오는 함수로 간단하게 위쪽에 선언해서 호출하시면 돼요
     if (!user) {
       showSwal('로그인이 필요한 서비스입니다.<br>로그인 후 이용해주세요.');
       router.push(`/login`);
@@ -29,7 +36,8 @@ const ProductCard = ({ product }: { product: ProductWithBusinessName }) => {
       cart_user_id: user.id,
       is_checked: false
     };
-    const result = await createCartItem(cartItemData, user.id);
+    const result = await createCartItem(cartItemData, user.id, initializeCart);
+    // 헤더의 장바구니 아이콘에 숫자 실시간 렌더링 위해 initializeCart 인자 필요
     if (result) {
       showSwal('장바구니에 상품이 정상적으로 담겼습니다.');
     }
@@ -45,7 +53,6 @@ const ProductCard = ({ product }: { product: ProductWithBusinessName }) => {
     event.stopPropagation();
     handleBuyNow();
   }
-
   return (
     <div className="flex flex-col w-full max-w-xs rounded-lg overflow-hidden">
       <div className="relative group cursor-pointer w-full">

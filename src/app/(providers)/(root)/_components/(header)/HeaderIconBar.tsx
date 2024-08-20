@@ -12,8 +12,13 @@ import useUser from '@/hooks/user/useUser';
 import useSeller from '@/hooks/user/useSeller';
 import { useCartStore } from '@/stores';
 
-function HeaderIconBar() {
-  const [isOpenSearch, setIsOpenSearch] = useState(false);
+interface HeaderMenuProps {
+  setIsOpenMenu: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsOpenSearch: React.Dispatch<React.SetStateAction<boolean>>;
+  isOpenSearch: boolean;
+}
+
+function HeaderIconBar({ setIsOpenMenu, setIsOpenSearch, isOpenSearch }: HeaderMenuProps) {
   const router = useRouter();
   const [isLogin, setIsLogin] = useState(false);
   const [userName, setUserName] = useState('');
@@ -43,8 +48,6 @@ function HeaderIconBar() {
       setIsLogin(true);
       setUserName(userData.user_name);
       setUserAvatar(userData.avatar_url);
-
-      console.log('sellerData', sellerData);
       if (sellerData) {
         setBusinessName(sellerData.business_name);
         setProfileLink('/seller/mypage/profile');
@@ -82,6 +85,7 @@ function HeaderIconBar() {
   // 검색창 토글
   const toggleSearch = () => {
     setIsOpenSearch(!isOpenSearch);
+    setIsOpenMenu(false);
   };
 
   // 검색 로직
