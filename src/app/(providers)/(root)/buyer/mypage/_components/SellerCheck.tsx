@@ -148,7 +148,7 @@ function SellerCheck({ userData }: SellerCheckProps) {
         <div className="flex justify-center">
           <button
             type="submit"
-            className={`w-full text-white mt-20 mb-180px s:mt-[48px] mb-4 p-4 rounded-md shadow-sm transition-colors duration-300 ${
+            className={`w-full text-white mt-20 mb-[180px] s:mt-[48px]  p-4 rounded-md shadow-sm transition-colors duration-300 ${
               isFormValid()
                 ? 'bg-primary-green-500 text-white hover:bg-primary-green-700 text-16-sb-24-40'
                 : 'bg-primary-green-100 text-gray-500 cursor-not-allowed text-16-sb-24-40'

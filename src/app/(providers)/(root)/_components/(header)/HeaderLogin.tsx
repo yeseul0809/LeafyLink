@@ -69,7 +69,7 @@ function HeaderLogin() {
         {isLogin ? (
           <div className="로그인O flex items-center text-zinc-500">
             <Image
-              src={userData?.avatar_url || '/icons/default-avatar.png'}
+              src={userData?.avatar_url || '/default-avatar.png'}
               alt="user profile image"
               width={28}
               height={28}
