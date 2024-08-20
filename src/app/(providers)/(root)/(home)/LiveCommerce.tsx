@@ -7,6 +7,7 @@ import LivestreamingCard from './_components/LivestreamingCard';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
+import Image from 'next/image';
 
 function LiveCommerce({ category }: { category: string }) {
   const router = useRouter();
@@ -56,10 +57,22 @@ function LiveCommerce({ category }: { category: string }) {
           ))}
           <div className="w-full flex justify-between items-center z-10 absolute lg:top-1/3 md:top-1/3 sm:top-1/3 xs:top-3/5 ">
             <div className="custom-swiper-button custom-swiper-button-prev cursor-pointer ">
-              <img src="/icons/button-left.svg" alt="left button" className="w-[56px] h-[80px]" />
+              <Image
+                src="/icons/button-left.svg"
+                alt="left button"
+                width={56}
+                height={80}
+                className="w-[56px] h-[80px]"
+              />
             </div>
             <div className="custom-swiper-button custom-swiper-button-next cursor-pointer ">
-              <img src="/icons/button-right.svg" alt="right button" className="w-[56px] h-[80px]" />
+              <Image
+                src="/icons/button-right.svg"
+                alt="right button"
+                width={56}
+                height={80}
+                className="w-[56px] h-[80px]"
+              />
             </div>
           </div>
         </Swiper>

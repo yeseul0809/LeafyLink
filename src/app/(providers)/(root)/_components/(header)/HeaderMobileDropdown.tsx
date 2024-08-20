@@ -52,7 +52,7 @@ function HeaderMobileDropdown({
               <li className="bold">
                 <button
                   onClick={() => {
-                    setLogout(isLogin);
+                    setLogout();
                     queryClient.removeQueries({ queryKey: ['user'] });
                   }}
                 >
