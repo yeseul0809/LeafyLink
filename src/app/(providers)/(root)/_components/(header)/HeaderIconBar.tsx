@@ -139,7 +139,12 @@ function HeaderIconBar({ setIsOpenMenu, setIsOpenSearch, isOpenSearch }: HeaderM
         </button>
 
         {isOpenSearch && (
-          <div className="w-full absolute h-auto flex justify-between py-[30px] px-[20px] bg-white top-full right-0 text-center mt-[1px]">
+          <div
+            style={{
+              boxShadow: '0px 2500px 0px 2500px rgb(0 0 0 / 0.6)'
+            }}
+            className="w-full border-b border-[#E5E5EC] absolute h-auto flex justify-between py-[30px] px-[20px] bg-white top-full right-0 text-center mt-[1px]"
+          >
             <p className="bold text-2xl font-semibold">SEARCH</p>
             <form
               action={formAction}

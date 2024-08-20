@@ -23,7 +23,7 @@ function HeaderMobileSearch({ setIsOpenMobileSearch }: HeaderMobileProps) {
 
   return (
     <section>
-      <div className="w-full mx-auto absolute h-auto flex justify-between py-[30px] px-[20px] bg-white top-full right-0 text-center">
+      <div className="w-full mx-auto absolute h-auto flex border-b border-[#E5E5EC] justify-between py-[30px] px-[20px] bg-white top-full right-0 text-center">
         <form
           action={formAction}
           className="flex justify-center mx-auto items-center max-w-[400px] w-full h-10 border rounded-full px-4"

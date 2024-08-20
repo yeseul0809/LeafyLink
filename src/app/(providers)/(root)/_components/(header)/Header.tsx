@@ -33,7 +33,7 @@ function Header() {
       </div>
       <div className="w-full mx-auto relative max-w-container-l px-[20px] block max_sm:hidden">
         {visible ? <HeaderLogin /> : null}
-        <div className="w-full h-[62px]  flex justify-between items-center block max_sm:hidden">
+        <div className="w-full h-[62px] flex justify-between items-center block max_sm:hidden">
           <HeaderMenu
             isOpenMenu={isOpenMenu}
             setIsOpenMenu={setIsOpenMenu}

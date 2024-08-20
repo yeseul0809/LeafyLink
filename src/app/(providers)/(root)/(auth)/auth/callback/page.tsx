@@ -4,9 +4,10 @@ import React, { useEffect } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@/supabase/supabaseClient';
-
+import { useAuthStore } from '@/stores/authStore';
 function AuthCallback() {
   const router = useRouter();
+  const { isLogin, setIsLogin } = useAuthStore();
 
   useEffect(() => {
     const saveUserToDatabase = async (user: any) => {
@@ -62,6 +63,7 @@ function AuthCallback() {
         if (!userExists) {
           await saveUserToDatabase(session.user);
         }
+        setIsLogin(true);
         router.push('/');
       }
     };
