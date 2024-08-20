@@ -62,7 +62,7 @@ export const fetchUnreadCounts = async (
         .select('is_read', { count: 'exact' })
         .eq('message_chatroom_id', chatroom.chatroom_id)
         .eq('is_read', false)
-        .neq('message_user_id', user.id));
+        .neq('message_user_id', chatroom.chatroom_seller_id));
     } else {
       // 판매자일 때
       ({ data, error } = await supabase
@@ -70,7 +70,7 @@ export const fetchUnreadCounts = async (
         .select('is_read', { count: 'exact' })
         .eq('message_chatroom_id', chatroom.chatroom_id)
         .eq('is_read', false)
-        .neq('message_user_id', chatroom.chatroom_seller_id));
+        .neq('message_user_id', user.id));
     }
 
     if (error) {
