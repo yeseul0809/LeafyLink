@@ -161,14 +161,14 @@ const UserEditForm = ({ initialData, userId }: UserEditFormProps) => {
   };
 
   return (
-    <div className="">
+    <>
       {/* 이미지 컨테이너 */}
       <div className=" flex justify-center mb-8 ">
         <Image
-          src={initialData.avatarUrl}
+          src={initialData.avatarUrl || '/default-useravatar.png'}
           width={86}
           height={86}
-          alt="Profile Image"
+          alt="/default-avatar.png"
           className="w-[86px] h-[86px] rounded-full"
         />
       </div>
@@ -256,7 +256,7 @@ const UserEditForm = ({ initialData, userId }: UserEditFormProps) => {
           회원정보수정
         </button>
       </div>
-    </div>
+    </>
   );
 };
 
