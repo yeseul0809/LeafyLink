@@ -3,7 +3,11 @@ import { useRouter } from 'next/navigation';
 import React from 'react';
 import { useFormState } from 'react-dom';
 
-function HeaderMobileSearch({ setIsOpenMobileSearch }) {
+interface HeaderMobileProps {
+  setIsOpenMobileSearch: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+function HeaderMobileSearch({ setIsOpenMobileSearch }: HeaderMobileProps) {
   const router = useRouter();
 
   // 검색 로직

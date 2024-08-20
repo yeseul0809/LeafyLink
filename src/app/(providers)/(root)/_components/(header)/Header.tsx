@@ -5,16 +5,10 @@ import HeaderIconBar from './HeaderIconBar';
 import HeaderMobile from './HeaderMobile';
 import { useCallback, useEffect, useState } from 'react';
 
-type HeaderMenuProps = {
-  setIsOpenMenu: (isOpenMenu: boolean) => void;
-  isOpenMenu: boolean;
-  setIsOpenSearch: (isOpenSearch: boolean) => void;
-};
-
 function Header() {
-  const [visible, setVisible] = useState(true);
-  const [isOpenMenu, setIsOpenMenu] = useState(false);
-  const [isOpenSearch, setIsOpenSearch] = useState(false);
+  const [visible, setVisible] = useState<boolean>(true);
+  const [isOpenMenu, setIsOpenMenu] = useState<boolean>(false);
+  const [isOpenSearch, setIsOpenSearch] = useState<boolean>(false);
 
   const handleScroll = useCallback(() => {
     const currentPosition = window.pageYOffset;

@@ -12,7 +12,13 @@ import useUser from '@/hooks/user/useUser';
 import useSeller from '@/hooks/user/useSeller';
 import { useCartStore } from '@/stores';
 
-function HeaderIconBar({ setIsOpenMenu, setIsOpenSearch, isOpenSearch }) {
+interface HeaderMenuProps {
+  setIsOpenMenu: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsOpenSearch: React.Dispatch<React.SetStateAction<boolean>>;
+  isOpenSearch: boolean;
+}
+
+function HeaderIconBar({ setIsOpenMenu, setIsOpenSearch, isOpenSearch }: HeaderMenuProps) {
   const router = useRouter();
   const [isLogin, setIsLogin] = useState(false);
   const [userName, setUserName] = useState('');

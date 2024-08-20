@@ -4,8 +4,13 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import HeaderMenuDropdown from './HeaderMenuDropdown';
 
-// 얘네 타입 설정해
-function HeaderMenu({ setIsOpenMenu, isOpenMenu, setIsOpenSearch }) {
+interface HeaderMenuProps {
+  setIsOpenMenu: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsOpenSearch: React.Dispatch<React.SetStateAction<boolean>>;
+  isOpenMenu: boolean;
+}
+
+function HeaderMenu({ setIsOpenMenu, isOpenMenu, setIsOpenSearch }: HeaderMenuProps) {
   const router = useRouter();
 
   // 페이지 네비게이션
