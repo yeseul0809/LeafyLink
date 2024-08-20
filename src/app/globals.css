@@ -60,6 +60,7 @@
 
 .swal-confirm-button {
   background-color: #3bb873;
+  outline: none;
   color: #ffffff;
   font-size: 13px;
   font-weight: 400;
@@ -115,15 +116,26 @@
   .swal2-actions {
     margin: 0 !important;
   }
-  .swal-cart-button,
-  .swal-continue-button {
-    background-color: #ffffff;
-    color: #3bb873;
+  .swal-cart-button {
+    background-color: #3bb873 !important;
+    color: #ffffff !important;
     font-size: 14px !important;
     width: 155.5px !important;
     height: 48px !important;
     border-radius: 0 !important;
-    border: 1px solid var(--primary-500-main, #3bb873);
+    border: 0 !important;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+
+  .swal-continue-button {
+    background-color: #f7fdfa !important;
+    color: #3bb873 !important;
+    font-size: 14px !important;
+    width: 155.5px !important;
+    height: 48px !important;
+    border-radius: 0 !important;
+    border: 0 !important;
     cursor: pointer;
     transition: background-color 0.2s ease;
   }
