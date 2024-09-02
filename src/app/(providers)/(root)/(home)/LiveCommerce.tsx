@@ -51,7 +51,7 @@ function LiveCommerce({ category }: { category: string }) {
           className="mySwiper"
         >
           {videosData?.map((video) => (
-            <SwiperSlide key={video.streamData[0].livestream_id}>
+            <SwiperSlide key={video.streamData?.[0]?.livestream_id || video.uid}>
               <LivestreamingCard videosData={video} />
             </SwiperSlide>
           ))}

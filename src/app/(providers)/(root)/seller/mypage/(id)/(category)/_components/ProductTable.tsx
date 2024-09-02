@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import ProductTableMobli from './ProductTableMobli';
-import { getProducts } from '../action';
+import { deleteProducts, getProducts } from '../action';
 
 type Product = {
   category: string;
@@ -33,6 +33,7 @@ export default function ProductTable({ sellerId }: ProductTableProps) {
   const [itemsPerPage] = useState<number>(10);
   const [categoryFilter, setCategoryFilter] = useState<string>('all');
   const [loading, setLoading] = useState<boolean>(true);
+  const [selectedProducts, setSelectedProducts] = useState<string[]>([]);
 
   const fetchProducts = async () => {
     setLoading(true);
@@ -78,14 +79,54 @@ export default function ProductTable({ sellerId }: ProductTableProps) {
       .replace('KRW', '')
       .trim();
   };
+
   //로딩
   if (loading) {
     return <div></div>;
   }
+
+  const handleDeleteSelectedProducts = async () => {
+    if (selectedProducts.length === 0) return;
+
+    try {
+      await deleteProducts(selectedProducts); // 선택된 상품 DB에서 삭제
+      setProducts(products.filter((product) => !selectedProducts.includes(product.product_id))); // 삭제된 상품 제외한 나머지 상품들로 상품목록(products) 상태 업데이트
+      setSelectedProducts([]); // 선택된 상품 목록 초기화
+    } catch (error) {
+      console.error('상품 삭제 중 오류가 발생했습니다:', error);
+    }
+  };
+
+  // 개별항목 체크박스 선택
+  const handleCheckboxChange = (productId: string, ischecked: boolean) => {
+    if (ischecked) {
+      setSelectedProducts([...selectedProducts, productId]);
+    } else {
+      setSelectedProducts(selectedProducts.filter((id) => id !== productId));
+    }
+  };
+
+  // 전체항목 체크박스 선택
+  const handleAllCheckboxChange = (ischecked: boolean) => {
+    if (ischecked) {
+      setSelectedProducts(products.map((product) => product.product_id));
+    } else {
+      setSelectedProducts([]);
+    }
+  };
+
   return (
     <>
       <section className="max-w-[1280px]  mx-auto mb-20 hidden md:block ">
-        <div className="flex justify-end mt-[28px] ">
+        <div className="flex justify-end mt-[28px] gap-5">
+          <button
+            onClick={handleDeleteSelectedProducts}
+            className={`px-[12px] py-[9px] rounded text-[13px] font-normal leading-[18px] tracking-[-0.325px]
+              ${selectedProducts.length > 0 ? 'bg-primary-green-50 text-primary-green-400 transition-colors duration-300 hover:bg-primary-green-100 hover:text-primary-green-400' : 'bg-grayscale-gray-50 text-grayscale-gray-500'}`}
+            disabled={selectedProducts.length === 0}
+          >
+            상품 삭제
+          </button>
           <Link
             href={`/seller/mypage/${sellerId}/register`}
             className="px-[12px] py-[9px] bg-primary-green-500 rounded text-white text-[13px] font-normal leading-[18px] tracking-[-0.325px] transition-colors duration-300 hover:bg-primary-green-700 hover:text-white"
@@ -97,6 +138,13 @@ export default function ProductTable({ sellerId }: ProductTableProps) {
           {products.length > 0 ? (
             <>
               <div className="flex items-start bg-secondary-yellow-100">
+                <input
+                  type="checkbox"
+                  id="allcheck"
+                  className="w-[22px] h-[22px] m-4 bg-white green-checkbox"
+                  onChange={(e) => handleAllCheckboxChange(e.target.checked)}
+                  checked={selectedProducts.length === products.length}
+                />
                 <div className="w-[178px] h-[56px] p-[16px] flex justify-center items-center">
                   카테고리
                 </div>
@@ -122,6 +170,13 @@ export default function ProductTable({ sellerId }: ProductTableProps) {
                   key={product.product_id}
                   className="flex items-start self-stretch border-b border-Line/Light"
                 >
+                  <input
+                    type="checkbox"
+                    id="allcheck"
+                    className="w-[22px] h-[22px] m-4 bg-white green-checkbox"
+                    onChange={(e) => handleCheckboxChange(product.product_id, e.target.checked)}
+                    checked={selectedProducts.includes(product.product_id)}
+                  />
                   <div className="flex w-[178px] h-[64px] p-[22px_16px] justify-center items-center gap-2.5 text-[14px] font-normal leading-[20px] tracking-[-0.35px] text-font/sub2">
                     {product.category}
                   </div>
