@@ -3,13 +3,15 @@ import React from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { createCartItem } from '../../products/[id]/_actions/cartActions';
-import showSwal from '@/utils/swal';
+import showSwal, { showSwalContinue } from '@/utils/swal';
 import { createClient } from '@/supabase/supabaseClient';
 import Image from 'next/image';
 import { ProductWithBusinessName } from '../actions';
 import { useCartStore } from '@/stores';
 
 const ProductCard = ({ product }: { product: ProductWithBusinessName }) => {
+  const router = useRouter();
+
   const { initializeCart } = useCartStore((state) => ({
     initializeCart: state.initializeCart
   }));
@@ -22,7 +24,7 @@ const ProductCard = ({ product }: { product: ProductWithBusinessName }) => {
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat('en-US').format(price);
   };
-  const router = useRouter();
+
   const handleAddToCart = async () => {
     const { user } = await getUserData();
     if (!user) {
@@ -39,7 +41,7 @@ const ProductCard = ({ product }: { product: ProductWithBusinessName }) => {
     const result = await createCartItem(cartItemData, user.id, initializeCart);
 
     if (result) {
-      showSwal('장바구니에 상품이 정상적으로 담겼습니다.');
+      showSwalContinue('장바구니에 상품이 정상적으로 담겼습니다.', router);
     }
   };
   function handleAddCartClick(event: React.MouseEvent) {
