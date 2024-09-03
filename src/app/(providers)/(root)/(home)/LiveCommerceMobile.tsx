@@ -54,7 +54,10 @@ function LiveCommerceMobile({ category }: { category: string }) {
           className="mySwiper"
         >
           {videosData?.map((video, index) => (
-            <SwiperSlide key={video.streamData[0].livestream_id} virtualIndex={index}>
+            <SwiperSlide
+              key={video.streamData[0]?.livestream_id || `video-${index}`}
+              virtualIndex={index}
+            >
               <LivestreamingCard videosData={video} />
             </SwiperSlide>
           ))}
