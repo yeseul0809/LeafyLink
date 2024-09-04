@@ -1,6 +1,8 @@
 'use server';
 
 import { createClient } from '@/supabase/supabaseServer';
+import { Database } from '@/types/supabase';
+import { SupabaseClient } from '@supabase/supabase-js';
 import { redirect } from 'next/navigation';
 
 // Product 타입
@@ -141,4 +143,19 @@ export async function getProducts(
     products: products || [],
     totalProducts: totalProducts || 0
   };
+}
+
+// 판매자 페이지 - 등록된 상품 삭제
+export async function deleteProducts(productsId: string[]) {
+  const supabaseServer: SupabaseClient<Database> = createClient();
+
+  const { data, error } = await supabaseServer
+    .from('Product')
+    .delete()
+    .in('product_id', productsId);
+
+  if (error) {
+    console.error('상품 삭제 중 오류가 발생했습니다.', error);
+    throw new Error('상품 삭제 중 오류가 발생했습니다.');
+  }
 }
