@@ -91,7 +91,7 @@ export default function ProductTable({ sellerId }: ProductTableProps) {
     try {
       await deleteProducts(selectedProducts); // 선택된 상품 DB에서 삭제
       setProducts(products.filter((product) => !selectedProducts.includes(product.product_id))); // 삭제된 상품 제외한 나머지 상품들로 상품목록(products) 상태 업데이트
-      router.push('/seller/mypage/products');
+      router.push('/seller/mypage/products'); // 삭제후 판매중인 상품페이지로 이동
       setSelectedProducts([]); // 선택된 상품 목록 초기화
     } catch (error) {
       console.error('상품 삭제 중 오류가 발생했습니다:', error);

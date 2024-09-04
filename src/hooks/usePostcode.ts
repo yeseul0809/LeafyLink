@@ -1,4 +1,3 @@
-// hooks/usePostcode.ts
 import { useEffect } from 'react';
 
 declare global {
