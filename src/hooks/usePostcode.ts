@@ -26,7 +26,6 @@ const usePostcode = (
   wrapRef: React.RefObject<HTMLDivElement>
 ) => {
   useEffect(() => {
-    // 스크립트가 이미 로드되었는지 확인
     if (
       !document.querySelector(
         'script[src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"]'
@@ -94,7 +93,6 @@ const usePostcode = (
     }
 
     return () => {
-      // Cleanup 코드 - 스크립트 제거
       const existingScript = document.querySelector(
         'script[src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"]'
       );
