@@ -81,7 +81,18 @@ function MessageList({ isMessagesLoaded, messages, userId, otherUserInfo }: Mess
                           : 'bg-BG/Regular rounded-tl-[20px] rounded-tr-[20px] rounded-bl-[8px] rounded-br-[20px]'
                       }`}
                     >
-                      <div className="text-[14px] md:text-[16px]">{msg.payload}</div>
+                      {msg.image_url && (
+                        <Image
+                          src={msg.image_url}
+                          alt="Sent Image"
+                          width={200}
+                          height={200}
+                          className="rounded-lg"
+                        />
+                      )}
+                      {msg.payload && (
+                        <div className="text-[14px] md:text-[16px]">{msg.payload}</div>
+                      )}
                     </div>
                     {!isCurrentUser && (
                       <div className="text-xs text-font/sub2 ml-2">

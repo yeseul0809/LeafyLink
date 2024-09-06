@@ -198,6 +198,9 @@ function ChatPage({ params }: ParamsProps) {
         newMessage={newMessage}
         setNewMessage={setNewMessage}
         sendMessage={sendMessage}
+        chatroomId={chatroomId}
+        user={user}
+        sellerId={sellerId}
       />
     </div>
   );
