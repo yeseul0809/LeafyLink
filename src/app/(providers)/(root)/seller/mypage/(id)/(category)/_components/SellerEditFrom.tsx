@@ -1,27 +1,10 @@
 'use client';
-
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import PhoneForm from '@/app/(providers)/(root)/buyer/mypage/_components/PhoneForm';
 import { createClient } from '@/supabase/supabaseClient';
 import Image from 'next/image';
-
-declare global {
-  interface Window {
-    daum: any;
-    foldDaumPostcode: () => void;
-    sample3_execDaumPostcode: () => void;
-  }
-}
-
-interface AddressData {
-  zonecode: string;
-  roadAddress: string;
-  jibunAddress: string;
-  userSelectedType: string;
-  bname: string;
-  buildingName: string;
-  apartment: string;
-}
+import usePostcode from '@/hooks/usePostcode';
+import { useSellerFormState } from '@/stores/profilEditStore';
 
 interface SellerEditFormProps {
   sellerData: {
@@ -38,86 +21,31 @@ interface SellerEditFormProps {
 
 const SellerEditForm = ({ sellerData }: SellerEditFormProps) => {
   const wrapRef = useRef<HTMLDivElement>(null);
-  const [address, setAddress] = useState<string>(sellerData.address);
-  const [postcode, setPostcode] = useState<string>(sellerData.address_code);
-  const [detailAddress, setDetailAddress] = useState<string>(sellerData.address_detail);
-  const [extraAddress, setExtraAddress] = useState<string>('');
-  const [businessName, setBusinessName] = useState<string>(sellerData.business_name);
-  const [phone, setPhone] = useState<string>(sellerData.phone);
-  const supabase = createClient();
+
+  const {
+    address,
+    setAddress,
+    postcode,
+    setPostcode,
+    detailAddress,
+    setDetailAddress,
+    extraAddress,
+    setExtraAddress,
+    businessName,
+    setBusinessName,
+    phone,
+    setPhone
+  } = useSellerFormState();
 
   useEffect(() => {
-    const script = document.createElement('script');
-    script.src = '//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js';
-    document.body.appendChild(script);
+    setAddress(sellerData.address);
+    setPostcode(sellerData.address_code);
+    setDetailAddress(sellerData.address_detail);
+    setBusinessName(sellerData.business_name);
+    setPhone(sellerData.phone);
+  }, [sellerData, setAddress, setPostcode, setDetailAddress, setBusinessName, setPhone]);
 
-    const handleScriptLoad = () => {
-      if (wrapRef.current) {
-        window.foldDaumPostcode = () => {
-          if (wrapRef.current) {
-            wrapRef.current.style.display = 'none';
-          }
-        };
-
-        window.sample3_execDaumPostcode = () => {
-          const currentScroll = Math.max(
-            document.body.scrollTop,
-            document.documentElement.scrollTop
-          );
-
-          new window.daum.Postcode({
-            oncomplete: (data: AddressData) => {
-              let addr = '';
-              let extraAddr = '';
-
-              addr = data.userSelectedType === 'R' ? data.roadAddress : data.jibunAddress;
-
-              if (data.userSelectedType === 'R') {
-                if (data.bname && /[동|로|가]$/g.test(data.bname)) {
-                  extraAddr += data.bname;
-                }
-                if (data.buildingName && data.apartment === 'Y') {
-                  extraAddr += extraAddr ? ', ' + data.buildingName : data.buildingName;
-                }
-                if (extraAddr) {
-                  extraAddr = ' (' + extraAddr + ')';
-                }
-                setExtraAddress(extraAddr);
-              } else {
-                setExtraAddress('');
-              }
-
-              setPostcode(data.zonecode);
-              setAddress(addr);
-              setDetailAddress('');
-
-              if (wrapRef.current) {
-                wrapRef.current.style.display = 'none';
-              }
-              document.body.scrollTop = currentScroll;
-            },
-            width: '100%',
-            height: '100%'
-          }).embed(wrapRef.current);
-
-          if (wrapRef.current) {
-            wrapRef.current.style.display = 'block';
-          }
-        };
-      }
-    };
-
-    script.onload = handleScriptLoad;
-
-    return () => {
-      const existingScript = document.querySelector(
-        'script[src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"]'
-      );
-      if (existingScript && existingScript.parentNode) {
-        existingScript.parentNode.removeChild(existingScript);
-      }
-    };
-  }, []);
+  usePostcode(setAddress, setPostcode, setExtraAddress, wrapRef);
 
   const handleAddressUpdate = async (
     newAddress: string,
@@ -125,8 +53,6 @@ const SellerEditForm = ({ sellerData }: SellerEditFormProps) => {
     newAddressCode: string,
     extraAddress: string
   ) => {
-    const {} = await supabase.from('Seller').select('*');
-
     const fullAddress = `${newAddress}${extraAddress}`;
     const payload = {
       address: fullAddress,
@@ -136,6 +62,7 @@ const SellerEditForm = ({ sellerData }: SellerEditFormProps) => {
       phone: phone
     };
 
+    const supabase = createClient();
     const { error } = await supabase
       .from('Seller')
       .update(payload)
@@ -147,14 +74,11 @@ const SellerEditForm = ({ sellerData }: SellerEditFormProps) => {
       alert('판매자 정보가 성공적으로 업데이트되었습니다.');
     }
   };
+
   const handleSave = () => {
     const fullAddress = `${address}${extraAddress}`;
     handleAddressUpdate(fullAddress, detailAddress, postcode, extraAddress);
     alert('회원정보가 저장되었습니다.');
-  };
-
-  const handlePhoneChange = (newPhone: string) => {
-    setPhone(newPhone);
   };
 
   const handleCancel = () => {
@@ -170,7 +94,7 @@ const SellerEditForm = ({ sellerData }: SellerEditFormProps) => {
   return (
     <>
       {/* 이미지 컨테이너 */}
-      <div className=" flex justify-center mb-8 ">
+      <div className="flex justify-center mb-8">
         <Image
           src={sellerData.avatar_url || '/default-useravatar.png'}
           width={300}
@@ -179,26 +103,25 @@ const SellerEditForm = ({ sellerData }: SellerEditFormProps) => {
           className="w-[86px] h-[86px] rounded-full"
         />
       </div>
-      {/* 이름 입력 필드 */}
-      <label className="text-16-n-24-40 text-font/main ">상호명</label>
+      {/* 상호명 입력 필드 */}
+      <label className="text-16-n-24-40 text-font/main">상호명</label>
       <input
         type="text"
-        className="border border-Line/Regular  bg-white w-full p-4  mb-6 mt-3 text-16-n-24-40 text-font/main  "
+        className="border border-Line/Regular bg-white w-full p-4 mb-6 mt-3 text-16-n-24-40 text-font/main"
         value={businessName}
         onChange={(e) => setBusinessName(e.target.value)}
       />
       {/* 우편번호 입력 필드 */}
-      <label className="text-16-n-24-40 text-font/main ">사업장 소재지</label>
-      <div className="  ">
+      <label className="text-16-n-24-40 text-font/main">사업장 소재지</label>
+      <div>
         <input
           type="text"
           id="sample3_postcode"
           placeholder="우편번호"
-          className=" border border-Line/Regular w-[160px] p-4 mt-3 mb-3 text-16-n-24-40 text-font/main  "
+          className="border border-Line/Regular w-[160px] p-4 mt-3 mb-3 text-16-n-24-40 text-font/main"
           value={postcode}
           readOnly
         />
-
         {/* 우편번호 찾기 버튼 */}
         <input
           type="button"
@@ -211,7 +134,7 @@ const SellerEditForm = ({ sellerData }: SellerEditFormProps) => {
       <div
         id="wrap"
         ref={wrapRef}
-        className=" w-full max-w-lg h-96 relative hidden bg-white rounded-lg shadow-lg"
+        className="w-full max-w-lg h-96 relative hidden bg-white rounded-lg shadow-lg"
       >
         <div className="flex justify-between items-center bg-gray-100 p-4 border-b">
           <h1 className="text-black font-bold">주소 검색</h1>
@@ -230,7 +153,7 @@ const SellerEditForm = ({ sellerData }: SellerEditFormProps) => {
         type="text"
         id="sample3_address"
         placeholder="주소"
-        className="border border-Line/Regular p-4 mb-3 w-full max-w-2xl text-16-n-24-40 text-font/main "
+        className="border border-Line/Regular p-4 mb-3 w-full max-w-2xl text-16-n-24-40 text-font/main"
         value={address}
         onChange={(e) => setAddress(e.target.value)}
       />
@@ -239,26 +162,24 @@ const SellerEditForm = ({ sellerData }: SellerEditFormProps) => {
         type="text"
         id="sample3_detailAddress"
         placeholder="상세주소"
-        className="border border-Line/Regular p-4 mb-6 w-full text-16-n-24-40 text-font/main "
+        className="border border-Line/Regular p-4 mb-6 w-full text-16-n-24-40 text-font/main"
         value={detailAddress}
         onChange={(e) => setDetailAddress(e.target.value)}
       />
       {/* Phone Form 추가 */}
-      <label className="text-16-n-24-40 text-font/main mb-3  ">휴대폰 번호</label>
-      <PhoneForm initialPhone={phone} onChange={handlePhoneChange} />
+      <label className="text-16-n-24-40 text-font/main mb-3">휴대폰 번호</label>
+      <PhoneForm initialPhone={phone} onChange={(newPhone) => setPhone(newPhone)} />
 
-      <div className="flex gap-4 ">
+      <div className="flex gap-4">
         <button
           onClick={handleCancel}
-          className="flex-1 bg-primary-green-50 text-primary-green-400 font-bold p-4 cursor-pointer rounded-md
-          transition-colors duration-300 hover:bg-primary-green-100 hover:text-primary-green-400 "
+          className="flex-1 bg-primary-green-50 text-primary-green-400 font-bold p-4 cursor-pointer rounded-md transition-colors duration-300 hover:bg-primary-green-100 hover:text-primary-green-400"
         >
           취소
         </button>
         <button
           onClick={handleSave}
-          className="flex-1 bg-primary-green-500 text-white p-4 font-bold cursor-pointer text-white rounded-md
-          transition-colors duration-300 hover:bg-primary-green-700 hover:text-white "
+          className="flex-1 bg-primary-green-500 text-white p-4 font-bold cursor-pointer text-white rounded-md transition-colors duration-300 hover:bg-primary-green-700 hover:text-white"
         >
           회원정보수정
         </button>
