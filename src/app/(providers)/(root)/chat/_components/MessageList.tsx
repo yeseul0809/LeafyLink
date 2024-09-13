@@ -75,20 +75,18 @@ function MessageList({ isMessagesLoaded, messages, userId, otherUserInfo }: Mess
                       </div>
                     )}
                     <div
-                      className={`inline-block px-4 py-2 ${
+                      className={`inline-block ${
                         isCurrentUser
-                          ? 'bg-primary-green-500 text-white rounded-tl-[20px] rounded-tr-[20px] rounded-bl-[20px] rounded-br-[8px]'
-                          : 'bg-BG/Regular rounded-tl-[20px] rounded-tr-[20px] rounded-bl-[8px] rounded-br-[20px]'
+                          ? msg.payload
+                            ? 'px-4 py-2 bg-primary-green-500 text-white rounded-tl-[20px] rounded-tr-[20px] rounded-bl-[20px] rounded-br-[8px]' // 텍스트가 있을 때 스타일
+                            : ''
+                          : msg.payload
+                            ? 'px-4 py-2 bg-BG/Regular rounded-tl-[20px] rounded-tr-[20px] rounded-bl-[8px] rounded-br-[20px]' // 텍스트가 있을 때 스타일
+                            : ''
                       }`}
                     >
                       {msg.image_url && (
-                        <Image
-                          src={msg.image_url}
-                          alt="Sent Image"
-                          width={200}
-                          height={200}
-                          className="rounded-lg"
-                        />
+                        <Image src={msg.image_url} alt="Sent Image" width={200} height={200} />
                       )}
                       {msg.payload && (
                         <div className="text-[14px] md:text-[16px]">{msg.payload}</div>

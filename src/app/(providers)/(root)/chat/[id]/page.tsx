@@ -140,7 +140,7 @@ function ChatPage({ params }: ParamsProps) {
     }
   };
 
-  const sendMessage = async (e: React.FormEvent) => {
+  const sendMessage = async (e: React.FormEvent, text: string | null, imageUrl: string | null) => {
     e.preventDefault();
 
     const { error } = await supabase.from('Message').insert([
@@ -148,7 +148,8 @@ function ChatPage({ params }: ParamsProps) {
         message_chatroom_id: chatroomId,
         message_user_id: user.id,
         message_seller_id: sellerId,
-        payload: newMessage,
+        payload: text || null, // 텍스트가 있으면 텍스트 전송, 없으면 null
+        image_url: imageUrl || null, // 이미지가 있으면 이미지 전송, 없으면 null
         is_read: false
       }
     ]);
