@@ -9,6 +9,7 @@ import MessageInput from '../_components/MessageInput';
 import MessageList from '../_components/MessageList';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import { deleteChatroom } from '../_utils/chatroomUtils';
 
 interface ParamsProps {
   params: { id: string };
@@ -153,6 +154,15 @@ function ChatPage({ params }: ParamsProps) {
     }
   };
 
+  const handleOutChatroom = async () => {
+    try {
+      await deleteChatroom(chatroomId);
+      router.push('/chat');
+    } catch (error) {
+      console.error('채팅방 삭제 중 에러 발생', error);
+    }
+  };
+
   const sendMessage = async (e: React.FormEvent, text: string | null, imageUrl: string | null) => {
     e.preventDefault();
 
@@ -177,7 +187,7 @@ function ChatPage({ params }: ParamsProps) {
   return (
     <div className="flex flex-col items-center justify-center mx-auto w-[335px] md:w-[610px] pt-[30px] pb-3 md:pb-8">
       <div className="flex items-center mb-7 w-full">
-        <button onClick={router.back} className="mr-2 md:mr-8 md:w-9 md:h-9">
+        <button onClick={() => router.push('/chat')} className="mr-2 md:mr-8 md:w-9 md:h-9">
           <Image
             src={'/icons/back.svg'}
             alt="back"
@@ -200,7 +210,7 @@ function ChatPage({ params }: ParamsProps) {
             </span>
           </>
         )}
-        <button onClick={router.back} className="ml-auto md:w-7 md:h-7">
+        <button onClick={handleOutChatroom} className="ml-auto md:w-7 md:h-7">
           <Image
             src={'/icons/out.svg'}
             alt="out"
