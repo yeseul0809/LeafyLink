@@ -21,7 +21,6 @@ function MessageInput({
   sellerId
 }: MessageInputProps) {
   const [imageFile, setImageFile] = useState<File | null>(null);
-  const [imageFilename, setImageFileName] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   // 이미지 파일 선택
@@ -29,7 +28,6 @@ function MessageInput({
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
       setImageFile(file);
-      setImageFileName(file.name);
       setNewMessage(file.name);
     }
   };
@@ -64,7 +62,6 @@ function MessageInput({
     if (imageFile) {
       imageUrl = await handleFileUpload();
       setImageFile(null);
-      setImageFileName(null);
       setNewMessage('');
     }
 
@@ -91,7 +88,6 @@ function MessageInput({
             setNewMessage(e.target.value);
             if (imageFile) {
               setImageFile(null);
-              setImageFileName(null);
               setNewMessage('');
             }
           }}

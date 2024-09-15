@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { addHours, formatDate } from '../_utils/timeUtils';
 import { Message } from '@/types/message';
 import Image from 'next/image';
+import { deleteMessage } from '../_utils/chatroomUtils';
 
 interface MessageListProps {
   isMessagesLoaded: boolean;
@@ -55,7 +56,7 @@ function MessageList({ isMessagesLoaded, messages, userId, otherUserInfo }: Mess
                     </span>
                   )}
                 </div>
-                <div className={`flex ${isCurrentUser ? 'justify-end' : 'justify-start'}`}>
+                <div className={`flex ${isCurrentUser ? 'justify-end' : 'justify-start'} group`}>
                   <div className="flex items-end">
                     {!isCurrentUser && otherUserInfo && (
                       <Image
@@ -67,21 +68,31 @@ function MessageList({ isMessagesLoaded, messages, userId, otherUserInfo }: Mess
                       />
                     )}
                     {isCurrentUser && (
-                      <div className="text-[11px] md:text-xs text-gray-600 mr-2">
-                        {addHoursDate.toLocaleTimeString('ko-KR', {
-                          hour: '2-digit',
-                          minute: '2-digit'
-                        })}
+                      <div>
+                        <div className="text-[11px] md:text-xs text-font/sub2 mr-2 group-hover:hidden">
+                          {addHoursDate.toLocaleTimeString('ko-KR', {
+                            hour: '2-digit',
+                            minute: '2-digit'
+                          })}
+                        </div>
+
+                        <button
+                          onClick={() => deleteMessage(msg.message_id)}
+                          className="hidden text-[12px] leading-[18px] md:text-xs text-font/main mr-2 group-hover:flex items-center gap-[4px]"
+                        >
+                          <Image src="/icons/icon-close.svg" alt="닫기" width={12} height={12} />
+                          <span>삭제</span>
+                        </button>
                       </div>
                     )}
                     <div
                       className={`inline-block ${
                         isCurrentUser
                           ? msg.payload
-                            ? 'px-4 py-2 bg-primary-green-500 text-white rounded-tl-[20px] rounded-tr-[20px] rounded-bl-[20px] rounded-br-[8px]' // 텍스트가 있을 때 스타일
+                            ? 'px-4 py-2 bg-primary-green-500 text-white rounded-tl-[20px] rounded-tr-[20px] rounded-bl-[20px] rounded-br-[8px]'
                             : ''
                           : msg.payload
-                            ? 'px-4 py-2 bg-BG/Regular rounded-tl-[20px] rounded-tr-[20px] rounded-bl-[8px] rounded-br-[20px]' // 텍스트가 있을 때 스타일
+                            ? 'px-4 py-2 bg-BG/Regular rounded-tl-[20px] rounded-tr-[20px] rounded-bl-[8px] rounded-br-[20px]'
                             : ''
                       }`}
                     >

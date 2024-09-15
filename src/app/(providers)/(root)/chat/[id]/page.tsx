@@ -51,6 +51,19 @@ function ChatPage({ params }: ParamsProps) {
             });
           }
         )
+        .on(
+          'postgres_changes',
+          {
+            event: 'DELETE',
+            schema: 'public',
+            table: 'Message'
+          },
+          (payload) => {
+            setMessages((messages) =>
+              messages.filter((message) => message.message_id !== payload.old.message_id)
+            );
+          }
+        )
         .subscribe();
 
       return () => {
