@@ -96,14 +96,14 @@ export default function StreamListPage() {
             </button>
           ))}
         </div>
-        {/* {sellerCheck && (
+        {sellerCheck && (
           <Link href={'/livestreaming/register'} className="xs:hidden">
             <button className="flex items-center text-[13px] text-primary-green-500 border border-primary-green-500 rounded px-[12px] py-[9px]">
               <Image src="/icons/start-stream.png" alt="startStream-icon" width={16} height={16} />
               방송시작
             </button>
           </Link>
-        )} */}
+        )}
       </div>
       <div className="mt-[80px] flex flex-col gap-[20px] xs:mt-[24px] max_sm:mt-[32px]">
         <StreamSection category={activeCategory} />

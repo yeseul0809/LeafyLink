@@ -45,13 +45,14 @@
 
 ## 0-2. 사용 기술 스택
 
-### 배포 및 서비스 백엔드 관련 기술
+### ✔ 배포 및 서비스 백엔드 관련 기술
 
 ![Vercel](https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white&labelColor=000000)
 ![Supabase](https://img.shields.io/badge/Supabase-181818?style=for-the-badge&logo=supabase&logoColor=white)
+![Supabase](https://img.shields.io/badge/Supabase-181818?style=for-the-badge&logo=supabase&logoColor=white)
 ![Cloudflare Stream](https://img.shields.io/badge/CloudflareStream-F38020?style=for-the-badge&logo=Cloudflare&logoColor=white)
 
-### 개발 관련 기술
+### ✔ 개발 관련 기술
 
 ![Next.js](https://img.shields.io/badge/next%20js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white)
 ![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
@@ -59,12 +60,7 @@
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
 ![React Query](https://img.shields.io/badge/React_Query-FF4154?style=for-the-badge&logo=ReactQuery&logoColor=white)
 
-<!-- ![Zustand](https://img.shields.io/badge/Zustand-3178C6)
-![Swiper](https://img.shields.io/badge/Swiper-3178C6)
-![Quill](https://img.shields.io/badge/Quill-3178C6)
-![DomPurify](https://img.shields.io/badge/DomPurify-3178C6) -->
-
-### 협업 및 도구 관련 기술
+### ✔ 협업 및 도구 관련 기술
 
 ![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)
 ![NPM](https://img.shields.io/badge/npm-CB3837?style=for-the-badge&logo=npm&logoColor=white)
@@ -168,37 +164,51 @@ React 애플리케이션에서 상태 관리를 위한 경량 상태 관리 라�
 - **라이브 커머스**: 판매자가 직접 진행하며 제품을 실시간으로 보여주고 판매할 수 있는 라이브 커머스 기능 제공
 - **카테고리와 상품 진열**: 아기자기한 카테고리로 나뉘며, 신제품, 식집사 필수템, 이달의 추천 식물, 베스트셀러 등 타이틀에 맞는 상품들을 진열
 
+<br>
+
 ![메인 화면](https://github.com/user-attachments/assets/17be4c83-a54e-4313-ae97-305b88889a61)
+
+<br>
 
 ## 2.2　상품 상세 화면
 
 - **실시간 채팅 기능**: 구매자가 실시간으로 판매자와 1:1 채팅을 통해 문의할 수 있는 기능 제공
 - **구매자 리뷰**: 상품 구매자만 남길 수 있는 리뷰 기능 제공
+  <br>
 
 ![상품 상세 화면](https://github.com/user-attachments/assets/7a3d41a6-9f38-4198-8761-a8e33a63c22d)
+
+<br>
 
 ## 2.3　장바구니 화면
 
 - **호버 기능**: 메인 페이지에서 상품 카드에 호버 시, 장바구니와 결제 아이콘이 표시되며, 외각 클릭 시 상세 페이지로 이동
 - **장바구니 기능**: 상세 페이지에서도 장바구니에 담기와 결제가 가능
+  <br>
 
 ![장바구니 화면](https://github.com/user-attachments/assets/4e50f0e4-b29c-4213-a2df-ee6dd7e45da3)
+
+<br>
 
 ## 2.4　구매자 마이페이지
 
 - **구매 내역 확인**: 주문 내역을 확인할 수 있는 구매 내역 카테고리 제공
 - **회원정보 수정**: 회원정보(이름, 주소, 전화번호) 수정 가능
 - **판매자 전환**: 사업자 번호, 대표자 성명, 상호명, 개업일자를 입력하여 인증할 경우 판매자 계정으로 전환 가능
+  <br>
 
 ![구매자 마이페이지](https://github.com/user-attachments/assets/09db5984-3268-4652-845b-9f35fb8f1fbc)
+<br>
 
 ## 2.5　판매자 마이페이지
 
 - **판매 관리**: 주문 내역과 판매 중인 상품, 회원정보로 구성된 카테고리 제공
 - **회원정보 수정**: 회원정보(이름, 주소, 전화번호) 수정 가능
 - **상품 관리**: 판매중인상품에서 상품 등록과 수정 가능
+  <br>
 
 ![판매자 마이페이지](https://github.com/user-attachments/assets/5f43cf3d-31e7-4b41-a8e5-2147ad24c705)
+<br>
 
 ### 그 외 결제, 1:1채팅, 판매자 인증, 라이브 스트리밍등 추가적인 기능들이 있습니다 <br>
 
