@@ -10,6 +10,7 @@ import MessageList from '../_components/MessageList';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { deleteChatroom } from '../_utils/chatroomUtils';
+import showSwal, { showSwalDeleteChatroom } from '@/utils/swal';
 
 interface ParamsProps {
   params: { id: string };
@@ -155,11 +156,15 @@ function ChatPage({ params }: ParamsProps) {
   };
 
   const handleOutChatroom = async () => {
-    try {
-      await deleteChatroom(chatroomId);
-      router.push('/chat');
-    } catch (error) {
-      console.error('채팅방 삭제 중 에러 발생', error);
+    const isConfirmed = await showSwalDeleteChatroom();
+    if (isConfirmed) {
+      try {
+        await deleteChatroom(chatroomId);
+        router.push('/chat');
+      } catch (error) {
+        console.error('채팅방 삭제 중 에러 발생', error);
+        showSwal('채팅방 나가기를 실패했습니다.');
+      }
     }
   };
 

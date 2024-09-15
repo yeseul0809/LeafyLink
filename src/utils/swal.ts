@@ -16,11 +16,24 @@ const showSwal = (title: string) => {
 
 export default showSwal;
 
+export const showSwalLink = (title: string) => {
+  Swal.fire({
+    title,
+    customClass: {
+      popup: 'swal-popup-small',
+      title: 'swal-title ',
+      confirmButton: 'swal-confirm-button'
+    },
+    buttonsStyling: false,
+    confirmButtonText: '확인'
+  });
+};
+
 export const showSwalContinue = (title: string, router: AppRouterInstance) => {
   Swal.fire({
     title,
     customClass: {
-      popup: 'swal-popup',
+      popup: 'swal-popup-small',
       title: 'swal-title ',
       confirmButton: 'swal-cart-button',
       cancelButton: 'swal-continue-button',
@@ -51,6 +64,28 @@ export const showSwalDeleteReview = async () => {
     buttonsStyling: false,
     showCancelButton: true,
     confirmButtonText: '삭제',
+    cancelButtonText: '취소',
+    reverseButtons: true
+  });
+
+  return result.isConfirmed;
+};
+
+export const showSwalDeleteChatroom = async () => {
+  const result = await Swal.fire({
+    title: '채팅 목록을 나가시겠습니까?',
+    html: '나가기 하면 그동안의 대화 내용을<br> 확인할 수 없습니다.',
+    customClass: {
+      popup: 'swal-popup-large',
+      title: 'swal-chat-title',
+      htmlContainer: 'swal-html-container',
+      confirmButton: 'swal-cart-button',
+      cancelButton: 'swal-continue-button',
+      actions: 'swal-actions'
+    },
+    buttonsStyling: false,
+    showCancelButton: true,
+    confirmButtonText: '나가기',
     cancelButtonText: '취소',
     reverseButtons: true
   });
