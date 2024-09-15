@@ -181,8 +181,8 @@ function ChatPage({ params }: ParamsProps) {
           <Image
             src={'/icons/back.svg'}
             alt="back"
-            width={24}
-            height={24}
+            width={28}
+            height={28}
             className="md:w-9 md:h-9"
           />
         </button>
@@ -200,6 +200,15 @@ function ChatPage({ params }: ParamsProps) {
             </span>
           </>
         )}
+        <button onClick={router.back} className="ml-auto md:w-7 md:h-7">
+          <Image
+            src={'/icons/out.svg'}
+            alt="out"
+            width={28}
+            height={28}
+            className="md:w-7 md:h-7"
+          />
+        </button>
       </div>
       <div className="w-full border-t border-#E5E5EC"></div>
       <MessageList

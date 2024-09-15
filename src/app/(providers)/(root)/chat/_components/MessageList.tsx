@@ -46,16 +46,17 @@ function MessageList({ isMessagesLoaded, messages, userId, otherUserInfo }: Mess
 
             return (
               <div key={msg.message_id} className="mb-3 md:mb-4">
-                <div className="flex items-center">
+                <div className="flex items-center justify-center">
                   {displayDate && (
                     <span
                       key={`date-${msg.message_id}`}
-                      className="w-[81px] h-[28px] md:w-[89px] md:h-[32px] text:[14px] md:text-[16px] leading-[24px] text-center mx-auto text-gray-500 mt-3 mb-3 md:mt-6 md:mb-5 md:py-1 md:px-3 rounded-[22px] bg-secondary-yellow-100 "
+                      className="flex items-center justify-center w-[81px] h-[28px] md:w-[89px] md:h-[32px] text-[14px] md:text-[16px] leading-[20px] md:leading-[24px] text-center mx-auto text-gray-500 mt-3 mb-3 md:mt-6 md:mb-5 md:py-1 md:px-3 rounded-[22px] bg-secondary-yellow-100"
                     >
                       {formattedDate}
                     </span>
                   )}
                 </div>
+
                 <div className={`flex ${isCurrentUser ? 'justify-end' : 'justify-start'} group`}>
                   <div className="flex items-end">
                     {!isCurrentUser && otherUserInfo && (
