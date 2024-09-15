@@ -160,30 +160,33 @@ export type Database = {
       Message: {
         Row: {
           created_at: string
+          image_url: string | null
           is_read: boolean
           message_chatroom_id: string
           message_id: string
           message_seller_id: string
           message_user_id: string
-          payload: string
+          payload: string | null
         }
         Insert: {
           created_at?: string
+          image_url?: string | null
           is_read: boolean
           message_chatroom_id: string
           message_id?: string
           message_seller_id: string
           message_user_id: string
-          payload: string
+          payload?: string | null
         }
         Update: {
           created_at?: string
+          image_url?: string | null
           is_read?: boolean
           message_chatroom_id?: string
           message_id?: string
           message_seller_id?: string
           message_user_id?: string
-          payload?: string
+          payload?: string | null
         }
         Relationships: [
           {
