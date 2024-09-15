@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { addHours, formatDate } from '../_utils/timeUtils';
 import { Message } from '@/types/message';
 import Image from 'next/image';
+import { deleteMessage } from '../_utils/chatroomUtils';
 
 interface MessageListProps {
   isMessagesLoaded: boolean;
@@ -45,17 +46,18 @@ function MessageList({ isMessagesLoaded, messages, userId, otherUserInfo }: Mess
 
             return (
               <div key={msg.message_id} className="mb-3 md:mb-4">
-                <div className="flex items-center">
+                <div className="flex items-center justify-center">
                   {displayDate && (
                     <span
                       key={`date-${msg.message_id}`}
-                      className="w-[81px] h-[28px] md:w-[89px] md:h-[32px] text:[14px] md:text-[16px] leading-[24px] text-center mx-auto text-gray-500 mt-3 mb-3 md:mt-6 md:mb-5 md:py-1 md:px-3 rounded-[22px] bg-secondary-yellow-100 "
+                      className="flex items-center justify-center w-[81px] h-[28px] md:w-[89px] md:h-[32px] text-[14px] md:text-[16px] leading-[20px] md:leading-[24px] text-center mx-auto text-gray-500 mt-3 mb-3 md:mt-6 md:mb-5 md:py-1 md:px-3 rounded-[22px] bg-secondary-yellow-100"
                     >
                       {formattedDate}
                     </span>
                   )}
                 </div>
-                <div className={`flex ${isCurrentUser ? 'justify-end' : 'justify-start'}`}>
+
+                <div className={`flex ${isCurrentUser ? 'justify-end' : 'justify-start'} group`}>
                   <div className="flex items-end">
                     {!isCurrentUser && otherUserInfo && (
                       <Image
@@ -67,21 +69,40 @@ function MessageList({ isMessagesLoaded, messages, userId, otherUserInfo }: Mess
                       />
                     )}
                     {isCurrentUser && (
-                      <div className="text-[11px] md:text-xs text-gray-600 mr-2">
-                        {addHoursDate.toLocaleTimeString('ko-KR', {
-                          hour: '2-digit',
-                          minute: '2-digit'
-                        })}
+                      <div>
+                        <div className="text-[11px] md:text-xs text-font/sub2 mr-2 group-hover:hidden">
+                          {addHoursDate.toLocaleTimeString('ko-KR', {
+                            hour: '2-digit',
+                            minute: '2-digit'
+                          })}
+                        </div>
+
+                        <button
+                          onClick={() => deleteMessage(msg.message_id)}
+                          className="hidden text-[12px] leading-[18px] md:text-xs text-font/main mr-2 group-hover:flex items-center gap-[4px]"
+                        >
+                          <Image src="/icons/icon-close.svg" alt="닫기" width={12} height={12} />
+                          <span>삭제</span>
+                        </button>
                       </div>
                     )}
                     <div
-                      className={`inline-block px-4 py-2 ${
+                      className={`inline-block ${
                         isCurrentUser
-                          ? 'bg-primary-green-500 text-white rounded-tl-[20px] rounded-tr-[20px] rounded-bl-[20px] rounded-br-[8px]'
-                          : 'bg-BG/Regular rounded-tl-[20px] rounded-tr-[20px] rounded-bl-[8px] rounded-br-[20px]'
+                          ? msg.payload
+                            ? 'px-4 py-2 bg-primary-green-500 text-white rounded-tl-[20px] rounded-tr-[20px] rounded-bl-[20px] rounded-br-[8px]'
+                            : ''
+                          : msg.payload
+                            ? 'px-4 py-2 bg-BG/Regular rounded-tl-[20px] rounded-tr-[20px] rounded-bl-[8px] rounded-br-[20px]'
+                            : ''
                       }`}
                     >
-                      <div className="text-[14px] md:text-[16px]">{msg.payload}</div>
+                      {msg.image_url && (
+                        <Image src={msg.image_url} alt="Sent Image" width={200} height={200} />
+                      )}
+                      {msg.payload && (
+                        <div className="text-[14px] md:text-[16px]">{msg.payload}</div>
+                      )}
                     </div>
                     {!isCurrentUser && (
                       <div className="text-xs text-font/sub2 ml-2">

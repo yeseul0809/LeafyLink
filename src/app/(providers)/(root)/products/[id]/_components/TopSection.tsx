@@ -1,7 +1,7 @@
 'use client';
 
 import { Product } from '@/types/product';
-import showSwal from '@/utils/swal';
+import showSwal, { showSwalLink } from '@/utils/swal';
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 import { getSellerName } from '../../../(home)/actions';
@@ -23,9 +23,9 @@ function TopSection({ product, averageRating, reviewCount }: TopSectionProps) {
   const handleCopyToClipboard = async () => {
     try {
       await navigator.clipboard.writeText(window.location.href);
-      showSwal('링크가 복사되었습니다!');
+      showSwalLink('링크가 복사되었습니다!');
     } catch (error) {
-      showSwal('링크복사를 실패했습니다.');
+      showSwalLink('링크복사를 실패했습니다.');
     }
   };
   const filledStars = Math.floor(averageRating);

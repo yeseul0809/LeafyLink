@@ -28,6 +28,22 @@ export const createChatroom = async (
   return data;
 };
 
+export const deleteChatroom = async (chatroomId: string) => {
+  const { data, error } = await supabase.from('Chatroom').delete().eq('chatroom_id', chatroomId);
+  if (error) {
+    console.error('채팅방 삭제 중 에러 발생', error);
+  }
+  return data;
+};
+
+export const deleteMessage = async (messageId: string) => {
+  const { data, error } = await supabase.from('Message').delete().eq('message_id', messageId);
+  if (error) {
+    console.error('채팅메세지 삭제 중 에러 발생', error);
+  }
+  return data;
+};
+
 export const findExistingChatroom = async (userId: string, sellerId: string, productId: string) => {
   const { data, error } = await supabase
     .from('Chatroom')
