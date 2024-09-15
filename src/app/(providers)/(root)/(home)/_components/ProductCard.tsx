@@ -72,23 +72,24 @@ const ProductCard = ({ product }: { product: ProductWithBusinessName }) => {
           </div>
         </Link>
         <div
-          className="absolute inset-0 flex justify-center items-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 hover:backdrop-blur-sm"
+          className="absolute top-[calc(100%-63px)] h-[63px] bg-white rounded-b-[19px] inset-0 flex justify-evenly items-center opacity-0 group-hover:opacity-80 transition-opacity duration-300 hover:backdrop-blur-sm"
           onClick={() => router.push(`/products/${product.product_id}`)}
         >
-          <div className="flex gap-2">
-            <button
-              className="p-2 rounded-full shadow-lg"
-              onClick={handleAddCartClick}
-              type="button"
-            >
-              <Image src="/icons/icon-card-cart.svg" alt="cart" width={24} height={24} />
+          <div
+            onClick={handleAddCartClick}
+            className="w-full h-full flex items-center justify-center"
+          >
+            <button type="button">
+              <Image src="/icons/icon-card-cart.svg" alt="cart" width={21} height={21} />
             </button>
-            <button
-              className="p-2 rounded-full shadow-lg"
-              onClick={handleBuyNowClick}
-              type="button"
-            >
-              <Image src="/icons/icon-card.svg" alt="card" width={24} height={24} />
+          </div>
+          <div className="w-[1px] h-full border-r-[1px] border-[#CACAD7]"></div>
+          <div
+            onClick={handleBuyNowClick}
+            className="w-full h-full flex items-center justify-center"
+          >
+            <button type="button">
+              <Image src="/icons/icon-card.svg" alt="card" width={26} height={21} />
             </button>
           </div>
         </div>
