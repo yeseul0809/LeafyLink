@@ -1,5 +1,5 @@
 'use client';
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { createCartItem } from '../../products/[id]/_actions/cartActions';
@@ -10,6 +10,7 @@ import { ProductWithBusinessName } from '../actions';
 import { useCartStore } from '@/stores';
 
 const ProductCard = ({ product }: { product: ProductWithBusinessName }) => {
+  const [isSale, setIsSale] = useState(true);
   const router = useRouter();
 
   const { initializeCart } = useCartStore((state) => ({
@@ -101,9 +102,18 @@ const ProductCard = ({ product }: { product: ProductWithBusinessName }) => {
         <p className="text-font/sub1 text-13-n-18-325 webkit-box md:text-14-n-20-35 mb-[8px]">
           {product.title}
         </p>
-        <p className="text-font/main text-14-sb-20-35 webkit-box md:text-18-sb-26-45">
-          {formatPrice(product.price ?? 0)}원
-        </p>
+        {isSale ? (
+          <p className="text-font/main text-14-sb-20-35 webkit-box md:text-18-sb-26-45 ">
+            <span>{formatPrice(product.price ?? 0)}할인원</span>
+            <span className="line-through text-[#767676] text-[16px] pl-2">
+              {formatPrice(product.price ?? 0)}
+            </span>
+          </p>
+        ) : (
+          <p className="text-font/main text-14-sb-20-35 webkit-box md:text-18-sb-26-45">
+            {formatPrice(product.price ?? 0)}원
+          </p>
+        )}
       </div>
     </div>
   );
