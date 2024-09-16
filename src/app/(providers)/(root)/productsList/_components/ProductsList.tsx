@@ -27,13 +27,12 @@ export default function ProductsList({
       const offset = (currentPage - 1) * itemsPerPage;
       const products = await getCategoryData(category); // category를 기준으로 데이터 가져오기
       const sortedProducts = products.sort(
-        (a, b) => new Date(b.created_at) - new Date(a.created_at)
+        (a, b) => +new Date(b.created_at) - +new Date(a.created_at)
       );
       setProductsData(sortedProducts.slice(offset, offset + itemsPerPage)); // 페이지네이션 적용
     };
     fetchProductData();
   }, [currentPage, category]);
-  console.log(productsData);
 
   const totalPages = Math.ceil(totalItems / itemsPerPage);
   return (

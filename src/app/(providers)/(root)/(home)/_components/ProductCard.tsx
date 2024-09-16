@@ -10,7 +10,7 @@ import { ProductWithBusinessName } from '../actions';
 import { useCartStore } from '@/stores';
 
 const ProductCard = ({ product }: { product: ProductWithBusinessName }) => {
-  const [isSale, setIsSale] = useState(true);
+  const [isSale, setIsSale] = useState(false);
   const router = useRouter();
 
   const { initializeCart } = useCartStore((state) => ({
