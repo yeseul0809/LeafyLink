@@ -11,7 +11,9 @@ export const INITIAL_STATE: Product = {
   product_id: '',
   product_seller_id: '',
   thumbnail_url: '',
-  sale_price: null
+  sale_price: null,
+  sale_starttime: null,
+  sale_endtime: null
 };
 
 export const FORMATS = [

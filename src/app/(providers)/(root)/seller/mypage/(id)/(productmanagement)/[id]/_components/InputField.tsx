@@ -4,7 +4,7 @@ interface InputFieldProps {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   placeholder: string;
   labelText: string;
-  type: 'text' | 'number';
+  type: 'text' | 'number' | 'datetime-local';
   id: string;
   min?: number;
 }

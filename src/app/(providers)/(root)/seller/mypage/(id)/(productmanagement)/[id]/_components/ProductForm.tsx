@@ -125,7 +125,7 @@ function ProductForm() {
       </div>
 
       <div className="flex">
-        <section className="flex-shrink border h-[716px] w-[295px]">
+        <section className="flex-shrink border h-[1024px] w-[295px]">
           <h2 className="text-sm text-center font-semibold border-b py-4 mb-4">상품 설정</h2>
 
           <div className="mb-6 px-3 text-[14px]">
@@ -181,6 +181,26 @@ function ProductForm() {
             min={0}
           />
 
+          <InputField
+            type="datetime-local"
+            id="sale_starttime"
+            name="sale_starttime"
+            value={state?.sale_starttime || ''}
+            onChange={handleChange}
+            placeholder="시작 날과 시간을 입력해주세요."
+            labelText="할인 시작 날짜"
+          />
+
+          <InputField
+            type="datetime-local"
+            id="sale_endtime"
+            name="sale_endtime"
+            value={state?.sale_endtime || ''}
+            onChange={handleChange}
+            placeholder="종료 날과 시간을 입력해주세요."
+            labelText="할인 종료 날짜"
+          />
+
           <div className="mb-6 px-3">
             <p className="text-[14px] mt-6 mb-2">대표이미지</p>
             <label className="pt-[3px] mb-[15px] cursor-pointer w-[60px] h-[24px] border border-primary-green-500 text-primary-green-500 text-[12px] text-center rounded-[4px] inline-block">
@@ -216,7 +236,7 @@ function ProductForm() {
           />
         </section>
 
-        <section className="flex-1 h-[716px] border">
+        <section className="flex-1 h-[1024px] border">
           <h2 className="text-sm text-center border-b font-semibold py-4 mb-4">상세 설명</h2>
           <QuillEditor value={state?.description || ''} onChange={handleDescriptionChange} />
         </section>
