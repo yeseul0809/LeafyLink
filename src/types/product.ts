@@ -9,6 +9,7 @@ export type Product = {
   product_id: string;
   product_seller_id: string;
   thumbnail_url: string;
+  sale_price: number | null;
 };
 export interface ProductProps extends Product {
   thumbnail?: File | null;

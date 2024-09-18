@@ -170,6 +170,17 @@ function ProductForm() {
             min={0}
           />
 
+          <InputField
+            type="number"
+            id="sale_price"
+            name="sale_price"
+            value={state?.sale_price || ''}
+            onChange={handleChange}
+            placeholder="원"
+            labelText="할인가 (판매가)"
+            min={0}
+          />
+
           <div className="mb-6 px-3">
             <p className="text-[14px] mt-6 mb-2">대표이미지</p>
             <label className="pt-[3px] mb-[15px] cursor-pointer w-[60px] h-[24px] border border-primary-green-500 text-primary-green-500 text-[12px] text-center rounded-[4px] inline-block">

@@ -275,6 +275,7 @@ export type Database = {
           price: number
           product_id: string
           product_seller_id: string
+          sale_price: number | null
           stock: number
           thumbnail_url: string
           title: string
@@ -287,6 +288,7 @@ export type Database = {
           price: number
           product_id: string
           product_seller_id: string
+          sale_price?: number | null
           stock: number
           thumbnail_url: string
           title: string
@@ -299,6 +301,7 @@ export type Database = {
           price?: number
           product_id?: string
           product_seller_id?: string
+          sale_price?: number | null
           stock?: number
           thumbnail_url?: string
           title?: string

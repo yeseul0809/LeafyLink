@@ -35,7 +35,8 @@ async function handleSubmit({ state, id }: handleSubmitProps) {
       price: Number(state.price),
       stock: Number(state.stock),
       thumbnail_url: thumbnail_url,
-      description: state.description
+      description: state.description,
+      sale_price: state.sale_price
     }
   ]);
 
