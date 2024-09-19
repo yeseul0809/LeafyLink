@@ -199,7 +199,7 @@ function HeaderMobileDropdown({
               </>
             ) : (
               <>
-                <li className="pb-5">
+                <li className="pb-5 font-semibold">
                   <button
                     onClick={() => {
                       redirect('/buyer/mypage/profile');

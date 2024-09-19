@@ -5,7 +5,6 @@ import ProductCard from '../../(home)/_components/ProductCard';
 import { getCategoryData } from '../actions';
 import { ProductWithBusinessName } from '../../(home)/actions';
 import ProductsSortDropdown from './ProductsSortDropdown';
-import SelectBox from '../../search/_components/SelectBox';
 
 interface ProductsListProps {
   initialData: ProductWithBusinessName[];
@@ -27,14 +26,15 @@ export default function ProductsList({
     const fetchProductData = async () => {
       const offset = (currentPage - 1) * itemsPerPage;
       const products = await getCategoryData(category); // category를 기준으로 데이터 가져오기
-      setProductsData(products.slice(offset, offset + itemsPerPage)); // 페이지네이션 적용
+      const sortedProducts = products.sort(
+        (a, b) => +new Date(b.created_at) - +new Date(a.created_at)
+      );
+      setProductsData(sortedProducts.slice(offset, offset + itemsPerPage)); // 페이지네이션 적용
     };
-
     fetchProductData();
   }, [currentPage, category]);
 
   const totalPages = Math.ceil(totalItems / itemsPerPage);
-
   return (
     <section className="mx-auto lg:mt-[80px] lg:mb-[180px]">
       <h2 className="text-[32px] text-center lg:mb-[48px] max_md:text-[20px] max_md:mt-6 max_md:mb-4 font-semibold">
@@ -44,7 +44,7 @@ export default function ProductsList({
         <div>
           <p>전체 {totalItems}개</p>
         </div>
-        <SelectBox />
+        {/* <ProductsSortDropdown /> */}
       </div>
       <div className="grid grid-cols-4 gap-x-[20px] gap-y-[24px] m:grid-cols-3 s:grid-cols-2 justify-items-center">
         {productsData?.map((product) => <ProductCard product={product} key={product.product_id} />)}

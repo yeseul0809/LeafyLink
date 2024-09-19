@@ -12,18 +12,6 @@ interface ProductsSortDropdownProps {
   onCategoryChange: (category: string) => void;
 }
 
-const [categoryFilter, setCategoryFilter] = useState<string>('all');
-
-const handleCategoryChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-  setCategoryFilter(event.target.value);
-};
-
-// 필터링된 제품 리스트
-// const filteredProducts =
-//   categoryFilter === 'all'
-//     ? products
-//     : products.filter((product) => product.category === categoryFilter);
-
 export default function ProductsSortDropdown({ onCategoryChange }: ProductsSortDropdownProps) {
   const category: Option[] = [
     { value: '신상품', label: '신상품' },
@@ -34,6 +22,17 @@ export default function ProductsSortDropdown({ onCategoryChange }: ProductsSortD
   ];
   const [categoryState, setCategoryState] = useState<Option | null>(category[0]);
   const [isMounted, setIsMounted] = useState(false);
+  const [categoryFilter, setCategoryFilter] = useState<string>('all');
+
+  const handleCategoryChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setCategoryFilter(event.target.value);
+  };
+
+  // 필터링된 제품 리스트
+  // const filteredProducts =
+  //   categoryFilter === 'all'
+  //     ? products
+  //     : products.filter((product) => product.category === categoryFilter);
 
   useEffect(() => {
     setIsMounted(true);
@@ -77,7 +76,6 @@ export default function ProductsSortDropdown({ onCategoryChange }: ProductsSortD
       options={category}
       onChange={handleChange}
       defaultValue={category[0]}
-      className="w-full"
     />
   );
 }

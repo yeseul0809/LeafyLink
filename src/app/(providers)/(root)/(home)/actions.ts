@@ -32,7 +32,6 @@ export const getUserData = async () => {
     if (error) {
       throw error;
     }
-    console.log('userData 서버 ===', userData);
     return userData;
   }
   return null;
