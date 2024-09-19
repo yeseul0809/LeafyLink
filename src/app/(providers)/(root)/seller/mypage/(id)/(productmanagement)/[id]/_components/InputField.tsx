@@ -1,12 +1,10 @@
-import React from 'react';
-
 interface InputFieldProps {
   name: string;
   value: number | string | null;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   placeholder: string;
   labelText: string;
-  type: 'text' | 'number';
+  type: 'text' | 'number' | 'datetime-local';
   id: string;
   min?: number;
 }

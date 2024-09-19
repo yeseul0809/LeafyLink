@@ -54,7 +54,7 @@ function QuillEditor({ value, onChange }: QuillEditorProps) {
     []
   );
   return (
-    <div className="h-[558px] lg:h-[585px] px-3">
+    <div className="h-[890px] lg:h-[890px] px-3">
       <DynamicReactQuill
         forwardedRef={quillRef}
         value={value}
