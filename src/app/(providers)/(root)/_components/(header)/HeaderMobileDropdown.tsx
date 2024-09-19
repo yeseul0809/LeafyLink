@@ -104,6 +104,16 @@ function HeaderMobileDropdown({
           <li className="pb-5 font-semibold">
             <button
               onClick={() => {
+                redirect('/event');
+              }}
+              className="flex"
+            >
+              EVENT
+            </button>
+          </li>
+          <li className="pb-5 font-semibold">
+            <button
+              onClick={() => {
                 redirect('/productsList/씨앗');
               }}
             >
