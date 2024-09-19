@@ -44,7 +44,7 @@ export default function ProductsList({
         <div>
           <p>전체 {totalItems}개</p>
         </div>
-        <ProductsSortDropdown />
+        {/* <ProductsSortDropdown /> */}
       </div>
       <div className="grid grid-cols-4 gap-x-[20px] gap-y-[24px] m:grid-cols-3 s:grid-cols-2 justify-items-center">
         {productsData?.map((product) => <ProductCard product={product} key={product.product_id} />)}
