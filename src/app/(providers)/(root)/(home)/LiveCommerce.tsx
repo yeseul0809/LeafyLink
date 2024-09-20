@@ -8,6 +8,7 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import Image from 'next/image';
+import { Navigation } from 'swiper/modules';
 
 function LiveCommerce({ category }: { category: string }) {
   const router = useRouter();
@@ -44,6 +45,7 @@ function LiveCommerce({ category }: { category: string }) {
         <Swiper
           slidesPerView={2.5}
           spaceBetween={80}
+          modules={[Navigation]}
           navigation={{
             nextEl: '.custom-swiper-button-next',
             prevEl: '.custom-swiper-button-prev'
@@ -56,7 +58,7 @@ function LiveCommerce({ category }: { category: string }) {
             </SwiperSlide>
           ))}
           <div className="w-full flex justify-between items-center z-10 absolute lg:top-1/3 md:top-1/3 sm:top-1/3 xs:top-3/5 ">
-            <div className="custom-swiper-button custom-swiper-button-prev cursor-pointer ">
+            <div className="custom-swiper-button custom-swiper-button-prev cursor-pointer">
               <Image
                 src="/icons/button-left.svg"
                 alt="left button"
@@ -65,7 +67,7 @@ function LiveCommerce({ category }: { category: string }) {
                 className="w-[56px] h-[80px]"
               />
             </div>
-            <div className="custom-swiper-button custom-swiper-button-next cursor-pointer ">
+            <div className="custom-swiper-button custom-swiper-button-next cursor-pointer">
               <Image
                 src="/icons/button-right.svg"
                 alt="right button"

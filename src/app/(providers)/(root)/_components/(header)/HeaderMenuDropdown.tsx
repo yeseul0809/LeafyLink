@@ -25,7 +25,6 @@ function HeaderMenuDropdown({ setIsOpenMenu }: HeaderMenuProps) {
     <div className="max-w-[1240px] z-10 overflow-x-hidden">
       <div
         style={{
-          //서영 Shadow
           boxShadow: '0px 2500px 0px 2500px rgb(0 0 0 / 0.6)'
         }}
         className="h-[246px] w-full flex border-b border-[#E5E5EC] justify-between max-w-container-lv2 px-7 pt-8 flex absolute top-full leading-5 text-center bg-white text-sm"

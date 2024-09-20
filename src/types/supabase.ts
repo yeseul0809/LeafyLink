@@ -160,30 +160,33 @@ export type Database = {
       Message: {
         Row: {
           created_at: string
+          image_url: string | null
           is_read: boolean
           message_chatroom_id: string
           message_id: string
           message_seller_id: string
           message_user_id: string
-          payload: string
+          payload: string | null
         }
         Insert: {
           created_at?: string
+          image_url?: string | null
           is_read: boolean
           message_chatroom_id: string
           message_id?: string
           message_seller_id: string
           message_user_id: string
-          payload: string
+          payload?: string | null
         }
         Update: {
           created_at?: string
+          image_url?: string | null
           is_read?: boolean
           message_chatroom_id?: string
           message_id?: string
           message_seller_id?: string
           message_user_id?: string
-          payload?: string
+          payload?: string | null
         }
         Relationships: [
           {
@@ -272,6 +275,9 @@ export type Database = {
           price: number
           product_id: string
           product_seller_id: string
+          sale_endtime: string | null
+          sale_price: number | null
+          sale_starttime: string | null
           stock: number
           thumbnail_url: string
           title: string
@@ -284,6 +290,9 @@ export type Database = {
           price: number
           product_id: string
           product_seller_id: string
+          sale_endtime?: string | null
+          sale_price?: number | null
+          sale_starttime?: string | null
           stock: number
           thumbnail_url: string
           title: string
@@ -296,6 +305,9 @@ export type Database = {
           price?: number
           product_id?: string
           product_seller_id?: string
+          sale_endtime?: string | null
+          sale_price?: number | null
+          sale_starttime?: string | null
           stock?: number
           thumbnail_url?: string
           title?: string

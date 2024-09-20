@@ -99,7 +99,7 @@ function HeaderIconBar({ setIsOpenMenu, setIsOpenSearch, isOpenSearch }: HeaderM
   };
 
   const [state, formAction] = useFormState(searchKeyword, null);
-  console.log({ chatroomList, isLogin, userData });
+
   return (
     <section>
       <div className="flex">

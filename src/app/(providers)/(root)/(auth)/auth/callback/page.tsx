@@ -74,13 +74,12 @@ function AuthCallback() {
           queryKey: ['user'],
           queryFn: () => getUserData()
         });
-        console.log('로그인 true로 변경 zustand');
         router.push('/');
       }
     };
 
     handleAuthCallback();
-  }, [router]);
+  }, [router, queryClient, setIsLogin]);
 
   return (
     <div className="w-full h-[200px] flex justify-center items-center">

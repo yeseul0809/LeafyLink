@@ -10,7 +10,10 @@ export const INITIAL_STATE: Product = {
   updated_at: null,
   product_id: '',
   product_seller_id: '',
-  thumbnail_url: ''
+  thumbnail_url: '',
+  sale_price: null,
+  sale_starttime: null,
+  sale_endtime: null
 };
 
 export const FORMATS = [

@@ -9,6 +9,8 @@ import MessageInput from '../_components/MessageInput';
 import MessageList from '../_components/MessageList';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import { deleteChatroom } from '../_utils/chatroomUtils';
+import showSwal, { showSwalDeleteChatroom } from '@/utils/swal';
 
 interface ParamsProps {
   params: { id: string };
@@ -49,6 +51,19 @@ function ChatPage({ params }: ParamsProps) {
             setMessages((messages) => {
               return [...messages, payload.new as Message];
             });
+          }
+        )
+        .on(
+          'postgres_changes',
+          {
+            event: 'DELETE',
+            schema: 'public',
+            table: 'Message'
+          },
+          (payload) => {
+            setMessages((messages) =>
+              messages.filter((message) => message.message_id !== payload.old.message_id)
+            );
           }
         )
         .subscribe();
@@ -140,7 +155,20 @@ function ChatPage({ params }: ParamsProps) {
     }
   };
 
-  const sendMessage = async (e: React.FormEvent) => {
+  const handleOutChatroom = async () => {
+    const isConfirmed = await showSwalDeleteChatroom();
+    if (isConfirmed) {
+      try {
+        await deleteChatroom(chatroomId);
+        router.push('/chat');
+      } catch (error) {
+        console.error('채팅방 삭제 중 에러 발생', error);
+        showSwal('채팅방 나가기를 실패했습니다.');
+      }
+    }
+  };
+
+  const sendMessage = async (e: React.FormEvent, text: string | null, imageUrl: string | null) => {
     e.preventDefault();
 
     const { error } = await supabase.from('Message').insert([
@@ -148,7 +176,8 @@ function ChatPage({ params }: ParamsProps) {
         message_chatroom_id: chatroomId,
         message_user_id: user.id,
         message_seller_id: sellerId,
-        payload: newMessage,
+        payload: text || null, // 텍스트가 있으면 텍스트 전송, 없으면 null
+        image_url: imageUrl || null, // 이미지가 있으면 이미지 전송, 없으면 null
         is_read: false
       }
     ]);
@@ -163,12 +192,12 @@ function ChatPage({ params }: ParamsProps) {
   return (
     <div className="flex flex-col items-center justify-center mx-auto w-[335px] md:w-[610px] pt-[30px] pb-3 md:pb-8">
       <div className="flex items-center mb-7 w-full">
-        <button onClick={router.back} className="mr-2 md:mr-8 md:w-9 md:h-9">
+        <button onClick={() => router.push('/chat')} className="mr-2 md:mr-8 md:w-9 md:h-9">
           <Image
             src={'/icons/back.svg'}
             alt="back"
-            width={24}
-            height={24}
+            width={28}
+            height={28}
             className="md:w-9 md:h-9"
           />
         </button>
@@ -186,6 +215,15 @@ function ChatPage({ params }: ParamsProps) {
             </span>
           </>
         )}
+        <button onClick={handleOutChatroom} className="ml-auto md:w-7 md:h-7">
+          <Image
+            src={'/icons/out.svg'}
+            alt="out"
+            width={28}
+            height={28}
+            className="md:w-7 md:h-7"
+          />
+        </button>
       </div>
       <div className="w-full border-t border-#E5E5EC"></div>
       <MessageList
@@ -198,6 +236,9 @@ function ChatPage({ params }: ParamsProps) {
         newMessage={newMessage}
         setNewMessage={setNewMessage}
         sendMessage={sendMessage}
+        chatroomId={chatroomId}
+        user={user}
+        sellerId={sellerId}
       />
     </div>
   );

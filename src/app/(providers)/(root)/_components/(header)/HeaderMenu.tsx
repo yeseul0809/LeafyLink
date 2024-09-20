@@ -26,7 +26,7 @@ function HeaderMenu({ setIsOpenMenu, isOpenMenu, setIsOpenSearch }: HeaderMenuPr
 
   return (
     <section>
-      <div className="w-[339px]">
+      <div className="w-[412px]">
         <div className="flex items-center justify-between">
           <button onClick={toggleMenu}>
             <Image src="/icons/icon-menu.svg" alt="menu" width={24} height={24}></Image>
@@ -62,6 +62,14 @@ function HeaderMenu({ setIsOpenMenu, isOpenMenu, setIsOpenSearch }: HeaderMenuPr
             }}
           >
             식집사템
+          </button>
+          <button
+            className=""
+            onClick={() => {
+              redirect('/event');
+            }}
+          >
+            EVENT
           </button>
         </div>
       </div>
