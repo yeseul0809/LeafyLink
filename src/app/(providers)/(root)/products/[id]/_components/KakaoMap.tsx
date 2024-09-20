@@ -92,6 +92,10 @@ const KakaoMap = ({ productId }: KakaoMapProps) => {
     loadKakaoMap();
   }, [productId]);
 
+  // 이 중 하나라도 없으면 숨기기
+  if (!businessName || !address) {
+    return null;
+  }
   return (
     <div className="flex flex-col items-center">
       <div>픽업위치</div>
@@ -107,7 +111,7 @@ const KakaoMap = ({ productId }: KakaoMapProps) => {
               {businessName}
             </div>
             <div className="self-stretch text-[#555555] text-[13px] font-normal leading-[18px]">
-              {address}
+              {address ? address : '판매자가 주소 정보를 입력하지 않았습니다.'}
             </div>
           </div>
 

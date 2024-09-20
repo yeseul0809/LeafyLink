@@ -159,3 +159,21 @@ export async function deleteProducts(productsId: string[]) {
     throw new Error('상품 삭제 중 오류가 발생했습니다.');
   }
 }
+
+// 상품등록을 할 때 유효성 검사 할 때 사용
+export async function getSellerInfo(sellerId: string) {
+  const supabase = createClient();
+
+  const { data: seller, error } = await supabase
+    .from('Seller')
+    .select('address')
+    .eq('seller_id', sellerId)
+    .single();
+
+  if (error || !seller) {
+    throw new Error('판매자 정보를 가져오는 중 오류가 발생했습니다');
+  }
+  console.log('주소', seller);
+
+  return seller;
+}
