@@ -40,6 +40,13 @@ const SellerMyPageHeader = () => {
           </Link>
         </li>
         <li
+          className={`w-1/3 py-[12px]  text-center s:py-[12px] ${linkClassName} ${activeLink === `/seller/mypage/events` ? activeLinkClassName : ''}`}
+        >
+          <Link href={`/seller/mypage/events`}>
+            <div className="webkit-box">이벤트 관리</div>
+          </Link>
+        </li>
+        <li
           className={`w-1/3 py-[12px]  text-center s:py-[12px] ${linkClassName} ${activeLink === `/seller/mypage/profile` ? activeLinkClassName : ''}`}
         >
           <Link href={`/seller/mypage/profile`}>
