@@ -34,24 +34,29 @@ export default function ProductTable({ sellerId }: ProductTableProps) {
   const [categoryFilter, setCategoryFilter] = useState<string>('all');
   const [loading, setLoading] = useState<boolean>(true);
   const [selectedProducts, setSelectedProducts] = useState<string[]>([]);
+  const [deletedProductsCount, setDeletedProductsCount] = useState<number>(0);
 
   const fetchProducts = async () => {
     setLoading(true);
     try {
       const page = searchParams.get('page') ? parseInt(searchParams.get('page') as string, 10) : 1;
-      setCurrentPage(page);
-
       const { products, totalProducts } = await getProducts(
         sellerId,
         page,
         itemsPerPage,
         categoryFilter
       );
+
+      if (products.length === 0 && page > 1) {
+        router.push(`?page=${page - 1}`);
+        return;
+      }
+
       setProducts(products);
       setTotalProducts(totalProducts);
+      setDeletedProductsCount(0);
     } catch (error) {
       console.error('제품 데이터를 가져오는 중 오류가 발생했습니다:', error);
-      router.push('/');
     } finally {
       setLoading(false);
     }
@@ -91,7 +96,7 @@ export default function ProductTable({ sellerId }: ProductTableProps) {
     try {
       await deleteProducts(selectedProducts); // 선택된 상품 DB에서 삭제
       setProducts(products.filter((product) => !selectedProducts.includes(product.product_id))); // 삭제된 상품 제외한 나머지 상품들로 상품목록(products) 상태 업데이트
-      // router.push('/seller/mypage/products');
+      fetchProducts(); // 삭제 후 바로 업데이트된 데이터로 다시 fetch
       setSelectedProducts([]); // 선택된 상품 목록 초기화
     } catch (error) {
       console.error('상품 삭제 중 오류가 발생했습니다:', error);

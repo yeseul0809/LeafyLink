@@ -48,11 +48,14 @@ async function ProductDetailPage({ params }: ParamsProps) {
           />
         </div>
       </section>
+
       <MiddleSectionWrapper
         productDescription={product.description}
         reviewProductId={id}
         reviewCount={reviewCount}
+        productId={id}
       />
+
       <ProductReviewList productId={product.product_id} reviewsPerPage={reviewsPerPage} />
     </div>
   );
