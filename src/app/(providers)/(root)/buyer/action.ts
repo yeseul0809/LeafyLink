@@ -120,7 +120,8 @@ export const validateBusinessNumber = async (
   businessNumber: string,
   startDate: string,
   name: string,
-  businessName: string
+  businessName: string,
+  businessAddress: string
 ): Promise<BusinessInfoResponse | null> => {
   const data = {
     businesses: [
@@ -128,12 +129,14 @@ export const validateBusinessNumber = async (
         b_no: businessNumber,
         start_dt: startDate,
         p_nm: name,
-        b_nm: businessName
+        b_nm: businessName,
+        b_adr: businessAddress.trim()
       }
     ]
   };
 
   try {
+    console.log('API 요청 데이터:', data);
     const response = await fetch(
       `https://api.odcloud.kr/api/nts-businessman/v1/validate?serviceKey=${process.env.NEXT_PUBLIC_SERVICE_KEY}&returnType=JSON`,
       {
@@ -151,6 +154,7 @@ export const validateBusinessNumber = async (
     }
 
     const result = await response.json();
+    console.log('API 응답 결과:', result);
 
     if (result.status_code === 'OK' && result.valid_cnt === 1) {
       return result.data[0];
@@ -188,12 +192,14 @@ export const createSeller = async (userData: any, businessData: BusinessInfoResp
     business_inception: businessData.request_param.start_dt,
     user_name: businessData.request_param.p_nm,
     email: userData.email,
-    address_code: userData.address_code,
-    address: userData.address,
-    address_detail: userData.address_detail,
+    address: businessData.request_param.b_adr,
+    // address_code: userData.address_code,
+    // address: userData.address,
+    // address_detail: userData.address_detail,
     phone: phone,
     avatar_url: avatar_url
   });
+  console.log('a', businessData.request_param.b_adr);
 
   if (error) {
     throw new Error('판매자 생성 중 오류가 발생했습니다: ' + error.message);
