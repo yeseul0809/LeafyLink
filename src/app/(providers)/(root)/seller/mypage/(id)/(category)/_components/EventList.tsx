@@ -1,7 +1,6 @@
 'use client';
 
 import Pagination from '@/app/(providers)/(root)/buyer/mypage/_components/Pagination';
-import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import ProductTableMobli from './ProductTableMobli';

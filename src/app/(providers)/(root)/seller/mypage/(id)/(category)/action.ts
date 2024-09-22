@@ -129,7 +129,7 @@ export async function getProducts(
   const { data: products, error: productError } = await supabase
     .from('Product')
     .select(
-      'category, title, price, stock, product_id, created_at, description, product_seller_id, thumbnail_url, updated_at'
+      'category, title, price, stock, product_id, created_at, description, product_seller_id, thumbnail_url, updated_at, sale_price'
     )
     .eq('product_seller_id', sellerId)
     .match(categoryCondition)

@@ -9,6 +9,7 @@ type Product = {
   product_seller_id: string;
   thumbnail_url: string;
   updated_at: string | null;
+  sale_price: number | null;
 };
 
 interface ProductTableMobliProps {
@@ -31,9 +32,20 @@ export default function ProductTableMobli({ product, formatCurrency }: ProductTa
           </div>
           <div className="justify-start items-center gap-2 inline-flex">
             <div className="justify-start items-center gap-1 flex">
-              <div className="text-font/sub2 text-[13px] font-normal leading-[18px]">가격</div>
+              <div className="text-font/sub2 text-[13px] font-normal leading-[18px]">정가</div>
+
               <div className="text-font/main text-[13px] font-normal leading-[18px]">
                 {formatCurrency(product.price ?? 0)}원
+              </div>
+            </div>
+            <div className="justify-start items-center gap-1 flex">
+              <div className="w-px h-2.5 bg-[#e5e5ec]" />
+              <div className="text-font/sub2 text-[13px] font-normal leading-[18px]">할인가</div>
+
+              <div className="text-font/main text-[13px] font-normal leading-[18px]">
+                {product.sale_price === 0 || product.sale_price === null
+                  ? '-'
+                  : `${formatCurrency(product.sale_price)}원`}
               </div>
             </div>
             <div className="w-px h-2.5 bg-[#e5e5ec]" />
@@ -48,8 +60,23 @@ export default function ProductTableMobli({ product, formatCurrency }: ProductTa
           </div>
         </div>
         <div className="text-right text-primary-green-500 text-sm font-semibold leading-tight">
-          <span className={product.stock === 0 ? 'text-font/Disabled' : 'text-primary-green-500'}>
+          {/* <span className={product.stock === 0 ? 'text-font/Disabled' : 'text-primary-green-500'}>
             {product.stock === 0 ? '품절' : '판매중'}
+          </span> */}
+          <span
+            className={
+              product.stock === 0
+                ? 'text-font/Disabled'
+                : product.sale_price !== null && product.sale_price > 0
+                  ? 'text-[#d50136] text-sm font-normal'
+                  : 'text-primary-green-500'
+            }
+          >
+            {product.stock === 0
+              ? '품절'
+              : product.sale_price !== null && product.sale_price > 0
+                ? '할인중'
+                : '판매중'}
           </span>
         </div>
       </div>
