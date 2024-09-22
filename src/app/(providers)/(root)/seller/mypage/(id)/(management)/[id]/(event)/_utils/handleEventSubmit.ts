@@ -1,9 +1,9 @@
 import { v4 as uuidv4 } from 'uuid';
 import { createClient } from '@/supabase/supabaseClient';
-import { Event } from '@/types/event';
+import { EventProps } from '@/types/event';
 
 interface handleEventSubmitProps {
-  state: Event;
+  state: EventProps;
   id: string;
 }
 
@@ -12,10 +12,10 @@ const supabase = createClient();
 async function handleEventSubmit({ state, id }: handleEventSubmitProps) {
   let thumbnail_url = '';
 
-  if (state.thumbnail_url) {
+  if (state.eventThumbnail) {
     const { data, error } = await supabase.storage
       .from('event-thumbnail')
-      .upload(`thumbnail/${uuidv4()}`, state.thumbnail_url);
+      .upload(`thumbnail/${uuidv4()}`, state.eventThumbnail);
     if (error) {
       console.error('이벤트 썸네일 업로드 중 오류 발생:', error);
       return;

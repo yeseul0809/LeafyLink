@@ -74,7 +74,7 @@ function EventForm() {
     if (file) {
       const url = URL.createObjectURL(file);
       setThumbnailPreview(url);
-      setState((prev) => prev && { ...prev, thumbnail: file });
+      setState((prev) => prev && { ...prev, eventThumbnail: file });
     }
   };
 
