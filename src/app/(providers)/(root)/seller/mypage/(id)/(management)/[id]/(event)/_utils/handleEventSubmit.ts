@@ -5,11 +5,12 @@ import { EventProps } from '@/types/event';
 interface handleEventSubmitProps {
   state: EventProps;
   id: string;
+  relatedProducts: string[];
 }
 
 const supabase = createClient();
 
-async function handleEventSubmit({ state, id }: handleEventSubmitProps) {
+async function handleEventSubmit({ state, id, relatedProducts }: handleEventSubmitProps) {
   let thumbnail_url = '';
 
   if (state.eventThumbnail) {
@@ -32,7 +33,7 @@ async function handleEventSubmit({ state, id }: handleEventSubmitProps) {
       description: state.description,
       event_endtime: state.event_endtime,
       event_starttime: state.event_starttime,
-      related_products: null,
+      related_products: relatedProducts,
       seller_id: id,
       summary: state.summary,
       thumbnail_url: thumbnail_url,

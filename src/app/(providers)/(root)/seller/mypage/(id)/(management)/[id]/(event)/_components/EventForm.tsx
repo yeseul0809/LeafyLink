@@ -8,9 +8,13 @@ import { EVENT_INITIAL_STATE } from '../_utils/constants';
 import { Event } from '@/types/event';
 import handleEventSubmit from '../_utils/handleEventSubmit';
 import EventInputField from './EventInputField';
-import { getEventRequest } from '@/app/(providers)/(root)/event/_actions/eventActions';
+import {
+  fetchDiscountedProducts,
+  getEventRequest
+} from '@/app/(providers)/(root)/event/_actions/eventActions';
 import EventQuillEditor from './EventQuillEditor';
 import { handleEventValidateForm } from '../_utils/handleEventValidateForm';
+import { Product } from '@/types/product';
 
 const supabase = createClient();
 
@@ -19,6 +23,9 @@ function EventForm() {
   const [thumbnailPreview, setThumbnailPreview] = useState<string | null>(null);
   const [isFormValid, setIsFormValid] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [discountProductList, setDiscountProductList] = useState<Product[]>([]);
+  const [relatedProducts, setRelatedProducts] = useState<string[]>([]);
+
   const router = useRouter();
   const params = useParams();
   const pathname = usePathname();
@@ -60,6 +67,20 @@ function EventForm() {
     setIsFormValid(handleEventValidateForm(state));
   }, [state, thumbnailPreview]);
 
+  useEffect(() => {
+    const fetchDiscountedList = async () => {
+      if (state?.category === '할인' && sellerId) {
+        const id = Array.isArray(sellerId) ? sellerId[0] : sellerId;
+        const discountedProducts = await fetchDiscountedProducts(id);
+        setDiscountProductList(discountedProducts);
+      } else {
+        setDiscountProductList([]);
+      }
+    };
+
+    fetchDiscountedList();
+  }, [state?.category, sellerId]);
+
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>) => {
     const { name, value } = e.target;
     setState((prev) => prev && { ...prev, [name]: value });
@@ -78,6 +99,12 @@ function EventForm() {
     }
   };
 
+  // 상품 선택
+  const handleProductSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedValues = Array.from(e.target.selectedOptions, (option) => option.value);
+    setRelatedProducts(selectedValues); // 관련 상품 ID 목록 업데이트
+  };
+
   const handleInputSubmit = async () => {
     if (!state) return;
     setIsLoading(true);
@@ -93,7 +120,7 @@ function EventForm() {
     } else {
       // 등록 모드
       const id = Array.isArray(sellerId) ? sellerId[0] : sellerId;
-      await handleEventSubmit({ state, id });
+      await handleEventSubmit({ state, id, relatedProducts });
       setState(EVENT_INITIAL_STATE);
       setThumbnailPreview(null);
       router.push('/seller/mypage/events');
@@ -177,6 +204,30 @@ function EventForm() {
               <option value="할인">할인</option>
             </select>
           </div>
+
+          {state?.category === '할인' && (
+            <div className="p-3 text-[14px]">
+              <label className="text-[14px] block mb-3" htmlFor="category">
+                상품 선택
+              </label>
+              <select
+                name="related_products"
+                multiple
+                value={relatedProducts}
+                onChange={handleProductSelect}
+                className="w-[271px] h-[44px] px-3 border text-font/sub2 text-right"
+              >
+                <option value="" disabled>
+                  상품을 선택하세요
+                </option>
+                {discountProductList.map((product) => (
+                  <option key={product.product_id} value={product.title}>
+                    {product.title}
+                  </option>
+                ))}
+              </select>
+            </div>
+          )}
 
           <div className="p-3">
             <div className="flex">
