@@ -94,6 +94,56 @@ export type Database = {
           },
         ]
       }
+      Event: {
+        Row: {
+          category: string
+          created_at: string
+          description: string
+          event_endtime: string
+          event_id: string
+          event_starttime: string
+          related_products: Json[] | null
+          seller_id: string
+          summary: string
+          thumbnail_url: string
+          title: string
+        }
+        Insert: {
+          category?: string
+          created_at?: string
+          description?: string
+          event_endtime: string
+          event_id?: string
+          event_starttime: string
+          related_products?: Json[] | null
+          seller_id?: string
+          summary: string
+          thumbnail_url?: string
+          title?: string
+        }
+        Update: {
+          category?: string
+          created_at?: string
+          description?: string
+          event_endtime?: string
+          event_id?: string
+          event_starttime?: string
+          related_products?: Json[] | null
+          seller_id?: string
+          summary?: string
+          thumbnail_url?: string
+          title?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "Event_seller_id_fkey"
+            columns: ["seller_id"]
+            isOneToOne: false
+            referencedRelation: "Seller"
+            referencedColumns: ["seller_id"]
+          },
+        ]
+      }
       Livestream: {
         Row: {
           category: string | null
