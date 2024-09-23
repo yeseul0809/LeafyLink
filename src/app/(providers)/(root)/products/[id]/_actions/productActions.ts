@@ -94,3 +94,37 @@ export async function getUserPurchasedProducts(userId: string, productId: string
 
   return data;
 }
+
+// product_id로부터 seller의 address_code와 business_name을 가져오는 함수
+export async function getSellerAddressCode(productId: string) {
+  const supabaseServer: SupabaseClient<Database> = createClient();
+
+  // product_seller_id를 가져옴
+  const { data: product, error: productError } = await supabaseServer
+    .from('Product')
+    .select('product_seller_id')
+    .eq('product_id', productId)
+    .single();
+
+  if (productError || !product) {
+    throw new Error('상품 정보를 찾을 수 없습니다.');
+  }
+
+  const productSellerId = product.product_seller_id;
+
+  // 해당 seller의 business_name과 address 가져옴
+  const { data: seller, error: sellerError } = await supabaseServer
+    .from('Seller')
+    .select('business_name, address')
+    .eq('seller_id', productSellerId)
+    .single();
+
+  if (sellerError || !seller) {
+    throw new Error('판매자 주소 정보를 찾을 수 없습니다.');
+  }
+
+  return {
+    businessName: seller.business_name,
+    address: seller.address
+  };
+}

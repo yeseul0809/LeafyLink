@@ -22,7 +22,7 @@ const MyPageHeader = () => {
         마이페이지
       </h1>
 
-      <ul className="flex items-start s:px-[20px]  ">
+      <ul className="flex items-start ">
         <li
           className={`w-1/3  p-4 text-center xs:p-[12px] ${linkClassName} ${activeLink === `/buyer/mypage/orders` ? activeLinkClassName : ''}`}
         >

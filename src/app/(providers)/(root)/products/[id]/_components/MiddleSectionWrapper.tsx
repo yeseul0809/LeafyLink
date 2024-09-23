@@ -6,17 +6,20 @@ import ProductDescription from './Description';
 import ActiveTab from './ActiveTab';
 import ReviewEdit from './ReviewEdit';
 import { Review } from '@/types/review';
+import KakaoMap from './KakaoMap';
 
 interface MiddleSectionWrapperProps {
   productDescription: string;
   reviewProductId: string;
   reviewCount: number;
+  productId: string;
 }
 
 function MiddleSectionWrapper({
   productDescription,
   reviewProductId,
-  reviewCount
+  reviewCount,
+  productId
 }: MiddleSectionWrapperProps) {
   const [activeTab, setActiveTab] = useState('description');
   const reviewRef = useRef<HTMLDivElement | null>(null);
@@ -35,7 +38,9 @@ function MiddleSectionWrapper({
         handleScrollToReview={handleScrollToReview}
         reviewCount={reviewCount}
       />
+
       <ProductDescription productDescription={productDescription} />
+      <KakaoMap productId={productId} />
       <div ref={reviewRef} className="text-center">
         <ReviewEdit reviewProductId={reviewProductId} reviewCount={reviewCount} />
       </div>

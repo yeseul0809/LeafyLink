@@ -17,7 +17,7 @@ const SellerMyPageHeader = () => {
     'text-18-sb-26-45 s:text-14-sb-20-35 text-primary-green-500  border-primary-green-500 border-b-2 overflow-hidden text-center truncate ';
 
   return (
-    <div className="max-w-screen-xl mx-auto mt-20  xs:my-[16px] s:px-[20px]">
+    <div className="max-w-screen-xl mx-auto mt-20  xs:my-[16px] ">
       {/* Title */}
       <h1 className="text-32-sb-42-80 xs:text-20-sb-28-50 text-center text-font/main mb-[32px] xs:mb-[0px]">
         마이페이지

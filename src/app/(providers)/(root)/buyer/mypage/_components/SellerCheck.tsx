@@ -20,6 +20,7 @@ function SellerCheck({ userData }: SellerCheckProps) {
   const [name, setName] = useState('');
   const [startDate, setStartDate] = useState('');
   const [businessName, setBusinessName] = useState('');
+  const [businessAddress, setBusinessAddress] = useState('');
   const [result, setResult] = useState<BusinessInfoResponse | null>(null);
   const [hydrated, setHydrated] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -45,14 +46,21 @@ function SellerCheck({ userData }: SellerCheckProps) {
       alert('사업자등록번호를 올바르게 입력하세요.');
       return;
     }
-
+    const cleanedAddress = businessAddress.trim();
+    console.log('사업자번호:', businessNumber);
+    console.log('대표자 성명:', name);
+    console.log('개업일자:', startDate);
+    console.log('상호명:', businessName);
+    console.log('주소:', businessAddress);
     try {
       const validatedBusiness = await validateBusinessNumber(
         businessNumber,
         startDate,
         name,
-        businessName
+        businessName,
+        cleanedAddress
       );
+      console.log('API 응답 결과:', validatedBusiness);
 
       if (validatedBusiness) {
         setResult(validatedBusiness);
@@ -71,6 +79,7 @@ function SellerCheck({ userData }: SellerCheckProps) {
   const checkInputNull = () => {
     const fullCode = businessNumber;
     const isValidLength = fullCode.length === 10;
+
     return isValidLength && /^[0-9]+$/.test(fullCode);
   };
 
@@ -82,6 +91,7 @@ function SellerCheck({ userData }: SellerCheckProps) {
     return (
       businessNumber.length === 10 &&
       name.trim() !== '' &&
+      // businessAddress.trim() !== '' &&
       startDate.trim() !== '' &&
       startDate.length === 8
     );
@@ -128,6 +138,20 @@ function SellerCheck({ userData }: SellerCheckProps) {
             className="mb-6 block w-full p-4 border border-gray-300 shadow-sm focus:ring-primary-green-500 focus:border-primary-green-500 text-16-n-24-40 text-font/main"
           />
         </div>
+
+        {/* <div className="mb-4">
+          <label className="block text-16-n-24-40 text-font/main mb-3 s:text-14-n-20-35">
+            주소
+          </label>
+          <input
+            type="text"
+            value={businessAddress}
+            onChange={(e) => setBusinessAddress(e.target.value)}
+            placeholder="주소를 입력해주세요"
+            className="mb-6 block w-full p-4 border border-gray-300 shadow-sm focus:ring-primary-green-500 focus:border-primary-green-500 text-16-n-24-40 text-font/main"
+          />
+        </div> */}
+
         <div className="mb-4">
           <label className="block text-16-n-24-40 text-font/main mb-3 s:text-14-n-20-35">
             개업일자

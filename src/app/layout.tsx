@@ -27,6 +27,7 @@ function RootLayout({
     <html lang="kr">
       <head>
         <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js" async></script>
+        <Script src="https://example.com/script.js" strategy="lazyOnload" />
       </head>
 
       <Script src="https://cdn.iamport.kr/v1/iamport.js" />
