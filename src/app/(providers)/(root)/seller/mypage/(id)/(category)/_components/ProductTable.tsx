@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import ProductTableMobli from './ProductTableMobli';
-import { deleteProducts, getProducts } from '../action';
+import { deleteProducts, getProducts, getSellerInfo } from '../action';
 
 type Product = {
   category: string;
@@ -20,7 +20,7 @@ type Product = {
   updated_at: string | null;
 };
 
-interface ProductTableProps {
+export interface ProductTableProps {
   sellerId: string;
 }
 
@@ -34,24 +34,29 @@ export default function ProductTable({ sellerId }: ProductTableProps) {
   const [categoryFilter, setCategoryFilter] = useState<string>('all');
   const [loading, setLoading] = useState<boolean>(true);
   const [selectedProducts, setSelectedProducts] = useState<string[]>([]);
+  const [deletedProductsCount, setDeletedProductsCount] = useState<number>(0);
 
   const fetchProducts = async () => {
     setLoading(true);
     try {
       const page = searchParams.get('page') ? parseInt(searchParams.get('page') as string, 10) : 1;
-      setCurrentPage(page);
-
       const { products, totalProducts } = await getProducts(
         sellerId,
         page,
         itemsPerPage,
         categoryFilter
       );
+
+      if (products.length === 0 && page > 1) {
+        router.push(`?page=${page - 1}`);
+        return;
+      }
+
       setProducts(products);
       setTotalProducts(totalProducts);
+      setDeletedProductsCount(0);
     } catch (error) {
       console.error('제품 데이터를 가져오는 중 오류가 발생했습니다:', error);
-      router.push('/');
     } finally {
       setLoading(false);
     }
@@ -91,7 +96,7 @@ export default function ProductTable({ sellerId }: ProductTableProps) {
     try {
       await deleteProducts(selectedProducts); // 선택된 상품 DB에서 삭제
       setProducts(products.filter((product) => !selectedProducts.includes(product.product_id))); // 삭제된 상품 제외한 나머지 상품들로 상품목록(products) 상태 업데이트
-      // router.push('/seller/mypage/products');
+      fetchProducts(); // 삭제 후 바로 업데이트된 데이터로 다시 fetch
       setSelectedProducts([]); // 선택된 상품 목록 초기화
     } catch (error) {
       console.error('상품 삭제 중 오류가 발생했습니다:', error);
@@ -115,6 +120,24 @@ export default function ProductTable({ sellerId }: ProductTableProps) {
       setSelectedProducts([]);
     }
   };
+  // 상품 등록 페이지로 이동하기 전, 주소를 확인하는 함수
+  const handleRegisterClick = async () => {
+    try {
+      const sellerInfo = await getSellerInfo(sellerId);
+      if (sellerInfo.address) {
+        // 주소가 있으면 상품 등록 페이지로 이동
+        router.push(`/seller/mypage/${sellerId}/register`);
+      } else {
+        // 주소가 없으면 다른 페이지로 이동
+        alert(
+          '상품 등록을 위해서는 판매자 정보에 주소가 필요합니다. 프로필 페이지에서 주소를 입력해주세요.'
+        );
+        router.push(`/seller/mypage/profile`);
+      }
+    } catch (error) {
+      console.error('판매자 정보를 가져오는 중 오류가 발생했습니다:', error);
+    }
+  };
 
   return (
     <>
@@ -128,12 +151,12 @@ export default function ProductTable({ sellerId }: ProductTableProps) {
           >
             상품 삭제
           </button>
-          <Link
-            href={`/seller/mypage/${sellerId}/register`}
+          <button
+            onClick={handleRegisterClick} // 상품 등록 버튼 클릭 시 주소 체크 후 이동
             className="px-[12px] py-[9px] bg-primary-green-500 rounded text-white text-[13px] font-normal leading-[18px] tracking-[-0.325px] transition-colors duration-300 hover:bg-primary-green-700 hover:text-white"
           >
             상품 등록
-          </Link>
+          </button>
         </div>
         <div className="mt-[16px]">
           {products.length > 0 ? (

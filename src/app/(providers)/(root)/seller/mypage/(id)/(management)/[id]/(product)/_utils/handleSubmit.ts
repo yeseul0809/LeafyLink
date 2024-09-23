@@ -1,7 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
-import { Product, ProductProps } from '@/types/product';
+import { ProductProps } from '@/types/product';
 import { createClient } from '@/supabase/supabaseClient';
-import useUser from '@/hooks/useUser';
 
 interface handleSubmitProps {
   state: ProductProps;
