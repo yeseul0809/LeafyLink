@@ -24,7 +24,8 @@ function EventForm() {
   const [isFormValid, setIsFormValid] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [discountProductList, setDiscountProductList] = useState<Product[]>([]);
-  const [relatedProducts, setRelatedProducts] = useState<string[]>([]);
+  const [relatedProducts, setRelatedProducts] = useState<Product[]>([]); // 선택된 상품들 저장
+  const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false); // 드롭다운 토글 상태
 
   const router = useRouter();
   const params = useParams();
@@ -99,10 +100,18 @@ function EventForm() {
     }
   };
 
-  // 상품 선택
-  const handleProductSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const selectedValues = Array.from(e.target.selectedOptions, (option) => option.value);
-    setRelatedProducts(selectedValues); // 관련 상품 ID 목록 업데이트
+  // 상품 선택 핸들러 (커스텀 드롭다운 사용)
+  const handleProductSelect = (product: Product) => {
+    if (!relatedProducts.includes(product)) {
+      setRelatedProducts([...relatedProducts, product]);
+    }
+    setIsDropdownOpen(false); // 드롭다운 닫기
+  };
+
+  const handleRemoveProduct = (productId: string) => {
+    setRelatedProducts((prevProducts) =>
+      prevProducts.filter((product) => product.product_id !== productId)
+    );
   };
 
   const handleInputSubmit = async () => {
@@ -120,7 +129,11 @@ function EventForm() {
     } else {
       // 등록 모드
       const id = Array.isArray(sellerId) ? sellerId[0] : sellerId;
-      await handleEventSubmit({ state, id, relatedProducts });
+      await handleEventSubmit({
+        state,
+        id,
+        relatedProducts: relatedProducts.map((p) => p.product_id)
+      });
       setState(EVENT_INITIAL_STATE);
       setThumbnailPreview(null);
       router.push('/seller/mypage/events');
@@ -205,29 +218,70 @@ function EventForm() {
             </select>
           </div>
 
-          {state?.category === '할인' && (
-            <div className="p-3 text-[14px]">
-              <label className="text-[14px] block mb-3" htmlFor="category">
-                상품 선택
-              </label>
-              <select
-                name="related_products"
-                multiple
-                value={relatedProducts}
-                onChange={handleProductSelect}
-                className="w-[271px] h-[44px] px-3 border text-font/sub2 text-right"
-              >
-                <option value="" disabled>
-                  상품을 선택하세요
-                </option>
-                {discountProductList.map((product) => (
-                  <option key={product.product_id} value={product.title}>
-                    {product.title}
-                  </option>
-                ))}
-              </select>
+          {/* 커스텀 드롭다운 */}
+          <div className="px-3 pt-3 text-[14px]">
+            <label className="text-[14px] block mb-3">상품 선택</label>
+            <div
+              className="px-4 py-3 flex align-middle justify-end w-[271px] h-[44px] border text-font/sub2 cursor-pointer"
+              onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+            >
+              <span className="text-sm pr-3">상품을 선택하세요</span>
+              <Image
+                src={isDropdownOpen ? '/icons/up.svg' : '/icons/down.svg'}
+                alt={isDropdownOpen ? '업 이미지' : '다운 이미지'}
+                className="flex-shrink-0"
+                width={16}
+                height={16}
+              />
             </div>
-          )}
+            {isDropdownOpen && (
+              <ul className="border border-gray-300 bg-white max-h-60 overflow-y-auto">
+                {discountProductList.map((product) => (
+                  <li
+                    key={product.product_id}
+                    className="flex items-center p-2 hover:bg-gray-100 cursor-pointer"
+                    onClick={() => handleProductSelect(product)}
+                  >
+                    <Image
+                      src={product.thumbnail_url}
+                      alt={product.title}
+                      width={40}
+                      height={40}
+                      className="mr-2"
+                    />
+                    <div className="flex flex-col">
+                      <span className="text-[13px]">{product.title}</span>
+                      <span className="text-[13px] font-semibold">{product.sale_price}원</span>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+
+          {/* 선택된 상품 표시 */}
+          <div className="p-3">
+            {relatedProducts.map((product) => (
+              <div
+                key={product.product_id}
+                className="selected-product flex items-center p-3 border-b border-gray-300"
+              >
+                <div className="product-info">
+                  <p className="text-[13px]">{product.title}</p>
+                  <p className="text-[13px] font-semibold">{product.sale_price}원</p>
+                </div>
+                <button className="ml-auto" onClick={() => handleRemoveProduct(product.product_id)}>
+                  <Image
+                    src="/icons/icon-close.svg"
+                    alt="삭제"
+                    className="flex-shrink-0"
+                    width={12}
+                    height={12}
+                  />
+                </button>
+              </div>
+            ))}
+          </div>
 
           <div className="p-3">
             <div className="flex">
