@@ -20,7 +20,7 @@ type Product = {
   updated_at: string | null;
 };
 
-interface ProductTableProps {
+export interface ProductTableProps {
   sellerId: string;
 }
 
