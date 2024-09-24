@@ -1,5 +1,5 @@
 'use client';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { createCartItem } from '../../products/[id]/_actions/cartActions';
@@ -8,11 +8,24 @@ import { createClient } from '@/supabase/supabaseClient';
 import Image from 'next/image';
 import { ProductWithBusinessName } from '../actions';
 import { useCartStore } from '@/stores';
-import useSaleState from '@/utils/(sale)/saleState';
+import useSaleState from '@/utils/(sale)/useSaleState';
+import useSalePercent from '@/utils/(sale)/useSalePercent';
 
 const ProductCard = ({ product }: { product: ProductWithBusinessName }) => {
   const router = useRouter();
   const isSale = useSaleState(product.product_id);
+  const [salePercent, setSalePercent] = useState<number | null>(null);
+
+  useEffect(() => {
+    const fetchSalePercent = async () => {
+      const discount = await useSalePercent(product.product_id);
+      setSalePercent(discount);
+    };
+
+    if (isSale) {
+      fetchSalePercent();
+    }
+  }, [isSale, product.product_id]);
 
   const { initializeCart } = useCartStore((state) => ({
     initializeCart: state.initializeCart
@@ -81,10 +94,17 @@ const ProductCard = ({ product }: { product: ProductWithBusinessName }) => {
           {product.title}
         </p>
         {isSale ? (
-          <p className="text-font/main text-14-sb-20-35 md:text-18-sb-26-45">
-            <span>{formatPrice(product.sale_price ?? 0)}원</span>
-            <span className="line-through text-[#767676] text-[16px] pl-2">
-              {formatPrice(product.price ?? 0)}
+          <p>
+            {salePercent && (
+              <span className="text-primary-green-500 text-lg font-semibold mr-[6px]">
+                {salePercent}%
+              </span>
+            )}
+            <span className="text-font/main text-14-sb-20-35 md:text-18-sb-26-45 ">
+              <span>{formatPrice(product.sale_price ?? 0)}원</span>
+              <span className="line-through text-[#767676] text-[16px] pl-2">
+                {formatPrice(product.price ?? 0)}
+              </span>
             </span>
           </p>
         ) : (
