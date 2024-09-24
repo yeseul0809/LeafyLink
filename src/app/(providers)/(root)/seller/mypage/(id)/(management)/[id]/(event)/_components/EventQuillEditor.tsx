@@ -54,17 +54,17 @@ function EventQuillEditor({ value, onChange }: QuillEditorProps) {
     []
   );
   return (
-    <div className="h-[890px] lg:h-[890px] px-3">
-      <DynamicReactQuill
-        forwardedRef={quillRef}
-        value={value}
-        onChange={onChange}
-        theme="snow"
-        modules={modules}
-        formats={FORMATS}
-        placeholder="등록할 이벤트의 상세내용을 작성해주세요."
-        className="h-full border-[#f0f0f0]"
-      />
+    <div className="flex flex-col flex-grow h-full px-3">
+      <div className="flex-grow overflow-y-auto">
+        <DynamicReactQuill
+          forwardedRef={quillRef}
+          value={value}
+          onChange={onChange}
+          theme="snow"
+          placeholder="등록할 이벤트의 상세내용을 작성해주세요."
+          className="h-full border-[#f0f0f0]"
+        />
+      </div>
     </div>
   );
 }
