@@ -23,7 +23,7 @@ export async function getEventRequest(id: string) {
 
 // 이벤트 중인 리스트 데이터를 가져오는 함수
 export async function getEventData() {
-  const { data: eventsData, error } = await supabaseServer
+  const { data: event, error } = await supabaseServer
     .from('Event')
     .select('*')
     .gte('event_endtime', new Date().toISOString())
@@ -32,7 +32,20 @@ export async function getEventData() {
     console.log('이벤트 중인 리스트 가져오는 중 에러 발생', error);
     return [];
   }
-  return eventsData;
+  return event;
+}
+
+// 이벤트가 만료된 리스트 데이터를 가져오는 함수
+export async function getEventExpiredData() {
+  const { data: event, error } = await supabaseServer
+    .from('Event')
+    .select('*')
+    .lt('event_endtime', new Date().toISOString());
+  if (error) {
+    console.log('이벤트가 만료된 리스트 가져오는 중 에러 발생', error);
+    return [];
+  }
+  return event;
 }
 
 // 현재 할인중인 상품 목록을 가져오는 함수
