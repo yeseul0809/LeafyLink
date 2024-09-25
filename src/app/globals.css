@@ -6,6 +6,10 @@
   @apply w-5 h-5 appearance-none border border-black checked:bg-[#3BB873] checked:bg-[url(/icons/check.png)] checked:border-0 bg-no-repeat bg-center;
 }
 
+.event-green-checkbox {
+  @apply appearance-none border border-black checked:bg-[#3BB873] checked:bg-[url(/icons/check.png)] checked:border-0 bg-no-repeat bg-center;
+}
+
 .szh-accordion__item-btn {
   @apply block w-full p-0 bg-none border-none cursor-pointer;
 }

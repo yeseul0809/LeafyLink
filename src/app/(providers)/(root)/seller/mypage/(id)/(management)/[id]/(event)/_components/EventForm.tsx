@@ -184,16 +184,13 @@ function EventForm() {
             placeholder="이벤트 타이틀을 입력하세요."
             labelText="이벤트 타이틀"
           />
+
           <EventInputField
-            type="text"
+            type="datetime-local"
             id="event_starttime"
             name="event_starttime"
             value={state?.event_starttime || ''}
             onChange={handleChange}
-            onFocus={(e) => (e.target.type = 'datetime-local')}
-            onBlur={(e) => {
-              if (!e.target.value) e.target.type = 'text';
-            }}
             placeholder="시작 날짜와 시간을 선택하세요"
             labelText="이벤트 시작 날짜"
           />
@@ -229,6 +226,24 @@ function EventForm() {
             </select>
           </div>
 
+          <div className="p-3 text-[14px]">
+            <div className="flex">
+              <span className="text-red-500 pr-1">*</span>
+              <label className="text-[14px] block mb-3" htmlFor="category">
+                카테고리
+              </label>
+            </div>
+            <div className="px-4 py-3 flex align-middle justify-end w-[271px] h-[44px] border text-font/sub2 cursor-pointer">
+              <span className="text-sm pr-3">카테고리를 선택하세요</span>
+              <Image
+                src={isDropdownOpen ? '/icons/up.svg' : '/icons/down.svg'}
+                alt={isDropdownOpen ? '업 이미지' : '다운 이미지'}
+                className="flex-shrink-0"
+                width={16}
+                height={16}
+              />
+            </div>
+          </div>
           {/* 커스텀 드롭다운 */}
           <div className="px-3 pt-3 text-[14px]">
             <label className="text-[14px] block mb-3">상품 선택</label>
@@ -244,10 +259,10 @@ function EventForm() {
               <Image
                 src={
                   state?.category === '할인'
-                    ? '/icons/down.svg'
-                    : isDropdownOpen
+                    ? isDropdownOpen
                       ? '/icons/up.svg'
-                      : '/icons/arrow-down.png'
+                      : '/icons/down.svg'
+                    : '/icons/arrow-down.png'
                 }
                 alt={
                   state?.category === '증정'
@@ -263,23 +278,23 @@ function EventForm() {
             </div>
             {isDropdownOpen && state?.category === '할인' && (
               <div>
-                <ul className="border border-gray-300 bg-white max-h-60 overflow-y-auto">
+                <ul className="border border-gray-300 bg-white max-h-[478px] overflow-y-auto custom-scrollbar">
                   {discountProductList.map((product) => (
                     <li
                       key={product.product_id}
-                      className="flex items-center p-2 hover:bg-gray-100 cursor-pointer"
+                      className="flex items-center p-4 hover:bg-gray-100 cursor-pointer gap-[6px]"
                     >
                       <input
                         type="checkbox"
                         checked={selectedProducts.includes(product)}
                         onChange={() => handleProductCheck(product)}
+                        className="w-[18px] h-[18px] cursor-pointer event-green-checkbox"
                       />
                       <Image
                         src={product.thumbnail_url}
                         alt={product.title}
-                        width={40}
-                        height={40}
-                        className="mr-2"
+                        width={62}
+                        height={62}
                       />
                       <div className="flex flex-col">
                         <span className="text-[13px]">{product.title}</span>
@@ -288,11 +303,17 @@ function EventForm() {
                     </li>
                   ))}
                 </ul>
-                <div>
-                  <button className="border" onClick={() => setIsDropdownOpen(false)}>
+                <div className="flex justify-center items-center gap-4 border border-t-0 py-3">
+                  <button
+                    className="border rounded-[4px] text-[12px] w-[37px] h-[24px] bg-grayscale-gray-50 hover:bg-grayscale-gray-100 text-grayscale-gray-500"
+                    onClick={() => setIsDropdownOpen(false)}
+                  >
                     취소
                   </button>
-                  <button className="border" onClick={handleConfirmSelection}>
+                  <button
+                    className="border rounded-[4px] text-[12px] w-[37px] h-[24px] bg-primary-green-500 hover:bg-primary-green-700 text-white"
+                    onClick={handleConfirmSelection}
+                  >
                     선택
                   </button>
                 </div>

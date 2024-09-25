@@ -55,7 +55,7 @@ function EventQuillEditor({ value, onChange }: QuillEditorProps) {
   );
   return (
     <div className="flex flex-col flex-grow h-full px-3">
-      <div className="flex-grow overflow-y-auto">
+      <div className="flex-grow overflow-y-auto custom-scrollbar">
         <DynamicReactQuill
           forwardedRef={quillRef}
           value={value}

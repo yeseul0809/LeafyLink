@@ -7,8 +7,6 @@ interface InputFieldProps {
   type: 'text' | 'number' | 'datetime-local';
   id: string;
   min?: number;
-  onFocus?: (e: React.FocusEvent<HTMLInputElement>) => void;
-  onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
 }
 
 function EventInputField({
@@ -19,9 +17,7 @@ function EventInputField({
   id,
   labelText,
   type,
-  min,
-  onFocus,
-  onBlur
+  min
 }: InputFieldProps) {
   const handleWheel = (e: React.WheelEvent<HTMLInputElement>) => {
     if (type === 'number') {
@@ -45,8 +41,6 @@ function EventInputField({
         placeholder={placeholder}
         min={min}
         onWheel={handleWheel}
-        onFocus={onFocus}
-        onBlur={onBlur}
         className="w-[271px] h-[44px] px-3 py-3 border text-[14px] cursor-pointer text-right text-font/sub2 placeholder-font/sub2"
       />
     </div>
