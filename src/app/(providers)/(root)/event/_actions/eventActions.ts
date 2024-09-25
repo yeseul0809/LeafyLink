@@ -6,7 +6,7 @@ import { SupabaseClient } from '@supabase/supabase-js';
 
 const supabaseServer: SupabaseClient<Database> = createClient();
 
-// 이벤트 데이터를 가져오는 함수
+// 이벤트 1개 데이터를 가져오는 함수
 export async function getEventRequest(id: string) {
   const { data: event, error } = await supabaseServer
     .from('Event')
@@ -19,6 +19,20 @@ export async function getEventRequest(id: string) {
   }
 
   return event;
+}
+
+// 이벤트 중인 리스트 데이터를 가져오는 함수
+export async function getEventData() {
+  const { data: eventsData, error } = await supabaseServer
+    .from('Event')
+    .select('*')
+    .gte('event_endtime', new Date().toISOString())
+    .lte('event_starttime', new Date().toISOString());
+  if (error) {
+    console.log('이벤트 중인 리스트 가져오는 중 에러 발생', error);
+    return [];
+  }
+  return eventsData;
 }
 
 // 현재 할인중인 상품 목록을 가져오는 함수
