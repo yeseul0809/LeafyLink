@@ -1,4 +1,5 @@
 import ProductDescription from '../../products/[id]/_components/Description';
+import Comment from './_components/Comment';
 import { getEventRequest } from './action';
 
 interface EventPageProps {
@@ -41,6 +42,7 @@ export default async function EventPage({ params }: EventPageProps) {
       <div>
         <ProductDescription productDescription={event.description} />
       </div>
+      <Comment eventId={event.event_id} />
     </div>
   );
 }
