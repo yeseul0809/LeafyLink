@@ -129,7 +129,7 @@ export async function getProducts(
   const { data: products, error: productError } = await supabase
     .from('Product')
     .select(
-      'category, title, price, stock, product_id, created_at, description, product_seller_id, thumbnail_url, updated_at'
+      'category, title, price, stock, product_id, created_at, description, product_seller_id, thumbnail_url, updated_at, sale_price'
     )
     .eq('product_seller_id', sellerId)
     .match(categoryCondition)
@@ -176,4 +176,17 @@ export async function getSellerInfo(sellerId: string) {
   console.log('주소', seller);
 
   return seller;
+}
+
+// 이벤트 데이터 가져오기
+export async function getEvents(sellerId: string) {
+  const supabaseServer: SupabaseClient<Database> = createClient();
+  const { data, error } = await supabaseServer.from('Event').select('*').eq('seller_id', sellerId);
+
+  if (error) {
+    console.error('이벤트 데이터를 불러오는 중 오류가 발생했습니다.', error);
+    throw new Error('이벤트 데이터를 불러오는 중 오류가 발생했습니다.');
+  }
+
+  return data;
 }

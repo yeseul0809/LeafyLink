@@ -12,6 +12,7 @@ type Product = {
   title: string;
   price: number | null;
   stock: number | null;
+  sale_price: number | null;
   product_id: string;
   created_at: string | null;
   description: string;
@@ -176,7 +177,10 @@ export default function ProductTable({ sellerId }: ProductTableProps) {
                   상품명
                 </div>
                 <div className="w-[130px] h-[56px] p-[16px] flex justify-center items-center ">
-                  가격
+                  정가
+                </div>
+                <div className="w-[130px] h-[56px] p-[16px] flex justify-center items-center ">
+                  할인가
                 </div>
                 <div className="w-[130px] h-[56px] p-[16px] flex justify-center items-center ">
                   수량
@@ -212,16 +216,27 @@ export default function ProductTable({ sellerId }: ProductTableProps) {
                   <div className="flex w-[130px] h-[64px] p-[22px_16px] justify-center items-center gap-2.5 text-[14px] font-normal leading-[20px] tracking-[-0.35px] text-font/sub2 overflow-hidden whitespace-nowrap text-ellipsis">
                     {formatCurrency(product.price ?? 0)}원
                   </div>
+                  <div className="flex w-[130px] h-[64px] p-[22px_16px] justify-center items-center gap-2.5 text-[14px] font-normal leading-[20px] tracking-[-0.35px] text-font/sub2 overflow-hidden whitespace-nowrap text-ellipsis">
+                    {formatCurrency(product.sale_price ?? 0)}원
+                  </div>
                   <div className="flex w-[130px] h-[64px] p-[22px_16px] justify-center items-center gap-2.5 text-[14px] font-normal leading-[20px] tracking-[-0.35px] text-font/sub2">
                     {product.stock ?? 0}
                   </div>
                   <div className="flex w-[130px] h-[64px] p-[22px_16px] justify-center items-center gap-2.5 text-[14px] font-normal leading-[20px] tracking-[-0.35px]">
                     <span
                       className={
-                        product.stock === 0 ? 'text-font/Disabled' : 'text-primary-green-500'
+                        product.stock === 0
+                          ? 'text-font/Disabled'
+                          : product.sale_price !== null && product.sale_price > 0
+                            ? 'text-[#d50136] text-sm font-normal'
+                            : 'text-primary-green-500'
                       }
                     >
-                      {product.stock === 0 ? '품절' : '판매중'}
+                      {product.stock === 0
+                        ? '품절'
+                        : product.sale_price !== null && product.sale_price > 0
+                          ? '할인중'
+                          : '판매중'}
                     </span>
                   </div>
                   <div className="flex w-[130px] h-[64px] p-[22px_16px] justify-center items-center gap-2.5">
