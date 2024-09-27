@@ -41,7 +41,7 @@ function EventInputField({
         placeholder={placeholder}
         min={min}
         onWheel={handleWheel}
-        className="w-[271px] h-[44px] px-3 py-3 border text-[14px] text-right text-font/sub2 placeholder-font/sub2"
+        className="w-[271px] h-[44px] px-3 py-3 border text-[14px] cursor-pointer text-right text-font/sub2 placeholder-font/sub2"
       />
     </div>
   );
