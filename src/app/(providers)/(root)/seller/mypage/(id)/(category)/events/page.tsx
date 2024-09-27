@@ -1,6 +1,7 @@
 import { createClient } from '@/supabase/supabaseServer';
 import { redirect } from 'next/navigation';
 import EventTable from '../_components/EventTable';
+import Events from '../_components/Events';
 
 export default async function Eventpage() {
   const supabase = createClient();
@@ -19,8 +20,13 @@ export default async function Eventpage() {
   }
 
   return (
-    <div className="mb-20">
-      <EventTable sellerId={userId} />
-    </div>
+    <>
+      <div className="mb-20">
+        <EventTable sellerId={userId} />
+      </div>
+      <div>
+        <Events sellerId={userId} />
+      </div>
+    </>
   );
 }
