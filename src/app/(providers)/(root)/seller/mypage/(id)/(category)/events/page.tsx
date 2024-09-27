@@ -21,7 +21,7 @@ export default async function Eventpage() {
 
   return (
     <>
-      <div className="mb-20">
+      <div className="mb-4">
         <EventTable sellerId={userId} />
       </div>
       <div>

@@ -18,6 +18,14 @@ import { Product } from '@/types/product';
 
 const supabase = createClient();
 
+const formattedDate = (dateString: string) => {
+  const date = new Date(dateString);
+  if (isNaN(date.getTime())) {
+    return ''; // 유효하지 않은 날짜인 경우 빈 문자열 반환
+  }
+  return date.toISOString().slice(0, 16);
+};
+
 function EventForm() {
   const [state, setState] = useState<Event | null>(null);
   const [thumbnailPreview, setThumbnailPreview] = useState<string | null>(null);
@@ -50,6 +58,7 @@ function EventForm() {
           if (event) {
             setState(event);
             setThumbnailPreview(event.thumbnail_url);
+            setSelectedCategory(event.category);
           } else {
             setState(null);
           }
@@ -198,7 +207,7 @@ function EventForm() {
             type="datetime-local"
             id="event_starttime"
             name="event_starttime"
-            value={state?.event_starttime || ''}
+            value={formattedDate(state?.event_starttime || '')}
             onChange={handleChange}
             placeholder="시작 날짜와 시간을 선택하세요"
             labelText="이벤트 시작 날짜"
@@ -208,7 +217,7 @@ function EventForm() {
             type="datetime-local"
             id="event_endtime"
             name="event_endtime"
-            value={state?.event_endtime || ''}
+            value={formattedDate(state?.event_endtime || '')}
             onChange={handleChange}
             placeholder="종료 날과 시간을 입력해주세요."
             labelText="이벤트 종료 날짜"
