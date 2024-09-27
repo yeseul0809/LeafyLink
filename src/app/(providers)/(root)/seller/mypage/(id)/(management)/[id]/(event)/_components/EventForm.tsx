@@ -23,10 +23,12 @@ function EventForm() {
   const [thumbnailPreview, setThumbnailPreview] = useState<string | null>(null);
   const [isFormValid, setIsFormValid] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [discountProductList, setDiscountProductList] = useState<Product[]>([]); // seller 가 할인중인 상품목록
   const [relatedProducts, setRelatedProducts] = useState<Product[]>([]); // 최종 선택된 상품들
   const [selectedProducts, setSelectedProducts] = useState<Product[]>([]); // 토글에서 선택된 상품들
-  const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false); // 드롭다운 토글 상태
+  const [isCategoryDropdownOpen, setIsCategoryDropdownOpen] = useState<boolean>(false); // 카테고리 드롭다운 상태
+  const [isProductDropdownOpen, setIsProductDropdownOpen] = useState<boolean>(false); // 상품 선택 드롭다운 상태
 
   const router = useRouter();
   const params = useParams();
@@ -89,6 +91,12 @@ function EventForm() {
     setState((prev) => prev && { ...prev, [name]: value });
   };
 
+  const handleCategorySelect = (category: string) => {
+    setSelectedCategory(category);
+    setState((prev) => prev && { ...prev, category });
+    setIsCategoryDropdownOpen(false);
+  };
+
   const handleDescriptionChange = (content: string) => {
     setState((prev) => prev && { ...prev, description: content });
   };
@@ -101,6 +109,7 @@ function EventForm() {
       setState((prev) => prev && { ...prev, eventThumbnail: file });
     }
   };
+
   // 상품 체크 핸들러
   const handleProductCheck = (product: Product) => {
     if (selectedProducts.includes(product)) {
@@ -112,7 +121,7 @@ function EventForm() {
 
   const handleConfirmSelection = () => {
     setRelatedProducts(selectedProducts);
-    setIsDropdownOpen(false);
+    setIsProductDropdownOpen(false);
   };
 
   const handleRemoveProduct = (productId: string) => {
@@ -212,38 +221,39 @@ function EventForm() {
                 카테고리
               </label>
             </div>
-            <select
-              name="category"
-              value={state?.category || ''}
-              onChange={handleChange}
-              className="w-[271px] h-[44px] px-3 border text-font/sub2 text-right cursor-pointer"
+            <div
+              className="px-4 py-3 flex align-middle justify-end w-[271px] h-[44px] border text-font/sub2 cursor-pointer"
+              onClick={() => setIsCategoryDropdownOpen(!isCategoryDropdownOpen)}
             >
-              <option value="" disabled>
-                카테고리를 선택하세요
-              </option>
-              <option value="증정">증정</option>
-              <option value="할인">할인</option>
-            </select>
-          </div>
-
-          <div className="p-3 text-[14px]">
-            <div className="flex">
-              <span className="text-red-500 pr-1">*</span>
-              <label className="text-[14px] block mb-3" htmlFor="category">
-                카테고리
-              </label>
-            </div>
-            <div className="px-4 py-3 flex align-middle justify-end w-[271px] h-[44px] border text-font/sub2 cursor-pointer">
-              <span className="text-sm pr-3">카테고리를 선택하세요</span>
+              <span className="text-sm pr-3">{selectedCategory || '카테고리를 선택하세요'}</span>
               <Image
-                src={isDropdownOpen ? '/icons/up.svg' : '/icons/down.svg'}
-                alt={isDropdownOpen ? '업 이미지' : '다운 이미지'}
+                src={isCategoryDropdownOpen ? '/icons/up.svg' : '/icons/down.svg'}
+                alt={isCategoryDropdownOpen ? '업 이미지' : '다운 이미지'}
                 className="flex-shrink-0"
                 width={16}
                 height={16}
               />
             </div>
+            {isCategoryDropdownOpen && (
+              <div>
+                <ul className="border">
+                  <li
+                    className="px-4 py-3 text-[14px] hover:cursor-pointer"
+                    onClick={() => handleCategorySelect('증정')}
+                  >
+                    증정
+                  </li>
+                  <li
+                    className="px-4 py-3 text-[14px] hover:cursor-pointer"
+                    onClick={() => handleCategorySelect('할인')}
+                  >
+                    할인
+                  </li>
+                </ul>
+              </div>
+            )}
           </div>
+
           {/* 커스텀 드롭다운 */}
           <div className="px-3 pt-3 text-[14px]">
             <label className="text-[14px] block mb-3">상품 선택</label>
@@ -253,36 +263,33 @@ function EventForm() {
                   ? 'bg-BG/Regular text-font/Disabled border-Line/Regular pointer-events-none'
                   : 'pointer-events-auto'
               }`}
-              onClick={() => state?.category === '할인' && setIsDropdownOpen(!isDropdownOpen)}
+              onClick={() =>
+                state?.category === '할인' && setIsProductDropdownOpen(!isProductDropdownOpen)
+              }
             >
               <span className="text-sm pr-3">상품을 선택하세요</span>
               <Image
                 src={
                   state?.category === '할인'
-                    ? isDropdownOpen
+                    ? isProductDropdownOpen
                       ? '/icons/up.svg'
                       : '/icons/down.svg'
                     : '/icons/arrow-down.png'
                 }
-                alt={
-                  state?.category === '증정'
-                    ? 'disable 다운 이미지'
-                    : isDropdownOpen
-                      ? '업 이미지'
-                      : '다운 이미지'
-                }
+                alt={isProductDropdownOpen ? '업 이미지' : '다운 이미지'}
                 className="flex-shrink-0"
                 width={16}
                 height={16}
               />
             </div>
-            {isDropdownOpen && state?.category === '할인' && (
+            {isProductDropdownOpen && state?.category === '할인' && (
               <div>
                 <ul className="border border-gray-300 bg-white max-h-[478px] overflow-y-auto custom-scrollbar">
                   {discountProductList.map((product) => (
                     <li
                       key={product.product_id}
                       className="flex items-center p-4 hover:bg-gray-100 cursor-pointer gap-[6px]"
+                      onClick={() => handleProductCheck(product)}
                     >
                       <input
                         type="checkbox"
@@ -305,14 +312,15 @@ function EventForm() {
                 </ul>
                 <div className="flex justify-center items-center gap-4 border border-t-0 py-3">
                   <button
-                    className="border rounded-[4px] text-[12px] w-[37px] h-[24px] bg-grayscale-gray-50 hover:bg-grayscale-gray-100 text-grayscale-gray-500"
-                    onClick={() => setIsDropdownOpen(false)}
+                    className={`border rounded-[4px] text-[12px] w-[37px] h-[24px] text-grayscale-gray-500 ${selectedProducts.length === 0 ? 'text-grayscale-gray-100 bg-grayscale-gray-50' : 'bg-grayscale-gray-50 hover:bg-grayscale-gray-100'}`}
+                    onClick={() => setIsProductDropdownOpen(false)}
                   >
                     취소
                   </button>
                   <button
-                    className="border rounded-[4px] text-[12px] w-[37px] h-[24px] bg-primary-green-500 hover:bg-primary-green-700 text-white"
+                    className={`border rounded-[4px] text-[12px] w-[37px] h-[24px] text-white ${selectedProducts.length === 0 ? 'bg-primary-green-100' : 'bg-primary-green-500  hover:bg-primary-green-700'}`}
                     onClick={handleConfirmSelection}
+                    disabled={selectedProducts.length === 0}
                   >
                     선택
                   </button>
