@@ -12,7 +12,7 @@ async function Event() {
       <h2 className="text-[32px] text-center lg:mb-[48px] max_md:text-[20px] max_md:mt-6 max_md:mb-4 font-semibold">
         이벤트
       </h2>
-      <div className="grid grid-cols-3 gap-5">
+      <div className="grid grid-cols-3 gap-y-10 gap-x-5">
         {eventsData.map((event) => {
           return <EventCard key={event.event_id} event={event} />;
         })}
