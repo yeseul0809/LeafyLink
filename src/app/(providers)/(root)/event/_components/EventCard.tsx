@@ -2,7 +2,6 @@
 import { Event } from '@/types/event';
 import useEventDday from '../_actions/useEventDday';
 import { useRouter } from 'next/navigation';
-import Image from 'next/image';
 
 function EventCard({ event }: { event: Event }) {
   const dDay = useEventDday(event.event_endtime, event.event_starttime);

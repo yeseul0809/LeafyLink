@@ -1,4 +1,3 @@
-'use client';
 import { Event } from '@/types/event';
 import React from 'react';
 
@@ -9,7 +8,7 @@ function EventCardExpired({ expiredEvent }: { expiredEvent: Event }) {
         className="w-full h-[300px] border-[1px] relative rounded-[20px] mb-5 bg-center bg-cover"
         style={{ backgroundImage: `url(${expiredEvent.thumbnail_url})` }}
       >
-        <div className='"w-full h-full bg-black opacity-60 rounded-[20px]'>
+        <div className="w-full h-full bg-black opacity-60 rounded-[20px]">
           <p className="h-full text-[28px] text-white font-semibold text-center flex justify-center items-center">
             이미 종료된 이벤트입니다.
           </p>
