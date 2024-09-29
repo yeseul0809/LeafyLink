@@ -3,9 +3,11 @@ import { getProducts } from './actions';
 
 async function NewProduct() {
   const newProductsData = await getProducts();
-  const sortedProducts = newProductsData.sort(
-    (a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
-  );
+  const sortedProducts = newProductsData.sort((a, b) => {
+    const dateA = a.created_at ? new Date(a.created_at).getTime() : 0;
+    const dateB = b.created_at ? new Date(b.created_at).getTime() : 0;
+    return dateB - dateA;
+  });
 
   return (
     <section className="px-[20px]">
