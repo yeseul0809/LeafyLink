@@ -38,3 +38,18 @@ export async function fetchDiscountedProducts(sellerId: string) {
 
   return discountProducts;
 }
+
+// 상품명으로 관련상품을 가져오는 함수
+export async function fetchRelatedProducts(relatedProductNames: string[]) {
+  const { data: relatedProducts, error } = await supabaseServer
+    .from('Product')
+    .select('*')
+    .in('title', relatedProductNames);
+
+  if (error) {
+    console.error('관련상품 가져오는 중 에러 발생', error);
+    return [];
+  }
+
+  return relatedProducts;
+}
