@@ -26,15 +26,16 @@ export default function ProductsList({
     const fetchProductData = async () => {
       const offset = (currentPage - 1) * itemsPerPage;
       const products = await getCategoryData(category); // category를 기준으로 데이터 가져오기
-      const sortedProducts = products.sort(
-        (a, b) => +new Date(b.created_at) - +new Date(a.created_at)
-      );
-      setProductsData(sortedProducts.slice(offset, offset + itemsPerPage)); // 페이지네이션 적용
+      // const sortedProducts = products.sort(
+      //   (a, b) => +new Date(b.created_at) - +new Date(a.created_at)
+      // );  최신순으로 정렬
+      setProductsData(products.slice(offset, offset + itemsPerPage)); // 페이지네이션 적용
     };
     fetchProductData();
   }, [currentPage, category]);
 
   const totalPages = Math.ceil(totalItems / itemsPerPage);
+
   return (
     <section className="mx-auto lg:mt-[80px] lg:mb-[180px]">
       <h2 className="text-[32px] text-center lg:mb-[48px] max_md:text-[20px] max_md:mt-6 max_md:mb-4 font-semibold">

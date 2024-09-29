@@ -1,21 +1,25 @@
 'use server';
 import { createClient } from '@/supabase/supabaseServer';
 import { Order } from '@/types/order';
+import { Product } from '@/types/product';
 // export const getProducts = async () => {
 //   const supabase = createClient();
 //   const { data: product, error } = await supabase.from('Product').select('*');
 //   if (error) throw error;
 //   return product;
 // };
-interface Product {
-  product_id: string;
-  title: string;
-  price: number;
-  thumbnail_url: string;
-  created_at: string;
-  stock: number;
-  product_seller_id: string;
-}
+// interface Product {
+//   product_id: string;
+//   title: string;
+//   price: number;
+//   thumbnail_url: string;
+//   created_at: string;
+//   stock: number;
+//   product_seller_id: string;
+//   sale_price: number;
+//   sale_starttime: string;
+//   sale_endtime: string;
+// }
 export interface ProductWithBusinessName extends Product {
   business_name: string;
 }
@@ -199,4 +203,17 @@ export const getBestSellerProducts = async (orderData: Order[]) => {
   }));
 
   return productsWithBusinessName;
+};
+
+export const getSaleProducts = async (): Promise<Product[] | null> => {
+  const supabase = createClient();
+  let { data: products, error } = await supabase
+    .from('Product')
+    .select('*')
+    .not('sale_price', 'is', null);
+  if (error) {
+    console.error('Error fetching sale products:', error);
+    return null;
+  }
+  return products;
 };

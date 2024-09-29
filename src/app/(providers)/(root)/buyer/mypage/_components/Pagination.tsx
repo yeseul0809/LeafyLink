@@ -11,10 +11,10 @@ interface Props {
 }
 
 export default function Pagination({
-  totalItems,
-  itemCountPerPage,
-  pageCount,
-  currentPage
+  totalItems, // 총 데이터
+  itemCountPerPage, // 한 페이지에 가져올 아이템 개수
+  pageCount, // 총 페이지 개수
+  currentPage // 지금 페이지
 }: Props) {
   const totalPages = Math.ceil(totalItems / itemCountPerPage); // 총 페이지 수 계산
 
