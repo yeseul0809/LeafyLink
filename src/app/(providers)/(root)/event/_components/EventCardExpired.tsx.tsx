@@ -9,7 +9,7 @@ function EventCardExpired({ expiredEvent }: { expiredEvent: Event }) {
         style={{ backgroundImage: `url(${expiredEvent.thumbnail_url})` }}
       >
         <div className="w-full h-full bg-black opacity-60 rounded-[20px]">
-          <p className="h-full text-[28px] text-white font-semibold text-center flex justify-center items-center">
+          <p className="h-full text-[28px] max_xs:text-[24px] text-white font-semibold text-center flex justify-center items-center">
             이미 종료된 이벤트입니다.
           </p>
         </div>
