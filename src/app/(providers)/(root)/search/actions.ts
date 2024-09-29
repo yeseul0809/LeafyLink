@@ -48,7 +48,7 @@ export const getProductDatas = async (
 
   const { data: products, error: productError } = await supabaseServer
     .from('Product')
-    .select('product_id, title, price,thumbnail_url,created_at,stock,product_seller_id')
+    .select('product_id, title, price,thumbnail_url,created_at,stock,product_seller_id,sale_price')
     .ilike('title', `%${keyword}%`)
     .neq('stock', 0)
     .range((page - 1) * perPage, page * perPage - 1);
