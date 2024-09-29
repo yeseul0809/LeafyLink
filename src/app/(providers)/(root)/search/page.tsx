@@ -3,6 +3,7 @@ import { getProductCount, getProductDatas, getTotalPages } from './actions';
 import Searchform from './_components/Searchform';
 import SelectBox from './_components/SelectBox';
 import ProductCard from '../(home)/_components/ProductCard';
+import { ProductWithDetails } from '@/types/product';
 
 interface Props {
   searchParams: {
@@ -20,7 +21,7 @@ export default async function SearchPage({ searchParams }: Props) {
 
   const [allProductsData, searchDatas, totalPages] = await Promise.all([
     getProductCount(keyword),
-    getProductDatas(keyword, currentPage, perPage, sortParam),
+    getProductDatas(keyword, currentPage, perPage, sortParam) as Promise<ProductWithDetails[]>, // 타입 명시
     getTotalPages(keyword, perPage)
   ]);
 
@@ -42,7 +43,7 @@ export default async function SearchPage({ searchParams }: Props) {
         </div>
       ) : (
         <div className="grid grid-cols-4 gap-[20px] max_lg:grid-cols-3 xs_max:grid-cols-2 xs_max:gap-[7px]">
-          {searchDatas.map((data) => (
+          {searchDatas.map((data: ProductWithDetails) => (
             <ProductCard product={data} key={data.product_id} />
           ))}
         </div>

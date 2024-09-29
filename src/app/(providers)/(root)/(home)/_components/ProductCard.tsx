@@ -36,7 +36,8 @@ const ProductCard = ({ product }: { product: ProductWithBusinessName }) => {
   };
 
   const handleAddToCart = async () => {
-    const { user } = await createClient().auth.getUser();
+    const { data } = await createClient().auth.getUser();
+    const user = data?.user;
     if (!user) {
       showSwal('로그인이 필요한 서비스입니다.<br>로그인 후 이용해주세요.');
       router.push(`/login`);

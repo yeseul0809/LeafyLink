@@ -5,6 +5,7 @@ import ProductCard from '../../(home)/_components/ProductCard';
 import { getCategoryData } from '../actions';
 import { ProductWithBusinessName } from '../../(home)/actions';
 import ProductsSortDropdown from './ProductsSortDropdown';
+
 interface ProductsListProps {
   initialData: ProductWithBusinessName[];
   totalItems: number;

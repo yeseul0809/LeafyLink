@@ -10,8 +10,8 @@ import Image from 'next/image';
 import { Event } from '@/types/event';
 
 function EventPage() {
-  const [eventsData, setEventsData] = useState<Event>();
-  const [eventExpiredData, setEventExpiredData] = useState<Event>();
+  const [eventsData, setEventsData] = useState<Event[]>();
+  const [eventExpiredData, setEventExpiredData] = useState<Event[]>();
   const [loading, setLoading] = useState(true); // 로딩 상태 관리
 
   useEffect(() => {
