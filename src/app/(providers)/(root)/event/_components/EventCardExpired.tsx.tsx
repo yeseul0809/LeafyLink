@@ -18,7 +18,7 @@ function EventCardExpired({ expiredEvent }: { expiredEvent: Event }) {
       <p className="w-full text-[20px] max_xs:text-[18px] font-semibold truncate mb-1 ">
         {expiredEvent.title}
       </p>
-      <p className="truncate text-font/sub1 text-[15px] max_xs:text-[14px] mb-3 ">
+      <p className="truncate text-font/sub1 text-[15px] max_xs:text-[14px] mb-3 max_xs:mb-[8px]">
         {expiredEvent.summary}
       </p>
       <p className="w-full max_xs:text-[14px]">

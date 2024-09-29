@@ -27,7 +27,7 @@ function HeaderMobileDropdown({
   };
 
   return (
-    <section className="w-1/2 h-auto py-6 bg-white z-20 absolute top-full left-0">
+    <section className="w-1/2 h-screen py-6 bg-white z-20 absolute top-full left-0">
       <div className="leading-5 text-sm" ref={dropdownRef}>
         <ul className="w-full px-4 pb-5 border-b flex justify-between items-center">
           {isLogin ? (

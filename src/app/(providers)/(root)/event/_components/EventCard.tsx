@@ -16,7 +16,7 @@ function EventCard({ event }: { event: Event }) {
         className="w-full h-[300px] max_xs:h-[251px] border-[1px] relative rounded-[20px] mb-5 cursor-pointer bg-center bg-cover "
         style={{ backgroundImage: `url(${event.thumbnail_url})` }}
         onClick={() => {
-          redirect(`${event.event_id}`);
+          redirect(`event/${event.event_id}`);
         }}
       >
         {event.category === '증정' ? (
@@ -33,15 +33,15 @@ function EventCard({ event }: { event: Event }) {
       <p
         className="w-full text-[20px] max_xs:text-[18px] font-semibold truncate mb-1 cursor-pointer"
         onClick={() => {
-          redirect(`${event.event_id}`);
+          redirect(`event/${event.event_id}`);
         }}
       >
         {event.title}
       </p>
       <p
-        className="truncate text-font/sub1 text-[15px]  max_xs:text-[14px] max_xs:text-[14px] mb-3 cursor-pointer"
+        className="truncate text-font/sub1 text-[15px] max_xs:mb-[8px] max_xs:text-[14px] max_xs:text-[14px] mb-3 cursor-pointer"
         onClick={() => {
-          redirect(`${event.event_id}`);
+          redirect(`event/${event.event_id}`);
         }}
       >
         {event.summary}
