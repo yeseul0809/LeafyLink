@@ -9,7 +9,7 @@ function FooterMobile() {
     setIsOpen(!isOpen);
   };
   return (
-    <section className="w-full h-auto bg-white sticky bottom-0 z-20 border-t">
+    <section className="w-full h-auto bg-white sticky bottom-0 z-20 border-t mt-[70px]">
       <div className="max-w-container-l m:max-w-container-m s:max-w-container-s mx-auto py-[28px] text-[14px] text-[#505050] text-center text-left">
         <div className="flex justify-center items-center my-[16px]">
           <Link href={'/'}>
@@ -27,7 +27,7 @@ function FooterMobile() {
         </div>
         {isOpen && (
           <div>
-            <div className="flex justify-between my-5 w-[386px] text-[13px] mx-auto">
+            <div className="flex justify-between my-5 w-auto text-[13px] mx-auto px-4">
               <a href="#" className="w-auto tracking-tighter leading-5 px-0">
                 회사소개
               </a>
