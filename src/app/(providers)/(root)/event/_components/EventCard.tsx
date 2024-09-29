@@ -11,9 +11,9 @@ function EventCard({ event }: { event: Event }) {
   };
 
   return (
-    <div className="w-[400px] text-center">
+    <div className="w-[400px] text-center max_xs:w-[335px] max_xs:mx-auto">
       <div
-        className="w-full h-[300px] border-[1px] relative rounded-[20px] mb-5 cursor-pointer bg-center bg-cover "
+        className="w-full h-[300px] max_xs:h-[251px] border-[1px] relative rounded-[20px] mb-5 cursor-pointer bg-center bg-cover "
         style={{ backgroundImage: `url(${event.thumbnail_url})` }}
         onClick={() => {
           redirect(`${event.event_id}`);
@@ -31,7 +31,7 @@ function EventCard({ event }: { event: Event }) {
       </div>
 
       <p
-        className="w-full text-[20px] font-semibold truncate mb-1 cursor-pointer"
+        className="w-full text-[20px] max_xs:text-[18px] font-semibold truncate mb-1 cursor-pointer"
         onClick={() => {
           redirect(`${event.event_id}`);
         }}
@@ -39,7 +39,7 @@ function EventCard({ event }: { event: Event }) {
         {event.title}
       </p>
       <p
-        className="truncate text-font/sub1 text-[15px] mb-3 cursor-pointer"
+        className="truncate text-font/sub1 text-[15px]  max_xs:text-[14px] max_xs:text-[14px] mb-3 cursor-pointer"
         onClick={() => {
           redirect(`${event.event_id}`);
         }}
@@ -47,7 +47,9 @@ function EventCard({ event }: { event: Event }) {
         {event.summary}
       </p>
       <p className="w-full">
-        <span className="pr-2 font-semibold text-primary-green-500">D-{dDay}</span>
+        <span className="pr-2 font-semibold text-primary-green-500 max_xs:text-[14px]">
+          D-{dDay}
+        </span>
         {new Date(event.event_starttime).toLocaleDateString()}~
         {new Date(event.event_endtime).toLocaleDateString()}
       </p>

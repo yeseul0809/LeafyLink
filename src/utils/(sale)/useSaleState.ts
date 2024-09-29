@@ -10,7 +10,7 @@ export default function useSaleState(productId: string) {
     const fetchSaleProductsData = async () => {
       const saleProductsData = await getSaleProducts();
       if (saleProductsData) {
-        const product = saleProductsData.find((product) => product.product_id === productId);
+        const product: any = saleProductsData.find((product) => product.product_id === productId);
         if (product) {
           const saleStartDate = new Date(product.sale_starttime);
           const saleEndDate = new Date(product.sale_endtime);
