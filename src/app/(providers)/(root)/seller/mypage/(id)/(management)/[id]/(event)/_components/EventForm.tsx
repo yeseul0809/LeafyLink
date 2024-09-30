@@ -10,13 +10,24 @@ import handleEventSubmit from '../_utils/handleEventSubmit';
 import EventInputField from './EventInputField';
 import {
   fetchDiscountedProducts,
+  fetchRelatedProducts,
   getEventRequest
 } from '@/app/(providers)/(root)/event/_actions/eventActions';
 import EventQuillEditor from './EventQuillEditor';
 import { handleEventValidateForm } from '../_utils/handleEventValidateForm';
 import { Product } from '@/types/product';
+import useGetUser from '@/hooks/user/useUser';
 
 const supabase = createClient();
+
+const formattedDate = (dateString: string) => {
+  const date = new Date(dateString);
+  if (isNaN(date.getTime())) {
+    return ''; // 유효하지 않은 날짜인 경우 빈 문자열 반환
+  }
+  const localDate = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
+  return localDate.toISOString().slice(0, 16);
+};
 
 function EventForm() {
   const [state, setState] = useState<Event | null>(null);
@@ -24,9 +35,9 @@ function EventForm() {
   const [isFormValid, setIsFormValid] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-  const [discountProductList, setDiscountProductList] = useState<Product[]>([]); // seller 가 할인중인 상품목록
+  const [discountProductList, setDiscountProductList] = useState<Product[]>([]); // seller가 할인 중인 상품 목록
   const [relatedProducts, setRelatedProducts] = useState<Product[]>([]); // 최종 선택된 상품들
-  const [selectedProducts, setSelectedProducts] = useState<Product[]>([]); // 토글에서 선택된 상품들
+  const [selectedProducts, setSelectedProducts] = useState<Product[]>([]); // 선택된 상품들
   const [isCategoryDropdownOpen, setIsCategoryDropdownOpen] = useState<boolean>(false); // 카테고리 드롭다운 상태
   const [isProductDropdownOpen, setIsProductDropdownOpen] = useState<boolean>(false); // 상품 선택 드롭다운 상태
 
@@ -35,7 +46,8 @@ function EventForm() {
   const pathname = usePathname();
 
   const isRegisterMode = pathname.includes('eventregister');
-  const sellerId = isRegisterMode ? params.id : '';
+  const { userData } = useGetUser();
+  const sellerId = userData?.user_id || '';
   const eventId = isRegisterMode ? null : params.id;
   const isEditMode = Boolean(eventId);
 
@@ -50,6 +62,23 @@ function EventForm() {
           if (event) {
             setState(event);
             setThumbnailPreview(event.thumbnail_url);
+            setSelectedCategory(event.category);
+
+            // related_products가 null이 아니고 배열 형태일 때
+            const relatedProductNames = Array.isArray(event.related_products)
+              ? event.related_products.filter((product) => typeof product === 'string')
+              : [];
+
+            // 상품명을 기반으로 관련 상품 정보를 가져옴
+            const relatedProductsFromDB = await fetchRelatedProducts(relatedProductNames);
+            setRelatedProducts(relatedProductsFromDB);
+            setSelectedProducts(relatedProductsFromDB);
+
+            // 카테고리가 '할인'인 경우 할인 상품 목록 불러오기
+            if (event.category === '할인' && sellerId) {
+              const discountedProducts = await fetchDiscountedProducts(sellerId);
+              setDiscountProductList(discountedProducts);
+            }
           } else {
             setState(null);
           }
@@ -64,27 +93,12 @@ function EventForm() {
     };
 
     fetchEvent();
-  }, [isEditMode, eventId]);
+  }, [isEditMode, eventId, sellerId]);
 
   // 유효성 검사
   useEffect(() => {
     setIsFormValid(handleEventValidateForm(state));
   }, [state, thumbnailPreview]);
-
-  useEffect(() => {
-    const fetchDiscountedList = async () => {
-      if (state?.category === '할인' && sellerId) {
-        const id = Array.isArray(sellerId) ? sellerId[0] : sellerId;
-        const discountedProducts = await fetchDiscountedProducts(id);
-        setDiscountProductList(discountedProducts);
-      } else {
-        setDiscountProductList([]);
-        setRelatedProducts([]);
-      }
-    };
-
-    fetchDiscountedList();
-  }, [state?.category, sellerId]);
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -94,6 +108,16 @@ function EventForm() {
   const handleCategorySelect = (category: string) => {
     setSelectedCategory(category);
     setState((prev) => prev && { ...prev, category });
+
+    // 카테고리가 '할인'이면 할인 상품 목록 로드
+    if (category === '할인' && sellerId) {
+      fetchDiscountedProducts(sellerId).then((products) => setDiscountProductList(products));
+    } else {
+      setDiscountProductList([]);
+      setSelectedProducts([]);
+      setRelatedProducts([]);
+    }
+
     setIsCategoryDropdownOpen(false);
   };
 
@@ -128,15 +152,21 @@ function EventForm() {
     setRelatedProducts((prevProducts) =>
       prevProducts.filter((product) => product.product_id !== productId)
     );
+    setSelectedProducts((prevSelected) =>
+      prevSelected.filter((product) => product.product_id !== productId)
+    );
   };
 
   const handleInputSubmit = async () => {
     if (!state) return;
     setIsLoading(true);
 
+    const relatedProductNames = relatedProducts.map((product) => product.title);
+    const updatedState = { ...state, related_products: relatedProductNames };
+
     if (isEditMode && eventId) {
       // 수정 모드
-      const { error } = await supabase.from('Event').update(state).eq('event_id', eventId);
+      const { error } = await supabase.from('Event').update(updatedState).eq('event_id', eventId);
       if (error) {
         console.error('이벤트 데이터 수정 중 에러 발생:', error);
       } else {
@@ -146,9 +176,9 @@ function EventForm() {
       // 등록 모드
       const id = Array.isArray(sellerId) ? sellerId[0] : sellerId;
       await handleEventSubmit({
-        state,
+        state: updatedState,
         id,
-        relatedProducts: relatedProducts.map((p) => p.product_id)
+        relatedProducts: relatedProductNames
       });
       setState(EVENT_INITIAL_STATE);
       setThumbnailPreview(null);
@@ -168,7 +198,7 @@ function EventForm() {
       <div className="flex justify-end">
         <button
           className={`w-[66px] h-[30px] md:w-[80px] md:h-[44px] text-[14px] px-2 md:px-3 md:py-3 mb-3 rounded-md text-white 
-      ${isFormValid ? 'bg-primary-green-500 hover:bg-primary-green-700' : 'bg-grayscale-gray-200 cursor-not-allowed'}`}
+          ${isFormValid ? 'bg-primary-green-500 hover:bg-primary-green-700' : 'bg-grayscale-gray-200 cursor-not-allowed'}`}
           onClick={handleInputSubmit}
           disabled={!isFormValid}
         >
@@ -198,7 +228,7 @@ function EventForm() {
             type="datetime-local"
             id="event_starttime"
             name="event_starttime"
-            value={state?.event_starttime || ''}
+            value={formattedDate(state?.event_starttime || '')}
             onChange={handleChange}
             placeholder="시작 날짜와 시간을 선택하세요"
             labelText="이벤트 시작 날짜"
@@ -208,7 +238,7 @@ function EventForm() {
             type="datetime-local"
             id="event_endtime"
             name="event_endtime"
-            value={state?.event_endtime || ''}
+            value={formattedDate(state?.event_endtime || '')}
             onChange={handleChange}
             placeholder="종료 날과 시간을 입력해주세요."
             labelText="이벤트 종료 날짜"
@@ -254,7 +284,7 @@ function EventForm() {
             )}
           </div>
 
-          {/* 커스텀 드롭다운 */}
+          {/* 상품 선택 드롭다운 */}
           <div className="px-3 pt-3 text-[14px]">
             <label className="text-[14px] block mb-3">상품 선택</label>
             <div
@@ -293,7 +323,7 @@ function EventForm() {
                     >
                       <input
                         type="checkbox"
-                        checked={selectedProducts.includes(product)}
+                        checked={selectedProducts.some((p) => p.product_id === product.product_id)}
                         onChange={() => handleProductCheck(product)}
                         className="w-[18px] h-[18px] cursor-pointer event-green-checkbox"
                       />
@@ -312,13 +342,21 @@ function EventForm() {
                 </ul>
                 <div className="flex justify-center items-center gap-4 border border-t-0 py-3">
                   <button
-                    className={`border rounded-[4px] text-[12px] w-[37px] h-[24px] text-grayscale-gray-500 ${selectedProducts.length === 0 ? 'text-grayscale-gray-100 bg-grayscale-gray-50' : 'bg-grayscale-gray-50 hover:bg-grayscale-gray-100'}`}
+                    className={`border rounded-[4px] text-[12px] w-[37px] h-[24px] text-grayscale-gray-500 ${
+                      selectedProducts.length === 0
+                        ? 'text-grayscale-gray-100 bg-grayscale-gray-50'
+                        : 'bg-grayscale-gray-50 hover:bg-grayscale-gray-100'
+                    }`}
                     onClick={() => setIsProductDropdownOpen(false)}
                   >
                     취소
                   </button>
                   <button
-                    className={`border rounded-[4px] text-[12px] w-[37px] h-[24px] text-white ${selectedProducts.length === 0 ? 'bg-primary-green-100' : 'bg-primary-green-500  hover:bg-primary-green-700'}`}
+                    className={`border rounded-[4px] text-[12px] w-[37px] h-[24px] text-white ${
+                      selectedProducts.length === 0
+                        ? 'bg-primary-green-100'
+                        : 'bg-primary-green-500 hover:bg-primary-green-700'
+                    }`}
                     onClick={handleConfirmSelection}
                     disabled={selectedProducts.length === 0}
                   >

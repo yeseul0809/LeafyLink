@@ -1,6 +1,7 @@
 'use client';
 import { useState, useEffect } from 'react';
 import { getEvents } from '../action';
+import { useRouter } from 'next/navigation';
 
 type Event = {
   event_id: string;
@@ -17,6 +18,12 @@ interface EventsProps {
 
 export default function Events({ sellerId }: EventsProps) {
   const [events, setEvents] = useState<Event[]>([]);
+
+  const router = useRouter();
+
+  const handleMoveEventEditPage = (id: string) => {
+    router.push(`/seller/mypage/${id}/eventedit`);
+  };
 
   // 이벤트 데이터를 가져오는 함수
   useEffect(() => {
@@ -79,11 +86,13 @@ export default function Events({ sellerId }: EventsProps) {
               </div>
             </div>
             <div className="w-[130px] h-16 px-4 py-[22px] bg-white justify-center items-center gap-2.5 flex">
-              <div className="px-3 py-[9px] bg-white rounded border border-[#3bb873] justify-center items-center gap-2.5 flex">
-                <div className="text-center text-[#3bb873] text-[13px] font-normal leading-[18px]">
-                  이벤트 수정
-                </div>
-              </div>
+              <button
+                onClick={() => handleMoveEventEditPage(event.event_id)}
+                className="px-[12px] py-[9px] border border-primary-green-500 bg-white rounded text-primary-green-500 text-[13px] font-normal leading-[18px] tracking-[-0.325px]
+                    transition-colors duration-300 hover:bg-primary-green-50 hover:text-primary-green-500"
+              >
+                이벤트 수정
+              </button>
             </div>
           </div>
         ))
