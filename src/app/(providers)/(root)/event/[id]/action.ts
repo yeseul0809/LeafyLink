@@ -2,7 +2,7 @@
 import { createClient } from '@/supabase/supabaseServer';
 import { Database } from '@/types/supabase';
 import { SupabaseClient } from '@supabase/supabase-js';
-import { Comment } from './types';
+import { Comment } from './Event';
 
 export async function getEventRequest(id: string) {
   const supabaseServer: SupabaseClient<Database> = createClient();
@@ -135,7 +135,7 @@ export async function getRelatedProducts(eventId: string) {
     .from('Product')
     .select('*')
     .in('title', productTitles)
-    .eq('product_seller_id', sellerId); // seller_id로 필터링
+    .eq('product_seller_id', sellerId);
 
   if (productsError) {
     console.error('제품 정보를 가져오는 데 오류가 발생했습니다:', productsError);
